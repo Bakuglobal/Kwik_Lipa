@@ -1,0 +1,7 @@
+{
+  "name": "kwik",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

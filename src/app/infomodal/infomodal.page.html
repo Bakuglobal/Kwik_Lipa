@@ -1,0 +1,51 @@
+<ion-header style="background-color: #3880ff;">
+    <ion-toolbar color="primary" >
+        <ion-buttons (click)="close()" slot="start">
+          <ion-icon name="arrow-back" size="large"></ion-icon>
+        </ion-buttons>
+        <ion-searchbar shape="round" style="border-radius: 10px;"></ion-searchbar>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+      
+  <div style="border-bottom: aquamarine ;" padding>
+    <ion-row>
+      <ion-col>
+      <ion-avatar><img src="../../assets/images/bg.png"></ion-avatar>
+      </ion-col>
+      <ion-col text-center>
+        <b style="font-size: 1.5rem;">1</b><br>
+        <ion-button color="primary" shape="round"disabled>Posts</ion-button>
+      </ion-col>
+    </ion-row>
+    <br>
+  </div> 
+<div padding>
+<ion-label><b>Quickmatt supermarket</b></ion-label><br><br>
+<ion-label><a (click)="maps()"> Moi Avenue Haruko house&nbsp;<ion-icon name="pin"></ion-icon></a></ion-label><br><br>
+<ion-label>Open from 9:00AM - 9:00PM Mon - Sat</ion-label><br><br>
+<ion-label>Website : <a (click)="inbrowser('https://www.quickmart.co.ke/')">https://www.quickmart.co.ke/</a></ion-label><br><br>
+</div>
+<div class="ion-text-center" style="margin-top: 20px;font-weight: bold;"><ion-label >Recent posts</ion-label></div>
+<ion-card>
+    <ion-card-header>
+        <ion-chip>
+          <ion-avatar><img src="../../assets/images/bg.png"></ion-avatar>
+          <ion-label>Quickmatt</ion-label>
+        </ion-chip>
+        1 hr . <ion-icon name="globe"></ion-icon>
+    </ion-card-header>
+    <ion-card-content>
+      <img src="../../assets/images/ad.jpg">
+      <ion-text>
+        Mega discounts this friday .
+      </ion-text>
+    </ion-card-content>
+    <ion-item style="margin-left:0;margin-right:0;">
+      <ion-icon [ngClass]="{'color': h}" (click)="like()" size="large" name="heart"></ion-icon>&nbsp;&nbsp;&nbsp;&nbsp;
+      <ion-icon  (click)="AddComment()" size="large" name="chatboxes"></ion-icon>&nbsp;&nbsp;&nbsp;&nbsp;
+      <ion-icon  (click)="share()" name="share-alt" size="large"></ion-icon>
+     
+    </ion-item>
+  </ion-card>
+</ion-content>

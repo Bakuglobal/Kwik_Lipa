@@ -1,0 +1,36 @@
+.imageContainer{
+    height: 100%;
+}
+
+.image-bg {
+    // background-color: #00ade5;
+    height: 100%;
+    position: absolute;
+    top:0px;    
+    width: 100%;
+}
+
+.imageContainer img{
+    width: 100%;
+    margin-top: 0;
+}
+
+.content ion-buttons {
+    right: 21px; 
+    position: absolute; 
+    bottom: 33px;
+}
+
+.content ion-button {
+    font-size: 19px; 
+    font-weight: bold;
+}
+
+span {
+    margin-left: 86%;
+    position: absolute;
+    z-index: 3;
+    padding-top: 30px;
+    color: white;
+}
+

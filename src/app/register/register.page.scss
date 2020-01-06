@@ -1,0 +1,60 @@
+ion-content {
+    --background: #00ade5;
+}
+
+.top-register {
+    color: white;
+    padding: 80px 25px 10px 20px; 
+}
+
+.bg-text {
+    margin-top: 0%;
+    margin-left: 5px;
+    margin-right: 10px;
+    background: transparent; 
+}
+
+ion-list{
+	background: transparent;
+    ion-item {
+        --border-color: transparent!important;
+        --highlight-height: 0;
+        --background: none;
+        ion-input {
+        	border-bottom: 1px solid white;
+            color: white;
+        }
+    }
+}
+
+.button-create-account {
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 25px;
+    border-radius: 5px;
+    color: #00ade5;
+    background-color: white;
+    width: auto;
+}
+
+ion-button {
+    margin-left: auto;
+    margin-right: auto;
+    height: 47px;
+}
+
+.have-account {
+    color: white; 
+    font-size: 15px;
+}
+
+hr {
+    border-bottom: 1px solid white; 
+    color: white; 
+    margin-top: -13px;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+
+

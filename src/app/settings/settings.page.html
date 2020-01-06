@@ -1,0 +1,80 @@
+
+<ion-header style="background-color: #3880ff;">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <span >My Account
+      </span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+<!-- Header display banner-->
+<ion-card color="primary" style="--padding-start:0"  class="display-header">
+  
+    <ion-card-title style="height: 100%">
+      <ion-row>
+        <ion-col size="1">
+          
+          <!-- <ion-badge style="padding-left:0 ; height: 100%;color: white"> -->
+            <ion-icon size="large"name="person"></ion-icon>
+          <!-- </ion-badge> -->
+        </ion-col>
+        <ion-col size="0.7"></ion-col>
+        <ion-col > 
+            <span style="padding-top: 15px">{{settings.name}}</span>
+        </ion-col>
+      </ion-row>
+    </ion-card-title>
+
+  </ion-card>
+
+            <!-- Personal information-->
+  <div>
+    <ion-card>
+        <ion-row>
+          <ion-col><h3>Account Mobile Number</h3></ion-col>
+         
+        </ion-row>
+        <ion-list>
+            <label class="labels" style="padding-left: 20px"> Primary M-pesa :&nbsp; {{settings.phone}}</label>
+            
+            <p></p>
+        </ion-list>
+    </ion-card>
+    <ion-card>
+    <ion-row>
+        <ion-col><h3>Personal Information</h3></ion-col>
+        <ion-col size="2"><ion-button fill="clear" (click)="editPersonalDetails()"><b>EDIT</b></ion-button></ion-col>
+      </ion-row>
+      <ion-list>
+          <label class="labels" style="padding-left: 20px;">Name: &nbsp; {{settings.name}}</label><br>
+          <p></p>
+          <label class="labels" style="padding-left: 20px">Email:&nbsp; &nbsp; {{settingsEmail.email}}</label><br>
+          <p></p>
+          <label class="labels" style="padding-left: 20px">Gender: &nbsp; {{settings.gender}}</label><br>
+          <p></p>
+          <label class="labels" style="padding-left: 20px">Country: &nbsp; {{settings.country}}</label>
+          <p></p>
+      </ion-list>
+  </ion-card>
+  <ion-card >
+    <ion-row>
+      <ion-col><h3>My Subscription Status</h3></ion-col>
+     
+    </ion-row>
+    <ion-list>
+      <!--  <label class="labels" style="padding-left: 20px;color:#f2a703">Expiry Date :{{todaysdate | date: 'EEEE, MMMM d y, h:mm:ss a'}}</label> -->
+        
+        <p text-center>
+          <b>You are using a free premium version of this app </b>
+        </p>
+    </ion-list>
+</ion-card>
+  </div>
+
+  
+</ion-content>

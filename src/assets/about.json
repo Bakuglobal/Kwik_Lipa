@@ -1,0 +1,41 @@
+{
+  "About":[
+    {
+      "name":"About Kwik",
+      "children": [
+        {"info":" kwik is a mobile app that allows you to quickly scan a product from the shop you are in and pay for it from the app ."}
+        
+      ]
+    },
+    {
+      "name":" Shopping from Kwik App?",
+      "children":[
+        {"info":"Open Kwik app and use your camera to scan the barcode of the product in the shop. After you've finished shopping checkout from the app and pay using mpesa"}
+      ]
+    },
+    {
+      "name":"Checking available shop offers?",
+      "children":[
+        {"info":"You can check shop offers by selecting a shop then clicking on 'Click to see offers' button"}
+      ]
+    },
+    {
+      "name":" Change shop?",
+      "children":[
+        {"info":"To change shop click on the back arrow at the top-left and you will be taken to home to select another shop"}
+      ]
+    },
+    {
+      "name":"Earning loyalty points?",
+      "children":[
+        {"info":"After every successful shopping the app calculates your loyalty points and is added to your loyalty points account"}
+      ]
+    },
+    {
+      "name":"Checkout from a different number?",
+      "children":[
+        {"info":"you can check out from a different number in your contact list by selecting the contact at checkout after clicking on 'Pay from other number' button"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+
+<ion-header style="background-color: #3880ff;">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <span >Customer Care</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+
+  <!-- Header display banner-->
+    <ion-card color="primary" style="height: 50px!important" class="display-header">
+    
+        <ion-card-title style="height: 100%">
+          <ion-row>
+            <ion-col size="1">
+                <ion-icon size="large"name="chatbubbles"></ion-icon>
+            </ion-col>
+            <ion-col size="0.7"></ion-col>
+            <ion-col > 
+              <span style="padding-top: 5px;font-size: 12pt;">Send a question to Kwik support </span>
+            </ion-col>
+          </ion-row>
+        </ion-card-title>
+    
+      </ion-card>
+
+      <!--Display send message-->
+      <ion-card shape="round" color="grey" *ngIf="msg">
+        <ion-row>
+          <ion-col size="2">
+            <div style="background: #3880ff" class="customer"></div>
+          </ion-col>
+          <ion-col>
+              <p>{{message}}</p>
+          </ion-col>
+          <ion-col>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+  
+
+
+</ion-content>
+<ion-footer>
+
+      <!-- message input area-->
+
+      <form #supportForm=ngForm>
+        <div class="support">
+          <ion-row>
+            <ion-col size="2">
+                <div style="background: #3880ff" class="customer"></div>
+            </ion-col>
+            <ion-col >
+                <ion-item>
+                    
+                    <textarea  required  name="message" [(ngModel)]="data.message" placeholder="Message here" style="width: 100%"
+                     autocomplete="on" type="text" autofocus="true" autocorrect="on">
+                    </textarea>
+                </ion-item>
+            </ion-col>
+            <ion-col size="2" text-align-center>
+                <button [disabled]="!supportForm.valid" (click)="submit()" color="primary">
+                  <ion-icon size="large" name="send" item-right ></ion-icon>
+                </button>
+                
+            </ion-col>
+          </ion-row>
+        </div>
+      </form>
+</ion-footer>

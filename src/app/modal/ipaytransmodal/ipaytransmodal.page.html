@@ -1,0 +1,93 @@
+<ion-header style="background-color: #3880ff;">
+  <ion-toolbar color="primary" >
+    <ion-buttons slot="start">
+        <ion-button (click)="toMyAccount()">
+            <ion-icon name="arrow-round-back"></ion-icon>
+            
+          </ion-button>
+    </ion-buttons>
+    <ion-title>
+      <span >Personal Information
+      </span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+<!-- Header display banner-->
+<ion-card color="primary" style="--padding-start:0"  class="display-header">
+  
+    <ion-card-title style="height: 100%">
+      <ion-row>
+        <ion-col size="1">
+          
+            <ion-icon size="large"name="person"></ion-icon>
+        </ion-col>
+        <ion-col size="0.4"></ion-col>
+        <ion-col > 
+            <span style="padding-top:10px;font-size: 12pt;">Update your personal details </span>
+        </ion-col>
+      </ion-row>
+    </ion-card-title>
+
+  </ion-card>
+
+  <ion-grid >
+      <ion-row>
+        <ion-col size="12">
+  
+          <form #settingsForm=ngForm>
+  
+            <div class="form-group">
+  
+              <div class="form-control">
+                <label class="labels">Full Names</label>
+                <br/>
+                <input [(ngModel)]="settings.name" required name="name" class="inputs" type="text">
+              </div>
+  
+              <div class="form-control">
+                <label class="labels">Phone Number</label>
+                <br/>
+                <input [(ngModel)]="settings.phone" required name="phone" class="inputs" type="text" placeholder="eg. 254701654872">
+              </div>
+  
+              <div class="form-control">
+                <label class="labels">Email Address</label>
+                <br/>
+                <input [(ngModel)]="settingsEmail.email" required name="email" class="inputs" type="text">
+              </div>
+  
+              <div class="form-control">
+                <label class="lables">Gender</label>
+                <select class="inputs" [(ngModel)]="settings.gender" name="gender" #gender>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+  
+              <div class="form-control">
+                <label class="labels">Country</label>
+                <select class="inputs" [(ngModel)]="settings.country" name="country" #country
+                  interface="action-sheet">
+                  <option value="KENYA">Kenya</option>
+                  <option value="TANZANIA">Tanzania</option>
+                  <option value="UGANDA">Uganda</option>
+                </select>
+              </div>
+            </div>
+  
+           
+              <div class="form-control">
+                <button [disabled]="!settingsForm.valid" (click)="presentPrompt()" color="primary" class="btn">UPDATE</button>
+              </div>
+            
+          </form>
+  
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+</ion-content>

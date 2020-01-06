@@ -1,0 +1,112 @@
+<ion-header style="background-color: #3880ff;">
+  <ion-toolbar color="primary"  >
+      <ion-buttons slot="start">
+          <ion-button (click)="home()">
+            <ion-icon name="arrow-round-back"></ion-icon>
+          </ion-button>
+      </ion-buttons>
+      
+      <ion-buttons class="price-slot" slot="end" (click)=gotoList()>
+          <ion-icon style="color:white" size="large" name="list-box"></ion-icon>
+        </ion-buttons>
+    <ion-title class="shopname">{{shopSelected}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+  <ion-content >
+
+  <div  class="">
+
+    <!--Display shop banner ads -->
+
+        <ion-card *ngIf="myCart.length == 0" style="border-radius: 10px">
+      <ion-card-content id="offer1">
+        <div  class="animated infinite pulse delay-5s" (click)="offers()" ><b><h2 style="text-align: center;color: white">Click to See Today's Offers</h2></b></div>
+      </ion-card-content>
+  </ion-card>
+
+<div *ngIf="myCart.length == 0" padding>
+  
+        <ion-card style="width: 100%; margin-right: 0px;margin-left: 0px;">
+           <ion-img src="../../assets/images/ad.jpg"></ion-img>
+           <ion-card-content>
+             Be happy with a coca-cola drink
+           </ion-card-content>
+        </ion-card>
+  
+      <ion-card style="width: 100%;margin-right: 0px;margin-left: 0px;">
+           <ion-img src="../../assets/images/grocery.png"></ion-img>
+           <ion-card-content>
+             Reliable shop for all your groceries
+           </ion-card-content>
+      </ion-card>
+          
+</div>
+
+
+
+<!--Show scanned products here-->
+<ion-card  >
+  <ion-row *ngIf="myCart.length > 0" >
+      <ion-label id="quontity">Qty</ion-label>
+  </ion-row>
+  
+  <ion-row  class="activated" *ngFor="let scanned of myCart" >
+      <ion-col>
+        <p></p>
+        <ion-thumbnail>
+        <img src={{scanned.pic_filename}} alt={{scanned.name}} class="scanned">
+        </ion-thumbnail>
+      </ion-col>
+      <ion-col size="7">
+          <ion-label (click)="removeFromCart(scanned)" color="danger">Remove</ion-label><br>
+          
+          <ion-label class="scanned-title">{{scanned.name}}</ion-label><br>
+          <ion-label class="scanned-price">KES {{scanned.unit_price | number:'1.1-5'}}</ion-label>
+      </ion-col>
+      <ion-col></ion-col>
+      <ion-col></ion-col>
+      <ion-col >
+          
+          <ion-label id="quontity" (click)="reduceQuantity(scanned)"><b><h3><ion-icon name="remove"></ion-icon></h3></b></ion-label>
+          <ion-label id="quontity" (click)="addQty(scanned)"><b><h3><ion-icon name="add"></ion-icon></h3></b></ion-label>
+          <ion-label id="quontity">{{scanned.count}}<strong>x</strong></ion-label>
+      </ion-col>
+  </ion-row>
+
+</ion-card>
+
+
+<!-- cart total sum label-->
+<ion-toolbar color="primary" *ngIf="myCart.length > 0" style="height: 40px;position: fixed;left: 0;bottom: 85px;right: 0;--border-radius: 5px;">
+ 
+    <ion-buttons slot="start">Cart Total : </ion-buttons>
+    <ion-buttons class="price-slot" slot="end">
+        KES {{getTotalCart() | number:'1.1-5'}}
+    </ion-buttons>
+</ion-toolbar>
+
+<!--checkout button -->
+
+<ion-button 
+ style="position: fixed;left: 0;bottom: 40px;right: 0; --border-radius: 5px" 
+ (click)="submitProduct()" *ngIf="myCart.length > 0" expand="block">
+  <ion-badge color="secondary">{{cart.length}}</ion-badge>&nbsp;&nbsp;&nbsp; 
+  <ion-icon name="cart" position-relative ></ion-icon>&nbsp;&nbsp;
+  Checkout now
+</ion-button>
+
+<!-- scanner button-->
+<ion-button style="position: fixed;left: 0;bottom: 0px;right: 0; --border-radius: 5px;" (click)="scan()" *ngIf="userShopId != 'none'" expand="block" >
+    <ion-icon name="qr-scanner"></ion-icon>&nbsp;&nbsp;
+    Scan your Product
+</ion-button>
+</div>
+
+<!-- <form (ngSubmit)="getProduct(code)" >
+  <ion-input name="code" [(ngModel)]="code" type="number">
+  </ion-input>
+  <ion-button type="submit">Send</ion-button>
+</form> -->
+
+</ion-content>

@@ -1,0 +1,148 @@
+.skeleton{
+    
+  width: 100%;
+  padding-top: 30px ; 
+}
+ion-content {
+  -webkit-transition: all;
+  transition: all;
+}
+ion-grid {
+  padding: auto;
+  ion-col{
+    border-radius: 25px;
+  }
+}
+ion-skeleton-text{
+  width: 100%;
+  height: 100%;
+  border-radius: 25px;
+  padding-bottom: 10px;
+}
+.partion {
+  width: 100%;
+  height: 150px;
+  border: thin solid #92bcf3;
+  text-align: center;
+  border-radius: 25px;
+}
+
+.shop-img {
+  width: 65%;
+  height: 65%;
+  margin: 5% auto;
+}
+
+.shops-title {
+    font-weight: bold;
+    color: #666666;
+    font-size: 13px;
+    margin-top: -3%;
+}
+
+.float-tick {
+    position: absolute; 
+    width: 25%;  
+    margin-top: 2%;
+    margin-right: 3%;
+}
+
+.actives {
+    background: #ffffff;
+    opacity: 0.2;
+}
+
+.price-slot {
+    font-family: 'Bebas Neue';
+}
+
+.bar-bottom {
+    width: 100%;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.568);
+    border-bottom: thin solid rgba(227, 227, 227, 0.365);
+}
+
+.scanned {
+    width: 200px;
+    height: 220px;
+    border: thin solid #e3e3e3;
+    text-align: center;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.scanned-img {
+    width: 65%;
+    margin: 5% auto;
+}
+
+.scanned-title, .scanned-price {
+    font-family: 'Bebas Neue';
+    color: #666666;
+    margin-top: 0px;
+    line-height: 50px;
+}
+
+.top-tag{
+    text-align: center ;
+    font-family: 'Bebas Neue';
+}
+
+.notice-btn {
+    ion-badge {
+        position: absolute;
+        top: -0.2rem;
+        right: -0.5rem;
+        opacity: 0.9;
+    }
+}
+
+.special-offer {
+    padding-top: 0px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-bottom: 30px;
+}
+
+.advert {
+    padding-top: 0px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-bottom: 30px;
+}
+
+.imageContainer img{
+    margin-top: 0;
+    box-shadow: 0 8px 6px -6px gray;
+}
+
+.main-menu {
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+ion-col ion-avatar{
+    margin: auto;
+}
+
+ion-col h2{
+    margin-top: 2px;
+    text-align: center;
+    font-size: 13px;
+    color: #95989A;
+}
+
+.notification-icon-button {
+    --overflow: visible;
+    ion-badge {
+        position: absolute;
+        background: #f70b0b;
+        border-radius: 50%;
+        opacity: 0.9;
+        top: 0.1rem;
+        right: 0.2rem;
+    }
+}

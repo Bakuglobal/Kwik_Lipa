@@ -1,0 +1,24 @@
+.form-control {
+    width: 100%;
+    border: thin solid #e3e3e3;
+    height: 120px;
+}
+
+.btn {
+    width: 30%;
+    margin: 0 auto;
+}
+.support{
+    bottom: 0px ;
+}
+.customer{
+    width:50px;
+    height: 50px;
+    border-radius: 100%;
+    border: 2px solid #ffffff;
+    // background: #ffffff;
+    // background: url('/assets/images/profile.png');
+    background-position: center;
+    background-size: cover;
+    margin: 0 auto;
+}

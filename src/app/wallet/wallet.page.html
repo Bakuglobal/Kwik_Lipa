@@ -1,0 +1,95 @@
+
+<ion-header style="background-color: #3880ff;" [hidden]="header">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title >
+      LOYALTY POINTS
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [scrollEvents]="true" (ionScroll)="onScroll($event)">
+
+              <!-- Header display banner-->
+
+  <ion-card color="primary" style="--padding-start:0;height: 50px"  class="display-header">
+    
+      <ion-card-title style="height: 100%">
+        <ion-row>
+          <ion-col size="1">
+            <ion-badge style="padding-left:0 ; height: 100%; --color: medium">
+              <ion-icon size="large"name="cash"></ion-icon>
+            </ion-badge>
+          </ion-col>
+          <ion-col size="0.7"></ion-col>
+          <ion-col > 
+              <span style="padding-top: 15px;font-size: 12pt;">Check your loyalty points</span>
+          </ion-col>
+        </ion-row>
+      </ion-card-title>
+  
+  </ion-card>
+
+          <!--Display shop to select-->
+
+    <div style="text-align: center;margin-top: 40px">
+        <span text-center style="color: primary;">Select Shop</span><br>
+      <div>
+          <select >
+            <option *ngFor="let shop of shops" style="font-size: small;" >{{shop.name}}</option>
+          </select>
+    </div>
+    </div>
+
+
+  <div class="wallet">
+    <h1 class="kes" style="font-size: 20">POINTS <br/> {{wallet | number:'1.1-5'}}
+    </h1>
+  </div>
+<!--  <ion-grid *ngIf="activate">
+    <ion-row>
+      <ion-col size="12">
+        <p class="text">{{text}}<br/><a class="cancel" (click)="cancelPayment()">cancel</a></p>
+      </ion-col>
+      <ion-col size="" *ngFor="let resp of response.data.payment_channels" (click)="selected(resp)">
+        <div class="partion">
+          
+          <img *ngIf="resp.name == 'MPESA'" src="assets/images/mpesa.jpg" class="resp-img">
+         
+          <h5 class="resp-title">{{resp.name}}</h5>
+        </div>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+
+
+  <ion-grid class="topupform">
+    <ion-row>
+      <ion-col size="1"></ion-col>
+      <ion-col size="10">
+
+        <form #walletForm=ngForm>
+
+          <div class="form-group">
+            <h1 class="title-wallet">Top up your account</h1>
+          </div>
+
+          <div class="form-group">
+            <input [readonly]="submission" type="number" class="form-control" required placeholder="0.00" name="amount" [(ngModel)]="data.amount">
+          </div>
+
+          <div class="form-group">
+            <button [disabled]="!walletForm.valid" (click)="submit()" color="primary" class="btn">TOP UP</button>
+          </div>
+
+        </form>
+
+      </ion-col>
+      <ion-col size="1"></ion-col>
+    </ion-row>
+  </ion-grid>
+-->
+
+</ion-content>

@@ -1,0 +1,40 @@
+<ion-content>
+
+  	<span (click)="Skip()">Skip</span>
+	<ion-slides  class="imageContainer" pager="true" [options]="slideOpts">   
+	  	<ion-slide>
+			<div class="image-bg">
+				<img src="/assets/sliders/slider1.png">
+			</div>
+			<div class="content">
+				<ion-buttons color="light">
+					<ion-button color="primary" (click)="nextSlide()">Next</ion-button>
+				</ion-buttons>
+			</div>
+		</ion-slide>
+		  
+	  	<ion-slide>
+			<div class="image-bg">
+				<img src="/assets/sliders/slider2.png">
+			</div>
+			<div class="content">
+				<ion-buttons color="light">
+					<ion-button color="primary" (click)="nextSlide()">Next</ion-button>
+				</ion-buttons>
+			</div>
+		  </ion-slide>
+		  
+	  	<ion-slide>
+			<div class="image-bg">
+				<img src="/assets/sliders/slider3.png">
+			</div>
+			<div class="content">
+				<ion-buttons color="light">
+					<ion-button color="primary" (click)="Skip()">Get started</ion-button>
+				</ion-buttons>
+			</div>
+	  	</ion-slide>
+	</ion-slides>
+
+</ion-content>
+

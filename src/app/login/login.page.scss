@@ -1,0 +1,51 @@
+ion-content {
+    font-size: 13px;
+}
+
+.logo-background-color {
+    border-bottom-left-radius: 350px 30px;
+    border-bottom-right-radius: 350px 40px;
+    background-color: #00ade5;
+}
+
+.logo-background-color .logo {
+    margin-left: 35%;
+    padding-top: 10px;
+}
+
+.logo-background-color .top-sign-in {
+    color: white;
+    text-align: center;
+    margin-top: -10px;
+    padding-bottom: 50px;
+}
+
+.bg-text {
+    margin-top: 25px;
+    padding: 20px 20px 20px 20px;
+}
+
+.button-sign-in {
+    font-size: 15px;
+    border-radius: 15px;
+    color: white;
+    background-color: #00ade5;
+    width: 100%;
+    height: 47px;
+}
+
+ion-item {
+    font-size: 15px;
+    border-radius: 15px;
+}
+
+hr {
+    height: 2px; 
+    background-color: #e4e4e4; 
+    margin-top: 10px;
+}
+
+.vertical-line {
+    border-left: 2px solid #e4e4e4;
+    height: 50px;
+}

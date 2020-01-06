@@ -1,0 +1,97 @@
+  <ion-header style="background-color: #3880ff">
+  <ion-toolbar color="primary" >
+      <ion-buttons slot="start">
+          <ion-button (click)="shop()">
+            <ion-icon name="arrow-round-back"></ion-icon>
+            
+          </ion-button>
+      </ion-buttons>
+      
+    <ion-title class="shopname">{{shopSelected}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+  <ion-content >
+
+<ion-card>
+  <ion-card-header>
+    <ion-card-subtitle style="text-align: center"><b>Todays' Offers</b></ion-card-subtitle>
+    <ion-card-title style="text-align: center">Extreme Discounts</ion-card-title>
+</ion-card-header>
+</ion-card>
+
+
+<ion-grid no-padding>
+  <ion-row no-padding>
+    <ion-col no-padding size="6" size-sm (click)="openPrompt()">
+      <ion-card no-padding class="image-position" class="card-radius">
+        <ion-card-header>
+          <img src="../assets/products/chocolate.png"><hr>
+          <ion-card-subtitle><b>Chocolate</b></ion-card-subtitle>
+            <ion-card-subtitle>Kshs: 330 <small style="color: #fc4e4e;"><s>Kshs: 500</s></small></ion-card-subtitle>
+            <ion-button expand="full" color="primary" style="margin-top: 5%;">
+                <ion-icon slot="start" name="cart"></ion-icon>
+                Add to cart
+            </ion-button>
+        </ion-card-header>
+      </ion-card>
+    </ion-col>
+
+    <ion-col no-padding size="6" size-sm (click)="openPrompt()">
+        <ion-card no-padding class="image-position" class="card-radius">
+          <ion-card-header>
+            <img src="../assets/products/milk.jpg"><hr>
+            <ion-card-subtitle><b>New milk</b></ion-card-subtitle>
+              <ion-card-subtitle>Kshs: 130 <small style="color: #fc4e4e;;"><s>Kshs: 200</s></small></ion-card-subtitle>
+              
+                <ion-button expand="full" color="primary" style="margin-top: 5%;">
+                    <ion-icon slot="start" name="cart"></ion-icon>
+                    Add to cart
+                </ion-button>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+  </ion-row>
+
+
+  <ion-row no-padding>
+      <ion-col no-padding size="6" size-sm (click)="openPrompt()">
+        <ion-card no-padding class="image-position" class="card-radius">
+          <ion-card-header>
+            <img src="../assets/products/blueband.jpg"><hr>
+            <ion-card-subtitle><b>Blu Band</b></ion-card-subtitle>
+              <ion-card-subtitle>Kshs: 530 <small style="color: #fc4e4e;"><s>Kshs: 700</s></small></ion-card-subtitle>
+              <ion-button expand="full" color="primary" style="margin-top: 5%;">
+                  <ion-icon slot="start" name="cart"></ion-icon>
+                  Add to cart
+              </ion-button>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+  
+      <ion-col no-padding size="6" size-sm (click)="openPrompt()">
+          <ion-card no-padding class="image-position" class="card-radius">
+            <ion-card-header>
+              <img src="../assets/products/juice.jpg"><hr>
+              <ion-card-subtitle><b>Natural juice</b></ion-card-subtitle>
+                <ion-card-subtitle>Kshs: 100 <small style="color: #fc4e4e;;"><s>Kshs: 150</s></small></ion-card-subtitle>
+                  <ion-button expand="full" color="primary" style="margin-top: 5%;">
+                      <ion-icon slot="start" name="cart"></ion-icon>
+                      Add to cart
+                  </ion-button>
+            </ion-card-header>
+          </ion-card>
+        </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+
+<!-- <div>
+  <ion-label style="position: fixed;left: 0;bottom: 0px;right: 0;text-align: center">
+    Visit <b style="color: rgb(7, 96, 155)">{{shopSelected}} </b>Today and buy at these Prices
+  </ion-label>
+</div> -->
+
+
+</ion-content>

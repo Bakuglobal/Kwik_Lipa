@@ -1,0 +1,39 @@
+  <ion-header style="background-color: #3880ff;">
+  <ion-toolbar color="primary" >
+    <ion-buttons (click)="close()" slot="start">
+      <ion-icon name="arrow-back" size="large"></ion-icon>
+    </ion-buttons>
+    <ion-buttons slot="start" text-center>
+      <ion-chip>
+        <ion-avatar ><img src="../../assets/images/bg.png"></ion-avatar>
+        <ion-label>{{sendTo}}</ion-label>
+        </ion-chip><br>
+        <ion-label><b style="color: green;font-size: 2em;">.</b>online</ion-label>
+      
+    </ion-buttons>
+  
+  </ion-toolbar>
+  </ion-header>
+<ion-content [scrollEvents]="true">
+  
+  <div class="chat" *ngFor="let chat of chatRef | async">
+    <div class="me" *ngIf="uid == chat.UserID">
+      {{chat.Message}}
+    </div>
+  
+    <div class="you" *ngIf="uid != chat.UserID">
+      <span class="name">
+        {{chat.Name}}
+      </span><br>
+      {{chat.Message}}
+    </div>
+  </div>
+
+  
+</ion-content>
+<ion-footer style="background-color: white;">
+  <ion-item style="background-color: white;">
+    <ion-textarea type="text" [(ngModel)]="text" placeholder="Enter message"></ion-textarea>
+    <ion-button (click)="send()"  icon-only slot="end"><ion-icon name="send" ></ion-icon></ion-button>
+  </ion-item>
+</ion-footer>

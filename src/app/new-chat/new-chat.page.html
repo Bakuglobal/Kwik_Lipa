@@ -1,0 +1,66 @@
+
+<ion-header style="background-color: #3880ff;">
+    <ion-toolbar color="primary" >
+      <ion-buttons (click)="close()" slot="start">
+        <ion-icon name="arrow-back" size="large"></ion-icon>
+      </ion-buttons>
+      <ion-title *ngIf="!Msgrecepient">
+        New Chat
+      </ion-title>
+      <ion-title *ngIf="Msgrecepient">
+        {{sendTo}}<br>
+        {{recepient}}
+      </ion-title>
+      <ion-buttons slot="end" *ngIf="!Msgrecepient">
+          <ion-icon style="margin-top: 5px;margin-right: 5px;"(click)="pickContact()" name="contact" size="large"></ion-icon>
+      </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+  <div *ngIf="!Msgrecepient">
+  <ion-searchbar
+    [(ngModel)]="searchTerm"
+    (ionChange)="setFilteredItems()"
+    placeholder="Enter phone number"
+  ></ion-searchbar>
+
+  <ion-list>
+    <ion-item *ngFor="let item of items" (click)="createChat(item)">
+      
+      <ion-avatar><img src={{item.photo}}></ion-avatar><ion-col size=".5"></ion-col>
+      {{item.name}}<br>
+      {{ item.phone }}
+    </ion-item>
+  </ion-list>
+  <div *ngIf="notfound" text-center style="padding-top: 20px;">
+    <ion-icon name="search"></ion-icon>
+    <ion-label>Contact not found</ion-label>
+
+  </div>
+</div>
+<div *ngIf="Msgrecepient">
+<div class="chat" >
+    <div *ngFor="let item of mychat ">
+        <div class="you">
+            {{item.text}} <br>
+          <span style="float: bottom-right;font-size: small;">
+            {{item.Time * 1000 | date: 'h:mm a'}}
+          </span>
+        </div>
+    </div>
+  <div *ngFor="let chat of chats">
+    <div class="me">
+      {{chat.text}} <br>
+      <span style="float: bottom-right;font-size: small;"> {{chat.Time.toDate() | date: 'h:mm a'}}</span>
+    </div>
+  </div>
+</div>
+
+</div>
+</ion-content>
+<ion-footer  style="background-color: white;" *ngIf="Msgrecepient" >
+  <ion-item style="background-color: white;">
+    <ion-textarea type="text" [(ngModel)]="text" placeholder="Enter message" ></ion-textarea>
+    <ion-button (click)="send()"  icon-only slot="end"><ion-icon name="send" ></ion-icon></ion-button>
+  </ion-item>
+</ion-footer>

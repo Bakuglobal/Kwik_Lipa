@@ -1,0 +1,84 @@
+<ion-header style="background-color: #3880ff;" >
+  <ion-toolbar color="primary" >
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title >
+      <span  >Chat</span>
+    </ion-title>
+    <ion-buttons (click)="notifications()" class="notice-btn" slot="end">
+    <!--  <ion-badge style="color:rgb(247, 95, 35);font-weight: bold;font-size: 18px;background-color: yellow">1</ion-badge> -->
+      <ion-icon name="notifications" size="large"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content    >
+  
+ <!--DISPLAY SKELETON-->
+ <ion-item *ngIf="chats.length == 0 && !showLogin">
+    <ion-thumbnail slot="start">
+      <ion-skeleton-text animated></ion-skeleton-text>
+    </ion-thumbnail>
+    <ion-label>
+      <h3>
+        <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+      </h3>
+      <p>
+        <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+      </p>
+      <p>
+        <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+      </p>
+    </ion-label>
+  </ion-item>
+  <ion-item *ngIf="chats.length == 0 && !showLogin">
+      <ion-thumbnail slot="start">
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-thumbnail>
+      <ion-label>
+        <h3>
+          <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+        </h3>
+        <p>
+          <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+        </p>
+        <p>
+          <ion-skeleton-text animated style="width: 70%"></ion-skeleton-text>
+        </p>
+      </ion-label>
+      
+    </ion-item>
+    <!-- <div text-center *ngIf="chats.length == 0 && load" style="padding-top: 30px;">
+      <ion-spinner name="circles" ></ion-spinner>
+      </div> -->
+    <ion-grid>
+        <ion-row  *ngIf="showLogin">
+          <div text-center style="padding-left: 20% ;padding-top:30px">
+            <ion-icon name="alert" size="large"></ion-icon>
+            <h4 style="text-align: center;">
+              You have no messages<br><span (click)="login()"><a >Login</a></span> to start chats
+            </h4>
+
+          </div>
+        </ion-row>
+        </ion-grid>
+
+
+   <div *ngFor="let chat of chats " > 
+      <ion-card  >
+        <ion-row (click)="chatModal(chat)" >
+          <ion-col size="2"> <ion-avatar><img src="../../assets/images/icon.png" alt="img"></ion-avatar></ion-col>
+          <ion-col padding> 
+              <span>{{chat.Recepient_Name}}</span><br>
+              <span>{{chat.text}}</span>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+    </div>
+  <ion-fab vertical="bottom" horizontal="end" (click)="newChatModal()">
+    <ion-fab-button icon-only>
+      <ion-icon name="chatbubbles"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  </ion-content>
+  

@@ -1,0 +1,39 @@
+<ion-app>
+ 
+    <ion-menu extend="full" side="start" menuId="first">
+        <ion-content id="menu" >
+          <div style="background-image: url('../assets/images/header.png')">
+            <div style="height: 40px;width: 100%"></div>
+          <ion-avatar  class="circle-avatar" routerLink="/settings" ><img src="../assets/images/icon.png"></ion-avatar>
+          <div *ngIf="!show" text-center>
+            <ion-icon name="warning" color="warning"></ion-icon><br>
+            <ion-label (click)="login()" style="color: white;">Login</ion-label>
+          </div>
+          <div *ngIf="show">
+          <h5 text-center style="color:white" >{{name}}</h5>
+          <h5 text-center style="color:white" >{{email}}<br/></h5>
+          </div>
+          </div>
+              <div >
+              <ion-list menuClose ion-item *ngFor="let p of appPages" >
+                <ion-item (click)="openPage(p)" [ngClass]="{'active': true}">  
+                <ion-icon slot="start" name="{{p.icon}}"></ion-icon>
+                  {{p.title}}
+                </ion-item>
+              </ion-list>
+            </div>
+               
+          <ion-list *ngIf="show" >
+            <ion-item >
+                <ion-button menuClose (click)="show = false ;logout() " class="button-cover">
+                  <ion-icon slot="start" name="lock" extend="full"></ion-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    LOGOUT
+                  </ion-button>
+            </ion-item>
+          </ion-list>
+        </ion-content>
+      </ion-menu>
+      
+    <ion-router-outlet main></ion-router-outlet>
+  
+</ion-app>

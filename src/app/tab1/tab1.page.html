@@ -1,0 +1,151 @@
+<ion-header style="background-color: #3880ff;" > <!--[hidden]="header"--> 
+    <ion-toolbar color="primary" >
+        <ion-buttons slot="start">
+            <ion-menu-button autoHide="false" ></ion-menu-button>
+        </ion-buttons>
+
+        <ion-title *ngIf="!showSearch">Home</ion-title>
+
+        <ion-searchbar *ngIf="showSearch"></ion-searchbar>
+
+        <ion-buttons slot="end">
+            <ion-button *ngIf="!showSearch" class="notification-icon-button">
+                <ion-badge class="notification-badge">10</ion-badge>
+                <ion-icon slot="icon-only" size="small" name="md-notifications"></ion-icon>
+            </ion-button>
+            <ion-button (click)="show()">
+                <ion-icon name="search" size="large"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content [scrollEvents]="true" (ionScroll)="onScroll($event)">
+
+    <!-- MAIN  MENU -->
+    <ion-row class="main-menu">
+        <ion-col size="4">
+            <ion-avatar>
+                <img src="/assets/images/scan.svg">
+            </ion-avatar>
+            <h2>Scan & Pay</h2>
+        </ion-col>
+
+        <ion-col size="4">
+            <ion-avatar>
+                <img src="/assets/images/pay.svg">
+            </ion-avatar>
+            <h2>Pick, Pay & Collect</h2>
+        </ion-col>
+
+        <ion-col size="4">
+            <ion-avatar>
+                <img src="/assets/images/shop.svg">
+            </ion-avatar>
+            <h2>Shopping lists</h2>
+        </ion-col>
+    </ion-row>
+
+
+    <!-- SPECIL OFFER -->
+    <ion-row class="special-offer">
+        <ion-slides  class="imageContainer" pager="true" [options]="slideOpts" style="border-bottom-color: yellow;">   
+            <ion-slide>
+                <img src="/assets/images/offer1.jpg">
+            </ion-slide>
+
+            <ion-slide>
+                <img src="/assets/images/offer2.jpg">
+            </ion-slide>
+        </ion-slides>
+    </ion-row>
+
+
+
+    <!-- ADVERTS -->
+    <ion-row class="advert">
+        <ion-slides  class="imageContainer" pager="true" [options]="slideOpts">   
+            <ion-slide>
+                <img src="/assets/images/images.jpg">
+            </ion-slide>
+
+            <ion-slide>
+                <img src="/assets/images/images1.jpg">
+            </ion-slide>
+        </ion-slides>
+    </ion-row><br><br>
+
+
+
+
+
+
+
+
+   <!-- Header display banner-->
+
+
+
+   <!-- <ion-card color="primary"   class="display-header " style="height: 40px">
+      <ion-card-title>
+        <ion-row >
+          <ion-col size="1"> 
+            
+            <ion-badge style="padding-left:0 ; height: 100%; --color: warning">
+              <ion-icon color="warning"size="large"name="checkmark-circle-outline"></ion-icon>
+            </ion-badge>
+          </ion-col>
+          <ion-col size=".7"></ion-col>
+          <ion-col  > 
+              <span style="text-transform: uppercase ;font-size: .7em;padding-top: 5px">Select a shop</span>
+          </ion-col>
+        </ion-row>
+      </ion-card-title>
+    </ion-card> -->
+
+<!-- SEARCH FOR A SUPERMARKET -->
+ 
+        
+
+
+
+    
+    <!---   DISPLAY SKELETON WHEN LOADING OR INTERNET IS SLOW-->
+    <!-- <ion-grid   *ngIf="!shops">
+        <ion-row >
+          <ion-col size="6"  class="partion" >
+                <ion-skeleton-text  class="skeleton" animated></ion-skeleton-text>
+          </ion-col>
+          <ion-col size="6" class="partion" >
+                <ion-skeleton-text class="skeleton" animated ></ion-skeleton-text>
+          </ion-col>
+          <ion-col size="6" class="partion"  >
+                  <ion-skeleton-text class="skeleton" animated></ion-skeleton-text>
+          </ion-col>
+          <ion-col class="partion" >
+                  <ion-skeleton-text class="skeleton" animated></ion-skeleton-text>
+            </ion-col>
+        </ion-row>
+    </ion-grid> -->
+      
+        <!-- <div style="text-align: center;" *ngIf="!shops">
+          <ion-spinner name="circles"></ion-spinner><br>
+        <h4 text-center>Connecting ...</h4>
+        </div> -->
+        
+    
+  
+  <!-- Select shop -->
+  <!-- <ion-grid  padding >
+    <ion-row>
+      <ion-col size="6" *ngFor="let shop of shops" (click)="goToShop(shop)">
+        
+        <div class="partion" >
+          <img src="{{shop.file}}" class="shop-img">
+          <h5 class="shops-title" style="text-transform: uppercase">{{shop.name}} </h5>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid> -->
+</ion-content>

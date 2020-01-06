@@ -1,0 +1,107 @@
+<!-- <ion-header style="background-color: #3880ff;" >  -->
+  <ion-toolbar >
+    <!-- <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons> -->
+    <ion-title >
+      <span style="color: #3880ff;">SOKO</span>
+    </ion-title>
+    <ion-buttons (click)="notifications()" class="notice-btn" slot="end">
+    <!--  <ion-badge style="color:rgb(247, 95, 35);font-weight: bold;font-size: 18px;background-color: yellow">1</ion-badge> -->
+      <ion-icon name="notifications" size="large"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+<!-- </ion-header>  -->
+<ion-content  [scrollEvents]="true" (ionScroll)="onScroll($event)" >
+  
+  
+      <ion-searchbar placeholder="search for a shop "animated type="text" ></ion-searchbar>
+      <ion-card>
+        <ion-card-header>
+            <ion-chip (click)="infoModal('QuickMatt')">
+              <ion-avatar><img src="../../assets/images/bg.png"></ion-avatar>
+              <ion-label>QuickMatt</ion-label>
+            </ion-chip>
+            1 hr . <ion-icon name="globe"></ion-icon>
+        </ion-card-header>
+        <ion-card-content>
+          <img class="post-img" src="../../assets/images/ad.jpg">
+          <ion-text>
+            Mega discounts this friday .
+          </ion-text>
+        </ion-card-content>
+        <ion-item style="margin-left:0;margin-right:0;">
+            <ion-icon [ngClass]="{'color': h}" (click)="like()" size="large" name="heart"></ion-icon>&nbsp;&nbsp;&nbsp;&nbsp;
+            <ion-icon  (click)="AddComment()" size="large" name="chatboxes"></ion-icon>&nbsp;&nbsp;&nbsp;&nbsp;
+            <ion-icon  (click)="share()" name="share-alt" size="large"></ion-icon>
+           
+          </ion-item>
+          <div >
+            <ion-label padding>{{likes.count}} likes</ion-label><br>
+            <div>
+                <ion-item >
+                    <ion-chip><ion-avatar ><img src="../../assets/images/icon.png"></ion-avatar></ion-chip>
+                  <ion-col>
+                    <ion-label style="font-size: 11pt;">Joseph</ion-label>
+                    <ion-text style="font-size: 10pt;">We are very pleased with the turn up this week. looking forward to set out another mega sale discount</ion-text><br>
+                    <ion-text>2 h</ion-text>
+                  </ion-col>
+                </ion-item>
+                <div *ngIf="Addcomment">
+                    <form name="post">
+                    <ion-item >
+                        <ion-avatar ><img src="../../assets/images/icon.png"></ion-avatar>&nbsp;&nbsp;
+                        <ion-textarea name="text" [(ngModel)]="text" required placeholder="Add a comment..."></ion-textarea>
+                        <a (click)="Post()">Post</a>
+                    </ion-item>
+                  </form>
+                </div>
+            </div>
+            <a padding (click)="comments()">view all comments</a>
+          </div>
+      </ion-card>
+      <ion-card>
+        <ion-card-header>
+            <ion-chip (click)="infoModal('QuickMatt')">
+              <ion-avatar><img src="../../assets/images/bg.png"></ion-avatar>
+              <ion-label>QuickMatt</ion-label>
+            </ion-chip>
+            1 hr . <ion-icon name="globe"></ion-icon>
+        </ion-card-header>
+        <ion-card-content>
+          <img class="post-img" src="../../assets/images/menuimage.png">
+          <ion-text>
+            Get 20% discounts on all bakery orders this Easter from all our branches.
+          </ion-text>
+        </ion-card-content>
+        <ion-item style="margin-left:0;margin-right:0;">
+            <ion-icon [ngClass]="{'color': h}" (click)="like()" size="large" name="heart"></ion-icon>&nbsp;&nbsp;&nbsp;&nbsp;
+            <ion-icon  (click)="AddComment()" size="large" name="chatboxes"></ion-icon>&nbsp;&nbsp;&nbsp;&nbsp;
+            <ion-icon  (click)="share()" name="share-alt" size="large"></ion-icon>
+           
+          </ion-item>
+          <div >
+            <ion-label padding>{{likes.count}} likes</ion-label><br>
+            <div>
+                <ion-item >
+                    <ion-chip><ion-avatar ><img src="../../assets/images/icon.png"></ion-avatar></ion-chip>
+                  <ion-col>
+                    <ion-label style="font-size: 11pt;">James</ion-label>
+                    <ion-text style="font-size: 10pt;">Bought alot of stuff today keep up</ion-text><br>
+                    <ion-text style="font-size: 10pt;">2 h</ion-text>
+                  </ion-col>
+                </ion-item>
+                <div *ngIf="Addcomment">
+                    <form name="post">
+                    <ion-item >
+                        <ion-avatar ><img src="../../assets/images/icon.png"></ion-avatar>&nbsp;&nbsp;
+                        <ion-textarea name="text" [(ngModel)]="text" required placeholder="Add a comment..."></ion-textarea>
+                        <a (click)="Post()">Post</a>
+                    </ion-item>
+                  </form>
+                </div>
+            </div>
+            <a padding (click)="comments()">view all comments</a>
+          </div>
+      </ion-card>
+    </ion-content>

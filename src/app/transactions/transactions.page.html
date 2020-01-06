@@ -1,0 +1,62 @@
+
+    <ion-header style="background-color: #3880ff;">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title >
+      <span >TRANSACTIONS</span>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+
+  <!-- Header display banner-->
+  <ion-card color="primary" style="--padding-start:0;height: 50px;"  class="display-header">
+      <ion-card-title style="height: 100%">
+        <ion-row>
+          <ion-col size="1">
+            
+            <ion-badge style="padding-left:0 ; height: 100%; --color: white">
+              <ion-icon size="large"name="timer"></ion-icon>
+            </ion-badge>
+          </ion-col>
+          <ion-col size="0.7"></ion-col>
+          <ion-col > 
+              <span style="margin-top: 15px;font-size: 12pt;">Check past transactions</span>
+          </ion-col>
+        </ion-row>
+      </ion-card-title>
+  
+    </ion-card>
+
+
+    <!-- No Transactions -->
+
+    <div style="margin-top: 100px;text-align:center" *ngIf="transactions.length == 0 ">
+      <ion-icon size="large" name="flash"></ion-icon><br>
+      <ion-label >You have no past Transactions</ion-label>
+    </div>
+
+  <ion-list>
+    <ion-item *ngFor="let trans of transactions" (click)="viewTransaction(trans)">
+      <ion-avatar slot="start">
+        <img src="assets/products/cash.png">
+      </ion-avatar>
+      <ion-label>
+        <h3>{{trans.key}}</h3>
+        <p>Click to view details.</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- fab placed to the top end 
+  <ion-fab (click)="clearTransaction()" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="trash"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+-->
+
+</ion-content>
