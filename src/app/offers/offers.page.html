@@ -1,4 +1,4 @@
-  <ion-header style="background-color: #3880ff">
+<ion-header style="background-color: #3880ff">
   <ion-toolbar color="primary" >
       <ion-buttons slot="start">
           <ion-button (click)="shop()">
@@ -6,21 +6,42 @@
             
           </ion-button>
       </ion-buttons>
-      
+      <ion-buttons slot="end">
+        <ion-button (click)="sendCart()" >
+          <ion-icon size="large" name="cart"></ion-icon>
+          <ion-badge color="light">{{count}}</ion-badge>
+        </ion-button>
+      </ion-buttons>
     <ion-title class="shopname">{{shopSelected}}</ion-title>
+   
   </ion-toolbar>
+ 
 </ion-header>
 
   <ion-content >
 
 <ion-card>
   <ion-card-header>
-    <ion-card-subtitle style="text-align: center"><b>Todays' Offers</b></ion-card-subtitle>
+    <ion-card-subtitle style="text-align: center"><b>Pick Pay and Collect</b></ion-card-subtitle>
     <ion-card-title style="text-align: center">Extreme Discounts</ion-card-title>
 </ion-card-header>
 </ion-card>
+<div style="text-align: center;margin-top: 40%;" *ngIf="shopSelected != 'Kakila Organic'" >
+  <ion-label>Sorry</ion-label><br>
+  <ion-label>This shop does not offer the Pick pay and collect service</ion-label>
+</div>
 
 
+<!-- <ion-grid > -->
+<!-- <ion-grid *ngIf="shopSelected != 'Kakila Organic'" >
+>>>>>>> ""
+  <ion-row>
+    <ion-col size="6" size-sm (click)="openPrompt()">
+      <ion-card class="image-position" class="card-radius">
+        <ion-card-header>
+          <img src="../assets/products/chocolate.png"><hr>
+          <ion-card-subtitle><b>Chocolate Chocolate</b></ion-card-subtitle>
+=======
 <ion-grid no-padding>
   <ion-row no-padding>
     <ion-col no-padding size="6" size-sm (click)="openPrompt()">
@@ -28,6 +49,7 @@
         <ion-card-header>
           <img src="../assets/products/chocolate.png"><hr>
           <ion-card-subtitle><b>Chocolate</b></ion-card-subtitle>
+>>>>>>> d0d74f6ea9c4abac26973cb592d69146fed43fe6
             <ion-card-subtitle>Kshs: 330 <small style="color: #fc4e4e;"><s>Kshs: 500</s></small></ion-card-subtitle>
             <ion-button expand="full" color="primary" style="margin-top: 5%;">
                 <ion-icon slot="start" name="cart"></ion-icon>
@@ -37,11 +59,19 @@
       </ion-card>
     </ion-col>
 
+
+    <ion-col size="6" size-sm (click)="openPrompt()">
+        <ion-card class="image-position" class="card-radius">
+          <ion-card-header>
+            <img src="../assets/products/milk.jpg"><hr>
+            <ion-card-subtitle><b>New milk New milk</b></ion-card-subtitle>
+=======
     <ion-col no-padding size="6" size-sm (click)="openPrompt()">
         <ion-card no-padding class="image-position" class="card-radius">
           <ion-card-header>
             <img src="../assets/products/milk.jpg"><hr>
             <ion-card-subtitle><b>New milk</b></ion-card-subtitle>
+
               <ion-card-subtitle>Kshs: 130 <small style="color: #fc4e4e;;"><s>Kshs: 200</s></small></ion-card-subtitle>
               
                 <ion-button expand="full" color="primary" style="margin-top: 5%;">
@@ -54,9 +84,15 @@
   </ion-row>
 
 
+
+  <ion-row>
+      <ion-col size="6" size-sm (click)="openPrompt()">
+        <ion-card class="image-position" class="card-radius">
+=======
   <ion-row no-padding>
       <ion-col no-padding size="6" size-sm (click)="openPrompt()">
         <ion-card no-padding class="image-position" class="card-radius">
+
           <ion-card-header>
             <img src="../assets/products/blueband.jpg"><hr>
             <ion-card-subtitle><b>Blu Band</b></ion-card-subtitle>
@@ -69,8 +105,13 @@
         </ion-card>
       </ion-col>
   
+
+      <ion-col size="6" size-sm (click)="openPrompt()">
+          <ion-card class="image-position" class="card-radius">
+
       <ion-col no-padding size="6" size-sm (click)="openPrompt()">
           <ion-card no-padding class="image-position" class="card-radius">
+
             <ion-card-header>
               <img src="../assets/products/juice.jpg"><hr>
               <ion-card-subtitle><b>Natural juice</b></ion-card-subtitle>
@@ -83,7 +124,7 @@
           </ion-card>
         </ion-col>
     </ion-row>
-  </ion-grid>
+  </ion-grid> -->
 
 
 
@@ -92,6 +133,29 @@
     Visit <b style="color: rgb(7, 96, 155)">{{shopSelected}} </b>Today and buy at these Prices
   </ion-label>
 </div> -->
+<div class="loader" *ngIf="showLoader">
+  <ion-spinner></ion-spinner>
+</div>
 
+<div *ngIf="offers.length > 0">
+ <ion-grid>
+   <ion-row>
+    <ion-col size="6" *ngFor="let item of offers">
+      <ion-card class="image-position" class="card-radius" > 
+        <ion-card-header >
+          <img class="image" src="{{item.image}}" (click)="viewProduct(item)"><hr>
+          <ion-card-subtitle><b>{{item.product}} {{item.quantity}}</b></ion-card-subtitle>
+            <ion-card-subtitle>Kshs: {{item.currentprice}} <small style="color: #fc4e4e;"><s>Kshs: {{item.initialprice}}</s></small></ion-card-subtitle>
+            <ion-button expand="full" color="primary" style="margin-top: 5%;" (click)="addToCart(item)">
+                <ion-icon slot="start" name="cart"></ion-icon>
+                Add to cart
+            </ion-button>
+        </ion-card-header>
+      </ion-card>
+    </ion-col>
+  </ion-row>  
+ </ion-grid>
+   
+</div>
 
 </ion-content>

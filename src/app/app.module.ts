@@ -43,6 +43,9 @@ import { CommentsPageModule } from './comments/comments.module';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { TransModalPageModule } from './modal/trans-modal/trans-modal.module';
 import { OpenNativeSettings } from '@ionic-native/open-native-settings/ngx';
+import { CPageModule } from './c/c.module';
+import { ScannedModalPageModule } from './scanned-modal/scanned-modal.module';
+import { OffersPage } from './offers/offers.page';
 
 
 @NgModule({
@@ -69,6 +72,8 @@ import { OpenNativeSettings } from '@ionic-native/open-native-settings/ngx';
     CommentsPageModule,
     NgxQRCodeModule,
     TransModalPageModule,
+    CPageModule,
+    ScannedModalPageModule,
     
 
     
@@ -79,6 +84,7 @@ import { OpenNativeSettings } from '@ionic-native/open-native-settings/ngx';
     DeviceOrientation,
     InAppBrowser,
     StatusBar,
+    OffersPage,
     OpenNativeSettings,
     // Http,
     SocialSharing,

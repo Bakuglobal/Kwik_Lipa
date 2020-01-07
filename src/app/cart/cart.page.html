@@ -1,0 +1,58 @@
+<ion-header style="background-color: #3880ff">
+  <ion-toolbar color="primary" >
+      <ion-buttons slot="start">
+          <ion-button (click)="back()">
+            <ion-icon name="arrow-round-back"></ion-icon>
+            
+          </ion-button>
+      </ion-buttons>
+     
+    <ion-title class="shopname">{{shopSelected}}</ion-title>
+   
+  </ion-toolbar>
+ 
+</ion-header>
+<ion-content>
+<div *ngIf="cart.length == 0" class="empty">
+  <ion-label>Your cart is Empty</ion-label><br><br><br>
+  <ion-button (click)="back()" shape="round">Start shopping</ion-button>
+</div>
+<ion-card padding class="successful" *ngIf="Ordersuccess">
+  <ion-card-header>
+    <ion-icon color="primary" name="checkmark-circle-outline"></ion-icon>&nbsp;&nbsp;
+    <ion-label style="color: green;"><b>Order Send Successful</b></ion-label>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-text>Please wait for a confirmation from the shop to be prompted to pay</ion-text>
+  </ion-card-content>
+
+</ion-card>
+  <div *ngIf="!Ordersuccess">
+    <ion-item *ngFor="let item of cart" >
+      <ion-col>
+        <img src="{{item.image}}">
+      </ion-col>
+      <ion-col style="text-align: left;">
+        <ion-label style="color:red;text-transform:capitalize;text-align: left;" (click)="remove(cart.indexOf(item))">Remove</ion-label>
+        <ion-label style="text-align: left;">{{item.product}} &nbsp; {{item.quantity}}</ion-label><br>
+        <ion-label style="text-align: left;">Kshs. <b>{{item.currentprice}}</b></ion-label>
+        <ion-label style="text-align: left;">Kshs. <span style="color: red;"><s>{{item.initialprice}}</s></span></ion-label>
+      </ion-col >
+      <ion-col style="text-align: right;">
+       <b> <ion-icon name="add" (click)="add(cart.indexOf(item))"></ion-icon></b>&nbsp;&nbsp;&nbsp;
+      <b><ion-icon name="remove" (click)="reduce(cart.indexOf(item))"></ion-icon></b><br><br>
+      <ion-label><b>{{item.count}} x</b></ion-label>
+      </ion-col>
+    </ion-item>
+    <ion-toolbar *ngIf="cart.length != 0" color="primary" style="height: 40px;position: fixed;left: 0;bottom: 50px;right: 0;border-radius: 5px;">
+ 
+      <ion-buttons slot="start" style="padding-bottom: 15px;">Total : </ion-buttons>
+      <ion-buttons class="price-slot" slot="end" style="padding-bottom: 15px;">
+          KES &nbsp;<span style="font-size: medium;font-weight: bolder;"> {{getTotalCart() | number:'1.1-5'}} </span>
+      </ion-buttons>
+  </ion-toolbar>
+  <ion-button *ngIf="cart.length != 0" expand="full" shape="round"style="height: 40px;position: fixed;left: 0;bottom: 0px;right: 0;border-radius: 5px;" (click)="sendOrder()">
+    Order Now
+  </ion-button>
+</div>
+</ion-content>

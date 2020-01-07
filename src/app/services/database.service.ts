@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { AngularFirestore,AngularFirestoreCollection } from '@angular/fire/firestore' ;
+import { Observable, BehaviorSubject } from 'rxjs';
  
 import { map  } from 'rxjs/operators';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
@@ -15,15 +15,17 @@ export interface ShoppingList {
 }
 
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class DatabaseService {
   shops ;
+  cart: any ;
   private listCollection: AngularFirestoreCollection<ShoppingList>;
   private lists: Observable<ShoppingList[]>; 
   items = [] ;   
-  
+  count = 0 ;
   constructor(
     private http:HttpClient,
     private fireApi:AngularFirestore
@@ -78,7 +80,7 @@ getList(id) {
   getshopsproduct(barcode,shop){
 
       let headers = new HttpHeaders();
-      headers.append('Content-Type','application/json');
+      // headers.append('Content-Type','application/json');
       headers.append('Access-Control-Allow-Origin','*');
       headers.append('Access-Control-Allow-Headers','Origin,X-Requested-With, Content-Type,Accept');
 
@@ -108,5 +110,14 @@ filterItems(searchTerm) {
   });
 }
 
-
+setData(data){
+  this.cart = data ;
+}
+getData(){
+  return this.cart ;
+}
+  //---Get count
+  serviceCount(){
+    return this.count ;
   }
+}

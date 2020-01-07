@@ -66,6 +66,8 @@ const routes: Routes = [
       { path: 'settings', loadChildren: () => import('../settings/settings.module').then(m=>m.SettingsPageModule),canActivate : [AuthService] },
       { path: 'welcome', loadChildren:() =>import( '../welcome/welcome.module').then(m => m.WelcomePageModule),canActivate: [LogsService]},
       {path : 'shop', loadChildren: () => import ('../shop/shop.module').then(m => m.ShopPageModule)},
+      {path: 'cart', loadChildren: () => import ('../cart/cart.module').then(m=>m.CartPageModule),canActivate : [AuthService]},
+      { path: 'c', loadChildren: () => import('../c/c.module').then(m => m.CPageModule), canActivate : [AuthService] },
       {
         path: '',
         redirectTo: '/tabs/tab1',
