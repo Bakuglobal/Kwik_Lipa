@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Shops } from '../models/shops';
 import { FirestoreService } from '../services/firestore.service';
 import {
-  AlertController,ToastController,LoadingController, MenuController,} from '@ionic/angular';
+  AlertController,ToastController,LoadingController, MenuController, ModalController,} from '@ionic/angular';
 import { User } from '../models/user';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 // import { AdMobFree, AdMobFreeBannerConfig, AdMobFreeInterstitialConfig } from '@ionic-native/admob-free/ngx';
@@ -16,6 +16,8 @@ import { Observable} from 'rxjs/observable' ;
 // import { settings } from 'cluster';
 import { map } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { PaymentPage } from '../payment/payment.page';
+import { ScannedModalPage } from '../scanned-modal/scanned-modal.page';
 
 
 @Component({
@@ -75,6 +77,7 @@ userPay ;
 userSub ;
 userDetails ;
 time ;
+data: any ;
 
   constructor(
     public fireApi: FirestoreService,
@@ -89,8 +92,9 @@ time ;
     public httpClient: HttpClient,
     public db: DatabaseService,
     private fauth: AngularFireAuth,
-    private menuCtrl: MenuController
-    
+    private menuCtrl: MenuController,
+    // private ref : PaymentPage,
+    public modalCtrl: ModalController,
   ) {
    this.fireApi.hiddenTabs = true ;
    this.menuCtrl.enable(false);
@@ -104,7 +108,7 @@ time ;
     this.getData();
     this.scannedProdcts = [] ;
     this.getUser();
-    this.time = Observable.interval(5000);
+    this.time = Observable.interval(3000);
     // timer to change div ID for offers button
     this.toggleBackgroundColor();
   }
@@ -169,14 +173,14 @@ time ;
             let amount = this.getTotalCart();
             let phone = this.phone;
             this.fireApi.sharePhoneNumber(phone);
-           //this.sendStkRequest(amount,phone);
+            // this.ref.payOut();
            this.navCtrl.navigate(['tabs/payment']);
           }
         }
       ]
     });
     await confirm.present();
-  }
+  }                                                                                                                                               
 
   //see the offers
   offers(){
@@ -370,7 +374,7 @@ async checkNumber(){
 
                   this.fireApi.sharePhoneNumber(phoneNumber);
                   
-                 
+                  // this.ref.payOut();
                   this.navCtrl.navigate(['tabs/payment']);
            
                  
@@ -392,7 +396,7 @@ async checkNumber(){
             let phone = this.userprofile.phone ;
                   let phoneNumber = "254"+phone.slice(-9);
                   this.fireApi.sharePhoneNumber(phoneNumber);
-            this.navCtrl.navigate(['tabs/loan']);
+            this.navCtrl.navigate(['tabs/mycredits']);
           }
         },
         {
@@ -431,7 +435,7 @@ async checkNumber(){
                 this.phone = nospace.substring(1,12) ;
               }else{
                 let clean = savedNumber.replace(/\s+/g,'');
-                let cut = '254'+clean.substring(1,9);
+                let cut = '254'+clean.substring(1,10);
                 this.phone = cut ;
               }
               //this.phone = "254"+savedNumber.toString().slice(-9);
@@ -519,18 +523,22 @@ scan(){
   this.selectedProducts = {} ;
     this.barcodeScanner.scan().then((barcodeData) => {
       this.selectedProducts =  Number(barcodeData.text) ;
+      this.presentLoadingWithOptions();
       if(this.items.length == 0){
-        this.items.push(this.selectedProducts) ;
+        
         this.db.getshopsproduct(this.selectedProducts,this.shopSelected).subscribe(data => {
-          if(data == null){
+              this.data = data ;
+          if(this.data.text == "Not found"){
+            this.loading.dismiss();
             this.productNotFound();
           }
-          
+          else{
+            this.items.push(this.selectedProducts) ;
             this.showProduct(data);
-           
             this.fireApi.shareCartDetails(this.myCart);
             this.fireApi.shareCartTotal(this.getTotalCart());
-          
+            this.loading.dismiss();
+          }
          
         });
        
@@ -550,23 +558,28 @@ checkCartItems(){
     this.myCart.forEach(item => {
       if(item.item_number == this.selectedProducts){
         item.count++;
+        this.cart.length ++ ;
       }
       this.fireApi.shareCartDetails(this.myCart);
       return ;
     });
     
+    this.loading.dismiss();
    
   }else {
     this.db.getshopsproduct(this.selectedProducts,this.shopSelected).subscribe(data => {
-      if(data == null){
+      this.data = data ;
+      if(this.data.text == "Not found"){
+        this.loading.dismiss()
         this.productNotFound();
       }
-      
+      else{
         this.addCart(data);
         this.items.push(this.selectedProducts) ;
         this.fireApi.shareCartDetails(this.myCart);
         this.fireApi.shareCartTotal(this.getTotalCart());
-      
+        this.loading.dismiss();
+      }
      
     });
   }
@@ -574,20 +587,25 @@ checkCartItems(){
 //scanner browser test barcode-direct-inject
 getProduct(code){
   //this.prd = 8901057300087 ;
+  
   this.selectedProducts = code ;
   if(this.cart.length == 10){
     this.cartLimit();
   }else{
     if(this.items.length == 0){
-      this.items.push(this.selectedProducts) ;
+      this.presentLoadingWithOptions();
       this.db.getshopsproduct(this.selectedProducts,this.shopSelected).subscribe(data => {
-        if(data == null){
+        this.data= data ;
+        if(this.data.text == "Not found"){
+          this.loading.dismiss()
           this.productNotFound();
+
         }else{
-        
+          this.items.push(this.selectedProducts) ;
           this.showProduct(data);
           this.fireApi.shareCartDetails(this.myCart);
           this.fireApi.shareCartTotal(this.getTotalCart());
+          this.loading.dismiss()
         }
       });
   }else{
@@ -617,7 +635,9 @@ addCart(data){
     this.total = this.myCart.reduce((a,b) => a + (b.count * b.price), 0) ;
     console.log('my cart'+this.myCart);
   }else {
+    this.loading.dismiss();
     this.presentToast('Product is not Online');
+
 
   }
   });
@@ -645,11 +665,26 @@ showProduct(data) {
     this.myCart = Object.keys(selected).map(key => selected[key]);
     this.total = this.myCart.reduce((a,b) => a + (b.count * b.price), 0) ;
     console.log('my cart'+this.myCart);
+    this.loading.dismiss();
+  
   }else {
     this.presentToast('Product is not Online');
 
   }
   });
+}
+async previewProduct(cart){
+  console.log('cart--'+ cart)
+    const modal = await this.modalCtrl.create({
+      component: ScannedModalPage,
+      componentProps : {
+        img: cart.pic_filename,
+        desc: cart.description,
+        name: cart.name,
+        price: cart.unit_price
+      }
+    })
+    await modal.present();
 }
 clearLocalArrays(){
   this.scannedProdcts.length = 0;
@@ -692,6 +727,14 @@ async cartLimit(){
   });
   alert.present();
 }
-
+async presentLoadingWithOptions() {
+  this.loading = await this.loadingController.create({
+    spinner: null,
+    message: 'Fetching product...',
+    translucent: true,
+    cssClass: 'custom-class custom-loading'
+  });
+  return await this.loading.present();
+}
 
 }

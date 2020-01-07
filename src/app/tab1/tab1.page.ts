@@ -48,6 +48,7 @@ export class Tab1Page  implements OnInit{
   backButtonSubscription ;
   header: boolean;
   tabbar: boolean;
+  selectShop = false ;
   constructor(
     private platform: Platform,
     public fireApi: FirestoreService,
@@ -92,7 +93,9 @@ export class Tab1Page  implements OnInit{
     }
   }
   }
-
+  onIonViewDidLoad(){
+    this.selectShop = false ;
+  }
 
   slideOpts = {
     initialSlide: 1,
@@ -100,6 +103,9 @@ export class Tab1Page  implements OnInit{
     autoplay:true
   };
 
+  back(){
+    this.selectShop = false ;
+  }
 
   onSlideMoved(event) {
     /** isEnd true when slides reach at end slide */
@@ -129,6 +135,16 @@ export class Tab1Page  implements OnInit{
   //   this.backButtonSubscription.unsubscribe();
   // }
  
+  scanAndPay(){
+    this.selectShop = true ;
+  }
+  pickPayCollect(){
+    this.selectShop = true ;
+  }
+  shoppingList(){
+    this.navCtrl.navigate(['mycontacts'])
+  }
+
 async msgNetwork(){
   let msg = await this.alertCtrl.create({
     header: 'Network check',
@@ -153,12 +169,7 @@ hideHeader(){
     }
 }
 
-  // redirect(){
-  //   const id = localStorage.getItem('userID');
-  //   if(id == null){
-  //     this.navCtrl.navigate(['login']);
-  //   }
-  // }
+ 
 
 goToShop(shop){
   this.fireApi.changeData(shop.name);
@@ -200,22 +211,7 @@ goToShop(shop){
   });
   alert.present();
 }
-// async change(shop){
-//   const user = await this.fireApi.getCurrentUser();
-//         await this.fireApi.updateOperationUsers(user.uid, { shop: shop.key })
-//         .then(
-//         result => {
-          
-//         this.fireApi.changeData(shop.name);
-        
-//         //this.presentToast('Shop selected successfully');
-//         },
-//           error => {
-//           this.presentToast('Shop is not online');
-//         }
-//         );
-  
-// }
+
 //redirect to shop page
 insideShop(){
   this.service.hiddenTabs = true ;
