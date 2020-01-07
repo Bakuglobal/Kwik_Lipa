@@ -34,7 +34,8 @@ const routes: Routes = [
   { path: 'settings', loadChildren: './settings/settings.module#SettingsPageModule' },
   // { path: 'shop', loadChildren: './shop/shop.module#ShopPageModule' },
   { path: 'sokomodal', loadChildren: './sokomodal/sokomodal.module#SokomodalPageModule' },
-  { path: 'infomodal', loadChildren: './infomodal/infomodal.module#InfomodalPageModule' }
+  { path: 'infomodal', loadChildren: './infomodal/infomodal.module#InfomodalPageModule' },
+  { path: 'forgot-password', loadChildren: './forgot-password/forgot-password.module#ForgotPasswordPageModule' }
 ];
 @NgModule({
   imports: [
