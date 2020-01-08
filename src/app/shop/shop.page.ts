@@ -18,6 +18,7 @@ import { map } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { PaymentPage } from '../payment/payment.page';
 import { ScannedModalPage } from '../scanned-modal/scanned-modal.page';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -93,7 +94,7 @@ data: any ;
     public db: DatabaseService,
     private fauth: AngularFireAuth,
     private menuCtrl: MenuController,
-    // private ref : PaymentPage,
+    private location: Location,
     public modalCtrl: ModalController,
   ) {
    this.fireApi.hiddenTabs = true ;
@@ -182,10 +183,7 @@ data: any ;
     await confirm.present();
   }                                                                                                                                               
 
-  //see the offers
-  offers(){
-    this.navCtrl.navigate(['tabs/offers']);
-  }
+  
   //get cart count of the scanned prod
  getCount(scanned){ var count = 0;
 for(var i = 0; i < this.myCart.length; ++i){
@@ -242,7 +240,7 @@ getData() {
   //   this.admobFree.banner.remove();
   // }
 
-  async home(){
+  async back(){
     if(this.myCart.length > 0){
       const back = await this.alertCtrl.create({
         header:'Sorry',
@@ -260,7 +258,7 @@ getData() {
               this.fireApi.shareCartDetails(this.myCart);
               this.menuCtrl.enable(true);
               this.fireApi.hiddenTabs = false ;
-              this.navCtrl.navigate(['tabs/tab1']);
+              this.location.back();
             }
           }
         ]
@@ -269,7 +267,7 @@ getData() {
     }else {
       this.menuCtrl.enable(true);
       this.fireApi.hiddenTabs = false ;
-      this.navCtrl.navigate(['tabs/tab1']);
+      this.location.back();
     }
     
   }

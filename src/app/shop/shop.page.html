@@ -1,7 +1,7 @@
 <ion-header style="background-color: #3880ff;">
   <ion-toolbar color="primary"  >
       <ion-buttons slot="start">
-          <ion-button (click)="home()">
+          <ion-button (click)="back()">
             <ion-icon name="arrow-round-back"></ion-icon>
           </ion-button>
       </ion-buttons>
@@ -97,12 +97,12 @@
       <ion-label>Checkout Now</ion-label>
     </ion-card>
     </ion-col>
-    <ion-col *ngIf="myCart.length == 0"  (click)="offers()" text-center>
+    <!-- <ion-col *ngIf="myCart.length == 0"  (click)="offers()" text-center>
       <ion-card padding style="border-radius: 20px;">
       <ion-icon color ="primary" size="large" name="cart"></ion-icon><br>
       <ion-label>Pick Pay & Collect</ion-label>
     </ion-card>
-    </ion-col>
+    </ion-col> -->
     <ion-col (click)="scan()" *ngIf="userShopId != 'none'" text-center>
       <ion-card padding style="border-radius: 20px;">
       <ion-icon color ="primary" size="large" name="qr-scanner"></ion-icon><br>

@@ -31,6 +31,8 @@ ion-skeleton-text{
   width: 65%;
   height: 65%;
   margin: 5% auto;
+  object-fit: contain;
+  object-position: center;
 }
 
 .shops-title {
@@ -39,7 +41,10 @@ ion-skeleton-text{
     font-size: 13px;
     margin-top: -3%;
 }
-
+.avatar-img{
+    object-fit: contain;
+    object-position: center;
+}
 .float-tick {
     position: absolute; 
     width: 25%;  

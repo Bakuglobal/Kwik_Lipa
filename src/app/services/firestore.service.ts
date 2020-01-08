@@ -118,6 +118,16 @@ export class FirestoreService {
      this.phone.next(number);
    }
   
+   // share shopBy Tag
+
+    private shopBy = new BehaviorSubject("shopBy");
+    serviceshopBy = this.shopBy.asObservable();
+    shareShopBy(string: any){
+      this.shopBy.next(string);
+    }
+
+
+
 //keep track of cart items
     getCart(){
       return this.cart ;

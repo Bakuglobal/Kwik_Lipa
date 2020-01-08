@@ -25,21 +25,21 @@
                 <ion-row class="main-menu">
                     <ion-col size="4" (click)="scanAndPay()">
                         <ion-avatar>
-                            <img src="/assets/images/scan.svg">
+                            <img class="avatar-img" src="/assets/images/scan.svg">
                         </ion-avatar>
                         <h2>Scan & Pay</h2>
                     </ion-col>
 
                     <ion-col size="4" (click)="pickPayCollect()">
                         <ion-avatar>
-                            <img src="/assets/images/pay.svg">
+                            <img class="avatar-img" src="/assets/images/pay.svg">
                         </ion-avatar>
                         <h2>Pick, Pay & Collect</h2>
                     </ion-col>
 
                     <ion-col size="4" (click)="shoppingList()">
                         <ion-avatar>
-                            <img src="/assets/images/shop.svg">
+                            <img class="avatar-img" src="/assets/images/shop.svg">
                         </ion-avatar>
                         <h2>Shopping lists</h2>
                     </ion-col>
@@ -89,7 +89,7 @@
                                     <ion-icon name="arrow-back" size="large"></ion-icon>
                                 </ion-buttons>
                                 <ion-title text-center *ngIf="!showSearch"><span style="text-transform: uppercase ;font-size: .7em;padding-top: 5px">Select a shop</span></ion-title>
-                                <ion-searchbar *ngIf="showSearch" [(ngModel)]="searchTerm" placeholder="Enter shop name"></ion-searchbar>
+                                <ion-searchbar *ngIf="showSearch" [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()" placeholder="Enter shop name"></ion-searchbar>
                                 <ion-buttons slot="end">
                                     <ion-button (click)="show()">
                                         <ion-icon name="search" size="large"></ion-icon>
