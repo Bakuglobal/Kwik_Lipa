@@ -1,16 +1,17 @@
 
 <ion-header style="background-color: #3880ff;">
 	<ion-toolbar color="primary" >
-		<ion-buttons slot="start">
-			<ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
+	
+      <ion-buttons slot="start" (click)="back()">
+        <ion-icon name="arrow-back" size="large"></ion-icon>
       </ion-buttons>
-		</ion-buttons>
-		<ion-buttons>
+	
+		<ion-title>
       My Shopping List
- </ion-buttons >
+ </ion-title >
  <ion-buttons slot="end" (click)="backtoCart()">
-    <ion-icon size="large" name="cart" ></ion-icon>
+    <ion-icon size="large" name="cart" ></ion-icon><br>
+    <ion-label>Shop</ion-label> 
  </ion-buttons>
   </ion-toolbar>
 </ion-header>

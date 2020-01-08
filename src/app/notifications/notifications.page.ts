@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FirestoreService } from '../services/firestore.service';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Location } from '@angular/common' ;
 
 @Component({
   selector: 'app-notifications',
@@ -14,7 +15,8 @@ export class NotificationsPage implements OnInit {
   constructor(
     private service: FirestoreService,
     private navCtrl: Router,
-    private fauth: AngularFireAuth
+    private fauth: AngularFireAuth,
+    private location: Location
   ) { 
     if(this.fauth.auth.currentUser){
       //logged in
@@ -22,7 +24,9 @@ export class NotificationsPage implements OnInit {
       this.navCtrl.navigate(['tabs/login'])
     }
   }
-
+  back(){
+    this.location.back() ;
+  }
    onScroll(event) {
     // used a couple of "guards" to prevent unnecessary assignments if scrolling in a direction and the var is set already:
     if (event.detail.deltaY > 0 && this.header && this.service.hiddenTabs) return;

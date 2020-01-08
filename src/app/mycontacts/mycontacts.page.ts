@@ -19,6 +19,8 @@ import 'rxjs/add/operator/mergeMap';
 // import { mapChildrenIntoArray } from '@angular/router/src/url_tree';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AppComponent } from '../app.component';
+import { Location } from '@angular/common' ;
+
 
 @Component({
   selector: 'app-mycontacts',
@@ -70,12 +72,15 @@ export class MycontactsPage implements OnInit {
     private dbService: DatabaseService,
     private socialSharing: SocialSharing,
     private afs:AngularFirestore,
-    public ref : AppComponent
+    public ref : AppComponent,
+    private location: Location
 
   ){
 
   }
-
+  back(){
+    this.location.back() ;
+  }
   ngOnInit() {
     // this.removeBannerAd();
     this.getDate();
