@@ -33,6 +33,8 @@ export class Tab1Page  implements OnInit{
   showSearch = false;
 
   shops: Shops[];
+  unfilteredShops: Shops[] ;
+  searchTerm: string ;
 
   scannedProdcts = [];
 
@@ -120,26 +122,30 @@ export class Tab1Page  implements OnInit{
   
   ngOnInit() {
     this.getShops();
-    // this.redirect();
-    // this.BannerAd();
-
     this.menuCtrl.enable(true);
-    
-    // this.platform.backButton.unsubscribe()
-  
-
+  }
+  setFilteredItems(){
+    if(this.searchTerm != null || this.searchTerm != ''){
+      this.shops = this.filterItems()
+      console.log(this.shops)
+    }
+  }
+  filterItems() {
+    return this.unfilteredShops.filter(item => {
+      return item.name.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
+    });
   }
 
-
-  // ngOnDestroy() { 
-  //   this.backButtonSubscription.unsubscribe();
-  // }
  
   scanAndPay(){
+    this.fireApi.shareShopBy('scan');
     this.selectShop = true ;
+    
   }
   pickPayCollect(){
+    this.fireApi.shareShopBy('pick');
     this.selectShop = true ;
+    
   }
   shoppingList(){
     this.navCtrl.navigate(['mycontacts'])
@@ -169,53 +175,21 @@ hideHeader(){
     }
 }
 
- 
-
+//redirect to shop page
 goToShop(shop){
   this.fireApi.changeData(shop.name);
   this.service.hiddenTabs = true ;
-  this.navCtrl.navigate(['tabs/shop']);
-
-}
-
-  async selectedShop(shop) {
-    this.changeShop(shop);
-    
-  
-  }
- // confirm change of shop
- async changeShop(shop) {
-  let alert = await this.alertCtrl.create({
-    header: "Please Confirm !",
-    
-    message: "Do you want to Shop from"+" "+shop.name+"?" ,
-    
-    buttons: [
-      {
-        text: 'No',
-        role: 'cancel',
-      
-      },
-      {
-        text: 'Yes',
-        handler: () => {
-         
-          // this.change(shop);
-          this.fireApi.changeData(shop.name);
-          this.insideShop();
-           
+  this.fireApi.serviceshopBy
+      .subscribe(data => {
+        console.log('shopBy -- ' + data)
+        if(data == 'scan'){
+          this.navCtrl.navigate(['tabs/shop']);
+        }else {
+          if(data == 'pick'){
+            this.navCtrl.navigate(['tabs/offers']);
+          }
         }
-        
-      }
-    ]
-  });
-  alert.present();
-}
-
-//redirect to shop page
-insideShop(){
-  this.service.hiddenTabs = true ;
-    this.navCtrl.navigate(['tabs/shop']);
+      }); 
 }
 
   getShops() {
@@ -228,6 +202,7 @@ insideShop(){
       }))
       .subscribe(shops => {
         this.shops = shops;
+        this.unfilteredShops = shops ;
       });
 
     this.fireApi.getCurrentUser().then(results => {

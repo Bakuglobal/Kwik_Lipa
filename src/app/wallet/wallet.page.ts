@@ -38,6 +38,7 @@ export class WalletPage implements OnInit {
 
   shops ;
   header: boolean ;
+  shopSelected: any ;
   constructor(
     public fireApi: FirestoreService,
     public alertCtrl: AlertController,

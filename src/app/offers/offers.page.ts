@@ -5,6 +5,8 @@ import { AlertController, ToastController, ModalController } from '@ionic/angula
 import { AngularFirestore } from '@angular/fire/firestore' ;
 import { DatabaseService } from '../services/database.service';
 import { CPage } from '../c/c.page';
+import { Location } from '@angular/common';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 // import { AdMobFree } from '@ionic-native/admob-free/ngx';
 
 @Component({
@@ -18,9 +20,13 @@ export class OffersPage implements OnInit {
 
   shopSelected: any ;
   offers = [] ;
+  UnfilteredOffers = [] ;
   cart = [] ;
   showLoader = false ;
   public count = 0 ;
+  showSearch = false ;
+  searchTerm : string ;
+
 
   constructor(
     public fireApi: FirestoreService,
@@ -29,30 +35,46 @@ export class OffersPage implements OnInit {
     private fs: AngularFirestore,
     private toastCtrl: ToastController,
     private db: DatabaseService,
-    private modal: ModalController
+    private modal: ModalController,
+    private location: Location
     // private admobFree: AdMobFree
   ) {
-     
-  }
-  changeCount(number){
-    this.count = number ;
-  }
-
-  ngOnInit() {
     this.showShop();
-    
-  }
-  ionViewWillEnter(){
-        //check if shop is kakila
-        console.log('shop name -- '+this.shopSelected) 
+    console.log('shop name -- '+this.shopSelected) 
         if(this.shopSelected == 'Kakila Organic'){
       //get kakila OffersPage
       
       this.getOffers();
     console.log('offers -- '+ this.offers)
     }
-      
+
   }
+  changeCount(number){
+    this.count = number ;
+  }
+
+  ngOnInit() {
+  }
+  showSearchBar(){
+    if(this.showSearch == false){
+      this.showSearch = true ;
+    } else {
+      this.showSearch = false ;
+    }
+  }
+  setFilteredItems(){
+    if(this.searchTerm != null || this.searchTerm != ''){
+      this.offers = this.filterItems()
+      console.log(this.offers)
+    }
+  }
+  filterItems() {
+    return this.UnfilteredOffers.filter(item => {
+      return item.product.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
+    });
+  }
+      
+  
   async getOffers(){
     this.showLoader = true ;
     await this.fs.collection('click&collect').ref.where('shop', '==', 'kakila')
@@ -63,6 +85,7 @@ export class OffersPage implements OnInit {
          let modified =  change.doc.data() ;
          modified.count = 0 ;
           this.offers.push(modified)
+          this.UnfilteredOffers.push(modified)
           
         } 
         if (change.type === 'modified') {
@@ -70,12 +93,14 @@ export class OffersPage implements OnInit {
           let modified =  change.doc.data() ;
          modified.count = 0 ;
           this.offers.push(modified)
+          this.UnfilteredOffers.push(modified)
         } 
         if (change.type === 'removed'){
           console.log('Removed city: ', change.doc.data());
           let modified =  change.doc.data() ;
           modified.count = 0 ;
            this.offers.push(modified)
+           this.UnfilteredOffers.push(modified)
         }
       });
   });
@@ -114,11 +139,11 @@ async openPrompt(){
   await prompt.present();
 
 }
-  shop(){
+  back(){
     this.offers.length = 0 ;
     this.cart.length = 0 ;
     this.count = 0 ;
-    this.navCtrl.navigate(['tabs/shop']);
+    this.location.back();
   }
 
   showShop(){
