@@ -6,14 +6,11 @@
 
         <ion-title >Home</ion-title>
 
-
-        <ion-buttons slot="end" (click)="notifications()">
-            <ion-button class="notification-icon-button">
-                <ion-badge class="notification-badge">10</ion-badge>
-                <ion-icon slot="icon-only" size="small" name="md-notifications"></ion-icon>
-            </ion-button>
-
+        <ion-buttons slot="end" (click)="notifications()" style="padding-right: 5px;">
+            <ion-icon size="large" name="notifications" ></ion-icon><br>
+            <ion-badge color="danger"><div>1</div></ion-badge>
         </ion-buttons>
+
     </ion-toolbar>
 </ion-header>
 

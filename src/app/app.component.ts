@@ -38,9 +38,9 @@ declare var $: any;
 export class AppComponent {
   public appPages = [
     {
-      title: 'Shops',
-      url: '/tabs',
-      icon: 'basket',
+      title: 'My Account',
+      url: '/tabs/settings',
+      icon: 'person',
       active: false
     },
     {
@@ -68,9 +68,9 @@ export class AppComponent {
     active: false
     },
     {
-      title: 'How it Works',
-      url: '/tabs/about',
-      icon: 'help',
+      title: 'Shops',
+      url: '/tabs',
+      icon: 'basket',
       active: false
     },
     {
@@ -80,9 +80,9 @@ export class AppComponent {
       active: false
     },
     {
-      title: 'My Account',
-      url: '/tabs/settings',
-      icon: 'person',
+      title: 'How it Works',
+      url: '/tabs/about',
+      icon: 'help',
       active: false
     }
   ];

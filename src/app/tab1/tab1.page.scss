@@ -146,3 +146,13 @@ ion-col h2{
         right: 0.2rem;
     }
 }
+
+ion-badge {
+    margin-left: -12px; 
+    margin-top: -12px; 
+    border-radius: 100%; 
+    font-size: 9px;
+    div {
+        margin-bottom: -2px;
+    }
+}
