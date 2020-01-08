@@ -18,7 +18,8 @@
  
 </ion-header>
 
-  <ion-content >
+<ion-content >
+
     <ion-item class="top">
       <span *ngIf="!showSearch">Pick Pay and Collect</span>
       <ion-searchbar placeholder="Enter product name" *ngIf="showSearch" [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()"></ion-searchbar>
@@ -32,10 +33,13 @@
       <ion-label>This shop does not offer the Pick pay and collect service</ion-label>
     </div>
 
+<!-- show spinner when loading product on offers -->
 
-    <div class="loader" *ngIf="showLoader">
-      <ion-spinner></ion-spinner>
+    <div class="loader" *ngIf="offers.length == 0">
+      <ion-spinner ></ion-spinner>
     </div>
+
+<!-- Display a list of products on offer -->
 
     <div *ngIf="offers.length > 0">
     <ion-grid>
