@@ -35,11 +35,11 @@
 
     <div style="text-align: center;margin-top: 40px">
         <span text-center style="color: primary;">Select Shop</span><br>
-      <div>
-          <select >
-            <option *ngFor="let shop of shops" style="font-size: small;" >{{shop.name}}</option>
-          </select>
-    </div>
+      
+          <ion-select placeholder="pick a shop" [(ngModel)]="shopSelected" >
+            <ion-select-option *ngFor="let shop of shops" style="font-size: small;" >{{shop.name}}</ion-select-option>
+          </ion-select>
+    
     </div>
 
 

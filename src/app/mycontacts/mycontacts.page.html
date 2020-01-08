@@ -1,138 +1,148 @@
 
 <ion-header style="background-color: #3880ff;">
-	<ion-toolbar color="primary" >
-	
-      <ion-buttons slot="start" (click)="back()">
-        <ion-icon name="arrow-back" size="large"></ion-icon>
-      </ion-buttons>
-	
-		<ion-title>
-      My Shopping List
- </ion-title >
- <ion-buttons slot="end" (click)="backtoCart()">
-    <ion-icon size="large" name="cart" ></ion-icon>
- </ion-buttons>
-  </ion-toolbar>
+    <ion-toolbar color="primary" >
+    
+        <ion-buttons slot="start" (click)="back()">
+          <ion-icon name="arrow-back" size="large"></ion-icon>
+        </ion-buttons>
+    
+      <ion-title>
+        My Shopping List
+  </ion-title >
+  <ion-buttons slot="end" (click)="backtoCart()">
+      <ion-icon size="large" name="cart" ></ion-icon>
+  </ion-buttons>
+    </ion-toolbar>
 </ion-header>
+
 <ion-content  #content >
  
   <!--create list button-->
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" >
-  <ion-fab-button (click)="createList()" size="large"  >
-    <ion-icon name="add" size="large"></ion-icon>
-  </ion-fab-button>
-  </ion-fab>
 
-  <!-- shopping list-->
- <ion-card>
-<form (ngSubmit)="saveList()" #listform=ngForm>
-  <div *ngIf="activate" style="margin-left: 10px;margin-right: 10px">
-    <ion-input text-center required type="text" name="Title" [(ngModel)]="todo.Title" placeholder="Title *" clearInput></ion-input>
-    <ion-input required type="text" name="first" [(ngModel)]="todo.First" placeholder="Item one *"></ion-input>
-    <ion-input required type="text" name="second" [(ngModel)]="todo.Second" placeholder="Item two *"></ion-input>
-    <ion-input  type="text" name="third" [(ngModel)]="todo.Third" placeholder="Item three "></ion-input>
-    <ion-input type="text" name="fourth" [(ngModel)]="todo.Fourth" placeholder="Item four"></ion-input>
-    <ion-input type="text" name="fifth" [(ngModel)]="todo.Fifth" placeholder="Item five"></ion-input>
-    <ion-button [disabled]="!listform.valid" type="submit">
-      Save
-    </ion-button>
-    <ion-button [disabled]="listform.valid" (click)="cancel()" style="float: right">
-      Cancel
-    </ion-button>
-  </div>
-</form>
-</ion-card>
-<!--Display lists-->
-<div *ngIf="!activate && edit">
-  <ion-card *ngIf="createdList.length == 0">
-   <h4 text-center style="margin-top: 50px"></h4>
-  </ion-card>
-   <ion-card>
-     <ion-item-sliding  *ngFor="let list of createdList;let i = index" [ngClass]="{'red': list?.disco == 0 , 'green': list?.disco == 1,'dark': list?.disco == 2,'medium': list?.disco == 3,'orange': list?.disco == 4 }">
-        <ion-item *ngIf="list.expanded || list.theme">
-            <ion-icon (click)="onChange(1,createdList.indexOf(list))" color="warning" name="color-palette"></ion-icon>&nbsp;
-            <ion-icon (click)="onChange(2,createdList.indexOf(list))" color="success" name="color-palette"></ion-icon>&nbsp;
-            <ion-icon (click)="onChange(3,createdList.indexOf(list))" color="dark" name="color-palette"></ion-icon>&nbsp;
-            <ion-icon  (click)="onChange(4,createdList.indexOf(list))" color="medium" name="color-palette"></ion-icon>&nbsp;
-            <ion-icon  (click)="onChange(5,createdList.indexOf(list))" style="color:rgb(107, 97, 79)" name="color-palette"></ion-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <ion-icon name="create" style="float: right" (click)="list.theme = !list.theme;editedList(list)"></ion-icon>
-          </ion-item>
-         
-       <div>
-          <ion-item style="width:100%" *ngIf="!list.theme || !list.expanded">
-          <ion-label button tappable (click)="list.expanded = !list.expanded" >Title : {{list.Title}}</ion-label>
-          <ion-label button tappable (click)="list.expanded = !list.expanded" >Created : {{list.Date}}</ion-label>
-          
-          </ion-item>
-         
-          <div *ngIf="list.expanded && !list.theme" >
-              <ion-item  (click)="backtoCart()" >
-              <ion-label  ><h1>{{list.First}}</h1></ion-label>
-              <ion-checkbox></ion-checkbox>
-              </ion-item >
-              <ion-item  (click)="backtoCart()">
-              <ion-label  ><h1>{{list.Second}}</h1></ion-label>
-              <ion-checkbox></ion-checkbox>
-              </ion-item>
-              <ion-item  (click)="backtoCart()">
-              <ion-label  ><h1>{{list.Third}}</h1></ion-label>
-              <ion-checkbox></ion-checkbox>
-              </ion-item>
-              <ion-item  (click)="backtoCart()">
-              <ion-label  ><h1>{{list.Fourth}}</h1></ion-label>
-              <ion-checkbox></ion-checkbox>
-              </ion-item>
-              <ion-item  (click)="backtoCart()">
-              <ion-label  ><h1>{{list.Fifth}}</h1></ion-label>
-              <ion-checkbox></ion-checkbox>
-              </ion-item>
-              <ion-button fill="clear" expand="full" (click)="list.expanded = !list.expanded">Close</ion-button>
-              </div>
-              <div *ngIf="list.theme">
-                <ion-item>Title<ion-input type="text" name="Title" [(ngModel)]="todo.Title" text-center ></ion-input></ion-item>
-                <ion-item><ion-input type="text" name="first" [(ngModel)]="todo.First" text-center  ></ion-input></ion-item>
-                <ion-item><ion-input type="text" name="second" [(ngModel)]="todo.Second" text-center ></ion-input></ion-item>
-                <ion-item><ion-input type="text" name="third"  [(ngModel)]="todo.Third" text-center ></ion-input></ion-item>
-                <ion-item><ion-input type="text" name="fourth" [(ngModel)]="todo.Fourth" text-center ></ion-input></ion-item>
-                <ion-item><ion-input type="text" name="fifth" [(ngModel)]="todo.Fifth" text-center ></ion-input></ion-item>
-                <ion-button fill="clear"  (click)="modify(list,createdList.indexOf(list))">Save</ion-button>
-              </div>
-          </div>
-       <ion-item-options side="end" (ionSwipe)="share = true">
-          <ion-button expandable shape="round" size="small" (click)="shareList(createdList.indexOf(list))">
-              <ion-icon size="small" slot="icon-only" name="share"> </ion-icon>
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed" >
+        <ion-fab-button (click)="createList()" size="large"  >
+          <ion-icon name="add" size="large"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+
+<!-- shopping list-->
+
+    <ion-card>
+        <form (ngSubmit)="saveList()" #listform=ngForm>
+          <div *ngIf="activate" style="margin-left: 10px;margin-right: 10px">
+            <ion-input text-center required type="text" name="Title" [(ngModel)]="todo.Title" placeholder="Title *" clearInput></ion-input>
+            <ion-input required type="text" name="first" [(ngModel)]="todo.First" placeholder="Item one *"></ion-input>
+            <ion-input required type="text" name="second" [(ngModel)]="todo.Second" placeholder="Item two *"></ion-input>
+            <ion-input  type="text" name="third" [(ngModel)]="todo.Third" placeholder="Item three "></ion-input>
+            <ion-input type="text" name="fourth" [(ngModel)]="todo.Fourth" placeholder="Item four"></ion-input>
+            <ion-input type="text" name="fifth" [(ngModel)]="todo.Fifth" placeholder="Item five"></ion-input>
+            <ion-button [disabled]="!listform.valid" type="submit">
+              Save
             </ion-button>
-       </ion-item-options>
-       <ion-item-options side="start">
-          <ion-button  expandable shape="round" color="danger" size="small" (click)="removeList(createdList.indexOf(list))" position="end">
-              <ion-icon size="small" slot="icon-only" name="trash"></ion-icon>
-          </ion-button>
-       </ion-item-options>
-     </ion-item-sliding>
-   </ion-card>
+            <ion-button [disabled]="listform.valid" (click)="cancel()" style="float: right">
+              Cancel
+            </ion-button>
+          </div>
+        </form>
+    </ion-card>
 
-
+<!-- If list is Empty -->
+<div style="text-align: center;margin-top: 40%;" *ngIf="createdList.length == 0"> 
+  <ion-label text-center>You have no shopping list saved</ion-label>
 </div>
+
+<!--Display lists-->
+      <div *ngIf="!activate && edit && createdList.length != 0">
+            <!-- <ion-card *ngIf="createdList.length == 0">
+            <h4 text-center style="margin-top: 50px"></h4>
+            </ion-card> -->
+            <ion-card *ngFor="let list of createdList;let i = index" [ngClass]="{'red': list?.disco == 0 , 'green': list?.disco == 1,'dark': list?.disco == 2,'medium': list?.disco == 3,'orange': list?.disco == 4 }"> 
+              <ion-item-sliding  >
+                  <ion-item *ngIf="list.expanded || list.theme">
+                      <ion-icon (click)="onChange(0,createdList.indexOf(list))" color="warning" name="color-palette"></ion-icon>&nbsp;
+                      <ion-icon (click)="onChange(1,createdList.indexOf(list))" color="success" name="color-palette"></ion-icon>&nbsp;
+                      <ion-icon (click)="onChange(2,createdList.indexOf(list))" color="dark" name="color-palette"></ion-icon>&nbsp;
+                      <ion-icon  (click)="onChange(3,createdList.indexOf(list))" color="medium" name="color-palette"></ion-icon>&nbsp;
+                      <ion-icon  (click)="onChange(4,createdList.indexOf(list))" style="color:rgb(107, 97, 79)" name="color-palette"></ion-icon>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <ion-icon name="create" style="float: right" (click)="list.theme = !list.theme;editedList(list)"></ion-icon>
+                    </ion-item>
+                  
+                <div >
+                    <ion-item style="width:100%" *ngIf="!list.theme || !list.expanded" >
+                    <ion-label button tappable (click)="list.expanded = !list.expanded" >Title : {{list.Title}}</ion-label>
+                    <ion-label button tappable (click)="list.expanded = !list.expanded" >Created : {{list.Date}}</ion-label>
+                    
+                    </ion-item>
+                  
+                    <div *ngIf="list.expanded && !list.theme" >
+                        <ion-item  (click)="backtoCart()" >
+                        <ion-label  ><h1>{{list.First}}</h1></ion-label>
+                        <ion-checkbox></ion-checkbox>
+                        </ion-item >
+                        <ion-item  (click)="backtoCart()">
+                        <ion-label  ><h1>{{list.Second}}</h1></ion-label>
+                        <ion-checkbox></ion-checkbox>
+                        </ion-item>
+                        <ion-item  (click)="backtoCart()" [disabled]="list.Third == '' ">
+                        <ion-label  ><h1>{{list.Third}}</h1></ion-label>
+                        <ion-checkbox></ion-checkbox>
+                        </ion-item>
+                        <ion-item  (click)="backtoCart()" [disabled]="list.Fourth == '' ">
+                        <ion-label  ><h1>{{list.Fourth}}</h1></ion-label>
+                        <ion-checkbox></ion-checkbox>
+                        </ion-item>
+                        <ion-item  (click)="backtoCart()" [disabled]="list.Fifth == '' ">
+                        <ion-label  ><h1>{{list.Fifth}}</h1></ion-label>
+                        <ion-checkbox></ion-checkbox>
+                        </ion-item>
+                        <ion-button fill="clear" expand="full" (click)="list.expanded = !list.expanded">Close</ion-button>
+                        </div>
+                        <div *ngIf="list.theme">
+                          <ion-item>Title<ion-input type="text" name="Title" [(ngModel)]="todo.Title" text-center ></ion-input></ion-item>
+                          <ion-item><ion-input type="text" name="first" [(ngModel)]="todo.First" text-center  ></ion-input></ion-item>
+                          <ion-item><ion-input type="text" name="second" [(ngModel)]="todo.Second" text-center ></ion-input></ion-item>
+                          <ion-item><ion-input type="text" name="third"  [(ngModel)]="todo.Third" text-center ></ion-input></ion-item>
+                          <ion-item><ion-input type="text" name="fourth" [(ngModel)]="todo.Fourth" text-center ></ion-input></ion-item>
+                          <ion-item><ion-input type="text" name="fifth" [(ngModel)]="todo.Fifth" text-center ></ion-input></ion-item>
+                          <ion-button fill="clear"  (click)="modify(list,createdList.indexOf(list))">Save</ion-button>
+                        </div>
+                    </div>
+                <ion-item-options side="end" (ionSwipe)="share = true">
+                    <ion-button expandable shape="round" size="small" (click)="shareList(createdList.indexOf(list))">
+                        <ion-icon size="small" slot="icon-only" name="share"> </ion-icon>
+                      </ion-button>
+                </ion-item-options>
+                <ion-item-options side="start" (ionSwipe)="removeList(createdList.indexOf(list))">
+                    <ion-button  expandable shape="round" color="danger" size="small" (click)="removeList(createdList.indexOf(list))" >
+                        <ion-icon size="small" slot="icon-only" name="trash"></ion-icon>
+                    </ion-button>
+                </ion-item-options>
+              </ion-item-sliding>
+            </ion-card>
+
+
+          </div>
+
 <!--Choose share channel-->
-<div *ngIf="share">
-  <ion-card color="primary" style="margin-left: 0px;margin-right:0px;position: fixed;left: 0;bottom: 0px;right: 0;">
-    
-    <ion-card-header >
-        <ion-icon name="close" size="large" style="float: left" (click)="share = false"></ion-icon>
-       <ion-label text-center> Share with ... </ion-label>
-    </ion-card-header>
-    <ion-card-content>
-    <ion-row> 
-      <ion-col></ion-col>
-      <ion-col></ion-col>
-      <ion-col (click)="whatsappshare()"><ion-icon icon-only size="large" name="logo-whatsapp"></ion-icon></ion-col>
-      <ion-col (click)="emailShare()"><ion-icon icon-only size="large" name="mail"></ion-icon></ion-col>
-      <ion-col></ion-col>
-      <ion-col></ion-col>
-    </ion-row>
-    </ion-card-content>
-  </ion-card>
-</div>
+      <div *ngIf="share">
+        <ion-card color="primary" style="margin-left: 0px;margin-right:0px;position: fixed;left: 0;bottom: 0px;right: 0;">
+          
+          <ion-card-header >
+              <ion-icon name="close" size="large" style="float: left" (click)="share = false"></ion-icon>
+            <ion-label text-center> Share with ... </ion-label>
+          </ion-card-header>
+          <ion-card-content>
+          <ion-row> 
+            <ion-col></ion-col>
+            <ion-col></ion-col>
+            <ion-col (click)="whatsappshare()"><ion-icon icon-only size="large" name="logo-whatsapp"></ion-icon></ion-col>
+            <ion-col (click)="emailShare()"><ion-icon icon-only size="large" name="mail"></ion-icon></ion-col>
+            <ion-col></ion-col>
+            <ion-col></ion-col>
+          </ion-row>
+          </ion-card-content>
+        </ion-card>
+      </div>
 
 
 
