@@ -31,6 +31,8 @@ export class RegisterPage implements OnInit {
     dob: null
   };
 
+
+
   loading: any;
   verify = false ;
   code = false ;

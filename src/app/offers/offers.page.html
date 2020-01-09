@@ -19,7 +19,7 @@
 </ion-header>
 
 <ion-content >
-
+  
     <ion-item class="top">
       <span *ngIf="!showSearch">Pick Pay and Collect</span>
       <ion-searchbar placeholder="Enter product name" *ngIf="showSearch" [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()"></ion-searchbar>
