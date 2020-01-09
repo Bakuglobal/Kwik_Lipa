@@ -98,6 +98,7 @@ login(){
   this.navigation.navigate(['tabs/login'])
 }
 
+
   async register() {
     this.presentLoading();
     
