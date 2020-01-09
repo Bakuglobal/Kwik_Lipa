@@ -143,7 +143,7 @@ async openPrompt(){
     this.offers.length = 0 ;
     this.cart.length = 0 ;
     this.count = 0 ;
-    this.location.back();
+    this.navCtrl.navigate(['tabs/tab1']);
   }
 
   showShop(){

@@ -9,16 +9,15 @@
                         <img src="../assets/images/person.svg">
                     </ion-avatar>
                 </div>
-                <div style="padding-left: 100px; color: white; margin-top: -20px;">
+                <div style="padding-left: 100px; color: white; margin-top: -20px;" *ngIf="!show">
                     <h2 style="padding-left: 10px; padding-bottom: 21px; font-size: 13px; font-weight: bold;">User name</h2>
                     <h2 style="padding-left: 10px; font-size: 11px; font-weight: bold; margin-top: -27px; padding-bottom: 65px;">Username@gmail.com</h2>
                 </div>
-                <!-- 
-                    <div *ngIf="show">
-                    <h5 text-center style="color:white" >{{name}}</h5>
-                    <h5 text-center style="color:white" >{{email}}<br/></h5>
-                    </div> 
-                -->
+                <div style="padding-left: 100px; color: white; margin-top: -20px;" *ngIf="show">
+                    <h2 style="padding-left: 10px; padding-bottom: 21px; font-size: 13px; font-weight: bold;">User name</h2>
+                    <h2 style="padding-left: 10px; font-size: 11px; font-weight: bold; margin-top: -27px; padding-bottom: 65px;">Username@gmail.com</h2>
+                </div>
+                
             </div><br>
 
             <!-- LIST OF MENU -->
