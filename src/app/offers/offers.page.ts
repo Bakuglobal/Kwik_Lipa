@@ -26,6 +26,7 @@ export class OffersPage implements OnInit {
   public count = 0 ;
   showSearch = false ;
   searchTerm : string ;
+  docID = [] ;
 
 
   constructor(
@@ -82,31 +83,48 @@ export class OffersPage implements OnInit {
       querySnapshot.docChanges().forEach(change => {
         if (change.type === 'added') {
           console.log('New city: ', change.doc.data());
+          // add id to array
+          this.docID.push(change.doc.id)
+
+          // append count to product and push to array
+
          let modified =  change.doc.data() ;
-         modified.count = 0 ;
+          modified.count = 0 ;
           this.offers.push(modified)
           this.UnfilteredOffers.push(modified)
           
         } 
         if (change.type === 'modified') {
           console.log('Modified city: ', change.doc.data());
+          //find index of product in local array
+          let id = change.doc.id ;
+          let index = this.docID.indexOf(id)
+
+          //add count to the modified product
           let modified =  change.doc.data() ;
-         modified.count = 0 ;
-          this.offers.push(modified)
-          this.UnfilteredOffers.push(modified)
+          modified.count = 0 ;
+          //replace the product in the local array <--offers--> with the modified one
+          this.offers[index] = modified;
+          this.UnfilteredOffers[index] = modified
         } 
         if (change.type === 'removed'){
           console.log('Removed city: ', change.doc.data());
+          //find index of product in local array
+          let id = change.doc.id ;
+          let index = this.docID.indexOf(id);
+
+          //add count to the modified product
           let modified =  change.doc.data() ;
           modified.count = 0 ;
-           this.offers.push(modified)
-           this.UnfilteredOffers.push(modified)
+          //replace the product in the local array <--offers--> with the modified one
+          this.offers.splice(index,1);
+          this.UnfilteredOffers.splice(index,1);
         }
       });
   });
     this.showLoader = false ;
   }
-
+  
   addToCart(item){
     if(this.cart.includes(item)){
       let index = this.cart.indexOf(item);

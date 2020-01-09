@@ -19,11 +19,16 @@ import { Location } from '@angular/common';
 export class RegisterPage implements OnInit {
   shouldHeight = document.body.clientHeight + 'px'
   
-  public data: { email: any; password: any ; phone: any ; name: any} = {
+  public data: { email: any; password: any ; phone: any ; firstName: any; lastName: any; confPassword: any;gender: any;residence: any;dob:Date;} = {
     email: null,
     password: null,
     phone: null ,
-    name: null
+    firstName: null,
+    lastName: null,
+    confPassword: null,
+    gender: null,
+    residence: null,
+    dob: null
   };
 
   loading: any;
@@ -96,7 +101,7 @@ login(){
   async register() {
     this.presentLoading();
     
-    this.fireApi.register(this.data.email, this.data.password , this.data.phone, this.data.name).then(
+    this.fireApi.register(this.data.email, this.data.password , this.data.phone, this.data.firstName, this.data.lastName,this.data.gender,this.data.dob,this.data.residence).then(
       resp => {
         console.log( resp);
        this.updateUser();
@@ -105,7 +110,11 @@ login(){
       this.data.email = null;
       this.data.password = null;
       this.data.phone = null;
-      this.data.name = null;
+      this.data.firstName = null;
+      this.data.lastName = null ;
+      this.data.residence = null ;
+      this.data.dob = null ;
+      this.data.gender = null ;
       this.fireApi.hiddenTabs = true ;
         this.navigation.navigate(["tabs/tab1"]);
       },
@@ -128,7 +137,7 @@ updateUser(){
         let key = user[0].key;
         localStorage.setItem('userPhone', this.data.phone);
         localStorage.setItem('userEmail', this.data.email);
-        localStorage.setItem('userName', this.data.name);
+        localStorage.setItem('userName', this.data.firstName+''+this.data.lastName);
         this.fireApi.login(this.data.email,this.data.password)
         this.saveUser(this.data);
         this.fireApi.updateOperationUsers(key, this.data);

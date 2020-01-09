@@ -23,14 +23,14 @@
 
             <ion-list>
                 <ion-item>
-                    <ion-input clearInput name="name" [(ngModel)]="data.name" required type="text" placeholder="Phone number"></ion-input>
+                    <ion-input clearInput name="name" [(ngModel)]="data.phone" required type="phone" placeholder="Phone number"></ion-input>
                 </ion-item>
             </ion-list>
 
             <ion-list>
                 <ion-item>
                     <ion-label color="medium">Date of birth</ion-label>
-                    <ion-datetime style="color: white;" placeholder="m/d/y"></ion-datetime>
+                    <ion-datetime name="date" style="color: white;" placeholder="m/d/y" [(ngModel)]="data.dob"></ion-datetime>
                 </ion-item>
             </ion-list>
             <hr>
@@ -38,7 +38,7 @@
             <ion-list>
                 <ion-item>
                     <ion-label color="medium">Gender</ion-label>
-                    <ion-select placeholder="Select One" style="color: white;">
+                    <ion-select name="gender" placeholder="Select One" style="color: white;" [(ngModel)]="data.gender">
                         <ion-select-option value="female">Female</ion-select-option>
                         <ion-select-option value="male">Male</ion-select-option>
                     </ion-select>

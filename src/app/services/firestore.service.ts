@@ -138,16 +138,19 @@ export class FirestoreService {
     removeProduct(){
       this.cart.pop();
     }
-  register(email: any, password: any, phone : any, name : any) {
+  register(email: any, password: any, phone : any, firstname : any, lastname: any,gender: any,dob: Date, residence: any) {
     return this.af.auth
       .createUserWithEmailAndPassword(email, password)
       .then((authData: any) => {
         localStorage.setItem('userID',authData.user.uid);
         let value = {
-          name: name,
-          phone: phone,
+          FirstName: firstname,
+          LastName: lastname,
+          ehone: phone,
           email: email,
-          shop: 'none'
+          Gender: gender,
+          Dob: dob,
+          Residence: residence
         };
 
         this.operationUser
