@@ -84,17 +84,17 @@ export class Tab1Page  implements OnInit{
   }
   
   onScroll(event){
-    if(event.detail.scrollTop == 0){
-      this.service.hiddenTabs = false ;
-      console.log("00000000")
-    }else{
-    if (event.detail.scrollTop > 30) {
-      console.log(">>>> 30");
-      this.service.hiddenTabs = true ;
-    } else {
-      this.service.hiddenTabs = false ;
-    }
-  }
+  //   if(event.detail.scrollTop == 0){
+  //     this.service.hiddenTabs = false ;
+  //     console.log("00000000")
+  //   }else{
+  //   if (event.detail.scrollTop > 30) {
+  //     console.log(">>>> 30");
+  //     this.service.hiddenTabs = true ;
+  //   } else {
+  //     this.service.hiddenTabs = false ;
+  //   }
+  // }
   }
   onIonViewDidLoad(){
     this.selectShop = false ;
