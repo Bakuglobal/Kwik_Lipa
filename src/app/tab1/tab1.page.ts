@@ -82,6 +82,7 @@ export class Tab1Page  implements OnInit{
     }); 
     this.service.hiddenTabs = false ;
   }
+  
   onScroll(event){
     if(event.detail.scrollTop == 0){
       this.service.hiddenTabs = false ;
@@ -165,15 +166,7 @@ async msgNetwork(){
   await msg.present();
 }
 
-hideHeader(){
-    console.log("Scrolling now")
-    let header = document.getElementById("header");
-    if(pageYOffset < header.clientHeight){
-      console.log("Scroll down")
-    }else{
-      header.hidden ;
-    }
-}
+
 
 //redirect to shop page
 goToShop(shop){
