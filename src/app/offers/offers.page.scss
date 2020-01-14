@@ -27,16 +27,13 @@
     width: 100%;
     height: 100%;
 }
-ion-card-content {
-    width: 100%;
-}
-ion-card-content.ion-card-subtitle {
- margin-left: -30%;
-}
-ion-grid {
-    // padding: auto;
-    background-color: rgb(241, 238, 238);
-}
+// ion-card-content {
+//     width: 100%;
+// }
+// ion-card-content.ion-card-subtitle {
+//  margin-left: -30%;
+// }
+
 .card-radius {
     border-radius: 15px;
     background-color: white;
@@ -44,6 +41,18 @@ ion-grid {
 
 hr {
     background-color: rgb(241, 238, 238); 
-    height: 3px;
+    height: 2px;
 }
 
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+    background-color: rgb(241, 238, 238);
+}
+
+.column {
+    float: left;
+    width: 50%;
+}
+  
