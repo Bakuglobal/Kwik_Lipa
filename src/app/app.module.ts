@@ -46,6 +46,7 @@ import { OpenNativeSettings } from '@ionic-native/open-native-settings/ngx';
 import { CPageModule } from './c/c.module';
 import { ScannedModalPageModule } from './scanned-modal/scanned-modal.module';
 import { OffersPage } from './offers/offers.page';
+import { Firebase } from '@ionic-native/firebase/ngx';
 
 
 @NgModule({
@@ -86,7 +87,7 @@ import { OffersPage } from './offers/offers.page';
     StatusBar,
     OffersPage,
     OpenNativeSettings,
-    // Http,
+    Firebase,
     SocialSharing,
     Network,
     Contacts,

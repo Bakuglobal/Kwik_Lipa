@@ -6,11 +6,12 @@ import { Router } from '@angular/router';
 import * as firebase from 'firebase/app';
 // import {GooglePlus} from '@ionic-native/google-plus/ngx';
 // import { AdMobFree } from '@ionic-native/admob-free/ngx';
-import { map } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { timer } from 'rxjs';
 import { Location } from '@angular/common';
 import { AppComponent } from '../app.component';
+import { DatabaseService } from '../services/database.service';
+
 
 @Component({
   selector: 'app-login',
@@ -50,10 +51,11 @@ export class LoginPage implements OnInit {
     // private admobFree: AdMobFree,
     private alertCtrl: AlertController,
     public menuCtrl: MenuController,
-       private platform: Platform,
-       public fauth: AngularFireAuth,
-       public location: Location,
-       public ref : AppComponent
+    private platform: Platform,
+    public fauth: AngularFireAuth,
+    public location: Location,
+    public ref : AppComponent,
+    public db: DatabaseService
    
   ) {
     
@@ -61,30 +63,27 @@ export class LoginPage implements OnInit {
       this.showSplash = false ;
     },300);
     
-      // this.redirect();
-
-
   }
  
   ngOnInit() {
-    // this.removeBannerAd();
-    // this.menuCtrl.enable(false);
     this.service.hiddenTabs = true ;
   }
-  ngAfterViewInit() {
-    // this.backButtonSubscription = this.platform.backButton.subscribe(() => {
-    //   navigator['app'].exitApp();
-    // });
+ async setUpNotfications() {
+    //get token
+    this.db.getToken();
+    this.db.lisetnToNotification().pipe(
+      tap(msg => {
+        this.toasted(msg);
+      })
+    ).subscribe();
+
    }
  
   hideShowPassword() {
     this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
     this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
 }
-  // removeBannerAd(){
-  //   this.admobFree.banner.remove();
-  // }
-
+  
   // redirect to home if logged in before
   redirect(){
     const id = localStorage.getItem('userID');
@@ -119,6 +118,7 @@ export class LoginPage implements OnInit {
     // this.presentToast1(' Loign successful ' + resp.name);
     this.service.hiddenTabs = false ;
     this.ref.getDetails(id);
+    this.setUpNotfications();
     this.navCtrl.navigate(['tabs/tab1']);
   }
 
@@ -169,6 +169,7 @@ export class LoginPage implements OnInit {
   //     })
   //   })
   // }
+
   //forgot password
   reset(){
     this.password();
@@ -207,5 +208,14 @@ export class LoginPage implements OnInit {
       ]
     });
     pop.present();
+  }
+
+  //toast
+  async toasted(msg){
+    const ts = await this.toastController.create({
+      message: msg.body(),
+      duration: 3000
+    })
+    ts.present();
   }
 }
