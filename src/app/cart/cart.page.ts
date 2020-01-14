@@ -4,6 +4,7 @@ import { ToastController } from '@ionic/angular';
 import { DatabaseService } from '../services/database.service';
 import { FirestoreService } from '../services/firestore.service';
 import { OffersPage} from '../offers/offers.page';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-cart',
@@ -20,23 +21,38 @@ export class CartPage implements OnInit {
     private toast: ToastController,
     private service: DatabaseService,
     private fireApi: FirestoreService,
-    private count: OffersPage
+    private count: OffersPage,
+    private fs: AngularFirestore
   ) { }
 
   ngOnInit() {
      this.cart = this.service.getData() ;
      this.showShop() ;
+     this.fireApi.hiddenTabs = true ;
   }
 
   sendOrder(){
+    let Today = new Date() ;
+    
+    let data = {
+      "Date": Today,
+      "products": this.cart,
+      "shop":this.shopSelected,
+      "status": "open",
+      "username": "steve",
+      "userphone": "phone"
+    }
+    // this.fs.collection('Orders').add(data)
+    this.Ordersuccess = true ;
     this.count.count = 0 ;
     this.cart.length = 0 ;
-    this.Ordersuccess = true ;
+
   }
   back(){
     if(this.cart.length == 0){
       this.Ordersuccess = false ;
       this.count.changeCount(0);
+      this.fireApi.hiddenTabs = false ;
       this.navCtrl.navigate(['tabs/offers'])
     }else {
       let count = this.cart.reduce((a,b) => a + (b.count * 1),0)

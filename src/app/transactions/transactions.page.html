@@ -24,7 +24,7 @@
           </ion-col>
           <ion-col size="0.7"></ion-col>
           <ion-col > 
-              <span style="margin-top: 15px;font-size: 12pt;">Check past transactions</span>
+              <span style="margin-top: 15px;font-size: 12pt;">Check past orders</span>
           </ion-col>
         </ion-row>
       </ion-card-title>
@@ -38,7 +38,8 @@
       <ion-icon size="large" name="flash"></ion-icon><br>
       <ion-label >You have no past Transactions</ion-label>
     </div>
-
+<!-- Scan and pay transactions -->
+<ion-label padding color='primary'>Scan and Pay</ion-label>
   <ion-list>
     <ion-item *ngFor="let trans of transactions" (click)="viewTransaction(trans)">
       <ion-avatar slot="start">
@@ -50,6 +51,9 @@
       </ion-label>
     </ion-item>
   </ion-list>
+
+  <!-- Pick Pay collect  -->
+  <ion-label padding color='primary'>Pick Pay Collect</ion-label>
 
   <!-- fab placed to the top end 
   <ion-fab (click)="clearTransaction()" vertical="bottom" horizontal="end" slot="fixed">

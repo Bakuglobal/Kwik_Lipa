@@ -1,12 +1,12 @@
 import { Component, OnInit  } from '@angular/core';
 import { Router , NavigationExtras , ActivatedRoute} from '@angular/router';
 import { FirestoreService } from '../services/firestore.service';
-import { AlertController, ToastController, ModalController } from '@ionic/angular';
+import { AlertController, ToastController, ModalController, NavController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/firestore' ;
 import { DatabaseService } from '../services/database.service';
 import { CPage } from '../c/c.page';
 import { Location } from '@angular/common';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { THIS_EXPR, ThrowStmt } from '@angular/compiler/src/output/output_ast';
 // import { AdMobFree } from '@ionic-native/admob-free/ngx';
 
 @Component({
@@ -37,24 +37,25 @@ export class OffersPage implements OnInit {
     private toastCtrl: ToastController,
     private db: DatabaseService,
     private modal: ModalController,
-    private location: Location
+    private location: Location,
+    private nav: NavController
     // private admobFree: AdMobFree
   ) {
     this.showShop();
-    console.log('shop name -- '+this.shopSelected) 
-        if(this.shopSelected == 'Kakila Organic'){
-      //get kakila OffersPage
-      
-      this.getOffers();
-    console.log('offers -- '+ this.offers)
-    }
-
+    console.log('shop name -- '+ this.shopSelected) 
+    this.getOffers(this.shopSelected);
+    
   }
+  
   changeCount(number){
     this.count = number ;
   }
 
   ngOnInit() {
+    if(this.offers.length == 0){
+      this.getOffers(this.shopSelected)
+    }
+    
   }
   showSearchBar(){
     if(this.showSearch == false){
@@ -76,9 +77,9 @@ export class OffersPage implements OnInit {
   }
       
   
-  async getOffers(){
+  async getOffers(shop){
     this.showLoader = true ;
-    await this.fs.collection('click&collect').ref.where('shop', '==', 'kakila')
+    await this.fs.collection('click&collect').ref.where('shop', '==', shop)
     .onSnapshot(querySnapshot => {
       querySnapshot.docChanges().forEach(change => {
         if (change.type === 'added') {
@@ -91,7 +92,8 @@ export class OffersPage implements OnInit {
          let modified =  change.doc.data() ;
           modified.count = 0 ;
           this.offers.push(modified)
-          this.UnfilteredOffers.push(modified)
+          this.UnfilteredOffers.push(modified);
+          this.showLoader = false ;
           
         } 
         if (change.type === 'modified') {
@@ -105,7 +107,8 @@ export class OffersPage implements OnInit {
           modified.count = 0 ;
           //replace the product in the local array <--offers--> with the modified one
           this.offers[index] = modified;
-          this.UnfilteredOffers[index] = modified
+          this.UnfilteredOffers[index] = modified ;
+          this.showLoader = false ;
         } 
         if (change.type === 'removed'){
           console.log('Removed city: ', change.doc.data());
@@ -119,10 +122,11 @@ export class OffersPage implements OnInit {
           //replace the product in the local array <--offers--> with the modified one
           this.offers.splice(index,1);
           this.UnfilteredOffers.splice(index,1);
+          this.showLoader = false ;
         }
       });
   });
-    this.showLoader = false ;
+    
   }
   
   addToCart(item){
@@ -164,6 +168,7 @@ async openPrompt(){
     this.navCtrl.navigate(['tabs/tab1']);
   }
 
+
   showShop(){
     this.fireApi.serviceData
       .subscribe(data => (this.shopSelected = data));
@@ -183,6 +188,7 @@ async openPrompt(){
 
          sendCart(){
               this.db.setData(this.cart)
+              this.fireApi.hiddenTabs = true ;
               this.navCtrl.navigate(['tabs/cart'])
          }
      async viewProduct(item){
