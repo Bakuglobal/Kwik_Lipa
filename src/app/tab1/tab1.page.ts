@@ -68,34 +68,37 @@ export class Tab1Page  implements OnInit{
     
   ) {
 
-    
-    this.network.onDisconnect().subscribe(()=>{
-      this.Disconnected = true ;
+    //check network status
+        this.network.onDisconnect().subscribe(()=>{
+          this.Disconnected = true ;
 
-    });
-    this.network.onConnect().subscribe(()=>{
-        setTimeout(()=>
-        {
-          //this.msgNetwork();
-          this.Disconnected = false ;
-        },2000);
-    }); 
-    this.service.hiddenTabs = false ;
+        });
+        this.network.onConnect().subscribe(()=>{
+            setTimeout(()=>
+            {
+              //this.msgNetwork();
+              this.Disconnected = false ;
+            },2000);
+        }); 
+    // hide bottom tabs
+        this.service.hiddenTabs = false ;
+
   }
+  // on scroll up hide tabs
+        onScroll(event){
+        //   if(event.detail.scrollTop == 0){
+        //     this.service.hiddenTabs = false ;
+        //     console.log("00000000")
+        //   }else{
+        //   if (event.detail.scrollTop > 30) {
+        //     console.log(">>>> 30");
+        //     this.service.hiddenTabs = true ;
+        //   } else {
+        //     this.service.hiddenTabs = false ;
+        //   }
+        // }
+        }
   
-  onScroll(event){
-  //   if(event.detail.scrollTop == 0){
-  //     this.service.hiddenTabs = false ;
-  //     console.log("00000000")
-  //   }else{
-  //   if (event.detail.scrollTop > 30) {
-  //     console.log(">>>> 30");
-  //     this.service.hiddenTabs = true ;
-  //   } else {
-  //     this.service.hiddenTabs = false ;
-  //   }
-  // }
-  }
   onIonViewDidLoad(){
     this.selectShop = false ;
   }

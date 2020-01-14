@@ -68,6 +68,7 @@ const routes: Routes = [
       {path : 'shop', loadChildren: () => import ('../shop/shop.module').then(m => m.ShopPageModule)},
       {path: 'cart', loadChildren: () => import ('../cart/cart.module').then(m=>m.CartPageModule),canActivate : [AuthService]},
       { path: 'c', loadChildren: () => import('../c/c.module').then(m => m.CPageModule), canActivate : [AuthService] },
+      { path: 'forgot-password', loadChildren:() => import('../forgot-password/forgot-password.module').then(m  => m.ForgotPasswordPageModule)},
       {
         path: '',
         redirectTo: '/tabs/tab1',

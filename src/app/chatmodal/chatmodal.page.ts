@@ -11,12 +11,19 @@ import { Router } from '@angular/router';
 })
 export class ChatmodalPage implements OnInit {
 
-  @ViewChild(IonContent,{static: true}) content: IonContent;
-  @Input() sendTo : any ;
-  text: string ;
-  chatRef: any ;
-  uid: string ;
-  time: any ;
+  //passed data via inputs
+
+      @Input() sendTo : any ;
+
+  //variables
+
+      text: string ;
+      chatRef: any ;
+      uid: string ;
+      time: any ;
+
+  //objects
+
 
   constructor(
     private fauth: AngularFireAuth,
@@ -33,28 +40,26 @@ export class ChatmodalPage implements OnInit {
     this.modalController.dismiss();
   }
   ngOnInit() {
-    this.ScrollToBottom();
   }
-  ScrollToBottom(){
-    this.content.scrollToBottom(300);
-  }
+  
+  
+//send message
 
-  send(){
-    if( this.text != ''){
-      if(this.sendTo == ''){
-        alert("Please add a recepient of this message");
-      }else{
-          this.time = new Date() ;
-          this.fs.collection('chats').add({
-            Name: this.fauth.auth.currentUser.displayName,
-            Message: this.text,
-            UserID: this.fauth.auth.currentUser.uid,
-            Time: this.time,
-            SendTo: this.sendTo
-          });
-          this.text = '' ;
-          this.ScrollToBottom();
+      send(){
+        if( this.text != ''){
+          if(this.sendTo == ''){
+            alert("Please add a recepient of this message");
+          }else{
+              this.time = new Date() ;
+              this.fs.collection('chats').add({
+                Name: this.fauth.auth.currentUser.displayName,
+                Message: this.text,
+                UserID: this.fauth.auth.currentUser.uid,
+                Time: this.time,
+                SendTo: this.sendTo
+              });
+              this.text = '' ;
+            }
         }
-    }
-  }
+      }
 }

@@ -77,7 +77,7 @@ getList(id) {
   }
 
 
-    ///  GET SHOPS PRODUCTS
+    //  GET SHOPS PRODUCTS
   getshopsproduct(barcode,shop){
 
       let headers = new HttpHeaders();
@@ -155,7 +155,7 @@ getList(id) {
 
         }
 
-        //listen to notifications
+// listen to notifications
         lisetnToNotification(){
           return this.firebaseNative.onNotificationOpen();
         }

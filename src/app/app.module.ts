@@ -47,6 +47,7 @@ import { CPageModule } from './c/c.module';
 import { ScannedModalPageModule } from './scanned-modal/scanned-modal.module';
 import { OffersPage } from './offers/offers.page';
 import { Firebase } from '@ionic-native/firebase/ngx';
+import { AppLauncher} from '@ionic-native/app-launcher/ngx';
 
 
 @NgModule({
@@ -92,6 +93,7 @@ import { Firebase } from '@ionic-native/firebase/ngx';
     Network,
     Contacts,
     Geolocation,
+    AppLauncher,
     // GooglePlus,
     SplashScreen,
     BarcodeScanner,

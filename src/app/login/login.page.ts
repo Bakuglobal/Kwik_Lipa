@@ -21,25 +21,25 @@ import { DatabaseService } from '../services/database.service';
 
 export class LoginPage implements OnInit {
 
+//Variables
+    shouldHeight = document.body.clientHeight + 'px';
+    loading: any;
+    errorCode: any;
+    errorMessage: any;
+    user ;
+    passwordType: string = 'password';
+    passwordIcon: string = 'eye-off';
+    backButtonSubscription ;
+    showSplash = true ;
 
-  shouldHeight = document.body.clientHeight + 'px';
+//objects
 
-  public data: { email: any; password: any } = {
-    email: null,
-    password: null
-  };
+      public data: { email: any; password: any } = {
+        email: null,
+        password: null
+      };
 
-  loading: any;
-
-  errorCode: any;
-
-  errorMessage: any;
-  user ;
-
-  passwordType: string = 'password';
- passwordIcon: string = 'eye-off';
- backButtonSubscription ;
- showSplash = true ;
+ 
   constructor(
     public firestore: FirestoreService,
     public loadingController: LoadingController,
@@ -68,154 +68,102 @@ export class LoginPage implements OnInit {
   ngOnInit() {
     this.service.hiddenTabs = true ;
   }
- async setUpNotfications() {
-    //get token
-    this.db.getToken();
-    this.db.lisetnToNotification().pipe(
-      tap(msg => {
-        this.toasted(msg);
-      })
-    ).subscribe();
 
-   }
- 
-  hideShowPassword() {
-    this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
-    this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
-}
-  
-  // redirect to home if logged in before
-  redirect(){
-    const id = localStorage.getItem('userID');
-    if(id !== null){
-      this.navCtrl.navigate(['tabs/tab1']);
-    }
-  }
- async register(){
-    this.navCtrl.navigate(['tabs/register']);
-     
-  }
- 
-  submit() {
-    this.presentLoading();
-    this.firestore.login(this.data.email, this.data.password).then(
-      resp => {
-        this.next(resp);
-      },
-      error => {
-        this.loading.dismiss();
-        this.presentToast(error.message);
-        
-      }
-    );
-  }
-  next(resp) {
-    localStorage.setItem('userEmail', resp.email);
-    localStorage.setItem('userName', resp.name);
-    const id = this.fauth.auth.currentUser.uid ;
-    localStorage.setItem('userID', id);
-    this.loading.dismiss();
-    // this.presentToast1(' Loign successful ' + resp.name);
-    this.service.hiddenTabs = false ;
-    this.ref.getDetails(id);
-    this.setUpNotfications();
-    this.navCtrl.navigate(['tabs/tab1']);
-  }
+  //Handle notification for the user
 
-  // Loader
-  async presentLoading() {
-    this.loading = await this.loadingController.create({
-      message: 'Wait ...'
-    });
-    return await this.loading.present();
-  }
+      async setUpNotfications() {
+          //get token
+          this.db.getToken();
+          this.db.lisetnToNotification().pipe(
+            tap(msg => {
+              this.toasted(msg);
+            })
+          ).subscribe();
 
-  // Toaster error
-  async presentToast(data) {
-    const toast = await this.toastController.create({
-      message: data,
-      duration: 3000,
-      position: 'bottom',
-    });
-    toast.present();
-  }
-  // Toaster success
-  async presentToast1(data) {
-    const toast = await this.toastController.create({
-      message: data,
-      duration: 3000,
-      position: 'top',
-    });
-    toast.present();
-  }
-  back(){
-    this.service.hiddenTabs = false;
-    localStorage.clear();
-    this.location.back();
-  }
-
-  // Google sign in
-
-  // login(){
-  //   this.googleplus.login({
-  //     'webClientId':'587167744825-38lfevsqb2h7o3jave51237cteov4vd2.apps.googleusercontent.com',
-  //     'offline':true
-  //   }).then(res=>{
-  //     firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.IdToken))
-  //     .then(suc=>{
-  //       alert("login successful")
-  //     }).catch(ns=>{
-  //       alert("login not successful")
-  //     })
-  //   })
-  // }
-
-  //forgot password
-  reset(){
-    this.password();
-    
-  }
- async forgotPassword(email){
-     return firebase.auth().sendPasswordResetEmail(email)
-     .then(res =>  this.presentToast('Password reset link send to '+' '+email))
-     .catch(error => this.presentToast('No user record with '+email))
-     
-  }
-  async password(){
-    let pop = await this.alertCtrl.create({
-      header: 'Enter Email',
-      message: 'Enter email address to receive password reset link',
-      inputs: [
-        {
-          name: 'email',
-          placeholder: 'you@example.com'
         }
-      ],
-      buttons: [
-        {
-          text: 'cancel',
-          role: 'cansel'
-        },
-        {
-          text: 'Send',
-          handler: data => {
-            let email = data.email ;
-            console.log(email);
-            this.forgotPassword(email);
-            //send pass reset link to email
+ // hide password btn
+      
+        hideShowPassword() {
+          this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
+          this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
+      }
+  
+// redirect to home if logged in before
+        redirect(){
+          const id = localStorage.getItem('userID');
+          if(id !== null){
+            this.navCtrl.navigate(['tabs/tab1']);
           }
         }
-      ]
-    });
-    pop.present();
-  }
+// go to register page
 
+        async register(){
+            this.navCtrl.navigate(['tabs/register']);
+            
+          }
+//send login credentials
+
+        submit() {
+          this.presentLoading();
+          this.firestore.login(this.data.email, this.data.password).then(
+            resp => {
+              this.next(resp);
+            },
+            error => {
+              this.loading.dismiss();
+              this.presentToast(error.message,'bottom');
+              
+            }
+          );
+        }
+        next(resp) {
+          localStorage.setItem('userEmail', resp.email);
+          localStorage.setItem('userName', resp.name);
+          const id = this.fauth.auth.currentUser.uid ;
+          localStorage.setItem('userID', id);
+          this.loading.dismiss();
+          // this.presentToast1(' Loign successful ' + resp.name);
+          this.service.hiddenTabs = false ;
+          this.ref.getDetails(id);
+          this.setUpNotfications();
+          // this.navCtrl.navigate(['tabs/tab1']);
+          this.location.back();
+        }
+
+// Loaders
+
+      async presentLoading() {
+        this.loading = await this.loadingController.create({
+          message: 'Wait ...'
+        });
+        return await this.loading.present();
+      }
+
+// Toaster error
+      async presentToast(data,position) {
+        const toast = await this.toastController.create({
+          message: data,
+          duration: 3000,
+          position: position,
+        });
+        toast.present();
+      }
+//Go back a page
+        
+      back(){
+        this.service.hiddenTabs = false;
+        localStorage.clear();
+        this.location.back();
+      }
+
+  
+  
   //toast
-  async toasted(msg){
-    const ts = await this.toastController.create({
-      message: msg.body(),
-      duration: 3000
-    })
-    ts.present();
-  }
+      async toasted(msg){
+        const ts = await this.toastController.create({
+          message: msg.body(),
+          duration: 3000
+        })
+        ts.present();
+      }
 }

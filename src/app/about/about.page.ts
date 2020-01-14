@@ -11,38 +11,44 @@ import {Router} from '@angular/router' ;
 })
 export class AboutPage implements OnInit {
 
-  information: any [] ;
+
+  //variables
+
+      information: any [] ;
+
+  //objects
+
 
   constructor(
     private http: Http,
     private navCtrl: Router,
-    //  private admobFree: AdMobFree
-     ) {
-    let localData = this.http.get('assets/about.json').map(res => res.json().About);
-    localData.subscribe(data => {
-      this.information = data ;
-    });
+
+     ) 
+  {
+        let localData = this.http.get('assets/about.json').map(res => res.json().About);
+        localData.subscribe(data => {
+          this.information = data ;
+        });
    }
-
-  //  removeBannerAd(){
-  //   this.admobFree.banner.remove();
-  // }
-
-
-
-toggleSection(i){
-this.information[i].open = !this.information[i].open ;
-}
-toggleItem(i, j){
-  this.information[i].children[j].open = !this.information[i].open ;
-}
-
-  ngOnInit() {
-    // this.removeBannerAd();
+   
+ngOnInit() {
+  
   }
 goToSupport(){
   this.navCtrl.navigate(['support']);
 }
+ 
+
+//Toggle section
+
+    toggleSection(i){
+    this.information[i].open = !this.information[i].open ;
+    }
+    toggleItem(i, j){
+      this.information[i].children[j].open = !this.information[i].open ;
+    }
+
+
   
 
 }

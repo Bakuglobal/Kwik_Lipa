@@ -9,10 +9,14 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
   styleUrls: ['./infomodal.page.scss'],
 })
 export class InfomodalPage implements OnInit {
-  likes = {"count":0}
-  liked = false ;
-  h     = false ;
-  Addcomment = false ;
+  //variables
+      liked = false ;
+      h     = false ;
+      Addcomment = false ;
+  //objects
+      likes = {"count":0}
+
+  
   constructor(
     private modalCtrl: ModalController,
     private iab: InAppBrowser,
@@ -22,67 +26,76 @@ export class InfomodalPage implements OnInit {
 
   ngOnInit() {
   }
+//share via whatsapp
 
-  async share(){
-    const asc = await this.asC.create({
-      animated: true ,
-      backdropDismiss: true ,
-      cssClass: './home.page.scss',
-      buttons: [{
-        icon: 'logo-whatsapp',
-        text: 'Whatsapp',
-        
-        handler: () => {
+    async share(){
+      const asc = await this.asC.create({
+        animated: true ,
+        backdropDismiss: true ,
+        cssClass: './home.page.scss',
+        buttons: [{
+          icon: 'logo-whatsapp',
+          text: 'Whatsapp',
           
+          handler: () => {
+            
+          }
+        },
+        
+        {
+          text: 'Cancel',
+          role: 'cancel'
         }
-      },
+      ]
+      });
+      await asc.present();
       
-      {
-        text: 'Cancel',
-        role: 'cancel'
-      }
-    ]
-    });
-    await asc.present();
-    
-  }
-  AddComment(){
-    if(this.Addcomment == true){
-      this.Addcomment = false;
-    }else {
-    this.Addcomment = true;
-  }
-  }
-  like(){
-    if(this.liked == false){
-      this.likes.count++ ;
-      this.liked = true ;
-    }else {
-      this.likes.count--;
-      this.liked = false ;
     }
-   if(this.h == false){
-     this.h = true ;
-   }else{
-    this.h = false ;
-   }
+//add a comment
+      AddComment(){
+        if(this.Addcomment == true){
+          this.Addcomment = false;
+        }else {
+        this.Addcomment = true;
+      }
+      }
+// like posts
+      like(){
+        if(this.liked == false){
+          this.likes.count++ ;
+          this.liked = true ;
+        }else {
+          this.likes.count--;
+          this.liked = false ;
+        }
+      if(this.h == false){
+        this.h = true ;
+      }else{
+        this.h = false ;
+      }
+        
+      }
+//close the modal
+
+      close(){
+        this.modalCtrl.dismiss()
+      }
+//go to maps to see location of the shop
+
+      async maps(){
+        const map = await this.modalCtrl.create({
+          component: SokomodalPage,
+          componentProps: {} 
+        })
+        await map.present();
+      }
+//open a link in a browser inside the app
+
+      inbrowser(link){
+        console.log("Opens link in the app");
+        const target = '_blank';
+        // const options = { location : 'no' } ;
+        const refLink = this.iab.create(link,target);
+      }
     
-  }
-  close(){
-    this.modalCtrl.dismiss()
-  }
-  async maps(){
-    const map = await this.modalCtrl.create({
-      component: SokomodalPage,
-      componentProps: {} 
-    })
-    await map.present();
-  }
-  inbrowser(link){
-    console.log("Opens link in the app");
-    const target = '_blank';
-    // const options = { location : 'no' } ;
-    const refLink = this.iab.create(link,target);
-  }
- 
 }
