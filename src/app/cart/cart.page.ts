@@ -103,6 +103,7 @@ export class CartPage implements OnInit {
       getTotalCart() {
         return this.total = this.cart.reduce((a,b) => a + (b.count * b.currentprice),0) ;
         }
+  //add quantity for an item in cart
       add(index){
         
         this.cart[index].count ++ ;

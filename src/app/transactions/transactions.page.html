@@ -50,28 +50,34 @@
 </div>
 <!-- No Transactions -->
 
-    <div style="margin-top: 100px;text-align:center" *ngIf="transactions.length == 0 ">
+    <div style="margin-top: 100px;text-align:center" *ngIf="transactions.length == 0 && myOrders.length == 0">
       <ion-icon size="large" name="flash"></ion-icon><br>
       <ion-label >You have no past Transactions</ion-label>
     </div>
 
   <!-- Pick Pay collect  -->
-  <div *ngIf="transactions.length > 0"> 
+  <div> 
     <ion-label padding color='primary'>Pick Pay Collect</ion-label>
-    <!-- <div padding class="nav">
-      <ion-label style="float: left;" id="past" class="past" (click)="change('past')">
-        PAST ORDERS
-      </ion-label>
-      <ion-label style="float: right" id="upcoming" (click)="change('upcoming')" class="upcoming">
-        UPCOMING
-      </ion-label>
-    </div> -->
+    <div >
+      <ion-card padding *ngFor="let item of myOrders "   class="card"> 
+        <ion-icon name="funnel" style="float: left;" color="primary"></ion-icon><ion-label style="float: right;" color="warning">{{item.status}}</ion-label><br><br>
+        <div style="text-align:start;">
+          Order for {{item.products[0].product}}, {{item.products[1].product}}, {{item.products[2].product}}, {{item.products[3].product}} ...
+        </div>
+        <span style="float: left;bottom: 0;margin-top: 10px;color:var(--ion-color-primary)">
+          {{item.shop}}
+        </span>
+        <span style="float: right;bottom:0;margin-top: 10px;color:var(--ion-color-primary)" >
+          {{item.Date.toDate() | date: 'mm'}} Mins Ago
+        </span>
+      </ion-card>
+  </div>
     <ion-tabs >
       <ion-tab-bar slot="top" id="tabbar">
-      <ion-tab-button (click)="pastOrder()" class="tab active">
+      <ion-tab-button (click)="pastOrder('Accepted')" class="tab active">
         <ion-label >PAST ORDERS</ion-label>
       </ion-tab-button>
-      <ion-tab-button (click)="openOrder()" class="tab">
+      <ion-tab-button (click)="openOrder('open')" class="tab">
         <ion-label>OPEN ORDERS</ion-label>
       </ion-tab-button>
     </ion-tab-bar>

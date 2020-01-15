@@ -8,6 +8,7 @@ import {
   ModalController
 } from "@ionic/angular";
 import { TransModalPage } from "../modal/trans-modal/trans-modal.page";
+import { AngularFirestore } from '@angular/fire/firestore';
 // import { AdMobFree } from "@ionic-native/admob-free/ngx";
 
 @Component({
@@ -19,20 +20,27 @@ export class TransactionsPage implements OnInit {
   transactions = [];
   loading: any;
   transID: any ;
+  userID;
+  myOrders = [];
+  docID = [];
 
   constructor(
     public fireApi: FirestoreService,
     public loadingController: LoadingController,
     public toastController: ToastController,
     public alertCtrl: AlertController,
-    // private admobFree: AdMobFree,
+    public fs: AngularFirestore,
     public modalController: ModalController
-  ) {}
+  ) {
+    this.userID = localStorage.getItem('UserID');
+    this.getOrders('Accepted');
+  }
 
   ngOnInit() {
     this.getTransactions();
     // this.removeBannerAd();
-    console.log(this.transactions)
+    console.log(this.transactions);
+
   }
 
   // removeBannerAd(){
@@ -102,14 +110,19 @@ export class TransactionsPage implements OnInit {
   }
 
 // check for open orders
-    openOrder(){
+    openOrder(type){
       this.change();
+      this.myOrders.length = 0 ;
+      this.getOrders(type);
+
       
     }
 
 //check for past orders
-    pastOrder(){
+    pastOrder(type){
       this.change();
+      this.myOrders.length = 0 ;
+      this.getOrders(type);
     }
 //style active tab to primary color
 change(){
@@ -124,8 +137,36 @@ change(){
   }
 }
 
-
-
+//get oders
+getOrders(type){
+    this.fs.collection('Orders').ref.where('userID','==','8FxNjxpLCKQLFSZPzOcaUrYSK2M2').where('status','==',type)
+    .onSnapshot(querySnapshot => {
+      querySnapshot.docChanges().forEach(change => {
+        if (change.type === 'added') {
+          this.docID.push(change.doc.id);
+          this.myOrders.push(change.doc.data());
+          console.log('New oder: ', this.myOrders);
+        } 
+        if (change.type === 'modified') {
+          console.log('Modified order: ', change.doc.data());
+          //find index of product in local array
+          let id = change.doc.id ;
+          let index = this.docID.indexOf(id)
+ 
+          let modified =  change.doc.data() ;
+          
+          //replace the product in the local array <--Myorders--> with the modified one
+          this.myOrders[index] = modified;
+ 
+          
+          } 
+        if (change.type === 'removed'){
+          console.log('Removed order: ', change.doc.data());
+          
+        }
+      });
+  });
+}
 
 // Loader
     async presentLoading() {
