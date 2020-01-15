@@ -101,20 +101,46 @@ export class TransactionsPage implements OnInit {
     }, 0);
   }
 
-  // Loader
-  async presentLoading() {
-    this.loading = await this.loadingController.create({
-      message: "Wait ..."
-    });
-    return await this.loading.present();
+// check for open orders
+    openOrder(){
+      this.change();
+      
+    }
+
+//check for past orders
+    pastOrder(){
+      this.change();
+    }
+//style active tab to primary color
+change(){
+  var  tabbar = document.getElementById("tabbar");
+  var btns = tabbar.getElementsByClassName("tab");
+  for(var i = 0;i <btns.length;i++){
+    btns[i].addEventListener("click", function() {
+      var current = document.getElementsByClassName("active");
+      current[0].className = current[0].className.replace(" active", "");
+      this.className += " active";
+    })
   }
+}
+
+
+
+
+// Loader
+    async presentLoading() {
+      this.loading = await this.loadingController.create({
+        message: "Wait ..."
+      });
+      return await this.loading.present();
+    }
 
   // Toaster
-  async presentToast(data) {
-    const toast = await this.toastController.create({
-      message: data,
-      duration: 3000
-    });
-    toast.present();
-  }
+    async presentToast(data) {
+      const toast = await this.toastController.create({
+        message: data,
+        duration: 3000
+      });
+      toast.present();
+    }
 }

@@ -1,9 +1,15 @@
 <ion-content>
-
-    <p style="margin-top: 20px; background: transparent; position: absolute; padding: 20px 20px 0 15px;">
-        <ion-icon size="large" (click)="back()" name="arrow-round-back" color="light"></ion-icon>
-    </p>
-    <h2 class="top-register">Register to kwik lipa</h2>
+  <ion-toolbar color="primary">
+      <ion-buttons slot="start"> 
+        <p >
+            <ion-icon size="large" (click)="back()" name="arrow-round-back" color="light"></ion-icon>
+        </p>
+      </ion-buttons>
+      <ion-title text-center>Register to kwik lipa
+        <!-- <h2 class="top-register">Register to kwik lipa</h2> -->
+      </ion-title>
+  </ion-toolbar>
+    
 
     <div class="bg-text">
 
@@ -73,7 +79,7 @@
             <ion-list>
                 <div class="form-group">
                     <ion-buttons class="button-create-account">
-                        <ion-button class="ion-text-center" [disabled]="!loginform.valid"><b>CREATE ACCOUNT</b>
+                        <ion-button class="ion-text-center" [disabled]="!loginform.valid" (click)="register()"><b>CREATE ACCOUNT</b>
                         </ion-button>
                     </ion-buttons>
                 </div>

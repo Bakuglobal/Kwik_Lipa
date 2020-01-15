@@ -77,7 +77,7 @@ getList(id) {
   }
 
 
-    ///  GET SHOPS PRODUCTS
+    //  GET SHOPS PRODUCTS
   getshopsproduct(barcode,shop){
 
       let headers = new HttpHeaders();
@@ -130,6 +130,7 @@ getList(id) {
           if(this.platform.is('android')){
             token = await this.firebaseNative.getToken()
             console.log('token is ==>'+ token)
+            alert(token);
           }
           //for ion devices
           if(this.platform.is('ios')){
@@ -155,8 +156,8 @@ getList(id) {
 
         }
 
-        //listen to notifications
-        lisetnToNotification(){
+// listen to notifications
+        listenToNotification(){
           return this.firebaseNative.onNotificationOpen();
         }
 

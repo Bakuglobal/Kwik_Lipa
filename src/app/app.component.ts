@@ -50,7 +50,7 @@ export class AppComponent {
       active: false
     },
     {
-      title: 'Transactions',
+      title: 'My Orders',
       url: '/tabs/transactions',
       icon: 'pulse',
       active: false
