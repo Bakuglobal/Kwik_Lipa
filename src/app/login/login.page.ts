@@ -74,7 +74,7 @@ export class LoginPage implements OnInit {
       async setUpNotfications() {
           //get token
           this.db.getToken();
-          this.db.lisetnToNotification().pipe(
+          this.db.listenToNotification().pipe(
             tap(msg => {
               this.toasted(msg);
             })

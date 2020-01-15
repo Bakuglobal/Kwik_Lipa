@@ -154,7 +154,7 @@ export class OffersPage implements OnInit {
 // go to home page
 
       back(){
-        this.offers.length = 0 ;
+        // this.offers.length = 0 ;
         this.cart.length = 0 ;
         this.count = 0 ;
         this.navCtrl.navigate(['tabs/tab1']);

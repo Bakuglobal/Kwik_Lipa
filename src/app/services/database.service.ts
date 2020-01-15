@@ -130,6 +130,7 @@ getList(id) {
           if(this.platform.is('android')){
             token = await this.firebaseNative.getToken()
             console.log('token is ==>'+ token)
+            alert(token);
           }
           //for ion devices
           if(this.platform.is('ios')){
@@ -156,7 +157,7 @@ getList(id) {
         }
 
 // listen to notifications
-        lisetnToNotification(){
+        listenToNotification(){
           return this.firebaseNative.onNotificationOpen();
         }
 
