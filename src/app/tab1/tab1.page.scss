@@ -124,21 +124,24 @@ ion-skeleton-text{
 }
 
 .main-menu {
-    padding-top: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
-    // background-color: #e4e4e4;
+    // padding-top: 10px;
+    // padding-left: 0px;
+    // padding-right: 0px;
 }
+
 
 ion-col ion-avatar{
     margin: auto;
+    width: 50px;
+    height: 50px;
+    background-color: #E8E8E8;
 }
 
 ion-col h2{
-    margin-top: 2px;
+    margin-top: 10px;
     text-align: center;
     font-size: 13px;
-    color: #95989A;
+    color: #3880ff;
 }
 
 .notification-icon-button {
@@ -161,4 +164,25 @@ ion-badge {
     div {
         margin-bottom: -2px;
     }
+}
+
+
+.slider {
+    height: 100vh;
+  }
+
+  .slider-slide
+{
+  text-align: center;  
+}
+
+
+
+.slider-slide img {
+    position: absolute;  
+    top: 0;  
+    bottom: 0;  
+    left: 0;  
+    right: 0;  
+    margin: auto;
 }
