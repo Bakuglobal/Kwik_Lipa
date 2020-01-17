@@ -1,19 +1,17 @@
 <ion-header style="background-color: #3880ff">
   <ion-toolbar color="primary" >
-      <ion-buttons slot="start">
-          <ion-button (click)="back()">
-            <ion-icon name="arrow-round-back"></ion-icon>
-            
-          </ion-button>
-      </ion-buttons>
-      <ion-buttons slot="end">
-        <ion-button (click)="sendCart()" >
-          <ion-icon size="large" name="cart"></ion-icon>
-          <ion-badge color="light">{{count}}</ion-badge>
-        </ion-button>
-      </ion-buttons>
-    <ion-title class="shopname">{{shopSelected}}</ion-title>
-   
+        <ion-buttons slot="start">
+            <ion-button (click)="back()">
+                <ion-icon name="arrow-round-back"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+        <ion-title class="shopname">{{shopSelected}}</ion-title>
+
+        <ion-buttons slot="end" (click)="sendCart()" style="padding-right: 5px;">
+            <ion-icon size="large" name="cart" ></ion-icon><br>
+            <ion-badge color="danger"><div>{{count}}</div></ion-badge>
+        </ion-buttons>
   </ion-toolbar>
  
 </ion-header>

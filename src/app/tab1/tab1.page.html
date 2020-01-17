@@ -16,10 +16,85 @@
 
 
 <ion-content [scrollEvents]="true" (ionScroll)="onScroll($event)">
+    <div  *ngIf="!selectShop" style="width: 100%;">
+        
+        <div style="background-color: #F5F5F5; height: 160px;">
+            <ion-row style="margin-left: 8px; margin-bottom: 8px; padding-top: 10px;">
+                <ion-col>Shop categories</ion-col>
+            </ion-row>
+            <ion-row class="main-menu" style="background-color: white; padding-top: 5px; margin-left: 8px; margin-right: 8px;">
+                <ion-col size="2" (click)="scanAndPay()">
+                    <ion-avatar>
+                        <img class="avatar-img" src="/assets/images/shop_categories/grocery.svg" style="width: 83%; padding-left: 10px;">
+                    </ion-avatar>
+                    <h2>Grocery</h2>
+                </ion-col>
+
+                <ion-col size="2" (click)="pickPayCollect()">
+                    <ion-avatar>
+                        <img class="avatar-img" src="/assets/images/shop_categories/shirt.svg" style="width: 83%; padding-left: 10px;">
+                    </ion-avatar>
+                    <h2>Men</h2>
+                </ion-col>
+
+                <ion-col size="2" (click)="pickPayCollect()">
+                    <ion-avatar>
+                        <img class="avatar-img" src="/assets/images/shop_categories/smartphone.svg" style="width: 83%; padding-left: 10px;">
+                    </ion-avatar>
+                    <h2>Phones</h2>
+                </ion-col>
+
+                <ion-col size="2" (click)="shoppingList()">
+                    <ion-avatar>
+                        <img class="avatar-img" src="/assets/images/shop_categories/stationery.svg" style="width: 83%; padding-left: 10px;">
+                    </ion-avatar>
+                    <h2>Stationery</h2>
+                </ion-col>
+
+                <ion-col size="2" (click)="shoppingList()">
+                    <ion-avatar>
+                        <img class="avatar-img" src="/assets/images/shop_categories/monitor.svg" style="width: 83%; padding-left: 10px;">
+                    </ion-avatar>
+                    <h2>Electronics</h2>
+                </ion-col>
+
+                <ion-col size="2" (click)="shoppingList()">
+                    <ion-avatar>
+                        <img class="avatar-img" src="/assets/images/shop_categories/more.svg">
+                    </ion-avatar>
+                    <h2>See more</h2>
+                </ion-col>
+            </ion-row>
+        </div>
+
+        <!-- SHOP -->
+        <div style="background-color: #EFF3FF; height: 160px;">
+            <div>
+                <ion-row style="margin-left: 8px; margin-bottom: 8px; padding-top: 10px;">
+                    <ion-col>Shops</ion-col>
+
+                    
+
+                </ion-row>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- <ion-slide-box> -->
+
+        <ion-slide>
+        
+        <img src="/assets/images/offer2.jpg" style="width:300px;height:300px;margin:auto;display:block" >
+        
+        </ion-slide>
+        
+        <!-- </ion-slide-box> -->
 
     <!-- MAIN  MENU -->
     <div *ngIf="!selectShop"> 
-                <ion-row class="main-menu">
+                <!-- <ion-row class="main-menu">
                     <ion-col size="4" (click)="scanAndPay()">
                         <ion-avatar>
                             <img class="avatar-img" src="/assets/images/scan.svg">
@@ -40,11 +115,11 @@
                         </ion-avatar>
                         <h2>Shopping lists</h2>
                     </ion-col>
-                </ion-row>
+                </ion-row> -->
 
 
                 <!-- SPECIL OFFER -->
-                <ion-row class="special-offer">
+                <!-- <ion-row class="special-offer">
                     <ion-slides  class="imageContainer" pager="true" [options]="slideOpts" style="border-bottom-color: yellow;">   
                         <ion-slide>
                             <img src="/assets/images/offer1.jpg">
@@ -54,12 +129,12 @@
                             <img src="/assets/images/offer2.jpg">
                         </ion-slide>
                     </ion-slides>
-                </ion-row>
+                </ion-row> -->
 
 
 
                     <!-- ADVERTS -->
-                    <ion-row class="advert">
+                    <!-- <ion-row class="advert">
                         <ion-slides  class="imageContainer" pager="true" [options]="slideOpts">   
                             <ion-slide>
                                 <img src="/assets/images/images.jpg">
@@ -69,9 +144,9 @@
                                 <img src="/assets/images/images1.jpg">
                             </ion-slide>
                         </ion-slides>
-                    </ion-row><br><br>
+                    </ion-row><br><br> -->
 
-</div>
+    </div>
 
 
 
