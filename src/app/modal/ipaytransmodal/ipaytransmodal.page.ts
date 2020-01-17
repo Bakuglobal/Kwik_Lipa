@@ -45,17 +45,12 @@ export class IpaytransmodalPage implements OnInit {
     // this.removeBannerAd();
   }
 
-  // removeBannerAd(){
-  //   this.admobFree.banner.remove();
-  // }
+ 
   async getUser() {
     let user = await this.fireApi.getCurrentUser();
     await this.fireApi
       .getUserDetails(user.uid)
-      .snapshotChanges()
-      .map(changes => {
-        return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-      })
+      .valueChanges()
       .subscribe(usr => {
         console.log(usr);
         this.showData(usr);
@@ -108,10 +103,7 @@ export class IpaytransmodalPage implements OnInit {
     this.fireApi.updateUserEmail(this.settingsEmail.email, this.settings.email, oldpassword).then(data => {
       this.fireApi
       .getUserDetails(user.uid)
-      .snapshotChanges()
-      .map(changes => {
-        return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-      })
+      .valueChanges()
       .subscribe(user => {
         let key = user[0].key;
         this.settings.email = this.settingsEmail.email;

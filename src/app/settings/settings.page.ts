@@ -6,6 +6,7 @@ import { Observable } from "rxjs/Rx";
 import { User } from "../models/user";
 import { ToastController, LoadingController, AlertController } from "@ionic/angular";
 import { Router } from "@angular/router";
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: "app-settings",
@@ -13,16 +14,9 @@ import { Router } from "@angular/router";
   styleUrls: ["./settings.page.scss"]
 })
 export class SettingsPage implements OnInit {
-  settings = {
-    phone: null,
-    name: null,
-    email: null,
-    country: null,
-    gender: null
-  };
+  
 
-
-  user: Observable<User[]>;
+  User: User ;
 
   settingsPassword = {
     newPassword: ""
@@ -48,76 +42,53 @@ export class SettingsPage implements OnInit {
     public loadingController: LoadingController,
     public toastController: ToastController,
     public alertCtrl: AlertController,
-    public navCtrl: Router
-  ) { }
+    public navCtrl: Router,
+    public database: AngularFirestore
+  ) 
+  { 
+    this.userID = localStorage.getItem('userID');
+    this.getUser(this.userID);
+  }
 
   ngOnInit() {
-    this.getUser();
+   
     this.getDate();
   }
 
-  //date
+  // get date
   getDate(){
     this.todaysdate = new Date().getTime();
   }
 
-  async getUser() {
-    let user = await this.fireApi.getCurrentUser();
-    await this.fireApi
-      .getUserDetails(user.uid)
-      .snapshotChanges()
-      .map(changes => {
-        return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-      })
-      .subscribe(usr => {
-        console.log(usr);
-        this.showData(usr);
-      });
+  getUser(id){
+    this.database.collection('users').doc(id).valueChanges().subscribe(res =>{
+      this.User = res ;
+    })
   }
+  // async getUser() {
+  //   let user = await this.fireApi.getCurrentUser();
+  //   await this.fireApi
+  //     .getUserDetails(user.uid)
+  //     .snapshotChanges()
+  //     .map(changes => {
+  //       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+  //     })
+  //     .subscribe(usr => {
+  //       console.log(usr);
+  //       this.showData(usr);
+  //     });
+  // }
 
-  showData(user) {
-    this.settings.phone = user[0].phone;
-    this.settings.name = user[0].name;
-    this.settings.email = user[0].email;
-    this.settings.gender = user[0].gender;
-    this.settings.country = user[0].country;
-    this.settingsEmail.email = user[0].email;
-  }
+  // showData(user) {
+  //   this.settings.phone = user[0].phone;
+  //   this.settings.name = user[0].name;
+  //   this.settings.email = user[0].email;
+  //   this.settings.gender = user[0].gender;
+  //   this.settings.country = user[0].country;
+  //   this.settingsEmail.email = user[0].email;
+  // }
   
-  // edit mobile number
-
-  editMobileNumber(){
-    this.changeNumber();
-  } 
-  async changeNumber() {
-    let alert = await this.alertCtrl.create({
-      header: "ADD Mobile M-pesa number",
-      
-      inputs: [
-        {
-          name:'paybuddy',
-          placeholder:'Give this number a name'
-        },
-        {
-          name: 'phone',
-          placeholder: this.settings.phone ,
-        }
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel'
-        },
-        {
-          text: 'Save',
-          handler: data => {
-           // this.submit(data.password);
-          }
-        }
-      ]
-    });
-    alert.present();
-  }
+ 
 editPersonalDetails(){
   this.navCtrl.navigate(['ipaytransmodal']);
 }
@@ -133,29 +104,29 @@ editPersonalDetails(){
     // Save user information
 
     // Change Email 
-    this.fireApi.updateUserEmail(this.settingsEmail.email, this.settings.email, oldpassword).then(data => {
-      this.fireApi
-      .getUserDetails(user.uid)
-      .snapshotChanges()
-      .map(changes => {
-        return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-      })
-      .subscribe(user => {
-        let key = user[0].key;
-        this.settings.email = this.settingsEmail.email;
-        this.fireApi.updateOperationUsers(key, this.settings);
-        this.presentToast("Information updated successfully");
-        this.loading.dismiss();
-      }, error => {
-        this.loading.dismiss();
-        this.presentToast(error.message);
-      });
-      this.loading.dismiss();
-      this.presentToast(data);
-    }, error => {
-      this.loading.dismiss();
-      this.presentToast(error.message)
-    });
+    // this.fireApi.updateUserEmail(this.settingsEmail.email, this.settings.email, oldpassword).then(data => {
+    //   this.fireApi
+    //   .getUserDetails(user.uid)
+    //   .snapshotChanges()
+    //   .map(changes => {
+    //     return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+    //   })
+    //   .subscribe(user => {
+    //     let key = user[0].key;
+    //     this.settings.email = this.settingsEmail.email;
+    //     this.fireApi.updateOperationUsers(key, this.settings);
+    //     this.presentToast("Information updated successfully");
+    //     this.loading.dismiss();
+    //   }, error => {
+    //     this.loading.dismiss();
+    //     this.presentToast(error.message);
+    //   });
+    //   this.loading.dismiss();
+    //   this.presentToast(data);
+    // }, error => {
+    //   this.loading.dismiss();
+    //   this.presentToast(error.message)
+    // });
 
     // Change password
     if (

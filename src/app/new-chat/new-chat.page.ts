@@ -95,10 +95,7 @@ setFilteredItems() {
 }
 getUserProfile(id){
   this.fireApi.getUserDetails(id)
-  .snapshotChanges()
-  .map(changes => {
-    return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-  })
+  .valueChanges()
   .subscribe(user => {
     console.log("USER--"+ user[0]);
     this.showData(user)

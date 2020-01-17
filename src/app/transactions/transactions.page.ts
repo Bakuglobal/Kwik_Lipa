@@ -139,7 +139,7 @@ change(){
 
 //get oders
 getOrders(type){
-    this.fs.collection('Orders').ref.where('userID','==','8FxNjxpLCKQLFSZPzOcaUrYSK2M2').where('status','==',type)
+    this.fs.collection('Orders').ref.where('userID','==',this.userID).where('status','==',type)
     .onSnapshot(querySnapshot => {
       querySnapshot.docChanges().forEach(change => {
         if (change.type === 'added') {

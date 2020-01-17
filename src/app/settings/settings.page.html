@@ -25,7 +25,7 @@
         </ion-col>
         <ion-col size="0.7"></ion-col>
         <ion-col > 
-            <span style="padding-top: 15px">{{settings.name}}</span>
+            <span style="padding-top: 15px">{{User.firstName}}</span>
         </ion-col>
       </ion-row>
     </ion-card-title>
@@ -40,7 +40,7 @@
          
         </ion-row>
         <ion-list>
-            <label class="labels" style="padding-left: 20px"> Primary M-pesa :&nbsp; {{settings.phone}}</label>
+            <label class="labels" style="padding-left: 20px"> Primary M-pesa :&nbsp; {{User.phone}}</label>
             
             <p></p>
         </ion-list>
@@ -51,13 +51,13 @@
         <ion-col size="2"><ion-button fill="clear" (click)="editPersonalDetails()"><b>EDIT</b></ion-button></ion-col>
       </ion-row>
       <ion-list>
-          <label class="labels" style="padding-left: 20px;">Name: &nbsp; {{settings.name}}</label><br>
+          <label class="labels" style="padding-left: 20px;">Name: &nbsp; {{User.firstName}}</label><br>
           <p></p>
-          <label class="labels" style="padding-left: 20px">Email:&nbsp; &nbsp; {{settingsEmail.email}}</label><br>
+          <label class="labels" style="padding-left: 20px">Email:&nbsp; &nbsp; {{User.email}}</label><br>
           <p></p>
-          <label class="labels" style="padding-left: 20px">Gender: &nbsp; {{settings.gender}}</label><br>
+          <label class="labels" style="padding-left: 20px">Gender: &nbsp; {{User.gender}}</label><br>
           <p></p>
-          <label class="labels" style="padding-left: 20px">Country: &nbsp; {{settings.country}}</label>
+          <label class="labels" style="padding-left: 20px">Country: &nbsp; {{User.residence}}</label>
           <p></p>
       </ion-list>
   </ion-card>

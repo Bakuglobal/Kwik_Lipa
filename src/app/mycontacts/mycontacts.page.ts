@@ -177,7 +177,7 @@ cancel(){
 
 
     // Share via email
-       let email =  this.ref.email ;
+       let email =  this.ref.User.email ;
     this.socialSharing.shareViaEmail('This is my shopping List', 'Shopping List', [email]).then(() => {
       // Success!
     }).catch(error => {

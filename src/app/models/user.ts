@@ -1,9 +1,12 @@
 export class User {
-    key?: any;
-    name?: any;
-    phone?: any;
-    email?: any;
-    country?: any;
+    email?: string;
+    password?: any;
+    phone?: any ;
+    firstName?: any;
+    lastName?: any;
+    confPassword?: any;
     gender?: any;
-    wallet?: number;
+    residence?: any;
+    dob?: any;
+    wallet?: any
 }

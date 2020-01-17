@@ -48,6 +48,7 @@ import { ScannedModalPageModule } from './scanned-modal/scanned-modal.module';
 import { OffersPage } from './offers/offers.page';
 import { Firebase } from '@ionic-native/firebase/ngx';
 import { AppLauncher} from '@ionic-native/app-launcher/ngx';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 
 @NgModule({
@@ -94,7 +95,7 @@ import { AppLauncher} from '@ionic-native/app-launcher/ngx';
     Contacts,
     Geolocation,
     AppLauncher,
-    // GooglePlus,
+    OneSignal,
     SplashScreen,
     BarcodeScanner,
     FirestoreService,

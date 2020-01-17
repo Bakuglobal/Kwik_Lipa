@@ -120,11 +120,7 @@ getMpesaResponse(){
         this.fireApi.getCurrentUser().then(results => {
           this.fireApi
             .getUserDetails(results.uid)
-            .snapshotChanges()
-            .map(changes => {
-              return changes.map(c => ({
-                key: c.payload.key, ...c.payload.val }));
-            })
+            .valueChanges()
             .subscribe(user => {
               this.sendReceipt(user);
             })});
@@ -148,11 +144,7 @@ receipt(){
   this.fireApi.getCurrentUser().then(results => {
     this.fireApi
       .getUserDetails(results.uid)
-      .snapshotChanges()
-      .map(changes => {
-        return changes.map(c => ({
-          key: c.payload.key, ...c.payload.val }));
-      })
+      .valueChanges()
       .subscribe(user => {
         this.sendReceipt(user);
         console.log(user);

@@ -35,34 +35,29 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class FirestoreService {
-  base_url_ipay = 'https://kwik.herokuapp.com/';
+  //variables
+      private pathSupport = '/support';
+      private pathShops = '/shops';
+      public hiddenTabs: boolean;
+      operationUser: AngularFireList<User> = null;
+      operationSupport: AngularFireList<Support> = null;
+      operationShops: AngularFireList<Shops> = null;
+      public products: AngularFireList<any>;
+      private cart = [] ;
+      authState: any = null;
 
-  HASH256 = '/generateSha256';
-  TRANSACT = 'transact';
-  MPESA = 'mpesa';
+
+
+  //objects
+      usermsg = {} ;
+
   
-  public hiddenTabs: boolean;
 
 
-  private pathUsers = '/users';
-  private pathSupport = '/support';
-  private pathShops = '/shops';
-  private pathProducts= '/products';
+  // private pathUsers = '/users';
+  
 
-  operationUser: AngularFireList<User> = null;
-  operationSupport: AngularFireList<Support> = null;
-  operationShops: AngularFireList<Shops> = null;
-  // operationProducts: AngularFireList<Products> = null;
-
-  public products: AngularFireList<any>;
-    
-
-  private cart = [] ;
-  authState: any = null;
-
-  // data: Ipaydata;
-  usermsg = {} ;
-  // mpesaData: Mpesa; 
+  
 
   constructor(
     public db: AngularFireDatabase,
@@ -70,55 +65,58 @@ export class FirestoreService {
     public nav: Router,
     public http: HttpClient,
     public modalCtrl: ModalController,
+    public fs: AngularFirestore
    
     
   ) {
-    this.authState = this.af.authState;
-    this.operationUser = db.list(this.pathUsers);
-    this.operationSupport = db.list(this.pathSupport);
-    this.operationShops = db.list(this.pathShops);
+        this.authState = this.af.authState;
+        // this.operationUser = db.list(this.pathUsers);
+        this.operationSupport = db.list(this.pathSupport);
+        this.operationShops = db.list(this.pathShops);
 
-    this.products = db.list('/products');
+        this.products = db.list('/products');
 
-    this.af.authState.subscribe(auth => {
-      this.authState = auth;
+        this.af.authState.subscribe(auth => {
+        this.authState = auth;
     });
   }
 
-  viewMessage(){
-    const msgRef : firebase.database.Reference = firebase.database().ref(this.pathSupport);
-    msgRef.on('value', msgSnapshot => {
-      this.usermsg = msgSnapshot.val();
-    });
-    return this.usermsg ;
-  }
+//get message send to support
+    viewMessage(){
+      const msgRef : firebase.database.Reference = firebase.database().ref(this.pathSupport);
+      msgRef.on('value', msgSnapshot => {
+        this.usermsg = msgSnapshot.val();
+      });
+      return this.usermsg ;
+    }
+
 //------share shopname across pages
- private dataSource = new BehaviorSubject("Shopname");
-    serviceData = this.dataSource.asObservable();
+  private dataSource = new BehaviorSubject("Shopname");
+      serviceData = this.dataSource.asObservable();
 
-    changeData(data: any) {
-      this.dataSource.next(data);
+      changeData(data: any) {
+        this.dataSource.next(data);
+      }
+//------share cart across pages
+    private cartDetails = new BehaviorSubject("cart");
+      serviceCart = this.cartDetails.asObservable();
+      shareCartDetails(details: any){
+        this.cartDetails.next(details);
+      }
+//---share cart total across a page
+    private cartTotal = new BehaviorSubject("total");
+    serviceTotal = this.cartTotal.asObservable();
+    shareCartTotal(total: any){
+      this.cartTotal.next(total);
     }
-  //------share cart across pages
-  private cartDetails = new BehaviorSubject("cart");
-    serviceCart = this.cartDetails.asObservable();
-    shareCartDetails(details: any){
-      this.cartDetails.next(details);
+//----share phone numbers for checkout
+    private phone = new BehaviorSubject("254");
+    servicePhone = this.phone.asObservable();
+    sharePhoneNumber(number: any){
+      this.phone.next(number);
     }
-  //---share cart total across a page
-  private cartTotal = new BehaviorSubject("total");
-   serviceTotal = this.cartTotal.asObservable();
-   shareCartTotal(total: any){
-     this.cartTotal.next(total);
-   }
-  //----share phone numbers for checkout
-  private phone = new BehaviorSubject("254");
-   servicePhone = this.phone.asObservable();
-   sharePhoneNumber(number: any){
-     this.phone.next(number);
-   }
   
-   // share shopBy Tag
+// share shopBy Tag
 
     private shopBy = new BehaviorSubject("shopBy");
     serviceshopBy = this.shopBy.asObservable();
@@ -128,7 +126,7 @@ export class FirestoreService {
 
 
 
-//keep track of cart items
+//Handle the cart
     getCart(){
       return this.cart ;
     }
@@ -138,31 +136,20 @@ export class FirestoreService {
     removeProduct(){
       this.cart.pop();
     }
-  register(email: any, password: any, phone : any, firstname : any, lastname: any,gender: any,dob: Date, residence: any) {
-    return this.af.auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((authData: any) => {
-        localStorage.setItem('userID',authData.user.uid);
-        let value = {
-          FirstName: firstname,
-          LastName: lastname,
-          ehone: phone,
-          email: email,
-          Gender: gender,
-          Dob: dob,
-          Residence: residence
-        };
+// registration process
+    register(email: string,password: any){
+      return this.af.auth.createUserWithEmailAndPassword(email,password)
+    }
+    createUserProfile(data,id){
+     return this.fs.collection('users').doc(id).set(data)
 
-        this.operationUser
-          .update(authData.user.uid, value)
-          .catch(error => console.log(error));
-      });
-  }
-
+    }
+ 
+// login process
   login(email: any, password: any) {
     return this.af.auth.signInWithEmailAndPassword(email, password);
   }
-
+//log out process
   logout() {
     this.af.auth.signOut().then(
       resp => {
@@ -175,7 +162,7 @@ export class FirestoreService {
     );
   }
  
-
+//get the user profile
   getCurrentUser() {
     return new Promise<any>((resolve, reject) => {
       var user = firebase.auth().onAuthStateChanged(function (user) {
@@ -187,7 +174,7 @@ export class FirestoreService {
       });
     });
   }
-
+//change user password
   updatePassword(newPassword, email, oldPassword) {
     return new Promise((resolve, reject) => {
       firebase
@@ -210,26 +197,28 @@ export class FirestoreService {
     });
   }
 
-  // ---------------------------------------------------------------------------------------------------------------
-  //-----------------------------------------------------------------------------------------------------------------
-
-  sendSupport(data) {
-    return this.operationSupport.push(data);
-  }
-  
+//send message to support
+    sendSupport(data) {
+      return this.operationSupport.push(data);
+    }
+//get the list of shops   
   getShops(): AngularFireList<Shops> {
     return this.operationShops;
   }
+//get the message send to support
  getuserMessage() : AngularFireList<Support> {
    return this.operationSupport;
  }
-  getUserDetails(key) {
-    return this.db.list('users', ref => {
-      let q = ref.orderByKey().equalTo(key);
-      return q;
-    });
-  }
-
+  // getUserDetails(key) {
+  //   return this.db.list('users', ref => {
+  //     let q = ref.orderByKey().equalTo(key);
+  //     return q;
+  //   });
+  // }
+getUserDetails(id){
+  return this.fs.collection('users').doc(id);
+}
+//save the transactions history
   submitProduct(data, userID, transactionID,shopname) {
     data.forEach(element => {
       element.created_at = this.convertDateTime(new Date());
@@ -238,31 +227,31 @@ export class FirestoreService {
     });
   }
 
- 
+//get a signle shop
+    shop(key) {
+      return this.db.list('shops/' + key);
+    }
 
-  shop(key) {
-    return this.db.list('shops/' + key);
-  }
+  // getScannedProducts(shopKey, barcode) {
+  //   return this.db.list(`products/${shopKey}`, ref => {
+  //     let q = ref.orderByChild('barcode').equalTo(barcode);
+  //     return q;
+  //   });
+  // }
 
-  getScannedProducts(shopKey, barcode) {
-    return this.db.list(`products/${shopKey}`, ref => {
-      let q = ref.orderByChild('barcode').equalTo(barcode);
-      return q;
-    });
-  }
-
-  convertDateTime(date) {
-    let rsl = date.toString();
-    return rsl;
-  }
-
-  transactions(key) {
-    return this.db.list(`Transactions/${key}`);
-  }
-
+//convert date to string
+    convertDateTime(date) {
+      let rsl = date.toString();
+      return rsl;
+    }
+//get a signle transaction history
+    transactions(key) {
+      return this.db.list(`Transactions/${key}`);
+    }
+//delete a single transaction 
   clearTransactions(key) {
-    return this.db.list(`Transactions/${key}`).remove();
-  }
+      return this.db.list(`Transactions/${key}`).remove();
+    }
 
   getDeepTransactions(key, transaID) {
     return this.db.list(`Transactions/${key}/${transaID}`);

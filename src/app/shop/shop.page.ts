@@ -140,10 +140,7 @@ data: any ;
     let user = await this.fireApi.getCurrentUser();
     this.userSub = this.fireApi
       .getUserDetails(user.uid)
-      .snapshotChanges() 
-      .pipe(map(changes => {
-        return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-      }))
+      .valueChanges()
       .subscribe(usr => {
         console.log(usr);
       this.showData(usr);
@@ -359,11 +356,7 @@ async checkNumber(){
            this.userPay = this.fireApi.getCurrentUser().then(results => {
               this.fireApi
                 .getUserDetails(results.uid)
-                .snapshotChanges()
-                .map(changes => {
-                  return changes.map(c => ({
-                    key: c.payload.key, ...c.payload.val }));
-                })
+                .valueChanges()
                 .subscribe(user => {
                   console.log(user);
                   let amount = this.getTotalCart();
