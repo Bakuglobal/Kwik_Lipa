@@ -70,7 +70,7 @@ const routes: Routes = [
       { path: 'welcome', loadChildren: () => import('../welcome/welcome.module').then(m=>m.WelcomePageModule) },
       { path: 'transactions', loadChildren: () => import('../transactions/transactions.module').then(m=>m.TransactionsPageModule),canActivate : [AuthService]},
        { path: 'support', loadChildren: () => import('../support/support.module').then(m=>m.SupportPageModule),canActivate : [AuthService] },
-      { path: 'settings', loadChildren: () => import('../settings/settings.module').then(m=>m.SettingsPageModule),canActivate : [AuthService] },
+      { path: 'settings', loadChildren: () => import('../settings/settings.module').then(m=>m.SettingsPageModule), canActivate : [AuthService] },
       { path: 'welcome', loadChildren:() =>import( '../welcome/welcome.module').then(m => m.WelcomePageModule),canActivate: [LogsService]},
       {path : 'shop', loadChildren: () => import ('../shop/shop.module').then(m => m.ShopPageModule)},
       {path: 'cart', loadChildren: () => import ('../cart/cart.module').then(m=>m.CartPageModule),canActivate : [AuthService]},

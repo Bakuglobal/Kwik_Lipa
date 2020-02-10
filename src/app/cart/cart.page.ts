@@ -114,9 +114,7 @@ myorders(){
           this.cart.splice(index,1);
           let ct = this.items() ;
           this.fireApi.setCount(ct);
-          if(this.cart.length = 0){
-            
-          }
+          
         }
   //get total of items in cart
         items(){
