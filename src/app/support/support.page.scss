@@ -22,3 +22,42 @@
     background-size: cover;
     margin: 0 auto;
 }
+.chat {
+    display: flex;
+    flex-direction: column;
+    .me{
+        position: relative;
+        float: right;
+        margin: 20px 5px 0px;
+        max-width: 80%;
+        align-self: flex-end;
+        padding: 6px 10px 7px;
+        border-radius: 15px 15px 0px ;
+        font-size: medium;
+        background: var(--ion-color-primary);
+        line-height: 1.4;
+        animation-name: fadeIn;
+        animation-duration: 3s;
+          
+
+    }
+
+    .you{
+        position: relative;
+        float: left;
+        margin: 15px;
+        max-width: 80%;
+        align-self: flex-start;
+        padding: 6px 10px 7px;
+        border-radius: 0px 15px 15px ;
+        background: #32de23;
+        font-size: medium;
+        line-height: 1.4;
+
+        .name{
+            font-size: small;
+            font-weight: bold;
+        }
+
+    }
+}

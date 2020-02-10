@@ -10,11 +10,11 @@
     padding: 3%;
     height: 35px;
     box-shadow: 0px;
-    border: thin solid #e3e3e3;
+    border: thin solid var(--ion-color-primary);;
     border-radius: 5px;
     width: 100%;
     text-align: left;
-    color: #2979ff;
+    color: var(--ion-color-primary);
 }
 
 .btn {

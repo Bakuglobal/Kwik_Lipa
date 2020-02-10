@@ -1,80 +1,94 @@
-
 <ion-header style="background-color: #3880ff;">
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
+    <ion-buttons slot="end" (click)="notifications()" style="padding-right: 5px;">
+      <ion-icon size="large" name="notifications"></ion-icon><br>
+      <ion-badge color="danger">
+        <div *ngIf="count != 0">{{count}}</div>
+      </ion-badge>
+    </ion-buttons>
     <ion-title>
-      <span >My Account
+      <span>My Account
       </span>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content >
-<!-- Header display banner-->
-<ion-card color="primary" style="--padding-start:0"  class="display-header">
-  
-    <ion-card-title style="height: 100%">
-      <ion-row>
-        <ion-col size="1">
-          
-          <!-- <ion-badge style="padding-left:0 ; height: 100%;color: white"> -->
-            <ion-icon size="large"name="person"></ion-icon>
-          <!-- </ion-badge> -->
-        </ion-col>
-        <ion-col size="0.7"></ion-col>
-        <ion-col > 
-            <span style="padding-top: 15px">{{User.firstName}}</span>
-        </ion-col>
-      </ion-row>
-    </ion-card-title>
+<ion-content>
 
-  </ion-card>
 
-            <!-- Personal information-->
-  <div>
+  <!-- Personal information-->
+  <div *ngIf="User != undefined">
     <ion-card>
-        <ion-row>
-          <ion-col><h3>Account Mobile Number</h3></ion-col>
-         
-        </ion-row>
-        <ion-list>
-            <label class="labels" style="padding-left: 20px"> Primary M-pesa :&nbsp; {{User.phone}}</label>
-            
-            <p></p>
-        </ion-list>
+      <ion-item>
+        <ion-col>
+          <h3 style="color: var(--ion-color-primary);">Loyalty Points</h3>
+        </ion-col>
+
+      </ion-item>
+      <ion-item>
+        <ion-select placeholder="select a Shop" [(ngModel)]="shopSelected" slot="start">
+          <ion-select-option *ngFor="let shop of shops" style="font-size: small;">{{shop.name}}</ion-select-option>
+        </ion-select>
+        <span slot="end"
+          style="font-size: 1.7em;font-weight: bold;color: var(--ion-color-primary);">{{wallet | number:'1.1-5'}}</span>
+        <!-- <label class="labels" style="padding-left: 20px"> Primary M-pesa :&nbsp; {{User.phone}}</label> -->
+      </ion-item>
     </ion-card>
     <ion-card>
-    <ion-row>
-        <ion-col><h3>Personal Information</h3></ion-col>
-        <ion-col size="2"><ion-button fill="clear" (click)="editPersonalDetails()"><b>EDIT</b></ion-button></ion-col>
-      </ion-row>
+      <ion-item no-lines>
+        <ion-col>
+          <h3 style="color: var(--ion-color-primary);">Personal Information</h3>
+        </ion-col>
+        <ion-col size="2">
+          <ion-icon name="create" color="primary" (click)="editPersonalDetails()"></ion-icon>
+        </ion-col>
+      </ion-item>
       <ion-list>
-          <label class="labels" style="padding-left: 20px;">Name: &nbsp; {{User.firstName}}</label><br>
-          <p></p>
-          <label class="labels" style="padding-left: 20px">Email:&nbsp; &nbsp; {{User.email}}</label><br>
-          <p></p>
-          <label class="labels" style="padding-left: 20px">Gender: &nbsp; {{User.gender}}</label><br>
-          <p></p>
-          <label class="labels" style="padding-left: 20px">Country: &nbsp; {{User.residence}}</label>
-          <p></p>
+        <ion-label class="labels" style="padding-left: 20px;">Name: &nbsp; {{User.firstName}} {{User.lastName}}
+        </ion-label><br>
+        <p></p>
+        <ion-label class="labels" style="padding-left: 20px">Email:&nbsp; &nbsp; {{User.email}}</ion-label><br>
+        <p></p>
+        <p></p>
+        <ion-label class="labels" style="padding-left: 20px">Phone: &nbsp; {{User.phone}}</ion-label><br>
+        <p></p>
+        <ion-label class="labels" style="padding-left: 20px">Gender: &nbsp; {{User.gender}}</ion-label><br>
+        <p></p>
+        <ion-label class="labels" style="padding-left: 20px">Residence: &nbsp; {{User.residence}}</ion-label>
+        <p></p>
+        <ion-label class="labels" style="padding-left: 20px">D.O.B: &nbsp; {{dob | date : 'EEEE, MMMM d, y'}}
+        </ion-label>
+        <p></p>
       </ion-list>
-  </ion-card>
-  <ion-card >
-    <ion-row>
-      <ion-col><h3>My Subscription Status</h3></ion-col>
-     
-    </ion-row>
-    <ion-list>
-      <!--  <label class="labels" style="padding-left: 20px;color:#f2a703">Expiry Date :{{todaysdate | date: 'EEEE, MMMM d y, h:mm:ss a'}}</label> -->
-        
-        <p text-center>
-          <b>You are using a free premium version of this app </b>
-        </p>
-    </ion-list>
-</ion-card>
-  </div>
+    </ion-card>
+    <ion-card>
+      <ion-item>
+        <ion-col>
+          <h3 style="color: var(--ion-color-primary);">Notification Subscriptions</h3>
+        </ion-col>
 
+      </ion-item>
+      <ion-list>
+        <ion-label padding>Accept to Receive notifications from this shops</ion-label>
+        <ion-item text-center>
+          <ion-col size="3" *ngIf="!toggleOn">
+            <ion-icon name="notifications-off"></ion-icon>
+          </ion-col>
+          <ion-col size="3" *ngIf="toggleOn">
+            <ion-icon color="primary" name="notifications"></ion-icon>
+          </ion-col>
+          <ion-col>Kakila Organic</ion-col>
+          <ion-col size="3">
+            <ion-toggle [(ngModel)]="toggleOn" color="primary"></ion-toggle>
+          </ion-col>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+  </div>
   
+
+
 </ion-content>

@@ -1,41 +1,32 @@
-
-    <ion-header style="background-color: #3880ff;">
+<ion-header style="background-color: #3880ff;">
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title >
-      <span >My Orders</span>
+    <ion-buttons slot="end" (click)="notifications()" style="padding-right: 5px;">
+      <ion-icon size="large" name="notifications" ></ion-icon><br>
+      <ion-badge color="danger"><div *ngIf="count != 0">{{count}}</div></ion-badge>
+  </ion-buttons>
+
+    <ion-title>
+      <span>My Orders</span>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content >
+<ion-content>
+  <ion-segment (ionChange)="orderChange($event)">
+    <ion-segment-button value="past">
+      <ion-label>Past orders</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="open" checked>
+      <ion-label>Open orders</ion-label>
+    </ion-segment-button>
+  </ion-segment>
 
-  <!-- Header display banner-->
-  <!-- <ion-card color="primary" style="--padding-start:0;height: 50px;"  class="display-header">
-      <ion-card-title style="height: 100%">
-        <ion-row>
-          <ion-col size="1">
-            
-            <ion-badge style="padding-left:0 ; height: 100%; --color: white">
-              <ion-icon size="large"name="timer"></ion-icon>
-            </ion-badge>
-          </ion-col>
-          <ion-col size="0.7"></ion-col>
-          <ion-col > 
-              <span style="margin-top: 15px;font-size: 12pt;">Check past orders</span>
-          </ion-col>
-        </ion-row>
-      </ion-card-title>
-  
-    </ion-card>
- -->
-
-    
-<!-- Scan and pay transactions -->
-<div *ngIf="transactions.length > 0" style="margin-top: 100px;"> 
-  <ion-label padding color='primary'>Scan and Pay</ion-label>
+  <!-- Scan and pay transactions -->
+  <div style="margin-top: 10px;" *ngIf="!open">
+    <ion-label padding color='primary'>Scan and Pay</ion-label>
     <ion-list>
       <ion-item *ngFor="let trans of transactions" (click)="viewTransaction(trans)">
         <ion-avatar slot="start">
@@ -47,45 +38,174 @@
         </ion-label>
       </ion-item>
     </ion-list>
-</div>
-<!-- No Transactions -->
-
-    <div style="margin-top: 100px;text-align:center" *ngIf="transactions.length == 0 && myOrders.length == 0">
-      <ion-icon size="large" name="flash"></ion-icon><br>
-      <ion-label >You have no past Transactions</ion-label>
+    <div style="margin-top: 40px;margin-bottom: 30px;text-align:center" *ngIf="transactions.length == 0 ">
+      <ion-label>You have no scan and pay history</ion-label>
     </div>
+  </div>
+  <!-- No Transactions -->
+
+
 
   <!-- Pick Pay collect  -->
-  <div> 
+  <div [ngClass]="{'top': open == true}">
     <ion-label padding color='primary'>Pick Pay Collect</ion-label>
-    <div >
-      <ion-card padding *ngFor="let item of myOrders "   class="card"> 
-        <ion-icon name="funnel" style="float: left;" color="primary"></ion-icon><ion-label style="float: right;" color="warning">{{item.status}}</ion-label><br><br>
-        <div style="text-align:start;">
-          Order for {{item.products[0].product}}, {{item.products[1].product}}, {{item.products[2].product}}, {{item.products[3].product}} ...
+    <!-- OPen orders -->
+    <div *ngIf="open">
+      <ion-card padding *ngFor="let item of myOpenOrders " class="card">
+        <div *ngIf="!item.show">
+          <ion-icon name="funnel" (click)="showMore(item)" style="float: left;" color="primary"></ion-icon>
+          <ion-label style="float: right;" color="warning">{{item.OrderID}}</ion-label><br><br>
+          <div style="text-align:start;" (click)="viewOrder(item)">
+            Order for <ion-label *ngFor="let item of item.products">{{item.product}},</ion-label> ...
+          </div>
+          <span style="float: left;bottom: 0;margin-top: 10px;color:var(--ion-color-primary)">
+            {{item.shop}}
+          </span>
+          <span style="float: right;bottom:0;margin-top: 10px;color:var(--ion-color-primary)">
+            Pick Up : {{item.pickHour}} : {{item.pickMins}} {{item.pickDay}}
+          </span>
         </div>
-        <span style="float: left;bottom: 0;margin-top: 10px;color:var(--ion-color-primary)">
-          {{item.shop}}
-        </span>
-        <span style="float: right;bottom:0;margin-top: 10px;color:var(--ion-color-primary)" >
-          {{item.Date.toDate() | date: 'mm'}} Mins Ago
-        </span>
+        <div *ngIf="item.show">
+
+          <ion-card-title text-center (click)="showLess(item)">
+            <ion-icon name="arrow-dropup" color="primary" style="float: left;"></ion-icon>
+            {{item.OrderID}}<br>{{item.shop}}
+          </ion-card-title>
+          <ion-card-content>
+            <ion-row *ngFor="let item of item.products">
+              <ion-col>
+                {{item.product}}
+              </ion-col>
+              <ion-col>
+                {{item.currentprice}}
+              </ion-col>
+              <ion-col>{{item.quantity}}</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <span style="float: left;bottom:0;margin-top: 10px;color:var(--ion-color-primary);font-weight: bold;"
+                  (click)="viewOrder(item)">
+                  <ion-label>More ...</ion-label>
+                </span>
+                <span style="float: right;bottom:0;margin-top: 10px;color:var(--ion-color-primary)">
+                  Pick Up : {{item.pickHour}} : {{item.pickMins}} {{item.pickDay}}
+                </span>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+
+        </div>
       </ion-card>
-  </div>
-    <ion-tabs >
-      <ion-tab-bar slot="top" id="tabbar">
-      <ion-tab-button (click)="pastOrder('Accepted')" class="tab active">
-        <ion-label >PAST ORDERS</ion-label>
-      </ion-tab-button>
-      <ion-tab-button (click)="openOrder('open')" class="tab">
-        <ion-label>OPEN ORDERS</ion-label>
-      </ion-tab-button>
-    </ion-tab-bar>
-    </ion-tabs>
-    
+      <div style="margin-top: 40px;text-align:center" *ngIf="myOpenOrders.length == 0 ">
+        <ion-label>You have no pick pay collect history</ion-label>
+      </div>
+    </div>
+    <!-- Past   orders -->
+    <div *ngIf="past">
+      <!-- canceled orders -->
+      <ion-card padding *ngFor="let item of myPastOrders " class="card">
+        <div *ngIf="!item.show">
+          <ion-icon name="funnel" (click)="showMore(item)" style="float: left;" color="primary"></ion-icon>
+          <ion-label style="float: right;" color="warning">{{item.OrderID}}</ion-label><br><br>
+          <div style="text-align:start;" (click)="viewOrder(item)">
+            Order for <ion-label *ngFor="let item of item.products">{{item.product}},</ion-label> ...
+          </div>
+          <span style="float: left;bottom: 0;margin-top: 10px;color:var(--ion-color-primary)">
+            {{item.shop}}
+          </span>
+          <span style="float: right;bottom:0;margin-top: 10px;color:var(--ion-color-primary)">
+            Status : {{item.status}}
+          </span>
+        </div>
+        <div *ngIf="item.show">
+
+          <ion-card-title text-center (click)="showLess(item)">
+            <ion-icon name="arrow-dropup" color="primary" style="float: left;"></ion-icon>
+            {{item.OrderID}}<br>{{item.shop}}
+          </ion-card-title>
+          <ion-card-content>
+            <ion-row *ngFor="let item of item.products">
+              <ion-col>
+                {{item.product}}
+              </ion-col>
+              <ion-col>
+                {{item.currentprice}}
+              </ion-col>
+              <ion-col>{{item.quantity}}</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <span style="float: left;bottom:0;margin-top: 10px;color:var(--ion-color-primary);font-weight: bold;"
+                  (click)="viewOrder(item)">
+                  <ion-label>More ...</ion-label>
+                </span>
+                <span style="float: right;bottom:0;margin-top: 10px;color:var(--ion-color-primary)">
+                  Status : {{item.status}}
+                </span>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+
+        </div>
+      </ion-card>
+      <div style="margin-top: 40px;text-align:center" *ngIf="myPastOrders.length == 0 ">
+        <ion-label>You have no pick pay collect history</ion-label>
+      </div>
+      <!-- Paid orders -->
+      <ion-card padding *ngFor="let item of paidOrders " class="card">
+        <div *ngIf="!item.show">
+          <ion-icon name="funnel" (click)="showMore(item)" style="float: left;" color="primary"></ion-icon>
+          <ion-label style="float: right;" color="warning">{{item.OrderID}}</ion-label><br><br>
+          <div style="text-align:start;" (click)="viewOrder(item)">
+            Order for <ion-label *ngFor="let item of item.products">{{item.product}},</ion-label> ...
+          </div>
+          <span style="float: left;bottom: 0;margin-top: 10px;color:var(--ion-color-primary)">
+            {{item.shop}}
+          </span>
+          <span style="float: right;bottom:0;margin-top: 10px;color:var(--ion-color-primary)">
+            Status : {{item.status}}
+          </span>
+        </div>
+        <div *ngIf="item.show">
+
+          <ion-card-title text-center (click)="showLess(item)">
+            <ion-icon name="arrow-dropup" color="primary" style="float: left;"></ion-icon>
+            {{item.OrderID}}<br>{{item.shop}}
+          </ion-card-title>
+          <ion-card-content>
+            <ion-row *ngFor="let item of item.products">
+              <ion-col>
+                {{item.product}}
+              </ion-col>
+              <ion-col>
+                {{item.currentprice}}
+              </ion-col>
+              <ion-col>{{item.quantity}}</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <span style="float: left;bottom:0;margin-top: 10px;color:var(--ion-color-primary);font-weight: bold;"
+                  (click)="viewOrder(item)">
+                  <ion-label>More ...</ion-label>
+                </span>
+                <span style="float: right;bottom:0;margin-top: 10px;color:var(--ion-color-primary)">
+                  Status : {{item.status}}
+                </span>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+
+        </div>
+      </ion-card>
+      <div style="margin-top: 40px;text-align:center" *ngIf="paidOrders.length == 0 ">
+        <ion-label>You have no pick pay collect history</ion-label>
+      </div>
+    </div>
+
+
 
   </div>
-  
+
   <!-- fab placed to the top end 
   <ion-fab (click)="clearTransaction()" vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button>

@@ -41,22 +41,33 @@
 
 <!-- Display a list of products on offer -->
 
-    <div *ngIf="offers.length > 0">
-        <div class="row">
-            <div class="column" *ngFor="let item of offers">
-                <ion-card class="image-position" class="card-radius"> 
-                    <ion-card-header >
-                        <img class="image" src="{{item.image}}" (click)="viewProduct(item)"><hr>
-                        <ion-card-subtitle><b>{{item.product}} {{item.quantity}}</b></ion-card-subtitle>
-                        <ion-card-subtitle>Kshs: {{item.currentprice}} <small style="color: #fc4e4e;"><s>Kshs: {{item.initialprice}}</s></small></ion-card-subtitle>
-                        <ion-button expand="full" color="primary" style="margin-top: 5%;" (click)="addToCart(item)">
-                            <ion-icon slot="start" name="cart"></ion-icon>
-                           <div style=" font-size: 13px;">Add to cart</div> 
-                        </ion-button>
-                    </ion-card-header>
-                </ion-card>
-            </div>
-        </div>
-    </div>
+    <!-- FEATURED PRODUCTS -->
+    <div class="featured-products" *ngIf="offers.length > 0">
+      <div class="featured-products-title">
+          <div class="featured-products-title-left">Featured products</div>
+      </div>
+      <div class="featured-products-content" >
+          <ion-row >
+              <!-- FIRST ROW OF PRODUCTS -->
+              <ion-col class="featured-products-content-card" size="6" *ngFor="let item of offers">
+                  <div class="featured-products-content-card-image">
+                      <img src="{{item.image}}" (click)="viewProduct(item)">
+                  </div>
+                  <div class="featured-products-content-card-content">
+                      <div class="featured-products-content-card-content-title"padding>{{item.product}} {{item.quantity}}</div>
+                      <ion-row class="featured-products-content-card-content-description" padding>
+                          <ion-col size="">Ksh {{item.currentprice}}</ion-col>
+                      </ion-row>
+                      <ion-row style="width: 100%;">
+                        <ion-col size="12">
+                          <ion-button expand="full" (click)="addToCart(item)">Add to cart</ion-button>
+                        </ion-col>
+                      </ion-row>
+                  </div>
+              </ion-col>
+          </ion-row>
+      </div>
+  </div>
+  <!-- END OF FEATURED PRODUCTS -->
 
 </ion-content>

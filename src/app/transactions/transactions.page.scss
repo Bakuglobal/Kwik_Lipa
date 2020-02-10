@@ -1,7 +1,12 @@
 
-.active{
+.tab{
     color: var(--ion-color-primary);
+    font-size: medium;
+    font-weight: bold;
 }
 .card{
     border-radius: 10px;
+}
+.top {
+    margin-top: 10px;
 }

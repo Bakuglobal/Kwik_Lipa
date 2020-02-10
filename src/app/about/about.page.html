@@ -44,7 +44,7 @@
           </ion-col>
       </ion-row>
       <div *ngIf="item.children && item.open">
-        <ion-list *ngFor="let child of item.children; let j = index" no-padding >
+        <ion-list *ngFor="let child of item.children; let j = index" padding>
           <h3>{{child.info}}</h3>
         </ion-list>
       </div>

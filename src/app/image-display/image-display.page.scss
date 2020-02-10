@@ -1,0 +1,40 @@
+.close-fake {
+    --background: transparent;
+    ion-icon {
+        font-size: 2rem;
+    }
+    margin-top: 40px;
+}
+
+
+ion-content {
+    --background: #0098da;
+}
+
+ion-slide {
+    padding-top: 35%;
+    img {
+        height: 250px; 
+        width: 100%; 
+        object-fit: fill;
+    }
+}
+
+
+// LIKE COMMENT AND SHARE
+.like-comment-share {
+    position: absolute;
+    bottom: 0px; 
+    width: 100%;
+    ion-row {
+        padding: 0px; 
+        text-align: center;
+        ion-col ion-button {
+            font-size: 10px;  
+            font-size: 12px;
+            ion-icon {
+                width: 15px;
+            }
+        }
+    }
+}

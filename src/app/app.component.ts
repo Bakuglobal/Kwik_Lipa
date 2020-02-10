@@ -21,14 +21,12 @@ import {
 import { FileUpload } from './models/upload';
 import { Shops } from './models/shops';
 import { IonRouterOutlet } from '@ionic/angular';
-import { viewClassName } from '@angular/compiler';
-import { Network } from '@ionic-native/network/ngx';
-import { timer } from 'rxjs';
-import { AngularFireDatabase } from '@angular/fire/database';
+import * as $ from "jquery";
+import { Keyboard } from '@ionic-native/keyboard/ngx';;
 import { AngularFirestore } from '@angular/fire/firestore';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { OneSignalService } from './OneSignal/one-signal.service';
-
+import { FCM } from '@ionic-native/fcm/ngx';
 
 
 @Component({
@@ -43,12 +41,7 @@ export class AppComponent {
       icon: 'person',
       active: false
     },
-    {
-      title: 'Loyalty Points',
-      url: '/tabs/wallet',
-      icon: 'card',
-      active: false
-    },
+    
     {
       title: 'My Orders',
       url: '/tabs/transactions',
@@ -61,21 +54,15 @@ export class AppComponent {
       icon: 'list-box',
       active: false
     },
-    {
-    title: 'My Credits',
-    url: '/tabs/mycredits',
-    icon: 'cash',
-    active: false
-    },
+   
     {
       title: 'Shops',
-      url: '/tabs',
+      url: '/tabs/selectshop',
       icon: 'basket',
-      active: false
     },
     {
       title: 'Customer Care',
-      url: '/support',
+      url: '/tabs/support',
       icon: 'chatbubbles',
       active: false
     },
@@ -125,7 +112,9 @@ export class AppComponent {
           public service: FirestoreService,
           public database: AngularFirestore,
           private oneSignal: OneSignal,
-          private notice: OneSignalService
+          private notice: OneSignalService,
+          private keyboard: Keyboard,
+          private fcm: FCM,
   ) {
 
       // Initiliaze APP
@@ -134,12 +123,28 @@ export class AppComponent {
 
       // check if userID exists in storage
 
-          if(localStorage.getItem('UserID') != null){
-            let id = localStorage.getItem('UserID');
+          if(localStorage.getItem('userID') != null){
+            let id = localStorage.getItem('userID');
             this.getDetails(id);
           }
+
+          if(this.platform.is('android')){
+            this.keyboard.onKeyboardShow().subscribe((e) => {
+              const offset = $(document.activeElement).offset().top;
+              let height = (offset - e.keyboardHeight)*-1;
+              height = height > 0 ? 0 : height;      
+              $('body').animate({ 'marginTop': height + 'px' }, 100);
+            });
+            this.keyboard.onKeyboardHide().subscribe(e => {
+              $('body').animate({ 'marginTop': 0 + 'px' }, 100);
+            });
+          
+          }
    
-  }
+  } 
+  
+  //
+  
 
   // GO to login page
 
@@ -152,6 +157,7 @@ export class AppComponent {
           getDetails(id){
             this.database.collection('users').doc(id).valueChanges().subscribe(res =>{
               this.User = res ;
+              localStorage.setItem('email',this.User.email);
               this.show = true ;
             })
           }
@@ -161,13 +167,28 @@ export class AppComponent {
               this.platform.ready().then(() => {
                 //
                 if (this.platform.is('android')) {
-                  this.statusBar.backgroundColorByHexString("#33000000");
-                  // this.setupPush();
-                }else{
-                  
-                  if (this.platform.is('cordova')) {
-                    // this.setupPush();
-                  }
+                  this.statusBar.backgroundColorByHexString("#00ade5");
+
+                  this.fcm.getToken().then(token => {
+                    console.log('fcm - token'+token);
+                    this.notice.setToken(token);
+                  });
+                  this.fcm.onTokenRefresh().subscribe(token => {
+                    console.log('fcm -token'+token);
+                    this.notice.setToken(token);
+                  });
+                  //  get notifications
+                  this.fcm.onNotification().subscribe(data => {
+                    console.log(data);
+                    if (data.wasTapped) {
+                      console.log('Received in background');
+                      // this.navCtrl.navigate([data.landing_page, data.price]);
+                    } else {
+                      console.log('Received in foreground');
+                      // this.navCtrl.navigate([data.landing_page, data.price]);
+                    }
+                  });
+      
                 }
                 this.statusBar.styleDefault();
                 this.statusBar.hide() ;

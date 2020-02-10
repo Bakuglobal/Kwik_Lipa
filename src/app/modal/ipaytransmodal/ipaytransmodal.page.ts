@@ -3,10 +3,10 @@ import {Router} from '@angular/router'
 import { FirestoreService } from "../../services/firestore.service";
 
 import "rxjs/Rx";
-import { Observable } from "rxjs/Rx";
-import { User } from "../../models/user";
 import { ToastController, LoadingController, AlertController } from "@ionic/angular";
-// import { AdMobFree } from '@ionic-native/admob-free/ngx';
+import { DatabaseService } from 'src/app/services/database.service';
+import { FormBuilder, Validators , FormGroup} from '@angular/forms';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 
 @Component({
@@ -16,114 +16,57 @@ import { ToastController, LoadingController, AlertController } from "@ionic/angu
 })
 export class IpaytransmodalPage implements OnInit {
 
-  settings = {
-    phone: null,
-    name: null,
-    email: null,
-    country: null,
-    gender: null
-  };
-
-  user: Observable<User[]>;
-
-  loading: any = null;
-  settingsEmail = {
-    email: null
-  };
-
-  userID: any = null;
+//variables
+      user ;
+      loading: any = null;
+       userID: any = null;
+       userForm : FormGroup;
 
   constructor(public navCtrl: Router,
-    public fireApi: FirestoreService,
-    public loadingController: LoadingController,
-    // public admobFree: AdMobFree,
-    public toastController: ToastController,
-    public alertCtrl: AlertController,) { }
+          public fireApi: FirestoreService,
+          public loadingController: LoadingController,
+          public toastController: ToastController,
+          public alertCtrl: AlertController,
+          private db: DatabaseService,
+          public formBuilder: FormBuilder,
+          private fs: AngularFirestore
+          ) 
+          { 
+            this.userForm = formBuilder.group({
+              firstName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+              // lastName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+              email: ['',Validators.required],
+              phone:['',Validators.required],
+              gender:['',Validators.required],
+              residence:['',Validators.required],
+              // wallet:['',Validators.required],
+              // password:['',Validators.required],
+              // confPassword:['',Validators.required],
+              dob: ['',Validators.required],
+        
+          });
+          }
 
-  ngOnInit() {
-    this.getUser();
-    // this.removeBannerAd();
-  }
+    ngOnInit() {
+      this.user = this.db.getUser();
+      console.log(this.user)
+      this.userID = localStorage.getItem('UserID');
+    }
 
  
-  async getUser() {
-    let user = await this.fireApi.getCurrentUser();
-    await this.fireApi
-      .getUserDetails(user.uid)
-      .valueChanges()
-      .subscribe(usr => {
-        console.log(usr);
-        this.showData(usr);
-      });
-  }
-  showData(user) {
-    this.settings.phone = user[0].phone;
-    this.settings.name = user[0].name;
-    this.settings.email = user[0].email;
-    this.settings.gender = user[0].gender;
-    this.settings.country = user[0].country;
-    this.settingsEmail.email = user[0].email;
-  }
-  async presentPrompt() {
-    let alert = await this.alertCtrl.create({
-      subHeader: "Enter your password to make changes",
-      inputs: [
-        {
-          name: 'password',
-          placeholder: 'Password',
-          type: 'password'
+  // 
+    update(){
+      this.presentLoading();
+      let data = this.userForm.value ;
+      this.fs.collection('users').doc(this.userID).update(data).then(
+        res => {
+          this.loading.dismiss();
+          //toast update success
+          this.presentToast('Update successful')
         }
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: data => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Continue',
-          handler: data => {
-            this.submit(data.password);
-          }
-        }
-      ]
-    });
-    alert.present();
-  }
-  async submit(oldpassword) {
-
-    this.presentLoading();
-    let user = await this.fireApi.getCurrentUser();
-
-    // Save user information
-
-    // Change Email 
-    this.fireApi.updateUserEmail(this.settingsEmail.email, this.settings.email, oldpassword).then(data => {
-      this.fireApi
-      .getUserDetails(user.uid)
-      .valueChanges()
-      .subscribe(user => {
-        let key = user[0].key;
-        this.settings.email = this.settingsEmail.email;
-        this.fireApi.updateOperationUsers(key, this.settings);
-        this.presentToast("Information updated successfully");
-        this.loading.dismiss();
-      }, error => {
-        this.loading.dismiss();
-        this.presentToast(error.message);
-      });
-      this.loading.dismiss();
-      this.presentToast1(data);
-    }, error => {
-      this.loading.dismiss();
-      this.presentToast(error.message)
-    });
-  }
-
+      ).catch(err => {console.log(err)})
+    }
   
-
   toMyAccount(){
     this.navCtrl.navigate(['tabs/settings']);
   }
@@ -135,23 +78,12 @@ export class IpaytransmodalPage implements OnInit {
     return await this.loading.present();
   }
 
-  // Toaster error
+  // Toaster message
   async presentToast(data) {
     const toast = await this.toastController.create({
       message: data,
       duration: 3000,
       position: 'bottom',
-      // cssClass: 'toast-error'
-    });
-    toast.present();
-  }
-   // Toaster success
-   async presentToast1(data) {
-    const toast = await this.toastController.create({
-      message: data,
-      duration: 3000,
-      position: 'top',
-      // cssClass: 'toast-success'
     });
     toast.present();
   }

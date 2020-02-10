@@ -4,6 +4,7 @@ import { FirestoreService } from '../services/firestore.service';
 import { ToastController, LoadingController, Platform, AlertController } from '@ionic/angular';
 import * as firebase from 'firebase/app';
 import { AppLauncher, AppLauncherOptions } from '@ionic-native/app-launcher/ngx';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 
 @Component({
@@ -28,8 +29,9 @@ export class ForgotPasswordPage implements OnInit {
     public toastController: ToastController,
     public loadingController: LoadingController,
     private appLauncher: AppLauncher, 
-    private platform: Platform,
     private alertCtrl: AlertController,
+    private platform: Platform,              
+    private iab: InAppBrowser,
    
 
 
@@ -88,30 +90,25 @@ goToGmail(){
   }
   
   if(this.platform.is('android')) {
-    options.uri = 'googlegmail://'
+
+        options.uri = 'googlegmail://' ;
+
+        this.appLauncher.canLaunch(options)
+        .then(
+                (canLaunch: boolean) => {
+                this.iab.create('android-app://'+options.uri, '_system', 'location=yes')
+              }
+          )
+        .catch(
+                (error: any) => {}
+              
+          );
+
   } else {
-    options.packageName = 'com.google.android.gm'
+
+       options.packageName = 'com.google.android.gm'
   }
   
-  this.appLauncher.canLaunch(options)
-    .then(
-            (canLaunch: boolean) => {
-            this.appLauncher.launch(options)
-          }
-      )
-    .catch(
-            (error: any) => 
-            // console.error('Facebook is not available')
-            this.alertCtrl.create({
-              message:'Sorry we cant find a Gmail Application on your phone',
-              buttons: [
-                {
-                  text:'close',
-                  role: 'cancel'
-                }
-              ]
-            })
-      );
-
+  
 }
 }

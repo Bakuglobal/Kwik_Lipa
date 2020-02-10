@@ -29,7 +29,7 @@ export class Tab1Page  implements OnInit{
         count = 0 ;
         shops: Shops[];
         unfilteredShops: Shops[] ;
-        searchTerm: string ;
+        
         scannedProdcts = [];
         users: User = new User();
         loading: any;
@@ -40,7 +40,7 @@ export class Tab1Page  implements OnInit{
         header: boolean;
         tabbar: boolean;
         selectShop = false ;
-        showSearch = false ;
+        
 
   constructor(
           private platform: Platform,
@@ -72,7 +72,7 @@ export class Tab1Page  implements OnInit{
               },2000);
           }); 
     // hide bottom tabs
-        this.service.hiddenTabs = false ;
+    this.service.hiddenTabs = false ;
 
   }
  
@@ -80,15 +80,18 @@ export class Tab1Page  implements OnInit{
             this.selectShop = false ;
           }
 
-          slideOpts = {
+          AdvertslideOpts = {
             initialSlide: 1,
             speed: 500,
-            autoplay:true
+            autoplay:true,
           };
-// to home page view
-          back(){
-            this.selectShop = false ;
-          }
+          DiscountslideOpts = {
+            initialSlide: 1,
+            speed: 500,
+            autoplay:false,
+            slidesPerView: 1.2
+          };
+
 // handle slide swipe
 
           onSlideMoved(event) {
@@ -103,39 +106,26 @@ export class Tab1Page  implements OnInit{
           }
 // oninit function                
             ngOnInit() {
-              this.getShops();
               this.menuCtrl.enable(true);
               this.count = Number(localStorage.getItem('NoticeCount'));
             }
 
-// handle searchbar 
-            setFilteredItems(){
-              if(this.searchTerm != null || this.searchTerm != ''){
-                this.shops = this.filterItems()
-                console.log(this.shops)
-              }
-            }
-            filterItems() {
-              return this.unfilteredShops.filter(item => {
-                return item.name.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
-              });
-            }
+
 
 //scan and pay     
             scanAndPay(){
               this.fireApi.shareShopBy('scan');
-              this.selectShop = true ;
-              
+              this.navCtrl.navigate(['tabs/selectshop'])  ;  
             }
 // pickpay and collect
             pickPayCollect(){
               this.fireApi.shareShopBy('pick');
-              this.selectShop = true ;
-              
+              this.navCtrl.navigate(['tabs/selectshop'])  ;  
             }
 // goto shoppinglist page
             shoppingList(){
-              this.navCtrl.navigate(['mycontacts'])
+              this.fireApi.hiddenTabs = true ;
+              this.navCtrl.navigate(['tabs/mycontacts'])
             }
 // an alert for network info
           async msgNetwork(){
@@ -152,41 +142,6 @@ export class Tab1Page  implements OnInit{
             await msg.present();
           }
 
-
-
-//redirect to shop page
-          goToShop(shop){
-            this.fireApi.changeData(shop.name);
-            this.service.hiddenTabs = true ;
-            this.fireApi.serviceshopBy
-                .subscribe(data => {
-                  console.log('shopBy -- ' + data)
-                  if(data == 'scan'){
-                    this.navCtrl.navigate(['tabs/shop']);
-                  }else {
-                    if(data == 'pick'){
-                      this.navCtrl.navigate(['tabs/offers']);
-                    }
-                  }
-                }); 
-          }
-// get the list of shops
-
-        getShops() {
-          this.fireApi
-            .getShops()
-            .snapshotChanges()
-            .pipe(map(changes => {
-              return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-            }))
-            .subscribe(shops => {
-              this.shops = shops;
-              this.unfilteredShops = shops ;
-            });
-
-
-    
-         }
 // Loader
           async presentLoading() {
             this.loading = await this.loadingController.create({
@@ -210,14 +165,7 @@ export class Tab1Page  implements OnInit{
             this.navCtrl.navigate(['tabs/notifications']);
           }
 
-// show searchBar
-        show(){
-          if(this.showSearch == false){
-            this.showSearch = true;
-          }else{
-            this.showSearch = false ;
-          }
-        }
+
 }
 
 

@@ -1,39 +1,29 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AngularFireModule } from '@angular/fire';
-
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-
 import { environment } from '../environments/environment';
 import { FirestoreService } from './services/firestore.service';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
-// import { TransModalPageModule } from './modal/trans-modal/trans-modal.module';
-// import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { DeviceOrientation } from '@ionic-native/device-orientation/ngx';
-// import { AdMobFree } from '@ionic-native/admob-free/ngx';
-
-//  import { HttpModule } from '@angular/http/ngx';
 import { Contacts } from '@ionic-native/contacts';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
-
-// import {GooglePlus} from '@ionic-native/google-plus/ngx';
 import {Network} from '@ionic-native/network/ngx';
 import { ChatmodalPageModule } from './chatmodal/chatmodal.module';
 import { NewChatPageModule } from './new-chat/new-chat.module';
-import { Http, HttpModule } from '@angular/http';
+import { HttpModule } from '@angular/http';
+import { HTTP } from '@ionic-native/http/ngx';
 import { InfomodalPageModule } from './infomodal/infomodal.module';
 import { SokomodalPageModule } from './sokomodal/sokomodal.module';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
@@ -49,6 +39,15 @@ import { OffersPage } from './offers/offers.page';
 import { Firebase } from '@ionic-native/firebase/ngx';
 import { AppLauncher} from '@ionic-native/app-launcher/ngx';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
+import { Tab1Page } from './tab1/tab1.page';
+import { Keyboard } from '@ionic-native/keyboard/ngx';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './material.module';
+import { AndroidFullScreen} from '@ionic-native/android-full-screen/ngx' ;
+import { FCM }from '@ionic-native/fcm/ngx'
+import { ViewOrderPageModule } from './view-order/view-order.module';
+import { ViewListPageModule } from './view-list/view-list.module';
+import { ImageDisplayPageModule } from './image-display/image-display.module';
 
 
 @NgModule({
@@ -57,7 +56,6 @@ import { OneSignal } from '@ionic-native/onesignal/ngx';
   imports: [
     BrowserModule,
     IonicModule.forRoot({_forceStatusbarPadding: true}),
-    // IonicModule.forRoot({scrollAssist: false, autoFocusAssist: false}),
     AppRoutingModule,
     AngularFireDatabaseModule,
     AngularFireModule.initializeApp(environment.firebase),
@@ -77,13 +75,13 @@ import { OneSignal } from '@ionic-native/onesignal/ngx';
     TransModalPageModule,
     CPageModule,
     ScannedModalPageModule,
-    
-
-    
+    BrowserAnimationsModule,
+    MaterialModule,
+    ViewOrderPageModule,
+    ViewListPageModule,
+    ImageDisplayPageModule
   ],
   providers: [
-    // FileChooser,
-    // AdMobFree,
     DeviceOrientation,
     InAppBrowser,
     StatusBar,
@@ -99,6 +97,11 @@ import { OneSignal } from '@ionic-native/onesignal/ngx';
     SplashScreen,
     BarcodeScanner,
     FirestoreService,
+    Tab1Page,
+    HTTP,
+    FCM,
+    Keyboard,
+    AndroidFullScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
     
   ],

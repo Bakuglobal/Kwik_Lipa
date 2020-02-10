@@ -115,54 +115,7 @@ export class WalletPage implements OnInit {
     });
   }
 
-  // submit() {
-  //   this.presentLoading();
-
-  //   this.fireApi.getCurrentUser().then(resp => {
-  //     this.fireApi
-  //       .getUserDetails(resp.uid)
-  //       .valueChanges()
-  //       .subscribe(result => {
-  //         this.user = result[0];
-
-  //         this.data.eml = this.user.email;
-  //         this.data.tel = this.user.phone;
-  //         this.data.p1 = Number(this.data.amount) + Number(this.user.wallet);
-  //         this.data.p2 = this.user.name;
-  //         this.data.p4 = resp.uid;
-  //         this.data.inv = this.generateInvoice;
-  //         this.data.vid = IPAY_VENDORID;
-
-  //         let compressedData =
-  //           this.data.live +
-  //           this.data.oid +
-  //           this.data.inv +
-  //           this.data.amount +
-  //           this.data.tel +
-  //           this.data.eml +
-  //           this.data.vid +
-  //           this.data.curr +
-  //           this.data.p1 +
-  //           this.data.p2 +
-  //           this.data.p4 +
-  //           this.data.cst +
-  //           this.data.cbk;
-
-  //         this.fireApi.makeIpayTransCall(compressedData, this.data).subscribe(
-  //           results => {
-  //             this.response = results;
-  //             this.submission = true;
-  //             this.activate = true;
-  //             this.loading.dismiss();
-  //           },
-  //           error => {
-  //             console.log(error);
-  //             this.loading.dismiss();
-  //           }
-  //         );
-  //       });
-  //   });
-  // }
+ 
 
   get generateInvoice() {
     var text = "";
@@ -175,49 +128,6 @@ export class WalletPage implements OnInit {
     return text;
   }
 
-  // cancelPayment() {
-  //   this.activate = false;
-  //   this.submission = false;
-  //   this.response = new IpayTrans();
-  // }
-
-  // selected(resp) {
-   
-
-  //   if (resp.name == "MPESA") {
-  //     this.presentLoading();
-  //     this.fireApi.getCurrentUser().then(resp => {
-  //       this.fireApi
-  //         .getUserDetails(resp.uid)
-  //         .valueChanges()
-  //         .subscribe(result => {
-  //           this.user = result[0];
-
-  //           this.mpesaData.phone = this.user.phone;
-  //           this.mpesaData.sid = this.response.data.sid;
-  //           console.log( this.response.data.sid);
-  //           this.mpesaData.vid = IPAY_VENDORID;
-
-  //           let compressedData =
-  //             this.user.phone + IPAY_VENDORID + this.response.data.sid;
-
-  //           this.fireApi.mpesaPush(compressedData, this.mpesaData).subscribe(
-  //             resp => {
-  //               this.loading.dismiss();
-  //               this.presentToast(resp.text);
-  //             },
-  //             error => {
-  //               this.loading.dismiss();
-  //               this.presentToast(error.message);
-  //             }
-  //           );
-  //         });
-  //     });
-  //   } else {
-      
-  //     this.presentAlert();
-  //   }
-  // }
 
   // Loader
   async presentLoading() {

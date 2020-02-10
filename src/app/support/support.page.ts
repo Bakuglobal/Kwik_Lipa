@@ -5,6 +5,9 @@ import { Support } from "../models/support";
 import "rxjs/Rx";
 import { Observable } from "rxjs/Rx";
 import { LoadingController, ToastController } from "@ionic/angular";
+import { timeout } from 'rxjs/operators';
+import { timer } from 'rxjs';
+import { Router } from '@angular/router';
 // import { AdMobFree } from "@ionic-native/admob-free/ngx";
 
 @Component({
@@ -20,14 +23,26 @@ export class SupportPage implements OnInit {
   message: any ;
   loading: any;
   msg = false ;
+  count = '' ;
+  date;
+  response = false ;
+  automsg = "Thank you for contacting Kwik Lipa. Our agents will respond to you shortly."
  
 
   constructor(
     public fireApi: FirestoreService,
     public loadingController: LoadingController,
     public toastController: ToastController,
+    private navCtrl: Router
     // private admobFree: AdMobFree
-  ) {}
+  )
+   {
+    // this.fireApi.hiddenTabs = true ;
+  }
+ // notifications page
+ notifications(){
+  this.navCtrl.navigate(['tabs/notifications']);
+}
 
   ngOnInit() {
     this.fireApi.getCurrentUser().then(resp => {
@@ -54,9 +69,13 @@ checkmsg(){
       resp => {
        // this.loading.dismiss();
        this.message = this.data.message ;
+       this.date = new Date();
        this.checkmsg();
         this.data.message = null;
-        this.presentToast("Message sent successfully");
+        setTimeout(
+          ()=> {this.response = true} 
+          ,1000
+          );
       },
       error => {
         //this.loading.dismiss();

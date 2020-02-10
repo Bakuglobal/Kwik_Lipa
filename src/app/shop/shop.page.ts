@@ -12,7 +12,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 // import { RequestOptions } from '@angular/http';
 import { OnDestroy } from "@angular/core";
 import { DatabaseService } from '../services/database.service';
-import { Observable} from 'rxjs/observable' ;
+import { Observable} from 'rxjs/Observable' ;
 // import { settings } from 'cluster';
 import { map } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -132,7 +132,7 @@ data: any ;
 
   //go to shopping list
   gotoList(){
-     this.fireApi.hiddenTabs = false ;
+    //  this.fireApi.hiddenTabs = false ;
      this.menuCtrl.enable(true);
     this.navCtrl.navigate(['tabs/mycontacts']);
   }
@@ -326,6 +326,7 @@ async checkNumber(){
       {
         text: 'Update',
         handler: () => {
+          this.fireApi.hiddenTabs = false ;
           this.navCtrl.navigate(['tabs/settings']);
         }
       },
@@ -513,6 +514,7 @@ scan(){
   }else {
   this.selectedProducts = {} ;
     this.barcodeScanner.scan().then((barcodeData) => {
+      if(barcodeData.cancelled){ return } ;
       this.selectedProducts =  Number(barcodeData.text) ;
       this.presentLoadingWithOptions();
       if(this.items.length == 0){

@@ -35,7 +35,7 @@ ngOnInit() {
   
   }
 goToSupport(){
-  this.navCtrl.navigate(['support']);
+  this.navCtrl.navigate(['tabs/support']);
 }
  
 

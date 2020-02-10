@@ -1,0 +1,23 @@
+.body{
+    text-align: center;
+    margin-top: 10px;
+}
+h4{
+    color: var(--ion-color-primary);
+}
+p{
+    text-align: center !important;
+}
+ion-col{
+    text-align: start;
+}
+.top{
+    background-color: var(--ion-color-light);
+}
+ion-card{
+    border-radius: 20px;
+}
+.bottom {
+    border-bottom: 1px solid var(--ion-color-primary);
+    box-shadow: 1px red;
+}

@@ -2,12 +2,25 @@ import { Component, OnInit  } from '@angular/core';
 import { Router , NavigationExtras , ActivatedRoute} from '@angular/router';
 import { FirestoreService } from '../services/firestore.service';
 import { AlertController, ToastController, ModalController, NavController } from '@ionic/angular';
-import { AngularFirestore } from '@angular/fire/firestore' ;
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore' ;
 import { DatabaseService } from '../services/database.service';
 import { CPage } from '../c/c.page';
 import { Location } from '@angular/common';
 import { THIS_EXPR, ThrowStmt } from '@angular/compiler/src/output/output_ast';
+// import { Observable } from 'rxjs';
 // import { AdMobFree } from '@ionic-native/admob-free/ngx';
+
+
+//interface
+export interface product {
+    currentprice: string;
+    image: string;
+    initialprice: string;
+    product: string;
+    quantity: string;
+    shop: string;
+    status: string;
+}
 
 @Component({
   selector: 'app-offers',
@@ -17,16 +30,20 @@ import { THIS_EXPR, ThrowStmt } from '@angular/compiler/src/output/output_ast';
 
 export class OffersPage implements OnInit {
 
+//variables
 
   shopSelected: any ;
   offers = [] ;
   UnfilteredOffers = [] ;
   cart = [] ;
   showLoader = false ;
-  public count = 0 ;
+  count = 0 ;
   showSearch = false ;
   searchTerm : string ;
   docID = [] ;
+
+  productCollection: AngularFirestoreCollection<product>;
+  // products: Observable<product[]>;
 
 
   constructor(
@@ -43,22 +60,30 @@ export class OffersPage implements OnInit {
   {
       this.showShop();
       console.log('shop name -- '+ this.shopSelected) 
-      this.getOffers(this.shopSelected);
     
+  }
+  ngOnInit() {
   }
 
   //cart count
       changeCount(number){
         this.count = number ;
       }
+  //get products from database
 
-  ngOnInit() {
-    if(this.offers.length == 0){
-      this.getOffers(this.shopSelected)
-    }
-    
-  }
+        ionViewWillEnter(){
+                this.productCollection = this.fs.collection('click&collect',ref => {
+                    return ref.where('shop','==',this.shopSelected).orderBy('currentprice');
+                })
+                this.productCollection.valueChanges().subscribe(res => {
+                    this.offers = res ;
+                    this.UnfilteredOffers = res ;
+                  })
+                  console.log('products'+ this.offers);
+                this.count = this.fireApi.getCount() ;
 
+        }
+        
   // searchbar
         showSearchBar(){
           if(this.showSearch == false){
@@ -79,84 +104,37 @@ export class OffersPage implements OnInit {
           });
         }
       
-  // get the offers of the selected shop 
-
-        async getOffers(shop){
-          this.showLoader = true ;
-          await this.fs.collection('click&collect').ref.where('shop', '==', shop)
-          .onSnapshot(querySnapshot => {
-            querySnapshot.docChanges().forEach(change => {
-              if (change.type === 'added') {
-                console.log('New city: ', change.doc.data());
-                // add id to array
-                this.docID.push(change.doc.id)
-
-                // append count to product and push to array
-
-              let modified =  change.doc.data() ;
-                modified.count = 0 ;
-                this.offers.push(modified)
-                this.UnfilteredOffers.push(modified);
-                this.showLoader = false ;
-                
-              } 
-              if (change.type === 'modified') {
-                console.log('Modified city: ', change.doc.data());
-                //find index of product in local array
-                let id = change.doc.id ;
-                let index = this.docID.indexOf(id)
-
-                //add count to the modified product
-                let modified =  change.doc.data() ;
-                modified.count = 0 ;
-                //replace the product in the local array <--offers--> with the modified one
-                this.offers[index] = modified;
-                this.UnfilteredOffers[index] = modified ;
-                this.showLoader = false ;
-              } 
-              if (change.type === 'removed'){
-                console.log('Removed city: ', change.doc.data());
-                //find index of product in local array
-                let id = change.doc.id ;
-                let index = this.docID.indexOf(id);
-
-                //add count to the modified product
-                let modified =  change.doc.data() ;
-                modified.count = 0 ;
-                //replace the product in the local array <--offers--> with the modified one
-                this.offers.splice(index,1);
-                this.UnfilteredOffers.splice(index,1);
-                this.showLoader = false ;
-              }
-            });
-        });
-          
-        }
+  
   //add items to the cart
 
       addToCart(item){
         if(this.cart.includes(item)){
           let index = this.cart.indexOf(item);
           this.cart[index].count ++ ;
-          this.count ++ ;
+          let ct = this.count ++; 
+          this.count = ct ;
+          this.fireApi.setCount(ct);
           
 
         }else{
           let mod = item ;
-          mod.count ++ ;
+          mod.count = 1 ;
           this.cart.push(mod);
+          this.count = this.fireApi.getCount();
           this.count ++ ;
+          this.fireApi.setCount(this.count)
       
-        console.log('Cart --> '+ this.cart);
+        console.log('Cart --> '+ JSON.stringify(this.cart));
         this.toast('Product added To cart') ;
       }
     }
 // go to home page
 
       back(){
-        // this.offers.length = 0 ;
+        this.offers.length = 0 ;
         this.cart.length = 0 ;
         this.count = 0 ;
+        this.fireApi.hiddenTabs = false ;
         this.navCtrl.navigate(['tabs/tab1']);
       }
 

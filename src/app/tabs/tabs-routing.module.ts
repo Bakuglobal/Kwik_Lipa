@@ -48,6 +48,13 @@ const routes: Routes = [
               }
             ]
       },
+      {path: 'selectshop', loadChildren:() => import('../selectshop/selectshop.module').then(m => m.SelectshopPageModule)},
+      {
+        path: 'viewlist', loadChildren:() => import('../view-list/view-list.module').then(m => m.ViewListPageModule), canActivate: [AuthService]
+      },
+      {
+        path: 'createList', loadChildren:() => import('../create-list/create-list.module').then(m => m.CreateListPageModule), canActivate: [AuthService]
+      },
       { path: 'mycredits', loadChildren:()=> import( '../mycredits/mycredits.module').then(m => m.MycreditsPageModule) },
       { path: 'about', loadChildren: () => import('../about/about.module').then(m => m.AboutPageModule) },
       { path: 'chatmodal', loadChildren: () => import('../chatmodal/chatmodal.module').then(m=>m.ChatmodalPageModule) },
@@ -69,6 +76,7 @@ const routes: Routes = [
       {path: 'cart', loadChildren: () => import ('../cart/cart.module').then(m=>m.CartPageModule),canActivate : [AuthService]},
       { path: 'c', loadChildren: () => import('../c/c.module').then(m => m.CPageModule), canActivate : [AuthService] },
       { path: 'forgot-password', loadChildren:() => import('../forgot-password/forgot-password.module').then(m  => m.ForgotPasswordPageModule)},
+      { path: 'ipaytransmodal', loadChildren:() => import('../modal/ipaytransmodal/ipaytransmodal.module').then(m => m.IpaytransmodalPageModule), canActivate: [AuthService]},
       {
         path: '',
         redirectTo: '/tabs/tab1',

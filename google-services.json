@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "587167744825",
+    "firebase_url": "https://kwikapp-77d77.firebaseio.com",
+    "project_id": "kwikapp-77d77",
+    "storage_bucket": "kwikapp-77d77.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:587167744825:android:c0ec182bf55870a4f21ee8",
+        "android_client_info": {
+          "package_name": "io.kwik.lipa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "587167744825-38lfevsqb2h7o3jave51237cteov4vd2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMT6X-BoeUJ5OV2-guGuy2B9nQQ7_tRRc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "587167744825-38lfevsqb2h7o3jave51237cteov4vd2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:587167744825:android:4b5ee330d32f9e77f21ee8",
+        "android_client_info": {
+          "package_name": "io.kwik.merchant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "587167744825-38lfevsqb2h7o3jave51237cteov4vd2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMT6X-BoeUJ5OV2-guGuy2B9nQQ7_tRRc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "587167744825-38lfevsqb2h7o3jave51237cteov4vd2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

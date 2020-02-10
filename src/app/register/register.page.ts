@@ -2,12 +2,14 @@ import { Component, OnInit } from "@angular/core";
 import { FirestoreService } from "../services/firestore.service";
 import { Router } from "@angular/router";
 import { ToastController, LoadingController, MenuController } from "@ionic/angular";
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import * as firebase from 'firebase/app';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Location } from '@angular/common';
 import { User } from '../models/user';
 import { AppComponent } from '../app.component';
+import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
+import { from } from 'rxjs';
 
 
 @Component({
@@ -24,7 +26,10 @@ export class RegisterPage implements OnInit {
     passwordType: string = 'password';
     passwordIcon: string = 'eye-off';
     provider ;
+    place: any;
+    residence: Object;
     public registerForm: FormGroup;
+    privacypolicy = 'https://bit.ly/38fS2dI' ;
   //objects
     data: User ;
 
@@ -40,7 +45,9 @@ export class RegisterPage implements OnInit {
     public formBuilder: FormBuilder,
     public menuCtrl: MenuController,
     private fs: AngularFirestore,
-    private app: AppComponent
+    private app: AppComponent,
+    private inappBrowser: InAppBrowser
+
   ) 
   {
     this.registerForm = formBuilder.group({
@@ -50,10 +57,11 @@ export class RegisterPage implements OnInit {
       phone:['',Validators.required],
       gender:['',Validators.required],
       residence:['',Validators.required],
-      wallet:['',Validators.required],
+      // wallet:['',Validators.required],
       password:['',Validators.required],
       confPassword:['',Validators.required],
       dob: ['',Validators.required],
+      privacyPolicy:['',Validators.required]
 
   });
   }
@@ -61,6 +69,7 @@ export class RegisterPage implements OnInit {
   ngOnInit() {
     this.fireApi.hiddenTabs = true ;
   }
+  
   
  sendCode(){
    this.code = true ;
@@ -98,50 +107,6 @@ register(){
   
 }
 
-//   async register() {
-//     this.presentLoading();
-//     this.fireApi.register(this.data.email, this.data.password , this.data.phone, this.data.firstName, this.data.lastName,this.data.gender,this.data.dob,this.data.residence)
-//     .then(
-//       resp => {
-//         console.log( resp);
-//         this.loading.dismiss();
-//         //clear form data
-//       // this.clear();
-//         this.fireApi.hiddenTabs = true ;
-//         this.navigation.navigate(["tabs/tab1"]);
-//       },
-//       error => {
-//         this.presentToast(error.message);
-//         this.loading.dismiss();
-//       }
-//     );
-//   }
-//   //create user details in relatime db
-// updateUser(){
-//   let userID = localStorage.getItem('userID')
-//   this.fireApi
-//       .getUserDetails(userID)
-//       .snapshotChanges()
-//       .map(changes => {
-//         return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-//       })
-//       .subscribe(user => {
-//         let key = user[0].key;
-//         localStorage.setItem('userPhone', this.data.phone);
-//         localStorage.setItem('userEmail', this.data.email);
-//         localStorage.setItem('userName', this.data.firstName+''+this.data.lastName);
-//         this.fireApi.login(this.data.email,this.data.password)
-//         // this.saveUser(this.data);
-//         this.fireApi.updateOperationUsers(key, this.data);
-//         this.presentToast("Information updated successfully");
-//         this.loading.dismiss();
-//       }, error => {
-//         this.loading.dismiss();
-//         this.presentToast(error.message);
-//       });
-      
-      
-// }
  
  // Toaster success
  async presentToast1(data) {
@@ -189,4 +154,20 @@ register(){
     this.fireApi.hiddenTabs = false;
     this.location.back();
   }
+  getResidence(){
+    let key = 'AIzaSyAcLMPO6PkIEoOuLJJ86Y_vjxqTCi7ZcvE' ;
+    this.fireApi.getPlace(this.place,key)
+    .subscribe(res => {
+      this.residence = res ;
+      alert(JSON.stringify(res));
+    },err => console.log(err));
+  }
+  privacy(){
+    const options : InAppBrowserOptions =  {
+      zoom: 'no'
+    }
+    this.inappBrowser.create(this.privacypolicy,'_self',options);
+    
+  }
+  
 }

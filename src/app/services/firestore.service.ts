@@ -11,7 +11,7 @@ import { User } from '../models/user';
 import * as firebase from 'firebase/app';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { Support } from '../models/support';
-import { Observable, BehaviorSubject } from 'rxjs';
+import {  BehaviorSubject } from 'rxjs';
 // import { IpayTrans, Ipaydata } from '../models/ipay-trans';
 // import { Mpesa } from '../models/mpesa';
 // import { IPAY_HASHKEY } from '../constants/ipay';
@@ -21,6 +21,9 @@ import { resolve } from 'q';
 import { map } from 'rxjs/operators';
 import { ModalController } from '@ionic/angular';
 import { LoginPage } from '../login/login.page';
+import { HTTP } from '@ionic-native/http/ngx';
+import { Order } from '../models/order';
+import { List } from '../models/list';
 
 
 
@@ -45,6 +48,11 @@ export class FirestoreService {
       public products: AngularFireList<any>;
       private cart = [] ;
       authState: any = null;
+      count = 0 ;
+      OpenOrdersCollection: AngularFirestoreCollection<Order> ;
+      pastOrderCollection: AngularFirestoreCollection<Order> ;
+      pastPaidOrderCollection: AngularFirestoreCollection<Order> ;
+      allLists: AngularFirestoreCollection<List>
 
 
 
@@ -80,7 +88,13 @@ export class FirestoreService {
         this.authState = auth;
     });
   }
-
+//cart count across page
+setCount(num){
+ return this.count = num ;
+}
+getCount(){
+  return this.count ;
+}
 //get message send to support
     viewMessage(){
       const msgRef : firebase.database.Reference = firebase.database().ref(this.pathSupport);
@@ -232,12 +246,13 @@ getUserDetails(id){
       return this.db.list('shops/' + key);
     }
 
-  // getScannedProducts(shopKey, barcode) {
-  //   return this.db.list(`products/${shopKey}`, ref => {
-  //     let q = ref.orderByChild('barcode').equalTo(barcode);
-  //     return q;
-  //   });
-  // }
+// get a list of places in a country from google map api
+getPlace(place,key){
+  let headers = new HttpHeaders ;
+  headers.append('Access-Control-Allow-Origin', '*')
+  
+  return this.http.get('https://maps.googleapis.com/maps/api/place/autocomplete/json?input='+place+'&key='+key,{headers: headers});
+}
 
 //convert date to string
     convertDateTime(date) {
@@ -284,7 +299,36 @@ getUserDetails(id){
       .update(key, value)
       .catch(error => console.log(error));
   }
+// get open orders
+openOrders(id){
+  this.OpenOrdersCollection = this.fs.collection('Orders', ref => {
+    return ref.where('userID','==',id).where('status','==','open')
+  })
+  return this.OpenOrdersCollection.valueChanges() ;
 
+}
+// get past orders
+pastOrders(id){
+  this.pastOrderCollection = this.fs.collection('Orders', ref => {
+    return ref.where('userID','==',id).where('status','==','canceled').orderBy('Date','asc')
+  })
+  return this.pastOrderCollection.valueChanges() ;
+}
+pastPaidOrders(id){
+  this.pastPaidOrderCollection = this.fs.collection('Orders', ref => {
+    return ref.where('userID','==',id).where('status','==','Paid').orderBy('Date','asc')
+  })
+  return this.pastPaidOrderCollection.valueChanges() ;
+
+}
+
+// get all shopping list of the user
+getLists(id){
+  this.allLists = this.fs.collection('shopping-list', ref => {
+    return ref.where('userID','==',id).orderBy('DueDate','asc')
+  })
+  return this.allLists.valueChanges() ;
+}
  
   
 

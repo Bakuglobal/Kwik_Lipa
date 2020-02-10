@@ -18,13 +18,10 @@
 
 
 $fab-size: 80px ;
-.tab{
-    // background-color: #3880ff;
-    
-}
+
 
 ion-toolbar {
-    background-color: #3880ff  !important;
+    background-color: var(--ion-color-primary)  !important;
     // border-radius: 10px;
     // padding-top: 27px ;
     margin-left: 10x ;
@@ -36,6 +33,7 @@ ion-select {
 
 * {
     font-family: 'Varela Round',Helvetica,Arial,Lucida,sans-serif !important;
+    // text-transform: capitalize;
     //font-family: 'Poppins', sans-serif !important;
 }
 

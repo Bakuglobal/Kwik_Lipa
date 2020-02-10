@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore,AngularFirestoreCollection } from '@angular/fire/firestore' ;
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { Firebase } from '@ionic-native/firebase/ngx' ;
 
 
@@ -30,6 +30,7 @@ export class DatabaseService {
   private lists: Observable<ShoppingList[]>; 
   items = [] ;   
   count = 0 ;
+  user ;
   constructor(
     private http:HttpClient,
     private fireApi:AngularFirestore,
@@ -160,5 +161,13 @@ getList(id) {
         listenToNotification(){
           return this.firebaseNative.onNotificationOpen();
         }
+//set user data for sharing with other pages
+setUser(data){
+  this.user = data ;
+}
+//get user info
+getUser(){
+  return this.user ;
+}
 
 }

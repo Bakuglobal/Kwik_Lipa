@@ -1,0 +1,81 @@
+<ion-content>
+
+             <!-- SHOW SHOP TO SELECT FROM -->
+
+             <div >
+              <!-- Banner at the top -->
+                  <ion-header color="primary" > 
+                      <ion-toolbar color="primary" padding>
+                          <ion-buttons slot="start" (click)="back()">
+                              <ion-icon name="arrow-back" size=""></ion-icon>
+                          </ion-buttons>
+                          <ion-title text-center *ngIf="!showSearch"><span style="text-transform: uppercase ;font-size: .7em;padding-top: 5px">Select a shop</span></ion-title>
+                          <ion-searchbar *ngIf="showSearch" [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()" placeholder="Enter shop name"></ion-searchbar>
+                          <ion-buttons slot="end">
+                              <ion-button (click)="show()">
+                                  <ion-icon name="search" size="large"></ion-icon>
+                              </ion-button>
+                          </ion-buttons>
+                      </ion-toolbar>
+                  </ion-header>
+
+            
+            
+                  <!---   DISPLAY SKELETON WHEN LOADING OR INTERNET IS SLOW-->
+                  <ion-grid   *ngIf="!shops">
+                      <ion-row >
+                      <ion-col size="6" >
+                          <div  class="partion" >
+                              <ion-skeleton-text  class="skeleton" animated></ion-skeleton-text>
+                          </div>
+                      </ion-col>
+                      <ion-col size="6" >
+                          <div  class="partion" >
+                              <ion-skeleton-text  class="skeleton" animated></ion-skeleton-text>
+                          </div>
+                      </ion-col>
+                      <ion-col size="6" >
+                          <div  class="partion" >
+                              <ion-skeleton-text  class="skeleton" animated></ion-skeleton-text>
+                          </div>
+                      </ion-col>
+                      <ion-col size="6" >
+                          <div  class="partion" >
+                              <ion-skeleton-text  class="skeleton" animated></ion-skeleton-text>
+                          </div>
+                      </ion-col>
+                      <ion-col size="6" >
+                          <div  class="partion" >
+                              <ion-skeleton-text  class="skeleton" animated></ion-skeleton-text>
+                          </div>
+                      </ion-col>
+                      <ion-col size="6" >
+                          <div  class="partion" >
+                              <ion-skeleton-text  class="skeleton" animated></ion-skeleton-text>
+                          </div>
+                      </ion-col>
+                      </ion-row>
+                  </ion-grid>
+                  
+                  <div style="text-align: center;" *ngIf="!shops">
+                      <ion-spinner name="circles"></ion-spinner><br>
+                  </div>
+                      
+                  
+              
+              <!-- List of shops  -->
+
+              <ion-grid  padding >
+                  <ion-row>
+                  <ion-col size="6" *ngFor="let shop of shops" (click)="goToShop(shop)">
+                      
+                      <div class="partion" >
+                      <img src="{{shop.file}}" class="shop-img">
+                      <h5 class="shops-title" style="text-transform: uppercase">{{shop.name}} </h5>
+                      </div>
+                  </ion-col>
+                  </ion-row>
+              </ion-grid>
+
+</div>
+</ion-content>

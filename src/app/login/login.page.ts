@@ -16,6 +16,7 @@ import { OneSignalService } from '../OneSignal/one-signal.service';
 import { Tab1Page } from '../tab1/tab1.page';
 
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -75,41 +76,7 @@ export class LoginPage implements OnInit {
     this.service.hiddenTabs = true ;
   }
 
-  //  ONESIGNAL INTERGRATION
-
-            setupPush() {
-              // register the device to onesignal
-              this.oneSignal.startInit('17ee3f91-dda1-43b2-836b-c747ff447e48', '587167744825');
-              this.oneSignal.getIds().then(res => {
-                localStorage.setItem('DeviceID',res.userId);
-              })
-              this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.None);
-
-              // Notifcation was received in general
-              this.oneSignal.handleNotificationReceived().subscribe(data => {
-                let msg = data.payload.body;
-                let title = data.payload.title;
-                let additionalData = data.payload.additionalData;
-                let notice = data.payload ;
-                // this.showAlert(title, msg, additionalData.task);
-                this.notice.setNoticeData(notice);
-                this.tab.count = Number(localStorage.getItem('NoticeCount'));
-              });
-
-              // Notification was really clicked/opened
-              this.oneSignal.handleNotificationOpened().subscribe(data => {
-                // Just a note that the data is a different place here!
-                let notice = data.notification.payload;
-
-                //open notification in the notification page
-                this.notice.setNoticeData(notice);
-                this.navCtrl.navigate(['/tabs/notifications']);
-                
-              });
-
-              this.oneSignal.endInit();
-            }
-
+ 
            
  // hide password btn
       
@@ -141,7 +108,7 @@ export class LoginPage implements OnInit {
             },
             error => {
               this.loading.dismiss();
-              this.presentToast(error.message,'bottom');
+              this.presentToast('wrong email and password match','bottom');
               
             }
           );
@@ -149,13 +116,13 @@ export class LoginPage implements OnInit {
         next(resp) {
           localStorage.setItem('userEmail', resp.email);
           localStorage.setItem('userName', resp.name);
-          const id = this.fauth.auth.currentUser.uid ;
-          localStorage.setItem('userID', id);
+          const id = resp.user.uid ;
+          localStorage.setItem('userID',id)
           this.loading.dismiss();
           // this.presentToast1(' Loign successful ' + resp.name);
           this.service.hiddenTabs = false ;
           this.ref.getDetails(id);
-          this.setupPush();
+          this.notice.sendTokenToFirebase(id);
           // this.navCtrl.navigate(['tabs/tab1']);
           this.location.back();
         }

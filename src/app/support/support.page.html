@@ -4,6 +4,10 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
+    <ion-buttons slot="end" (click)="notifications()" style="padding-right: 5px;">
+      <ion-icon size="large" name="notifications" ></ion-icon><br>
+      <ion-badge color="danger"><div *ngIf="count != 0">{{count}}</div></ion-badge>
+  </ion-buttons>
     <ion-title>
       <span >Customer Care</span>
     </ion-title>
@@ -30,10 +34,10 @@
       </ion-card>
 
       <!--Display send message-->
-      <ion-card shape="round" color="grey" *ngIf="msg">
+      <!-- <ion-card shape="round" color="grey" *ngIf="msg">
         <ion-row>
           <ion-col size="2">
-            <div style="background: #3880ff" class="customer"></div>
+            <div style="background: var(--ion-color-primary)" class="customer"></div>
           </ion-col>
           <ion-col>
               <p>{{message}}</p>
@@ -41,36 +45,48 @@
           <ion-col>
           </ion-col>
         </ion-row>
-      </ion-card>
-  
+      </ion-card> -->
+      <div class="chat" >
+        <div *ngIf="message != undefined">
+            <div class="you">
+                {{message}} <br>
+              <span style="float: bottom-right;font-size: small;">
+                {{date  | date: 'h:mm a'}}
+              </span>
+            </div>
+        </div>
+      <div *ngIf="response">
+        <div class="me">
+          {{automsg}} <br>
+          <span style="float: bottom-right;font-size: small;"> {{date | date: 'h:mm a'}}</span>
+        </div>
+      </div>
+    </div>
+   <!-- message input area-->
+
+   <form #supportForm=ngForm style="position: fixed;bottom: 0px;left: 0px;right:0px">
+    <div class="support">
+      <ion-row>
+        <!-- <ion-col size="2">
+            <div style="background: var(--ion-color-primary)" class="customer"></div>
+        </ion-col> -->
+        <ion-col >
+            <ion-item>
+                
+                <textarea  required  name="message" [(ngModel)]="data.message" placeholder="Message here" style="width: 100%"
+                 autocomplete="on" type="text" autofocus="true" autocorrect="on">
+                </textarea>
+            </ion-item>
+        </ion-col>
+        <ion-col size="2" text-align-center>
+            <button [disabled]="!supportForm.valid" (click)="submit()" color="primary">
+              <ion-icon size="large" name="send" item-right ></ion-icon>
+            </button>
+            
+        </ion-col>
+      </ion-row>
+    </div>
+  </form>
 
 
 </ion-content>
-<ion-footer>
-
-      <!-- message input area-->
-
-      <form #supportForm=ngForm>
-        <div class="support">
-          <ion-row>
-            <ion-col size="2">
-                <div style="background: #3880ff" class="customer"></div>
-            </ion-col>
-            <ion-col >
-                <ion-item>
-                    
-                    <textarea  required  name="message" [(ngModel)]="data.message" placeholder="Message here" style="width: 100%"
-                     autocomplete="on" type="text" autofocus="true" autocorrect="on">
-                    </textarea>
-                </ion-item>
-            </ion-col>
-            <ion-col size="2" text-align-center>
-                <button [disabled]="!supportForm.valid" (click)="submit()" color="primary">
-                  <ion-icon size="large" name="send" item-right ></ion-icon>
-                </button>
-                
-            </ion-col>
-          </ion-row>
-        </div>
-      </form>
-</ion-footer>

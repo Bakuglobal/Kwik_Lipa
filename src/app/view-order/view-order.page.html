@@ -1,0 +1,83 @@
+<ion-content>
+  <ion-toolbar color="primary" padding>
+    <ion-buttons>
+      <ion-icon slot="start" name="arrow-back" (click)="back()"></ion-icon>
+      <ion-title text-center>{{OrderID}}</ion-title>
+    </ion-buttons>
+  </ion-toolbar>
+  <div class="body">
+    <h4>Ordered to {{shop}}</h4>
+    <ion-row  class="top" padding>
+      <ion-col>
+        Product
+      </ion-col>
+      <ion-col>
+        Price
+      </ion-col>
+      <ion-col>
+        Quantity
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let item of products" padding>
+      <ion-col>
+        {{item.product}}
+      </ion-col>
+      <ion-col>
+        {{item.currentprice}}
+      </ion-col>
+      <ion-col>
+        {{item.quantity}}
+      </ion-col>
+    </ion-row>
+    <h4>Your Notes</h4>
+    <ion-row padding>
+      <p >
+        {{notes}}
+      </p>
+      <p *ngIf="notes == ''">
+        No notes
+      </p>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+      <h4 style="text-align: center;" color="primary">Payment</h4>
+      <p ><strong>
+        Will pay on pick up.
+      </strong>
+      </p>
+    </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+      <h4 style="text-align: center;" color="primary">Delivery</h4>
+      <p ><strong>
+        {{Delivery}}
+      </strong>
+      </p>
+    </ion-col>
+    </ion-row>
+    <!-- <ion-row>
+      <ion-col class="bottom">
+        <ion-label>Total Items</ion-label>
+        <span style="font-size: 1.8em;">0</span>
+      </ion-col>
+      <ion-col class="bottom">
+        Ksh. <span style="font-size: 1.8em;">0.00</span>
+      </ion-col>
+    </ion-row> -->
+  </div>
+</ion-content>
+<ion-footer *ngIf="status == 'open'">
+  <ion-row > 
+    <ion-col >
+      <ion-card color="success" padding text-center disabled>
+        <ion-label>Pay Now</ion-label>
+      </ion-card>
+    </ion-col>
+    <ion-col >
+      <ion-card color="warning" padding text-center (click)="cancelOrder()">
+        <ion-label>Cancel Order</ion-label>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-footer>

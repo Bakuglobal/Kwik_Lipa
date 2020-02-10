@@ -1,4 +1,4 @@
-<ion-header style="background-color: #3880ff;">
+
   <ion-toolbar color="primary" >
     <ion-buttons slot="start">
         <ion-button (click)="toMyAccount()">
@@ -11,7 +11,6 @@
       </span>
     </ion-title>
   </ion-toolbar>
-</ion-header>
 
 <ion-content>
 
@@ -37,52 +36,50 @@
       <ion-row>
         <ion-col size="12">
   
-          <form #settingsForm=ngForm>
+          <form [formGroup]="userForm">
   
-            <div class="form-group">
-  
-              <div class="form-control">
-                <label class="labels">Full Names</label>
-                <br/>
-                <input [(ngModel)]="settings.name" required name="name" class="inputs" type="text">
+              <div class="form-group">
+    
+                <div class="form-control">
+                  <label class="labels">First Name</label>
+                  <br/>
+                  <input  formControlName="firstName" required name="name" class="inputs" type="text" placeholder="{{user.firstName}}">
+                </div>
+    
+                <div class="form-control">
+                  <label class="labels">Phone Number</label>
+                  <br/>
+                  <input  formControlName="phone" required name="phone" class="inputs" type="text" placeholder="{{user.phone}}">
+                </div>
+    
+                <div class="form-control">
+                  <label class="labels">Email Address</label>
+                  <br/>
+                  <input  formControlName="email" required name="email" class="inputs" type="text" placeholder='{{user.email}}'>
+                </div>
+                <div class="form-control">
+                  <ion-label >Date of birth</ion-label>
+                  <ion-datetime name="date" formControlName="dob" class="inputs" placeholder="{{user.dob | date :'yyyy/mm/dd'}}"></ion-datetime>
+                </div>
+                <div class="form-control">
+                  <label class="lables">Gender</label>
+                  <select class="inputs"  name="gender" #gender formControlName="gender" placeholder="gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+    
+                <div class="form-control">
+                  <label class="labels">Residence</label>
+                  <input   required name="residence" class="inputs" type="text" formControlName="residence" placeholder="{{user.residence}}">
+                </div>
               </div>
-  
-              <div class="form-control">
-                <label class="labels">Phone Number</label>
-                <br/>
-                <input [(ngModel)]="settings.phone" required name="phone" class="inputs" type="text" placeholder="eg. 254701654872">
-              </div>
-  
-              <div class="form-control">
-                <label class="labels">Email Address</label>
-                <br/>
-                <input [(ngModel)]="settingsEmail.email" required name="email" class="inputs" type="text">
-              </div>
-  
-              <div class="form-control">
-                <label class="lables">Gender</label>
-                <select class="inputs" [(ngModel)]="settings.gender" name="gender" #gender>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Other">Other</option>
-                </select>
-              </div>
-  
-              <div class="form-control">
-                <label class="labels">Country</label>
-                <select class="inputs" [(ngModel)]="settings.country" name="country" #country
-                  interface="action-sheet">
-                  <option value="KENYA">Kenya</option>
-                  <option value="TANZANIA">Tanzania</option>
-                  <option value="UGANDA">Uganda</option>
-                </select>
-              </div>
-            </div>
-  
-           
-              <div class="form-control">
-                <button [disabled]="!settingsForm.valid" (click)="presentPrompt()" color="primary" class="btn">UPDATE</button>
-              </div>
+    
+            
+                <div class="form-control">
+                  <ion-button [disabled]="!userForm.valid" (click)="update()" color="primary" class="btn">UPDATE</ion-button>
+                </div>
             
           </form>
   
