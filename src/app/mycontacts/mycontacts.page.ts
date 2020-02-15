@@ -16,6 +16,7 @@ import { AppComponent } from '../app.component';
 import { Location } from '@angular/common' ;
 import { ViewListPage } from '../view-list/view-list.page';
 import { List } from '../models/list';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-mycontacts',
@@ -27,8 +28,11 @@ export class MycontactsPage implements OnInit {
   @ViewChild('content',{static:true}) content : IonContent ;
 // variables
 search = false ;
-myList = [];
+myList ;
 userID ;
+totaItems ;
+budget ;
+myName ;
   
   constructor(
     public navCtrl: Router,
@@ -41,11 +45,12 @@ userID ;
     private afs:AngularFirestore,
     public ref : AppComponent,
     private location: Location,
-    private mod: ModalController
+    private mod: ModalController,
 
   ){
     this.fireApi.hiddenTabs = true ;
     this.userID = localStorage.getItem('userID');
+    this.myName = localStorage.getItem('Name');
     console.log(this.userID)
     this.getallLists();
   }
@@ -56,7 +61,7 @@ userID ;
   ngOnInit() {
     
   }
-  ionViewDidEnter
+  // ionViewDidEnter
 
   showSearch(){
     if(this.search === false){
@@ -83,6 +88,12 @@ userID ;
       console.log(this.myList);
     })
 
+  }
+  getTotalCount() {
+    this.totaItems = this.myList.Items.reduce((a, b) => a + (b.count * 1), 0);
+  }
+  totalBudget(item){
+   return this.budget = item.Items.reduce((a, b) => a + (b.count * b.price), 0);
   }
   
 }

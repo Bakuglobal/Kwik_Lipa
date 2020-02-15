@@ -24,7 +24,7 @@ import { IonRouterOutlet } from '@ionic/angular';
 import * as $ from "jquery";
 import { Keyboard } from '@ionic-native/keyboard/ngx';;
 import { AngularFirestore } from '@angular/fire/firestore';
-import { OneSignal } from '@ionic-native/onesignal/ngx';
+// import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { OneSignalService } from './OneSignal/one-signal.service';
 import { FCM } from '@ionic-native/fcm/ngx';
 
@@ -111,7 +111,7 @@ export class AppComponent {
           public events: Events,
           public service: FirestoreService,
           public database: AngularFirestore,
-          private oneSignal: OneSignal,
+          // private oneSignal: OneSignal,
           private notice: OneSignalService,
           private keyboard: Keyboard,
           private fcm: FCM,
@@ -158,6 +158,8 @@ export class AppComponent {
             this.database.collection('users').doc(id).valueChanges().subscribe(res =>{
               this.User = res ;
               localStorage.setItem('email',this.User.email);
+              localStorage.setItem('Name',this.User.firstName);
+              localStorage.setItem('Number',this.User.phone);
               this.show = true ;
             })
           }
@@ -172,10 +174,16 @@ export class AppComponent {
                   this.fcm.getToken().then(token => {
                     console.log('fcm - token'+token);
                     this.notice.setToken(token);
+                    if(localStorage.getItem('userID') !== undefined){
+                      this.notice.sendTokenToFirebase(localStorage.getItem('userID'));
+                    }
                   });
                   this.fcm.onTokenRefresh().subscribe(token => {
                     console.log('fcm -token'+token);
                     this.notice.setToken(token);
+                    if(localStorage.getItem('userID') !== undefined){
+                      this.notice.sendTokenToFirebase(localStorage.getItem('userID'));
+                    }
                   });
                   //  get notifications
                   this.fcm.onNotification().subscribe(data => {

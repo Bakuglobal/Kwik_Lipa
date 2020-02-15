@@ -120,21 +120,25 @@
       margin-top: 0;
       box-shadow: 0 8px 6px -6px gray;
   }
-  
   // MAIN MENU
   .main-menu {
       padding-top: 10px;
       ion-col ion-avatar{
           margin: auto;
-          width: 50px;
-          height: 50px;
-          background-color: #E8E8E8;
+          width: 50%;
+          height: 55%;
+          object-fit: fill;
       }
       ion-col h2{
           margin-top: 10px;
           text-align: center;
           font-size: 13px;
+          font-weight: bold;
       }
+  }
+  .avatar{
+    background-color: var(--ion-color-primary);
+    
   }
   
   
@@ -196,6 +200,7 @@
               object-position: center;
               width: 83%; 
               padding-left: 9px;
+              margin: auto;
           }
           h2 {
               margin-top: 2px;
@@ -238,9 +243,11 @@
           padding-left: 10px; 
           padding-right: 10px;
           .soko-image {
-              object-fit: fill; 
               width: 100%; 
               height: 250px;
+              object-position: center;
+              object-fit: fill;
+              
           }
       }
   }
@@ -314,9 +321,9 @@
                   margin: auto; 
                   padding-top: 30px;
                   img {
-                      width: 100%;
-                      height: 120px;
-                      object-fit: fill;
+                      width: 85px;
+                      height: 85px;
+                      object-position: center;
                   }
               }
               .featured-products-content-card-content {

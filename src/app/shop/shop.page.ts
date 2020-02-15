@@ -7,7 +7,7 @@ import { User } from '../models/user';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 // import { AdMobFree, AdMobFreeBannerConfig, AdMobFreeInterstitialConfig } from '@ionic-native/admob-free/ngx';
 import { Router , NavigationExtras , ActivatedRoute} from '@angular/router';
-import { Contacts, ContactFieldType, ContactFindOptions } from '@ionic-native/contacts';
+import { Contacts, ContactFieldType, ContactFindOptions } from '@ionic-native/contacts/ngx';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 // import { RequestOptions } from '@angular/http';
 import { OnDestroy } from "@angular/core";

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ModalController, ToastController } from '@ionic/angular';
+import { ModalController, ToastController, AlertController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
@@ -25,7 +25,8 @@ export class ViewOrderPage implements OnInit {
   constructor(
     private modal: ModalController,
     private fs: AngularFirestore,
-    private toast: ToastController
+    private toast: ToastController,
+    private alert : AlertController
   ) { }
 
   ngOnInit() {
@@ -38,18 +39,10 @@ export class ViewOrderPage implements OnInit {
 
   cancelOrder(){
     const ref = this.fs.collection('Orders') ;
-    let data = {
-      "OderID": this.OrderID,
-      "notes": this.notes,
-      "pickDay": this.pickDay,
-      "pickHour": this.pickHour,
-      "pickMins": this.pickMins,
-      "products": this.products,
-      "shop": this.shop,
-      "status" :"canceled",
-      "userID": this.userID,
-      "username": this.username
-    }
+
+   let data = {
+     "status": this.status
+   }
     ref.doc(this.OrderID).update(data);
     this.presentToast('Your '+''+ this.OrderID+''+''+ 'Order'+ ''+' is canceled')
     this.back();
@@ -62,6 +55,26 @@ export class ViewOrderPage implements OnInit {
       duration: 2000
     });
     await ts.present();
+  }
+  // alert 
+  async confirm() {
+    const alert = await this.alert.create({
+      header: 'Please confirm',
+      message: 'Do you want to cancel this order',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel'
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            this.cancelOrder();
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
 }

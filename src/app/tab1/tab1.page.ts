@@ -84,12 +84,13 @@ export class Tab1Page  implements OnInit{
             initialSlide: 1,
             speed: 500,
             autoplay:true,
+            slidesPerView: 1
           };
           DiscountslideOpts = {
-            initialSlide: 1,
+            initialSlide: 0,
             speed: 500,
             autoplay:false,
-            slidesPerView: 1.2
+            slidesPerView: 1.1
           };
 
 // handle slide swipe

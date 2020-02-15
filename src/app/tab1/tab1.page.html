@@ -20,7 +20,7 @@
 <ion-content>
 
     <!-- MAIN  MENU -->
-    <div>
+    
         <ion-row class="main-menu">
             <ion-col size="4" (click)="scanAndPay()">
                 <ion-avatar class="avatar">
@@ -30,14 +30,14 @@
             </ion-col>
 
             <ion-col size="4" (click)="pickPayCollect()">
-                <ion-avatar>
+                <ion-avatar class="avatar">
                     <img class="avatar-img" src="/assets/images/pay.svg">
                 </ion-avatar>
                 <h2>Pick, Pay & Collect</h2>
             </ion-col>
 
             <ion-col size="4" (click)="shoppingList()">
-                <ion-avatar>
+                <ion-avatar class="avatar">
                     <img class="avatar-img" src="/assets/images/shop.svg">
                 </ion-avatar>
                 <h2>Shopping lists</h2>
@@ -59,7 +59,7 @@
                 </ion-slides>
             </div>
         </div>
-
+    <div class="body">
         <!-- DISCOUNTED PRODUCTS -->
         <div style="background-color: #F5F5F5; height: 5px;"></div>
         <div class="featured-products">

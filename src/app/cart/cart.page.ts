@@ -5,6 +5,7 @@ import { DatabaseService } from '../services/database.service';
 import { FirestoreService } from '../services/firestore.service';
 import { OffersPage} from '../offers/offers.page';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { MpesaService } from '../mpesa/mpesa.service';
 
 @Component({
   selector: 'app-cart',
@@ -16,7 +17,7 @@ export class CartPage implements OnInit {
 
       cart = [] ;
       shopSelected ;
-      total ;
+      total  = 0;
       Ordersuccess = false ;
       pickHour: string;
       pickMinute: string;
@@ -27,6 +28,12 @@ export class CartPage implements OnInit {
       notes = '' ;
       Today ;
       delivery : string;
+      areas;
+      deliveryFee = 0 ;
+      selectedarea ;
+      noPickUpTime = false ;
+      Number ;
+      paid = false ;
 
   //objects and arrays
       hour =[ '08','09','10','11','12','13','14','15','16','17','18']
@@ -40,10 +47,16 @@ export class CartPage implements OnInit {
         private service: DatabaseService,
         private fireApi: FirestoreService,
         private fs: AngularFirestore,
-        private alert: AlertController
+        private alert: AlertController,
+        private mpesa : MpesaService
   ) 
   { 
-        
+        this.fireApi.getAreas().subscribe(res => {
+          this.areas = res ;
+          console.log(this.areas);
+        });
+        this.Number = localStorage.getItem('Number');
+        this.formatNumber();
   }
 
   ngOnInit() {
@@ -53,16 +66,85 @@ export class CartPage implements OnInit {
      this.fireApi.hiddenTabs = true ;
      
   }
+  formatNumber(){
+    let num = this.Number ;
+    let check = num.charAt(0);
+              if(check == "+"){
+                let nospace = num.replace(/\s+/g,'');
+                this.Number = nospace.substring(1,12) ;
+              }else{
+                let clean = num.replace(/\s+/g,'');
+                let cut = '254'+clean.substring(1,10);
+                this.Number = cut ;
+              }
+  }
 //goto orders
 myorders(){
   this.fireApi.hiddenTabs = false ;
   this.navCtrl.navigate(['tabs/transactions'])
 }
+// calculate delivery fee
+getDeliveryFee(area){
+  let obj = this.getAreaInfo(area)  ;
+  this.deliveryFee = obj[0].charge ;
+  console.log(this.deliveryFee);
+  // this.total = this.getTotalCart() + this.deliveryFee ;
+}
+getAreaInfo(area) {
+  return this.areas.filter(item => {
+    return item.Area.toLowerCase().indexOf(area.toLowerCase()) > -1;
+  });
+}
+noDeliveryFee(delivery){
+  if(delivery === 'I will pick it'){
+    this.deliveryFee = 0 ;
+    this.noPickUpTime = false ;
+    this.paid = false ;
+  }else {
+    this.noPickUpTime = true ;
+    this.paid = true ;
+    if(this.selectedarea != undefined){
+    this.getDeliveryFee(this.selectedarea);
+    }
+  }
+} 
+async changeNumber(){
+const pop = await this.alert.create({
+  message: 'Enter the Mpesa number to pay with',
+  inputs: [
+    {
+      placeholder: 'Enter number eg. 07xx xxx xxx',
+      name: 'number'
+    }
+  ],
+  buttons: [
+    {
+      text: 'MyContacts',
+      handler: () => {
+        console.log('Pick from contacts');
+      }
+    },
+    {
+      text: 'Ok',
+      handler: (data) => {
+        console.log(data);
+        this.Number = data.number ;
+        this.formatNumber();
+      }
+    }
+  ]
+});
+await pop.present();
+}
 //Send the order to the shop
       sendOrder(){
-        
-        if(this.pickHour != undefined && this.pickDay != undefined && this.pickMinute != undefined && this.delivery != undefined){
-              let Today = new Date() ;
+        if(this.delivery === 'Deliver it to me'){
+          // no pick up time and no online payment
+          if(this.selectedarea == undefined || this.selectedarea == null){
+            this.alertPop("Please select a delivery location near you");
+            return ;
+          } 
+          let Today = new Date() ;
               let id = this.genearteOrderID().substring(0,8).toUpperCase();
               console.log(id)
               let data = {
@@ -70,24 +152,52 @@ myorders(){
                 "products": this.cart,
                 "shop":this.shopSelected,
                 "status": "open",
-                "pickHour": this.pickHour,
-                "pickMins":this.pickMinute,
-                "pickDay":this.pickDay,
-                "username": localStorage.getItem('email'),
+                "username": localStorage.getItem('Name'),
                 "notes": this.notes,
                 "OrderID":id,
                 "Delivery": this.delivery,
+                "DeliveryFee": this.deliveryFee,
                 "userID": localStorage.getItem('userID'),
               }
             this.fs.collection('Orders').doc(id).set(data)
               this.Ordersuccess = true ;
               this.showTimeSelect = false ;
               this.cart.length = 0 ;
+        }else {
+          // pick time and online payment
+          if(this.pickHour != undefined && this.pickDay != undefined && this.pickMinute != undefined && this.delivery != undefined){
+            let Today = new Date() ;
+            let id = this.genearteOrderID().substring(0,8).toUpperCase();
+            console.log(id)
+            let data = {
+              "Date": Today,
+              "products": this.cart,
+              "shop":this.shopSelected,
+              "status": "open",
+              "pickHour": this.pickHour,
+              "pickMins":this.pickMinute,
+              "pickDay":this.pickDay,
+              "username": localStorage.getItem('email'),
+              "notes": this.notes,
+              "OrderID":id,
+              "Delivery": this.delivery,
+              "DeliveryFee": this.deliveryFee,
+              "userID": localStorage.getItem('userID'),
+            }
+          
+          this.fs.collection('Orders').doc(id).set(data)
+            this.Ordersuccess = true ;
+            this.showTimeSelect = false ;
+            this.cart.length = 0 ;
+          }else {
+            this.alertPop("Please set pick up time and delivery option");
           }
-        else{
-          this.alertPop();
         }
         
+      }
+      // pay for order
+      payForOrder(){
+        this.mpesa.sendStkRequest(this.total,this.Number);
       }
   // generate orderID
   genearteOrderID(){
@@ -130,7 +240,8 @@ myorders(){
   //get the cart total
       
       getTotalCart() {
-        return this.total = this.cart.reduce((a,b) => a + (b.count * b.currentprice),0) ;
+         this.total = this.cart.reduce((a,b) => a + (b.count * b.currentprice),0) ;
+         return (Number(this.total) + Number(this.deliveryFee));
         }
   //add quantity for an item in cart
       add(index){
@@ -148,9 +259,9 @@ myorders(){
         }
       }
   //alert
-  async alertPop(){
+  async alertPop(msg){
     const alert = await this.alert.create({
-      message: "Please set pick up time and delivery option",
+      message: msg,
       buttons: [
         {
           text:'close',

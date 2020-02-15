@@ -8,10 +8,11 @@ import { NavParams, ModalController } from '@ionic/angular';
 })
 export class ImageDisplayPage implements OnInit {
     img: any;
+    liked = false ;
 
     // @ViewChild('slider', { read: ElementRef })slider: ElementRef;
 
-    sliderOps = {
+    sliderOpts = {
         zoom: {
             maxRatio: 3
         }
@@ -37,5 +38,17 @@ export class ImageDisplayPage implements OnInit {
     close() {
         this.modalController.dismiss();
     }
+    like(){
+        if(this.liked = false){
+            this.liked = true ;
+        }else {
+            this.liked = false ;
+        }
+    }
+    comments(){
 
+    }
+    share(){
+
+    }
 }

@@ -17,17 +17,21 @@
     <ion-col size="10">
       <ion-card padding style="border-radius: 10px;width: 100%;" color="primary">
         <ion-card-title padding> 
-      <ion-label style="float: left;">{{item.Items.length}} Item</ion-label>
+      <ion-label style="float: left;">{{item.Title}}</ion-label>
+      <!-- <ion-label style="float: right">Budget <br> {{totalBudget(item)}}</ion-label> -->
     </ion-card-title><br>
     <ion-card-content padding>
-      <ion-label  padding class="list-title">{{item.Title}}</ion-label><br>
+      <ion-label  padding class="list-title">{{item.Items.length}} Item</ion-label><br>
       <ion-icon name="people" ></ion-icon>&nbsp;&nbsp;
-      <ion-label *ngFor="let item of item.members">{{item.name}},</ion-label>
+      <ion-label *ngFor="let item of item.members">{{item.firstName}}&nbsp;</ion-label>
+      
     </ion-card-content>
+    <div style="margin-bottom: 0px;">
+      <ion-label>CreatedBy: &nbsp; {{item.createdBy}}</ion-label>
+    </div>
     </ion-card>
     </ion-col>
   </ion-row>
-
   <ion-fab vertical="bottom" horizontal="center" slot="fixed" (click)="createList()">
     <ion-fab-button color="danger">
       <ion-icon name="add"></ion-icon>

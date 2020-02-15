@@ -18,7 +18,13 @@
 
 
 $fab-size: 80px ;
-
+@media only screen and (min-width: 1024px) {
+    .body {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+  
 
 ion-toolbar {
     background-color: var(--ion-color-primary)  !important;
@@ -33,8 +39,7 @@ ion-select {
 
 * {
     font-family: 'Varela Round',Helvetica,Arial,Lucida,sans-serif !important;
-    // text-transform: capitalize;
-    //font-family: 'Poppins', sans-serif !important;
+    
 }
 
 .tab{

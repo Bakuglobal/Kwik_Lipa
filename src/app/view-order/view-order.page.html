@@ -38,24 +38,32 @@
         No notes
       </p>
     </ion-row>
+    <div *ngIf="status !== 'canceled'">
     <ion-row>
       <ion-col>
-      <h4 style="text-align: center;" color="primary">Payment</h4>
-      <p ><strong>
+      <h4 style="text-align: center;" color="primary">Payment Option</h4>
+      <p ><strong *ngIf="Delivery === 'I will pick it'">
         Will pay on pick up.
+      </strong>
+      <strong *ngIf="Delivery === 'Deliver it to me'">
+        Will pay on delivery.
       </strong>
       </p>
     </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
-      <h4 style="text-align: center;" color="primary">Delivery</h4>
+      <h4 style="text-align: center;" color="primary">Delivery Options</h4>
       <p ><strong>
         {{Delivery}}
       </strong>
       </p>
     </ion-col>
     </ion-row>
+  </div>
+  <div *ngIf="status === 'canceled'">
+    <ion-label padding>You canceled this Order</ion-label>
+  </div>
     <!-- <ion-row>
       <ion-col class="bottom">
         <ion-label>Total Items</ion-label>
@@ -69,13 +77,13 @@
 </ion-content>
 <ion-footer *ngIf="status == 'open'">
   <ion-row > 
-    <ion-col >
+    <!-- <ion-col >
       <ion-card color="success" padding text-center disabled>
         <ion-label>Pay Now</ion-label>
       </ion-card>
-    </ion-col>
+    </ion-col> -->
     <ion-col >
-      <ion-card color="warning" padding text-center (click)="cancelOrder()">
+      <ion-card color="warning" padding text-center (click)="confirm()">
         <ion-label>Cancel Order</ion-label>
       </ion-card>
     </ion-col>

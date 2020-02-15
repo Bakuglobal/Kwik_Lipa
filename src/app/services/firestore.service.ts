@@ -26,7 +26,6 @@ import { Order } from '../models/order';
 import { List } from '../models/list';
 
 
-
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':
@@ -54,19 +53,10 @@ export class FirestoreService {
       pastPaidOrderCollection: AngularFirestoreCollection<Order> ;
       allLists: AngularFirestoreCollection<List>
 
-
-
   //objects
       usermsg = {} ;
-
-  
-
-
   // private pathUsers = '/users';
-  
-
-  
-
+ 
   constructor(
     public db: AngularFireDatabase,
     public af: AngularFireAuth,
@@ -74,7 +64,6 @@ export class FirestoreService {
     public http: HttpClient,
     public modalCtrl: ModalController,
     public fs: AngularFirestore
-   
     
   ) {
         this.authState = this.af.authState;
@@ -131,15 +120,11 @@ getCount(){
     }
   
 // share shopBy Tag
-
     private shopBy = new BehaviorSubject("shopBy");
     serviceshopBy = this.shopBy.asObservable();
     shareShopBy(string: any){
       this.shopBy.next(string);
     }
-
-
-
 //Handle the cart
     getCart(){
       return this.cart ;
@@ -210,7 +195,6 @@ getCount(){
         });
     });
   }
-
 //send message to support
     sendSupport(data) {
       return this.operationSupport.push(data);
@@ -223,12 +207,7 @@ getCount(){
  getuserMessage() : AngularFireList<Support> {
    return this.operationSupport;
  }
-  // getUserDetails(key) {
-  //   return this.db.list('users', ref => {
-  //     let q = ref.orderByKey().equalTo(key);
-  //     return q;
-  //   });
-  // }
+ 
 getUserDetails(id){
   return this.fs.collection('users').doc(id);
 }
@@ -241,7 +220,7 @@ getUserDetails(id){
     });
   }
 
-//get a signle shop
+//get a single shop
     shop(key) {
       return this.db.list('shops/' + key);
     }
@@ -324,16 +303,27 @@ pastPaidOrders(id){
 
 // get all shopping list of the user
 getLists(id){
-  this.allLists = this.fs.collection('shopping-list', ref => {
-    return ref.where('userID','==',id).orderBy('DueDate','asc')
+  this.allLists = this.fs.collection<List>('shopping-list', ref => {
+    // return ref.where('members','array-contains',{firstName:name}).orderBy('DueDate','asc');
+    return ref.where('userID','==',id).orderBy('DueDate','asc');
   })
-  return this.allLists.valueChanges() ;
+  return this.allLists.snapshotChanges().pipe(
+    map(actions => {
+      return actions.map(a => {
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id ;
+        return { id, ... data};
+      })
+    })
+  )
 }
- 
-  
-
-  //--------
-  //--------
-  
+  //  get users from db
+getUsers(){
+  return this.fs.collection('users') ;
+}
+// get areas
+getAreas(){
+  return this.fs.collection('Areas').valueChanges();
+}
   
 }

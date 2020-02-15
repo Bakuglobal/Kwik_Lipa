@@ -133,7 +133,7 @@ export class OffersPage implements OnInit {
       back(){
         this.offers.length = 0 ;
         this.cart.length = 0 ;
-        this.count = 0 ;
+        this.fireApi.setCount(0);
         this.fireApi.hiddenTabs = false ;
         this.navCtrl.navigate(['tabs/tab1']);
       }

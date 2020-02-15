@@ -13,6 +13,7 @@ export class InfomodalPage implements OnInit {
       liked = false ;
       h     = false ;
       Addcomment = false ;
+      showSearch = false ;
   //objects
       likes = {"count":0}
 
@@ -97,5 +98,18 @@ export class InfomodalPage implements OnInit {
         // const options = { location : 'no' } ;
         const refLink = this.iab.create(link,target);
       }
+      show(){
+
+      }
+      infoModal(shop){
+
+      }
+      showImage(){
+
+      }
+      comments(){
+
+      }
+     
     
 }

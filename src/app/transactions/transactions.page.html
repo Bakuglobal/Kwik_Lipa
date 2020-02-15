@@ -5,7 +5,7 @@
     </ion-buttons>
     <ion-buttons slot="end" (click)="notifications()" style="padding-right: 5px;">
       <ion-icon size="large" name="notifications" ></ion-icon><br>
-      <ion-badge color="danger"><div *ngIf="count != 0">{{count}}</div></ion-badge>
+      <!-- <ion-badge color="danger"><div *ngIf="count != '0'">{{count}}</div></ion-badge> -->
   </ion-buttons>
 
     <ion-title>
@@ -61,8 +61,11 @@
           <span style="float: left;bottom: 0;margin-top: 10px;color:var(--ion-color-primary)">
             {{item.shop}}
           </span>
-          <span style="float: right;bottom:0;margin-top: 10px;color:var(--ion-color-primary)">
+          <span style="float: right;bottom:0;margin-top: 10px;color:var(--ion-color-primary)" *ngIf="item.Delivery == 'I will pick it'">
             Pick Up : {{item.pickHour}} : {{item.pickMins}} {{item.pickDay}}
+          </span>
+          <span style="float: right;bottom:0;margin-top: 10px;color:var(--ion-color-primary)" *ngIf="item.Delivery == 'Deliver it to me'">
+             To be Delivered
           </span>
         </div>
         <div *ngIf="item.show">
@@ -87,8 +90,11 @@
                   (click)="viewOrder(item)">
                   <ion-label>More ...</ion-label>
                 </span>
-                <span style="float: right;bottom:0;margin-top: 10px;color:var(--ion-color-primary)">
+                <span style="float: right;bottom:0;margin-top: 10px;color:var(--ion-color-primary)" *ngIf="item.Delivery == 'I will pick it'">
                   Pick Up : {{item.pickHour}} : {{item.pickMins}} {{item.pickDay}}
+                </span>
+                <span style="float: right;bottom:0;margin-top: 10px;color:var(--ion-color-primary)" *ngIf="item.Delivery == 'Deliver it to me'">
+                   To be Delivered
                 </span>
               </ion-col>
             </ion-row>

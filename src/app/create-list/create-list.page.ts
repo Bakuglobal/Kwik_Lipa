@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
+import { FirestoreService } from '../services/firestore.service';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { Contacts } from '@ionic-native/contacts/ngx';
 
 
 const url = "https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y";
@@ -15,29 +18,47 @@ const url = "https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=iden
 export class CreateListPage implements OnInit {
   // variables
 
-  items = [{ "item": "sugar", "image": url }, { "item": "Rice", "image": url }, { "item": "Soap", "image": url }, { "item": "honey", "image": url }];
-  unfilteredItems;
-  searchTerm: string;
+  items = [{ "item": "sugar", "image": url ,"price":"0"}, { "item": "Rice", "image": url ,"price":"0"}, { "item": "Soap", "image": url ,"price":"0"}, { "item": "honey", "image": url,"price":"0" }];
+  unfilteredItems ;
+  searchTerm: string ;
+  title: string ;
+  DueDate: string ;
+  member: string ;
   suggestion = false;
+  userSuggestion = false ;
+  showInvite = false ;
   newListItems = [];
-  members = [{ "name": "James", "phone": "url" }, { "name": "Allan", "phone": "url" }, { "name": "Steve", "phone": "url" }];
+  users = [] ;
+  unfilteredUsers = [] ;
+  phone;
+  name;
+  // members = [{ "name": "James", "phone": "url" }, { "name": "Allan", "phone": "url" }, { "name": "Steve", "phone": "url" }];
   Listmembers = [];
   showMembers = false ;
   userID ;
+  userName ;
 
-  listForm: FormGroup;
   constructor(
     private navCtrl: Router,
     private formBuilder: FormBuilder,
     private fs: AngularFirestore,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private service: FirestoreService ,
+    private toastCtrl: ToastController,
+    private socialSharing: SocialSharing,
+    private contacts: Contacts
   ) {
     this.unfilteredItems = this.items;
     this.userID = localStorage.getItem('userID');
-    this.listForm = formBuilder.group({
-      title: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
-      DueDate: ['',Validators.required],
-    });
+    this.userName = localStorage.getItem('Name');
+    // get users from db
+    this.service.getUsers().valueChanges().subscribe(res => {
+      this.users = res ;
+      this.unfilteredUsers = res ;
+      console.log(this.users);
+    })
+
+    
   }
 
   ngOnInit() {
@@ -62,22 +83,31 @@ export class CreateListPage implements OnInit {
       return item.item.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
     });
   }
-  // filter users
-  searchUser() {
-    if (this.searchTerm != null || this.searchTerm != '') {
-      this.items = this.filterItems();
-      this.suggestion = true;
-      console.log(this.items)
-    } else {
-      this.suggestion = false;
 
+  // filter users
+  suggestUsers() {
+    if (this.member != null || this.member != '') {
+      console.log(this.users) ;
+      if(this.filterUser().length == 0){
+        this.showInvite = true ;
+        this.users = [] ;
+      }else {
+        this.users = this.filterUser() ;
+        this.userSuggestion = true ;
+        this.showInvite = false ;
+      }
+    }
+    if(this.member === ''){
+      this.userSuggestion = false ;
+      this.users = [] ;
     }
   }
   filterUser() {
-    return this.unfilteredItems.filter(item => {
-      return item.item.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
-    });
+    return this.unfilteredUsers.filter(item => {
+      return item.phone.toLowerCase().indexOf(this.member.toLowerCase()) > -1;
+    }) ;
   }
+
   addItem(item) {
     item.count = 1;
     this.newListItems.push(item);
@@ -88,40 +118,83 @@ export class CreateListPage implements OnInit {
     this.newListItems[index].count++;
   }
   reduce(index) {
+    if(this.newListItems[index].count == 1){
     this.newListItems[index].count--;
+    }
   }
   clearList() {
     this.newListItems = [];
-    this.listForm.reset();
     this.Listmembers = [] ;
   }
   removeMember(index) {
     this.Listmembers.splice(index, 1);
   }
+  remove(index){
+    this.newListItems.splice(index, 1);
+  }
   addMembers(item) {
-    this.Listmembers.push(item);
-    this.showMembers = false;
+    if(this.Listmembers.includes(item)){
+      // do not add
+      this.Toasted('member already added')
+    }else{
+      this.Listmembers.push(item);
+      // this.member = '' ;
+      this.users.length = 0 ;
+      this.userSuggestion = false;
+    }
+    
+  }
+  async sendInvite(){
+    //share via whatsapp
+    let receiver = this.member ;
+    let msg = this.userName +' '+ "shared a Shopping List with you. Click the link to view it";
+    let img = '../assets/images/icon.png' ;
+    let url = 'https://play.google.com/store/apps/details?id=io.kwik.lipa';
+    this.socialSharing.shareViaWhatsAppToReceiver(receiver, msg , img , url );
+}
+  closeSuggestion(){
+    this.userSuggestion = false ;
+  }
+  contactList(){
+    this.contacts.pickContact().then( det => {
+      let savedNumber = det.phoneNumbers[0].value.toString() ;
+      let check = savedNumber.charAt(0);
+      if(check == "+"){
+        let nospace = savedNumber.replace(/\s+/g,'');
+        this.member = '0'+nospace.substring(4,12) ;
+      }else{
+        let clean = savedNumber.replace(/\s+/g,'');
+        let cut = clean.substring(0,10);
+        this.member = cut ;
+      }
+      this.name = det.name.givenName;
+      this.suggestUsers();
+    });
+  
+
   }
   saveList() {
-    if (!this.listForm.valid) {
-      console.log(this.listForm.value);
-      return;
+    
+    if(this.title === undefined || this.title === '' ){
+      this.presentAlert('Add Title to your List');
+      return ;
     }
-    if(this.newListItems.length === 0 ){
-      this.presentAlert('Add items to your List');
+    if(this.DueDate === undefined){
+      this.presentAlert('Set a shopping date for your List');
       return ;
     }
     const ref = this.fs.collection('shopping-list');
     let data = {
-      "Title": this.listForm.value.title ,
-      "DueDate": this.listForm.value.DueDate,
+      "Title": this.title ,
+      "DueDate": this.DueDate,
       "members":this.Listmembers,
       "Items": this.newListItems,
-      "userID":this.userID
+      "userID":this.userID,
+      "createdBy": this.userName
     };
     ref.add(data).then(res => {
       console.log('saved' + res);
-      this.listForm.reset();
+      // this.listForm.reset();
       this.Listmembers = [] ;
       this.newListItems = [] ;
 
@@ -130,9 +203,7 @@ export class CreateListPage implements OnInit {
         console.log(err);
       })
   }
-  suggestUsers(member){
-
-  }
+  
   // alert
   async presentAlert(data){
     const alert = await this.alertCtrl.create({
@@ -146,5 +217,13 @@ export class CreateListPage implements OnInit {
     });
     await alert.present();
   }
-
+// toast msg
+async Toasted(msg){
+  const ts = await this.toastCtrl.create({
+    message: msg,
+    duration: 2000,
+    position: 'bottom'
+  });
+  await ts.present();
+}
 }

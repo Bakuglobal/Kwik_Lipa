@@ -17,7 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { DeviceOrientation } from '@ionic-native/device-orientation/ngx';
-import { Contacts } from '@ionic-native/contacts';
+import { Contacts } from '@ionic-native/contacts/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import {Network} from '@ionic-native/network/ngx';
 import { ChatmodalPageModule } from './chatmodal/chatmodal.module';
@@ -38,7 +38,7 @@ import { ScannedModalPageModule } from './scanned-modal/scanned-modal.module';
 import { OffersPage } from './offers/offers.page';
 import { Firebase } from '@ionic-native/firebase/ngx';
 import { AppLauncher} from '@ionic-native/app-launcher/ngx';
-import { OneSignal } from '@ionic-native/onesignal/ngx';
+// import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { Tab1Page } from './tab1/tab1.page';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -93,7 +93,7 @@ import { ImageDisplayPageModule } from './image-display/image-display.module';
     Contacts,
     Geolocation,
     AppLauncher,
-    OneSignal,
+    // OneSignal,
     SplashScreen,
     BarcodeScanner,
     FirestoreService,

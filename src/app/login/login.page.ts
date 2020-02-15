@@ -11,7 +11,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Location } from '@angular/common';
 import { AppComponent } from '../app.component';
 import { DatabaseService } from '../services/database.service';
-import { OneSignal } from '@ionic-native/onesignal/ngx';
+// import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { OneSignalService } from '../OneSignal/one-signal.service';
 import { Tab1Page } from '../tab1/tab1.page';
 
@@ -60,7 +60,7 @@ export class LoginPage implements OnInit {
     public location: Location,
     public ref : AppComponent,
     public db: DatabaseService,
-    private oneSignal: OneSignal,
+    // private oneSignal: OneSignal,
     private notice: OneSignalService,
     private tab: Tab1Page
    
@@ -114,8 +114,8 @@ export class LoginPage implements OnInit {
           );
         }
         next(resp) {
-          localStorage.setItem('userEmail', resp.email);
-          localStorage.setItem('userName', resp.name);
+          // localStorage.setItem('userEmail', resp.email);
+          // localStorage.setItem('userName', resp.name);
           const id = resp.user.uid ;
           localStorage.setItem('userID',id)
           this.loading.dismiss();
