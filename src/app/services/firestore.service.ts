@@ -24,6 +24,7 @@ import { LoginPage } from '../login/login.page';
 import { HTTP } from '@ionic-native/http/ngx';
 import { Order } from '../models/order';
 import { List } from '../models/list';
+import { Notice } from '../models/upload';
 
 
 const httpOptions = {
@@ -47,14 +48,16 @@ export class FirestoreService {
       public products: AngularFireList<any>;
       private cart = [] ;
       authState: any = null;
-      count = 0 ;
       OpenOrdersCollection: AngularFirestoreCollection<Order> ;
       pastOrderCollection: AngularFirestoreCollection<Order> ;
       pastPaidOrderCollection: AngularFirestoreCollection<Order> ;
-      allLists: AngularFirestoreCollection<List>
+      allLists: AngularFirestoreCollection<List> ;
+      notices: AngularFirestoreCollection<Notice> ;
+      count = 0 ;
 
-  //objects
+  // objects
       usermsg = {} ;
+     
   // private pathUsers = '/users';
  
   constructor(
@@ -118,7 +121,12 @@ getCount(){
     sharePhoneNumber(number: any){
       this.phone.next(number);
     }
-  
+// show new notification
+    private notice = new BehaviorSubject(false);
+    serviceNotice = this.phone.asObservable();
+    showNotice(show: boolean){
+      this.notice.next(show);
+    }
 // share shopBy Tag
     private shopBy = new BehaviorSubject("shopBy");
     serviceshopBy = this.shopBy.asObservable();
@@ -324,6 +332,21 @@ getUsers(){
 // get areas
 getAreas(){
   return this.fs.collection('Areas').valueChanges();
+}
+// get notifications
+getNotifications(id){
+ this.notices =  this.fs.collection<Notice>('Notifications', ref => {
+   return ref.where('userID','==',id).orderBy('Date','asc');
+ });
+ return this.notices.snapshotChanges().pipe(
+    map(actions => {
+      return actions.map(a => {
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id ;
+        return { id, ... data};
+      })
+    })
+  )
 }
   
 }

@@ -1,18 +1,42 @@
-  <ion-header color="primary" >
+<ion-header color="primary">
   <ion-toolbar color="primary" padding>
-      <ion-buttons slot="start" (click)="back()">
-          <ion-icon name="arrow-back" size="large"></ion-icon>
-        </ion-buttons>
+    <ion-buttons slot="start" (click)="back()">
+      <ion-icon name="arrow-back" size="large"></ion-icon>
+    </ion-buttons>
     <ion-title>
       Notifications
     </ion-title>
   </ion-toolbar>
 
 </ion-header>
-  <ion-content  >
-
-<div class="ion-text-center"style="margin-top: 200px;">
-  <ion-icon size="large" name="flash"></ion-icon><br>
-  <ion-label>You have no Notifications</ion-label>
-</div>
+<ion-content>
+  <div>
+    <ion-card *ngFor="let item of notifications" (click)="viewOrder(item.title)">
+      <ion-row padding>
+        <ion-col size="3" >
+          <ion-avatar>
+            <img src="../../assets/images/icon.png">
+          </ion-avatar>
+        </ion-col>
+        <ion-col style="text-align: left;padding-top: 20px;">
+          <ion-label>{{item.title}}</ion-label><br>
+          <ion-label>{{ item.Date.toDate() | date }}</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-card-content>
+        <p>
+          Hello {{Name}} your order is Ready for pick up. <br>
+          You ordered for : 
+        </p>
+        <blockquote>
+          {{item.message}}
+        </blockquote>
+        
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <!-- <div class="ion-text-center" style="margin-top: 200px;">
+    <ion-icon size="large" name="flash"></ion-icon><br>
+    <ion-label>You have no Notifications</ion-label>
+  </div> -->
 </ion-content>

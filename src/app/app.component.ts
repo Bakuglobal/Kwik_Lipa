@@ -18,7 +18,6 @@ import {
   DeviceOrientation,
   DeviceOrientationCompassHeading
 } from '@ionic-native/device-orientation/ngx';
-import { FileUpload } from './models/upload';
 import { Shops } from './models/shops';
 import { IonRouterOutlet } from '@ionic/angular';
 import * as $ from "jquery";
@@ -27,6 +26,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 // import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { OneSignalService } from './OneSignal/one-signal.service';
 import { FCM } from '@ionic-native/fcm/ngx';
+import { NotificationsPage } from './notifications/notifications.page';
+import { Body } from '@angular/http/src/body';
 
 
 @Component({
@@ -75,7 +76,6 @@ export class AppComponent {
   ];
 
   selectedFiles: FileList;
-  currentFileUpload: FileUpload;
   progress: { percentage: number } = { percentage: 0 };
 
   lastTimeBackPress = 0;
@@ -189,22 +189,23 @@ export class AppComponent {
                   this.fcm.onNotification().subscribe(data => {
                     console.log(data);
                     if (data.wasTapped) {
-                      console.log('Received in background');
+                      console.log('Received in background', data);
                       // this.navCtrl.navigate([data.landing_page, data.price]);
+                      this.service.showNotice(true);
+                      this.saveNoticeTofirebase(data);
+                      this.viewNotice();
                     } else {
-                      console.log('Received in foreground');
+                      console.log('Received in foreground', data);
                       // this.navCtrl.navigate([data.landing_page, data.price]);
+                      this.service.showNotice(true);
+                      this.showAlert(data);
                     }
                   });
-      
                 }
                 this.statusBar.styleDefault();
                 this.statusBar.hide() ;
               });
               
-
-              
-
               //HIDE BOTTOM BANNER AD
 
               this.platform.backButton.subscribe(async () => {
@@ -291,7 +292,42 @@ export class AppComponent {
             this.fireApi.logout();
           }
 
-
+// view notices 
+async viewNotice(){
+  this.routerCtrl.navigate(['tabs/notifications']);
+}
+async showAlert(data){
+  const alert = await this.alertCtrl.create({
+    header: data.title,
+    message: data.body,
+    buttons: [
+      {
+        text: 'View',
+        handler: () => {
+          this.saveNoticeTofirebase(data);
+          this.viewNotice();
+        }
+      },
+      {
+        text: 'Close',
+        handler: () => {
+          this.saveNoticeTofirebase(data); 
+        }
+      }
+    ],
+    cssClass: 'alert'
+  });
+  await alert.present();
+}
+saveNoticeTofirebase(data){
+  let notice = {
+    message: data.body,
+    Date: Date(),
+    title: data.title,
+    userID: localStorage.getItem('userID')
+  }
+  this.database.collection('Notifications').add(notice).catch(err => console.log(err));
+}
 
                     
 }

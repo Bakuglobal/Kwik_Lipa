@@ -36,7 +36,7 @@
   <!-- Shows items in the cart and there total  -->
   <div *ngIf="!Ordersuccess">
     <ion-item *ngFor="let item of cart">
-      <ion-col>
+      <ion-col size="3">
         <img class="img" src="{{item.image}}">
       </ion-col>
       <ion-col class="details" size="6">
@@ -45,26 +45,22 @@
         <ion-label>{{item.product}} &nbsp; {{item.quantity}}</ion-label><br>
         <ion-label>Kshs. <b>{{item.currentprice}}</b></ion-label>
       </ion-col>
-      <ion-col size="4">
-
+      <ion-col  style="text-align: left;">
         <ion-card style="border-radius: 20px;width: 100%;">
-          <ion-item>
+          <ion-row>
             <ion-col>
               <ion-icon name="remove" (click)="reduce(cart.indexOf(item))"></ion-icon>
-            </ion-col>&nbsp;&nbsp;
+            </ion-col>
             <ion-col>
               <ion-label><b>{{item.count}} </b></ion-label>
-            </ion-col>&nbsp;
-            <ion-col>
-              <ion-icon name="add" (click)="add(cart.indexOf(item))"></ion-icon>
             </ion-col>
-            <ion-col></ion-col>
-          </ion-item>
+            <ion-col>
+              <ion-icon name="add" (click)="add(cart.indexOf(item))" color="dark"></ion-icon>
+            </ion-col>
+          </ion-row>
         </ion-card>
-        &nbsp;
       </ion-col>
     </ion-item>
-
   </div>
   <!-- Pick up time section-->
   <div  *ngIf="cart.length != 0;">

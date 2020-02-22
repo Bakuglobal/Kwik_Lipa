@@ -1,0 +1,39 @@
+.image{
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 10px;
+    img{
+        height: 200px;
+        object-fit: cover;
+        width: 100%;
+    }
+}
+.description{
+    
+}
+.name{
+    font-size: large;
+}
+.bottom{
+    bottom: 5px;
+    position: fixed;
+    left: 0px ;
+    right: 0px ;
+    height: 50px ;
+    span{
+        color: grey;
+        font-size: .9em;
+    }
+}
+.btn{
+    padding-top: 0px;
+    padding-bottom: 0px;
+    height: 50px;
+    width: 100%;
+}
+.label{
+    font-size: 1.3em;
+    font-weight: bolder;
+    color: black;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif !important;
+}

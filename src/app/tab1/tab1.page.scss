@@ -35,7 +35,24 @@
     object-fit: contain;
     object-position: center;
   }
-  
+  .header{
+    width:100%;
+    height:100px;
+    border-bottom-left-radius:20%;
+    border-bottom-right-radius:20%;
+    opacity: 1;
+    transition: opacity 3s;
+  }
+  .toolbar{
+    -webkit-transition: 1s linear;
+    /*to only change opacity*/
+    // -webkit-transition: opacity 4s linear ;
+   -moz-transition: 1s linear;
+   -o-transition: 1s linear;
+   transition: 1s linear;
+   opacity: 1;
+  }
+
   .shops-title {
       font-weight: bold;
       color: #666666;
@@ -299,6 +316,7 @@
               float: left; 
               margin-left: 8px;
               font-weight: bold;
+              color: grey;
           }
           .featured-products-title-right {
               float: right; 

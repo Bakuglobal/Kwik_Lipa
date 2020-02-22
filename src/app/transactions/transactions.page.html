@@ -51,7 +51,7 @@
     <ion-label padding color='primary'>Pick Pay Collect</ion-label>
     <!-- OPen orders -->
     <div *ngIf="open">
-      <ion-card padding *ngFor="let item of myOpenOrders " class="card">
+      <ion-card padding *ngFor="let item of myOpenOrders " [ngClass]="{'card-ready': item.status == 'Ready'}">
         <div *ngIf="!item.show">
           <ion-icon name="funnel" (click)="showMore(item)" style="float: left;" color="primary"></ion-icon>
           <ion-label style="float: right;" color="warning">{{item.OrderID}}</ion-label><br><br>
@@ -111,7 +111,8 @@
       <!-- canceled orders -->
       <ion-card padding *ngFor="let item of myPastOrders " class="card">
         <div *ngIf="!item.show">
-          <ion-icon name="funnel" (click)="showMore(item)" style="float: left;" color="primary"></ion-icon>
+          <ion-icon name="funnel" (click)="showMore(item)" style="float: left;" color="primary"></ion-icon>&nbsp;
+          <ion-label>{{item.Date.toDate() | date }}</ion-label>
           <ion-label style="float: right;" color="warning">{{item.OrderID}}</ion-label><br><br>
           <div style="text-align:start;" (click)="viewOrder(item)">
             Order for <ion-label *ngFor="let item of item.products">{{item.product}},</ion-label> ...
@@ -203,9 +204,9 @@
 
         </div>
       </ion-card>
-      <div style="margin-top: 40px;text-align:center" *ngIf="paidOrders.length == 0 ">
+      <!-- <div style="margin-top: 40px;text-align:center" *ngIf="paidOrders.length == 0 ">
         <ion-label>You have no pick pay collect history</ion-label>
-      </div>
+      </div> -->
     </div>
 
 

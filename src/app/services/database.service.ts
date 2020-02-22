@@ -8,6 +8,7 @@ import { Firebase } from '@ionic-native/firebase/ngx' ;
 import { map  } from 'rxjs/operators';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Platform } from '@ionic/angular';
+import { Product } from '../models/product';
 export interface ShoppingList {
   Title: string,
   First: string,
@@ -28,6 +29,7 @@ export class DatabaseService {
   cart: any ;
   private listCollection: AngularFirestoreCollection<ShoppingList>;
   private lists: Observable<ShoppingList[]>; 
+  products ;
   items = [] ;   
   count = 0 ;
   user ;
@@ -36,6 +38,7 @@ export class DatabaseService {
     private fireApi:AngularFirestore,
     public firebaseNative: Firebase,
     private platform: Platform,
+    private fs: AngularFirestore
   ) { 
     this.listCollection = this.fireApi.collection<ShoppingList>('shopping-list');
  
@@ -97,12 +100,12 @@ getList(id) {
 
 // get users from firestore
         async getUsers(){
-          await this.fireApi.collection('users').get()
+          this.fireApi.collection('users').get()
             .subscribe(querySnapshot => {
               querySnapshot.docs.forEach(doc => {
-              this.items.push(doc.data());
-            });
-          })
+                this.items.push(doc.data());
+              });
+            })
         }
 
 // Filter users 
@@ -169,7 +172,21 @@ setUser(data){
 getUser(){
   return this.user ;
 }
-
+// get disounted products
+ getdiscountedProducts(){
+  let prod = this.fs.collection<Product>('Kakila Organic', ref => {
+    return ref.where('currentprice', '<=', '150');
+  });
+  return prod.snapshotChanges().pipe(
+    map(actions => {
+      return actions.map(a => {
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id ;
+        return { id, ... data};
+      })
+    })
+  )
+}
 
 
 }

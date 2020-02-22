@@ -65,22 +65,25 @@ export class OffersPage implements OnInit {
   ngOnInit() {
   }
 
-  //cart count
-      changeCount(number){
-        this.count = number ;
-      }
+  // //cart count
+  //     changeCount(number){
+  //       // this.count = number ;
+  //       this.fireApi.
+  //         .subscribe(data => (this.shopSelected = data));
+  //       console.log("sent data from home page : ", this.shopSelected);
+  //     }
   //get products from database
 
         ionViewWillEnter(){
-                this.productCollection = this.fs.collection('click&collect',ref => {
-                    return ref.where('shop','==',this.shopSelected).orderBy('currentprice');
+                this.productCollection = this.fs.collection('Kakila Organic',ref => {
+                    return ref.orderBy('currentprice','asc');
                 })
                 this.productCollection.valueChanges().subscribe(res => {
                     this.offers = res ;
                     this.UnfilteredOffers = res ;
                   })
                   console.log('products'+ this.offers);
-                this.count = this.fireApi.getCount() ;
+                // this.count = this.fireApi.getCount() ;
 
         }
         
@@ -137,6 +140,7 @@ export class OffersPage implements OnInit {
         this.fireApi.hiddenTabs = false ;
         this.navCtrl.navigate(['tabs/tab1']);
       }
+
 
 //get a shop name
 

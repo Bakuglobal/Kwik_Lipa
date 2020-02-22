@@ -1,102 +1,82 @@
-<ion-header *ngIf="!selectShop">
-    <ion-toolbar color="primary">
-        <ion-buttons slot="start">
-            <ion-menu-button autoHide="false"></ion-menu-button>
-        </ion-buttons>
+<!-- <ion-header > -->
+<ion-toolbar color="primary" [ngClass]="{'header': heading == false}" class="toolbar">
+    <ion-buttons slot="start">
+        <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title text-center *ngIf="!heading"> <br><br><span style="font-size: .8em;">Welcome back ,</span> <br> What
+        would you like to do ?</ion-title>
+    <ion-title *ngIf="heading" text-center>Hello {{Name}}</ion-title>
+    <ion-buttons slot="end" (click)="notifications()" style="padding-right: 5px;">
+        <ion-icon size="large" name="notifications"></ion-icon><br>
+        <ion-badge color="danger">
+            <div *ngIf="count"></div>
+        </ion-badge>
+    </ion-buttons>
 
-        <ion-title>Home</ion-title>
-
-        <ion-buttons slot="end" (click)="notifications()" style="padding-right: 5px;">
-            <ion-icon size="large" name="notifications"></ion-icon><br>
-            <ion-badge color="danger">
-                <div *ngIf="count != 0">{{count}}</div>
-            </ion-badge>
-        </ion-buttons>
-
-    </ion-toolbar>
-</ion-header>
-
-
-<ion-content>
+</ion-toolbar>
+<!-- </ion-header> -->
+<ion-content [scrollEvents]="true" (ionScroll)="onScroll($event)">
 
     <!-- MAIN  MENU -->
-    
-        <ion-row class="main-menu">
-            <ion-col size="4" (click)="scanAndPay()">
-                <ion-avatar class="avatar">
-                    <img class="avatar-img" src="/assets/images/scan.svg">
-                </ion-avatar>
-                <h2>Scan & Pay</h2>
-            </ion-col>
 
-            <ion-col size="4" (click)="pickPayCollect()">
-                <ion-avatar class="avatar">
-                    <img class="avatar-img" src="/assets/images/pay.svg">
-                </ion-avatar>
-                <h2>Pick, Pay & Collect</h2>
-            </ion-col>
+    <ion-row class="main-menu">
+        <ion-col size="4" (click)="scanAndPay()">
+            <ion-avatar class="avatar">
+                <img class="avatar-img" src="/assets/images/scan.svg">
+            </ion-avatar>
+            <h2>Scan & Pay</h2>
+        </ion-col>
 
-            <ion-col size="4" (click)="shoppingList()">
-                <ion-avatar class="avatar">
-                    <img class="avatar-img" src="/assets/images/shop.svg">
-                </ion-avatar>
-                <h2>Shopping lists</h2>
-            </ion-col>
-        </ion-row>
+        <ion-col size="4" (click)="pickPayCollect()">
+            <ion-avatar class="avatar">
+                <img class="avatar-img" src="/assets/images/pay.svg">
+            </ion-avatar>
+            <h2>Pick, Pay & Collect</h2>
+        </ion-col>
+
+        <ion-col size="4" (click)="shoppingList()">
+            <ion-avatar class="avatar">
+                <img class="avatar-img" src="/assets/images/shop.svg">
+            </ion-avatar>
+            <h2>Shopping lists</h2>
+        </ion-col>
+    </ion-row>
 
 
-        <!-- ADVERTS -->
-        <div class="soko">
-            <div class="space"></div>
-            <div class="soko-content">
-                <ion-slides pager="false" [options]="AdvertslideOpts">
-                    <ion-slide>
-                        <img class="soko-image" src="/assets/images/soko/big-basket-2.jpg">
-                    </ion-slide>
-                    <ion-slide>
-                        <img class="soko-image" src="/assets/images/soko/bigbasket-banner.jpg">
-                    </ion-slide>
-                </ion-slides>
-            </div>
+    <!-- ADVERTS -->
+    <div class="soko">
+        <div class="space"></div>
+        <div class="soko-content">
+            <ion-slides pager="true" [options]="AdvertslideOpts">
+                <ion-slide>
+                    <img class="soko-image" src="/assets/images/Kakilaposter.jpg" (click)="gotoShop()">
+                </ion-slide>
+                <ion-slide>
+                    <img class="soko-image" src="/assets/images/Kakila.jpg">
+                </ion-slide>
+            </ion-slides>
         </div>
+    </div>
     <div class="body">
         <!-- DISCOUNTED PRODUCTS -->
         <div style="background-color: #F5F5F5; height: 5px;"></div>
         <div class="featured-products">
             <div class="featured-products-title">
                 <div class="featured-products-title-left">Discounted products</div>
-                <div class="featured-products-title-right">
+                <div class="featured-products-title-right" (click)="gotoShop()">
                     View all
                     <ion-icon src="/assets/images/arrow-right.svg"></ion-icon>
                 </div>
             </div>
 
             <div class="featured-products-content">
-                <!-- <ion-row> -->
 
                 <ion-slides pager="false" [options]="DiscountslideOpts">
                     <!-- FIRST SLIDE DISCOUNTED PRODUCTS -->
-                    <ion-slide>
-                        <ion-col class="featured-products-content-card" size="6">
-                            <div class="featured-products-content-card-image">
-                                <div>
-                                    <ion-button expand="full"
-                                        style="height: 25px; width: 35px; position: absolute; top: 5px; right: 0px;">
-                                        <div style="font-size: 11px;">-20%</div>
-                                    </ion-button>
-                                </div>
-                                <img class="product-image" src="/assets/images/featured_products/camera.png">
-                            </div>
-                            <div class="featured-products-content-card-content">
-                                <div class="featured-products-content-card-content-title">Product Name</div>
-                                <ion-row class="featured-products-content-card-content-description">
-                                    <ion-col size="6">Ksh 200</ion-col>
-                                    <ion-col size="6" style="direction: rtl;"><s>Ksh 280</s></ion-col>
-                                </ion-row>
-                            </div>
-                        </ion-col>
+                    <ion-slide *ngFor="let n of discontedProducts | slice:0:discontedProducts.length/2 let i=index ">
 
-                        <ion-col class="featured-products-content-card" size="6">
+                        <ion-col class="featured-products-content-card"
+                            *ngFor="let item of discontedProducts | slice:discontedProducts.indexOf(n):discontedProducts.indexOf(n)+2 " (click)="gotoDiscountModal(item)">
                             <div class="featured-products-content-card-image">
                                 <div>
                                     <ion-button expand="full"
@@ -104,63 +84,22 @@
                                         <div style="font-size: 11px;">-20%</div>
                                     </ion-button>
                                 </div>
-                                <img class="product-image" src="/assets/images/featured_products/cabbage.png">
+                                <img class="product-image" src="{{item.image}}">
                             </div>
                             <div class="featured-products-content-card-content">
-                                <div class="featured-products-content-card-content-title">Product Name</div>
+                                <div class="featured-products-content-card-content-title">{{item.product}}</div>
                                 <ion-row class="featured-products-content-card-content-description">
-                                    <ion-col size="6">Ksh 200</ion-col>
-                                    <ion-col size="6" style="direction: rtl;"><s>Ksh 280</s></ion-col>
-                                </ion-row>
-                            </div>
-                        </ion-col>
-                    </ion-slide>
-
-                    <!-- FIRST SLIDE DISCOUNTED PRODUCTS -->
-                    <ion-slide>
-                        <ion-col class="featured-products-content-card" size="6">
-                            <div class="featured-products-content-card-image">
-                                <div>
-                                    <ion-button expand="full"
-                                        style="height: 25px; width: 35px; position: absolute; top: 5px; right: 0px;">
-                                        <div style="font-size: 11px;">-20%</div>
-                                    </ion-button>
-                                </div>
-                                <img class="product-image" src="/assets/images/featured_products/camera.png">
-                            </div>
-                            <div class="featured-products-content-card-content">
-                                <div class="featured-products-content-card-content-title">Product Name</div>
-                                <ion-row class="featured-products-content-card-content-description">
-                                    <ion-col size="6">Ksh 200</ion-col>
-                                    <ion-col size="6" style="direction: rtl;"><s>Ksh 280</s></ion-col>
-                                </ion-row>
-                            </div>
-                        </ion-col>
-
-                        <ion-col class="featured-products-content-card" size="6">
-                            <div class="featured-products-content-card-image">
-                                <div>
-                                    <ion-button expand="full"
-                                        style="height: 25px; width: 35px; position: absolute; top: 5px; right: 0px;">
-                                        <div style="font-size: 11px;">-20%</div>
-                                    </ion-button>
-                                </div>
-                                <img class="product-image" src="/assets/images/featured_products/cabbage.png">
-                            </div>
-                            <div class="featured-products-content-card-content">
-                                <div class="featured-products-content-card-content-title">Product Name</div>
-                                <ion-row class="featured-products-content-card-content-description">
-                                    <ion-col size="6">Ksh 200</ion-col>
-                                    <ion-col size="6" style="direction: rtl;"><s>Ksh 280</s></ion-col>
+                                    <ion-col size="6">Ksh {{item.currentprice}}</ion-col>
+                                    <ion-col size="6" style="direction: rtl;"><s>Ksh {{item.currentprice * 1.2}}</s>
+                                    </ion-col>
                                 </ion-row>
                             </div>
                         </ion-col>
 
                     </ion-slide>
+
                 </ion-slides>
 
-
-                <!-- </ion-row> -->
             </div>
         </div>
         <!-- END OF DISCOUNTED PRODUCTS -->
@@ -178,83 +117,126 @@
             <div class="featured-products-content">
                 <ion-row>
                     <!-- FIRST ROW OF PRODUCTS -->
-                    <ion-col class="featured-products-content-card" size="6">
-                        <div class="featured-products-content-card-image">
-                            <img class="product-image" src="/assets/images/featured_products/camera.png">
-                        </div>
-                        <div class="featured-products-content-card-content">
-                            <div class="featured-products-content-card-content-title">Product Name</div>
-                            <ion-row class="featured-products-content-card-content-description">
-                                <ion-col size="4.5">Ksh 200</ion-col>
-                            </ion-row>
-                        </div>
-                    </ion-col>
-
-                    <ion-col class="featured-products-content-card" size="6">
-                        <div class="featured-products-content-card-image">
-                            <img class="product-image" src="/assets/images/featured_products/camera.png">
-                        </div>
-                        <div class="featured-products-content-card-content">
-                            <div class="featured-products-content-card-content-title">Product Name</div>
-                            <ion-row class="featured-products-content-card-content-description">
-                                <ion-col size="4.5">Ksh 200</ion-col>
-                            </ion-row>
-                        </div>
-                    </ion-col>
-
-                    <!-- SECOND ROW OF PRODUCTS -->
-                    <ion-col class="featured-products-content-card" size="6">
-                        <div class="featured-products-content-card-image">
-                            <img class="product-image" src="/assets/images/featured_products/cabbage.png">
-                        </div>
-                        <div class="featured-products-content-card-content">
-                            <div class="featured-products-content-card-content-title">Product Name</div>
-                            <ion-row class="featured-products-content-card-content-description">
-                                <ion-col size="4.5">Ksh 200</ion-col>
-                            </ion-row>
-                        </div>
-                    </ion-col>
-
-                    <ion-col class="featured-products-content-card" size="6">
-                        <div class="featured-products-content-card-image">
-                            <img class="product-image" src="/assets/images/featured_products/cabbage.png">
-                        </div>
-                        <div class="featured-products-content-card-content">
-                            <div class="featured-products-content-card-content-title">Product Name</div>
-                            <ion-row class="featured-products-content-card-content-description">
-                                <ion-col size="4.5">Ksh 200</ion-col>
-                            </ion-row>
-                        </div>
-                    </ion-col>
-
-                    <!-- THIRD ROW OF PRODUCTS -->
-                    <ion-col class="featured-products-content-card" size="6">
-                        <div class="featured-products-content-card-image">
-                            <img class="product-image" src="/assets/images/featured_products/camera.png">
-                        </div>
-                        <div class="featured-products-content-card-content">
-                            <div class="featured-products-content-card-content-title">Product Name</div>
-                            <ion-row class="featured-products-content-card-content-description">
-                                <ion-col size="4.5">Ksh 200</ion-col>
-                            </ion-row>
-                        </div>
-                    </ion-col>
-
-                    <ion-col class="featured-products-content-card" size="6">
-                        <div class="featured-products-content-card-image">
-                            <img class="product-image" src="/assets/images/featured_products/camera.png">
-                        </div>
-                        <div class="featured-products-content-card-content">
-                            <div class="featured-products-content-card-content-title">Product Name</div>
-                            <ion-row class="featured-products-content-card-content-description">
-                                <ion-col size="4.5">Ksh 200</ion-col>
-                            </ion-row>
-                        </div>
-                    </ion-col>
+                    <ion-slides pager="false" [options]="DiscountslideOpts">
+                        <ion-slide>
+                            <ion-col class="featured-products-content-card">
+                                <div class="featured-products-content-card-image">
+                                    <img class="product-image" src="/assets/images/featured_products/camera.png">
+                                </div>
+                                <div class="featured-products-content-card-content">
+                                    <div class="featured-products-content-card-content-title">Product Name</div>
+                                    <ion-row class="featured-products-content-card-content-description">
+                                        <ion-col size="4.5">Ksh 200</ion-col>
+                                    </ion-row>
+                                </div>
+                            </ion-col>
+                            <ion-col class="featured-products-content-card">
+                                <div class="featured-products-content-card-image">
+                                    <img class="product-image" src="/assets/images/featured_products/camera.png">
+                                </div>
+                                <div class="featured-products-content-card-content">
+                                    <div class="featured-products-content-card-content-title">Product Name</div>
+                                    <ion-row class="featured-products-content-card-content-description">
+                                        <ion-col size="4.5">Ksh 200</ion-col>
+                                    </ion-row>
+                                </div>
+                            </ion-col>
+                        </ion-slide>
+                        <ion-slide>
+                            <ion-col class="featured-products-content-card">
+                                <div class="featured-products-content-card-image">
+                                    <img class="product-image" src="/assets/images/featured_products/camera.png">
+                                </div>
+                                <div class="featured-products-content-card-content">
+                                    <div class="featured-products-content-card-content-title">Product Name</div>
+                                    <ion-row class="featured-products-content-card-content-description">
+                                        <ion-col size="4.5">Ksh 200</ion-col>
+                                    </ion-row>
+                                </div>
+                            </ion-col>
+                            <ion-col class="featured-products-content-card">
+                                <div class="featured-products-content-card-image">
+                                    <img class="product-image" src="/assets/images/featured_products/camera.png">
+                                </div>
+                                <div class="featured-products-content-card-content">
+                                    <div class="featured-products-content-card-content-title">Product Name</div>
+                                    <ion-row class="featured-products-content-card-content-description">
+                                        <ion-col size="4.5">Ksh 200</ion-col>
+                                    </ion-row>
+                                </div>
+                            </ion-col>
+                        </ion-slide>
+                    </ion-slides>
                 </ion-row>
             </div>
         </div>
         <!-- END OF FEATURED PRODUCTS -->
+        <div style="background-color: #F5F5F5; height: 5px;"></div>
+        <div class="featured-products">
+            <div class="featured-products-title">
+                <div class="featured-products-title-left">Near You</div>
+                <div class="featured-products-title-right">
+                    View all
+                    <ion-icon src="/assets/images/arrow-right.svg"></ion-icon>
+                </div>
+            </div>
+
+            <div class="featured-products-content">
+                <ion-row>
+                    <!-- FIRST ROW OF PRODUCTS -->
+                    <ion-slides pager="false" [options]="DiscountslideOpts">
+                        <ion-slide>
+                            <ion-col class="featured-products-content-card">
+                                <div class="featured-products-content-card-image">
+                                    <img class="product-image" src="/assets/images/featured_products/camera.png">
+                                </div>
+                                <div class="featured-products-content-card-content">
+                                    <div class="featured-products-content-card-content-title">Product Name</div>
+                                    <ion-row class="featured-products-content-card-content-description">
+                                        <ion-col size="4.5">Ksh 200</ion-col>
+                                    </ion-row>
+                                </div>
+                            </ion-col>
+                            <ion-col class="featured-products-content-card">
+                                <div class="featured-products-content-card-image">
+                                    <img class="product-image" src="/assets/images/featured_products/camera.png">
+                                </div>
+                                <div class="featured-products-content-card-content">
+                                    <div class="featured-products-content-card-content-title">Product Name</div>
+                                    <ion-row class="featured-products-content-card-content-description">
+                                        <ion-col size="4.5">Ksh 200</ion-col>
+                                    </ion-row>
+                                </div>
+                            </ion-col>
+                        </ion-slide>
+                        <ion-slide>
+                            <ion-col class="featured-products-content-card">
+                                <div class="featured-products-content-card-image">
+                                    <img class="product-image" src="/assets/images/featured_products/camera.png">
+                                </div>
+                                <div class="featured-products-content-card-content">
+                                    <div class="featured-products-content-card-content-title">Product Name</div>
+                                    <ion-row class="featured-products-content-card-content-description">
+                                        <ion-col size="4.5">Ksh 200</ion-col>
+                                    </ion-row>
+                                </div>
+                            </ion-col>
+                            <ion-col class="featured-products-content-card">
+                                <div class="featured-products-content-card-image">
+                                    <img class="product-image" src="/assets/images/featured_products/camera.png">
+                                </div>
+                                <div class="featured-products-content-card-content">
+                                    <div class="featured-products-content-card-content-title">Product Name</div>
+                                    <ion-row class="featured-products-content-card-content-description">
+                                        <ion-col size="4.5">Ksh 200</ion-col>
+                                    </ion-row>
+                                </div>
+                            </ion-col>
+                        </ion-slide>
+                    </ion-slides>
+                </ion-row>
+            </div>
+        </div>
     </div>
 
 </ion-content>

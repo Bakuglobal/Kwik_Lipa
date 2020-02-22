@@ -52,7 +52,7 @@ export class TransactionsPage implements OnInit {
   }
 
   ngOnInit() {
-    this.getTransactions();
+    // this.getTransactions();
     console.log(this.transactions);
     this.getOpenOrders();
     this.getPastOrders();
@@ -112,22 +112,22 @@ export class TransactionsPage implements OnInit {
 
   // get scan and pay history
 
-  getTransactions() {
-    this.fireApi.getCurrentUser().then(results => {
-      this.fireApi
-        .transactions(results.uid)
-        .snapshotChanges()
-        .map(changes => {
-          return changes.map(c => ({
-            key: c.payload.key,
-            ...c.payload.val()
-          }));
-        })
-        .subscribe(transactions => {
-          this.showData(transactions);
-        });
-    });
-  }
+  // getTransactions() {
+  //   this.fireApi.getCurrentUser().then(results => {
+  //     this.fireApi
+  //       .transactions(results.uid)
+  //       .snapshotChanges()
+  //       .map(changes => {
+  //         return changes.map(c => ({
+  //           key: c.payload.key,
+  //           ...c.payload.val()
+  //         }));
+  //       })
+  //       .subscribe(transactions => {
+  //         this.showData(transactions);
+  //       });
+  //   });
+  // }
 
   showData(data) {
     this.transactions = data;

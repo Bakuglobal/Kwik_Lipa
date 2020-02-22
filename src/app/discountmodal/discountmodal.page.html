@@ -1,9 +1,78 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>discountmodal</ion-title>
-  </ion-toolbar>
-</ion-header>
+<!-- <ion-header> -->
+<ion-toolbar padding color="primary">
+  <ion-buttons slot="start">
+    <ion-icon name="arrow-back" (click)="close()"></ion-icon>
+  </ion-buttons>
+  <ion-title text-center>{{product}}</ion-title>
+  <ion-buttons slot="end">
+    <ion-icon name="cart"></ion-icon>
+    <ion-badge style="color:white">{{count}}</ion-badge>
+  </ion-buttons>
+</ion-toolbar>
+<!-- </ion-header> -->
 
 <ion-content>
+  <div class="image">
+    <img src="{{image}}">
+  </div>
+  <div>
+    <ion-item padding>
+      <ion-col>
+        <ion-label class="name">{{shop}}</ion-label>
+      </ion-col>
+    </ion-item>
+  </div>
+  <div class="description" padding>
+    <ion-text style="color: grey;">Description</ion-text>
+    <p>
+      lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem
+      ipsum
+      lorem ipsum
+    </p>
+  </div>
+  <!-- <div class="quantity">
+    <ion-row style="border-radius: 10px;height: 40px;width: 100%" padding>
+      <ion-col>
+        <span size="3" style="padding-left: 10px;">
+          Total <br> amount :
+        </span>
+      </ion-col>
+      <ion-col style="padding-top: 10px;">
+        <ion-text class="label">Ksh. {{currentprice}}</ion-text>
+      </ion-col>
+      <ion-col>
+        Qty
+      </ion-col>
+      <ion-col>
+        {{count}}
+      </ion-col>
+      <ion-col>
+        <ion-icon name="arrow-up"></ion-icon><br>
+        <ion-icon name="arrow-down"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </div>
+  <div>
+    <ion-row>
+      <ion-label style="float: left;">20% off Today</ion-label>
+      <ion-label style="float: right;" >
+        <ion-icon name="bicycle-outline"></ion-icon> Express delivery </ion-label>
+    </ion-row>
+  </div>
+ -->
+
+  <ion-row class="bottom">
+   <ion-col>
+     <ion-button fill="clear">
+      <ion-icon name="add"></ion-icon>
+      Cart
+     </ion-button>
+   </ion-col>
+    <ion-col>
+      <ion-button class="btn" color="primary">
+       Buy Now
+      </ion-button>
+    </ion-col>
+  </ion-row>
 
 </ion-content>

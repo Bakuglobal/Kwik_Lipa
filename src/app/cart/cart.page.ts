@@ -81,6 +81,7 @@ export class CartPage implements OnInit {
 //goto orders
 myorders(){
   this.fireApi.hiddenTabs = false ;
+  this.Ordersuccess = false ;
   this.navCtrl.navigate(['tabs/transactions'])
 }
 // calculate delivery fee
@@ -99,10 +100,10 @@ noDeliveryFee(delivery){
   if(delivery === 'I will pick it'){
     this.deliveryFee = 0 ;
     this.noPickUpTime = false ;
-    this.paid = false ;
+    // this.paid = false ;
   }else {
     this.noPickUpTime = true ;
-    this.paid = true ;
+    // this.paid = true ;
     if(this.selectedarea != undefined){
     this.getDeliveryFee(this.selectedarea);
     }
@@ -163,6 +164,12 @@ await pop.present();
               this.Ordersuccess = true ;
               this.showTimeSelect = false ;
               this.cart.length = 0 ;
+              this.fireApi.setCount('0');
+              this.delivery = '';
+              this.deliveryFee = 0 ;
+              this.pickDay = '' ;
+              this.pickHour = '';
+              this.pickMinute = '' ;
         }else {
           // pick time and online payment
           if(this.pickHour != undefined && this.pickDay != undefined && this.pickMinute != undefined && this.delivery != undefined){
@@ -189,6 +196,12 @@ await pop.present();
             this.Ordersuccess = true ;
             this.showTimeSelect = false ;
             this.cart.length = 0 ;
+            this.fireApi.setCount('0');
+            this.delivery = '';
+            this.deliveryFee = 0 ;
+            this.pickDay = '' ;
+            this.pickHour = '';
+            this.pickMinute = '' ;
           }else {
             this.alertPop("Please set pick up time and delivery option");
           }
@@ -214,8 +227,10 @@ await pop.present();
             this.fireApi.hiddenTabs = false ;
             this.navCtrl.navigate(['tabs/offers'])
           }else {
-            let count = this.cart.reduce((a,b) => a + (b.count * 1),0)
-            this.navCtrl.navigate(['tabs/offers'])
+            // let count = this.cart.reduce((a,b) => a + (b.count * 1),0);
+            let ct = this.items() ;
+            this.fireApi.setCount(ct);
+            this.navCtrl.navigate(['tabs/offers']);
           }
         
         }
@@ -272,5 +287,6 @@ await pop.present();
     })
     alert.present();
   }
+  
       
 }

@@ -41,7 +41,8 @@ export class ViewOrderPage implements OnInit {
     const ref = this.fs.collection('Orders') ;
 
    let data = {
-     "status": this.status
+     "status": 'canceled',
+     "Date": Date()
    }
     ref.doc(this.OrderID).update(data);
     this.presentToast('Your '+''+ this.OrderID+''+''+ 'Order'+ ''+' is canceled')

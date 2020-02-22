@@ -9,7 +9,7 @@
       <ion-buttons slot="end">
         <ion-button (click)="sendCart()" >
           <ion-icon size="large" name="cart"></ion-icon>
-          <ion-badge color="light">{{count}}</ion-badge>
+          <ion-badge color="light">{{fireApi.getCount()}}</ion-badge>
         </ion-button>
       </ion-buttons>
     <ion-title class="shopname">{{shopSelected}}</ion-title>

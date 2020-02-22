@@ -48,6 +48,8 @@ import { FCM }from '@ionic-native/fcm/ngx'
 import { ViewOrderPageModule } from './view-order/view-order.module';
 import { ViewListPageModule } from './view-list/view-list.module';
 import { ImageDisplayPageModule } from './image-display/image-display.module';
+import { DiscountmodalPageModule } from './discountmodal/discountmodal.module';
+import { NotificationsPageModule } from './notifications/notifications.module';
 
 
 @NgModule({
@@ -69,7 +71,6 @@ import { ImageDisplayPageModule } from './image-display/image-display.module';
     NewChatPageModule,
     InfomodalPageModule,
     SokomodalPageModule,
-    LoanPageModule,
     CommentsPageModule,
     NgxQRCodeModule,
     TransModalPageModule,
@@ -79,7 +80,10 @@ import { ImageDisplayPageModule } from './image-display/image-display.module';
     MaterialModule,
     ViewOrderPageModule,
     ViewListPageModule,
-    ImageDisplayPageModule
+    ImageDisplayPageModule,
+    DiscountmodalPageModule,
+    NotificationsPageModule
+
   ],
   providers: [
     DeviceOrientation,
