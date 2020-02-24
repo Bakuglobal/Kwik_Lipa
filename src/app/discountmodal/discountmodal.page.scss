@@ -8,14 +8,17 @@
         width: 100%;
     }
 }
-.description{
-    
-}
 .name{
     font-size: large;
 }
+.desc{
+    text-transform: capitalize;
+    font-size: large;
+    font-weight: bold;
+    color: grey;
+}
 .bottom{
-    bottom: 5px;
+    bottom: 10px;
     position: fixed;
     left: 0px ;
     right: 0px ;
@@ -31,9 +34,24 @@
     height: 50px;
     width: 100%;
 }
-.label{
-    font-size: 1.3em;
+.price{
+    font-size: 1.5em;
+    color: grey;font-weight: bolder;
+    padding-top: 20px;
+    font-weight: bold;
+}
+.checked {
+    color: var(--ion-color-primary)
+  }
+.icon{
+    border:  1px solid grey;
+    border-radius: 20px;
+    text-align: center;
+    padding-top: 10px;
+}
+.qty{
+    font-size: 1.2em;
+    text-align: center;
+    padding-top: 10px;
     font-weight: bolder;
-    color: black;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif !important;
 }

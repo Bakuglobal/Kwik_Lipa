@@ -64,7 +64,7 @@ export class NotificationsPage implements OnInit {
       this.loader();
       setTimeout( () => {
         this.gotoModal(this.Order);
-      },2500)
+      },3000)
     } else {
       this.gotoModal(this.Order);
     }

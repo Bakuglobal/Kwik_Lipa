@@ -50,6 +50,7 @@ import { ViewListPageModule } from './view-list/view-list.module';
 import { ImageDisplayPageModule } from './image-display/image-display.module';
 import { DiscountmodalPageModule } from './discountmodal/discountmodal.module';
 import { NotificationsPageModule } from './notifications/notifications.module';
+import { Badge } from '@ionic-native/badge/ngx';
 
 
 @NgModule({
@@ -97,6 +98,7 @@ import { NotificationsPageModule } from './notifications/notifications.module';
     Contacts,
     Geolocation,
     AppLauncher,
+    Badge,
     // OneSignal,
     SplashScreen,
     BarcodeScanner,

@@ -26,7 +26,7 @@ export interface ShoppingList {
 })
 export class DatabaseService {
   shops ;
-  cart: any ;
+  cart = [] ;
   private listCollection: AngularFirestoreCollection<ShoppingList>;
   private lists: Observable<ShoppingList[]>; 
   products ;
@@ -118,7 +118,11 @@ getList(id) {
         }
 //share cart details across pages
         setData(data){
-          this.cart = data ;
+          if(this.cart.includes(data)){
+            let index = this.cart.indexOf(data);
+            this.cart[index].count  = data.count ;
+          }
+          this.cart.push(data) ;
         }
         getData(){
           return this.cart ;
@@ -176,6 +180,21 @@ getUser(){
  getdiscountedProducts(){
   let prod = this.fs.collection<Product>('Kakila Organic', ref => {
     return ref.where('currentprice', '<=', '150');
+  });
+  return prod.snapshotChanges().pipe(
+    map(actions => {
+      return actions.map(a => {
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id ;
+        return { id, ... data};
+      })
+    })
+  )
+}
+// get disounted products
+getFeaturedProducts(){
+  let prod = this.fs.collection<Product>('Penny Vintage', ref => {
+    return ref.orderBy('currentprice','asc');
   });
   return prod.snapshotChanges().pipe(
     map(actions => {

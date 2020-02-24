@@ -44,6 +44,7 @@ export class Tab1Page implements OnInit {
   discontedProducts = [] ;
   heading = false ;
   Name = '' ;
+  featuredProducts = [] ;
 
 
   constructor(
@@ -101,13 +102,18 @@ export class Tab1Page implements OnInit {
       this.discontedProducts = res ;
       console.log(res);
     });
+    // get featured products 
+    this.database.getFeaturedProducts().subscribe(res => {
+      this.featuredProducts = res ;
+      console.log(res);
+    })
   }
 
   onIonViewDidLoad() {
     this.selectShop = false;
   }
-  gotoShop(){
-    this.fireApi.changeData('Kakila Organic');
+  gotoShop(shop){
+    this.fireApi.changeData(shop);
     this.navCtrl.navigate(['tabs/offers']);
   }
   AdvertslideOpts = {
@@ -197,6 +203,7 @@ export class Tab1Page implements OnInit {
   }
 
   async  gotoDiscountModal(item) {
+    item.cart = this.fireApi.getCount();
     const mod = await this.modal.create({
       component: DiscountmodalPage,
       componentProps: item

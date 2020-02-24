@@ -21,14 +21,14 @@
 <ion-content >
   
     <ion-item class="top">
-      <span *ngIf="!showSearch" style="font-size: 13px;">Pick Pay and Collect</span>
+      <span *ngIf="!showSearch" style="font-size: 13px;text-align: center;">Pick Pay and Collect</span>
       <ion-searchbar placeholder="Enter product name" *ngIf="showSearch" [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()"></ion-searchbar>
       <ion-icon name="search" slot="end" (click)="showSearchBar()"></ion-icon>
     </ion-item>
 
    
 
-    <div style="text-align: center;margin-top: 40%; margin-left: 10px; margin-right: 20px; font-size: 13px;" *ngIf="shopSelected != 'Kakila Organic'" >
+    <div style="text-align: center;margin-top: 40%; margin-left: 10px; margin-right: 20px; font-size: 13px;" *ngIf="offers.length == 0" >
       <ion-label>Sorry</ion-label><br>
       <ion-label>This shop does not offer the Pick pay and collect service</ion-label>
     </div>
@@ -43,9 +43,9 @@
 
     <!-- FEATURED PRODUCTS -->
     <div class="featured-products" *ngIf="offers.length > 0">
-      <div class="featured-products-title">
+      <!-- <div class="featured-products-title">
           <div class="featured-products-title-left">Featured products</div>
-      </div>
+      </div> -->
       <div class="featured-products-content" >
           <ion-row >
               <!-- FIRST ROW OF PRODUCTS -->

@@ -1,5 +1,6 @@
 <!-- <ion-header > -->
-<ion-toolbar color="primary" [ngClass]="{'header': heading == false}" class="toolbar">
+<div style="background-color: #f5f5f5;">
+    <ion-toolbar color="primary" [ngClass]="{'header': heading == false}" class="toolbar">
     <ion-buttons slot="start">
         <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>
@@ -14,6 +15,7 @@
     </ion-buttons>
 
 </ion-toolbar>
+</div>
 <!-- </ion-header> -->
 <ion-content [scrollEvents]="true" (ionScroll)="onScroll($event)">
 
@@ -49,7 +51,7 @@
         <div class="soko-content">
             <ion-slides pager="true" [options]="AdvertslideOpts">
                 <ion-slide>
-                    <img class="soko-image" src="/assets/images/Kakilaposter.jpg" (click)="gotoShop()">
+                    <img class="soko-image" src="/assets/images/Kakilaposter.jpg" (click)="gotoShop('Kakila Organic')">
                 </ion-slide>
                 <ion-slide>
                     <img class="soko-image" src="/assets/images/Kakila.jpg">
@@ -63,7 +65,7 @@
         <div class="featured-products">
             <div class="featured-products-title">
                 <div class="featured-products-title-left">Discounted products</div>
-                <div class="featured-products-title-right" (click)="gotoShop()">
+                <div class="featured-products-title-right" (click)="gotoShop('Kakila Organic')">
                     View all
                     <ion-icon src="/assets/images/arrow-right.svg"></ion-icon>
                 </div>
@@ -85,6 +87,7 @@
                                     </ion-button>
                                 </div>
                                 <img class="product-image" src="{{item.image}}">
+                                <ion-skeleton-text style="height: 100px;width: 100px;" *ngIf="!item.image"></ion-skeleton-text>
                             </div>
                             <div class="featured-products-content-card-content">
                                 <div class="featured-products-content-card-content-title">{{item.product}}</div>
@@ -108,7 +111,7 @@
         <div class="featured-products">
             <div class="featured-products-title">
                 <div class="featured-products-title-left">Featured products</div>
-                <div class="featured-products-title-right">
+                <div class="featured-products-title-right" (click)="gotoShop('Penny Vintage')">
                     View all
                     <ion-icon src="/assets/images/arrow-right.svg"></ion-icon>
                 </div>
@@ -116,56 +119,28 @@
 
             <div class="featured-products-content">
                 <ion-row>
-                    <!-- FIRST ROW OF PRODUCTS -->
+                    <!-- FIRST ROW OF PRODUCTS --> 
                     <ion-slides pager="false" [options]="DiscountslideOpts">
-                        <ion-slide>
-                            <ion-col class="featured-products-content-card">
+                        <ion-slide *ngFor="let n of featuredProducts | slice:0:featuredProducts.length/2 let i=index ">
+
+                            <ion-col class="featured-products-content-card"
+                                *ngFor="let item of featuredProducts | slice:featuredProducts.indexOf(n):featuredProducts.indexOf(n)+2 " (click)="gotoDiscountModal(item)">
                                 <div class="featured-products-content-card-image">
-                                    <img class="product-image" src="/assets/images/featured_products/camera.png">
+                                    <img class="product-image" src="{{item.image}}">
+                                    <ion-skeleton-text style="height: 100px;width: 100px;" *ngIf="!item.image"></ion-skeleton-text>
                                 </div>
                                 <div class="featured-products-content-card-content">
-                                    <div class="featured-products-content-card-content-title">Product Name</div>
+                                    <div class="featured-products-content-card-content-title">{{item.product}}</div>
                                     <ion-row class="featured-products-content-card-content-description">
-                                        <ion-col size="4.5">Ksh 200</ion-col>
+                                        <ion-col size="6">Ksh {{item.currentprice}}</ion-col>
+                                        <ion-col size="6" style="direction: rtl;"><s>Ksh {{item.currentprice * 1.2}}</s>
+                                        </ion-col>
                                     </ion-row>
                                 </div>
                             </ion-col>
-                            <ion-col class="featured-products-content-card">
-                                <div class="featured-products-content-card-image">
-                                    <img class="product-image" src="/assets/images/featured_products/camera.png">
-                                </div>
-                                <div class="featured-products-content-card-content">
-                                    <div class="featured-products-content-card-content-title">Product Name</div>
-                                    <ion-row class="featured-products-content-card-content-description">
-                                        <ion-col size="4.5">Ksh 200</ion-col>
-                                    </ion-row>
-                                </div>
-                            </ion-col>
+    
                         </ion-slide>
-                        <ion-slide>
-                            <ion-col class="featured-products-content-card">
-                                <div class="featured-products-content-card-image">
-                                    <img class="product-image" src="/assets/images/featured_products/camera.png">
-                                </div>
-                                <div class="featured-products-content-card-content">
-                                    <div class="featured-products-content-card-content-title">Product Name</div>
-                                    <ion-row class="featured-products-content-card-content-description">
-                                        <ion-col size="4.5">Ksh 200</ion-col>
-                                    </ion-row>
-                                </div>
-                            </ion-col>
-                            <ion-col class="featured-products-content-card">
-                                <div class="featured-products-content-card-image">
-                                    <img class="product-image" src="/assets/images/featured_products/camera.png">
-                                </div>
-                                <div class="featured-products-content-card-content">
-                                    <div class="featured-products-content-card-content-title">Product Name</div>
-                                    <ion-row class="featured-products-content-card-content-description">
-                                        <ion-col size="4.5">Ksh 200</ion-col>
-                                    </ion-row>
-                                </div>
-                            </ion-col>
-                        </ion-slide>
+                       
                     </ion-slides>
                 </ion-row>
             </div>
@@ -175,7 +150,7 @@
         <div class="featured-products">
             <div class="featured-products-title">
                 <div class="featured-products-title-left">Near You</div>
-                <div class="featured-products-title-right">
+                <div class="featured-products-title-right" (click)="gotoShop('Kakila Organic')">
                     View all
                     <ion-icon src="/assets/images/arrow-right.svg"></ion-icon>
                 </div>
@@ -185,53 +160,24 @@
                 <ion-row>
                     <!-- FIRST ROW OF PRODUCTS -->
                     <ion-slides pager="false" [options]="DiscountslideOpts">
-                        <ion-slide>
-                            <ion-col class="featured-products-content-card">
+                        <ion-slide *ngFor="let n of discontedProducts | slice:0:discontedProducts.length/2 let i=index ">
+
+                            <ion-col class="featured-products-content-card"
+                                *ngFor="let item of discontedProducts | slice:discontedProducts.indexOf(n):discontedProducts.indexOf(n)+2 " (click)="gotoDiscountModal(item)">
                                 <div class="featured-products-content-card-image">
-                                    <img class="product-image" src="/assets/images/featured_products/camera.png">
+                                    <img class="product-image" src="{{item.image}}">
+                                    <ion-skeleton-text style="height: 100px;width: 100px;" *ngIf="!item.image"></ion-skeleton-text>
                                 </div>
                                 <div class="featured-products-content-card-content">
-                                    <div class="featured-products-content-card-content-title">Product Name</div>
+                                    <div class="featured-products-content-card-content-title">{{item.product}}</div>
                                     <ion-row class="featured-products-content-card-content-description">
-                                        <ion-col size="4.5">Ksh 200</ion-col>
+                                        <ion-col size="6">Ksh {{item.currentprice}}</ion-col>
+                                        <ion-col size="6" style="direction: rtl;"><s>Ksh {{item.currentprice * 1.2}}</s>
+                                        </ion-col>
                                     </ion-row>
                                 </div>
                             </ion-col>
-                            <ion-col class="featured-products-content-card">
-                                <div class="featured-products-content-card-image">
-                                    <img class="product-image" src="/assets/images/featured_products/camera.png">
-                                </div>
-                                <div class="featured-products-content-card-content">
-                                    <div class="featured-products-content-card-content-title">Product Name</div>
-                                    <ion-row class="featured-products-content-card-content-description">
-                                        <ion-col size="4.5">Ksh 200</ion-col>
-                                    </ion-row>
-                                </div>
-                            </ion-col>
-                        </ion-slide>
-                        <ion-slide>
-                            <ion-col class="featured-products-content-card">
-                                <div class="featured-products-content-card-image">
-                                    <img class="product-image" src="/assets/images/featured_products/camera.png">
-                                </div>
-                                <div class="featured-products-content-card-content">
-                                    <div class="featured-products-content-card-content-title">Product Name</div>
-                                    <ion-row class="featured-products-content-card-content-description">
-                                        <ion-col size="4.5">Ksh 200</ion-col>
-                                    </ion-row>
-                                </div>
-                            </ion-col>
-                            <ion-col class="featured-products-content-card">
-                                <div class="featured-products-content-card-image">
-                                    <img class="product-image" src="/assets/images/featured_products/camera.png">
-                                </div>
-                                <div class="featured-products-content-card-content">
-                                    <div class="featured-products-content-card-content-title">Product Name</div>
-                                    <ion-row class="featured-products-content-card-content-description">
-                                        <ion-col size="4.5">Ksh 200</ion-col>
-                                    </ion-row>
-                                </div>
-                            </ion-col>
+    
                         </ion-slide>
                     </ion-slides>
                 </ion-row>

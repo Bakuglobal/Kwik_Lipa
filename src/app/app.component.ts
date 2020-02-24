@@ -16,9 +16,7 @@ import { Router } from '@angular/router';
 import { User } from './models/user';
 import {
   DeviceOrientation,
-  DeviceOrientationCompassHeading
 } from '@ionic-native/device-orientation/ngx';
-import { Shops } from './models/shops';
 import { IonRouterOutlet } from '@ionic/angular';
 import * as $ from "jquery";
 import { Keyboard } from '@ionic-native/keyboard/ngx';;
@@ -26,8 +24,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 // import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { OneSignalService } from './OneSignal/one-signal.service';
 import { FCM } from '@ionic-native/fcm/ngx';
-import { NotificationsPage } from './notifications/notifications.page';
-import { Body } from '@angular/http/src/body';
+import { Badge } from '@ionic-native/badge/ngx';
 
 
 @Component({
@@ -115,6 +112,7 @@ export class AppComponent {
           private notice: OneSignalService,
           private keyboard: Keyboard,
           private fcm: FCM,
+          private badge: Badge
   ) {
 
       // Initiliaze APP
@@ -194,11 +192,13 @@ export class AppComponent {
                       this.service.showNotice(true);
                       this.saveNoticeTofirebase(data);
                       this.viewNotice();
+                      this.badge.increase(1);
                     } else {
                       console.log('Received in foreground', data);
                       // this.navCtrl.navigate([data.landing_page, data.price]);
                       this.service.showNotice(true);
                       this.showAlert(data);
+                      this.badge.increase(1);
                     }
                   });
                 }

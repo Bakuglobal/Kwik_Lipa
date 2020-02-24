@@ -1,12 +1,13 @@
 <!-- <ion-header> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <ion-toolbar padding color="primary">
   <ion-buttons slot="start">
     <ion-icon name="arrow-back" (click)="close()"></ion-icon>
   </ion-buttons>
   <ion-title text-center>{{product}}</ion-title>
-  <ion-buttons slot="end">
+  <ion-buttons slot="end" (click)="goToCart()">
     <ion-icon name="cart"></ion-icon>
-    <ion-badge style="color:white">{{count}}</ion-badge>
+    <ion-badge style="color:white">{{cart}}</ion-badge>
   </ion-buttons>
 </ion-toolbar>
 <!-- </ion-header> -->
@@ -14,65 +15,58 @@
 <ion-content>
   <div class="image">
     <img src="{{image}}">
+    
   </div>
-  <div>
-    <ion-item padding>
-      <ion-col>
-        <ion-label class="name">{{shop}}</ion-label>
-      </ion-col>
-    </ion-item>
+  <div padding>
+    <ion-col>
+      <ion-label class="name">{{shop}}</ion-label>
+    </ion-col>
+    <ion-col>
+      <ion-icon name="star-outline" class="checked"></ion-icon>
+      <ion-icon name="star-outline" class="checked"></ion-icon>
+      <ion-icon name="star-outline" class="checked"></ion-icon>
+      <ion-icon name="star-outline" class="checked"></ion-icon>
+      <ion-icon name="star-outline" class="checked"></ion-icon>
+    </ion-col>
   </div>
-  <div class="description" padding>
-    <ion-text style="color: grey;">Description</ion-text>
-    <p>
-      lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem
-      ipsum
-      lorem ipsum
+  <div padding>
+    <ion-label class="desc">Description</ion-label>
+    <p padding>
+      Get {{product}} from {{shop}} Your daily shopping now made easier! Kwik Lipa has partnered with
+      {{shop}} to save you the hustle of long supermarket queues. Order today and enjoy the great quality and freshness
+      of our products and have them delivered to you at the click of a button.
     </p>
   </div>
-  <!-- <div class="quantity">
-    <ion-row style="border-radius: 10px;height: 40px;width: 100%" padding>
-      <ion-col>
-        <span size="3" style="padding-left: 10px;">
-          Total <br> amount :
-        </span>
-      </ion-col>
-      <ion-col style="padding-top: 10px;">
-        <ion-text class="label">Ksh. {{currentprice}}</ion-text>
-      </ion-col>
-      <ion-col>
-        Qty
-      </ion-col>
-      <ion-col>
-        {{count}}
-      </ion-col>
-      <ion-col>
-        <ion-icon name="arrow-up"></ion-icon><br>
-        <ion-icon name="arrow-down"></ion-icon>
-      </ion-col>
-    </ion-row>
-  </div>
-  <div>
+  <div padding>
+    <ion-label class="desc">Quantity</ion-label>
     <ion-row>
-      <ion-label style="float: left;">20% off Today</ion-label>
-      <ion-label style="float: right;" >
-        <ion-icon name="bicycle-outline"></ion-icon> Express delivery </ion-label>
+      <ion-col class="price">
+        Kshs. <span>{{currentprice * count}}</span>
+      </ion-col>
+      <ion-col size="2" class="icon" (click)="reduce()">
+        <ion-icon name="remove" size="large"></ion-icon>
+      </ion-col>
+      <ion-col size="3" class="qty">{{count}}<br>{{quantity}}</ion-col>
+      <ion-col size="2" class="icon" (click)="add()">
+        <ion-icon name="add" size="large"></ion-icon>
+      </ion-col>
     </ion-row>
   </div>
- -->
 
-  <ion-row class="bottom">
-   <ion-col>
-     <ion-button fill="clear">
-      <ion-icon name="add"></ion-icon>
-      Cart
-     </ion-button>
-   </ion-col>
+</ion-content>
+<ion-footer >
+  <ion-row >
     <ion-col>
-      <ion-button class="btn" color="primary">
-       Buy Now
+      <ion-button fill="outline" style="width: 100%;height: 50px;padding-top: 0px;padding-bottom: 5px;"
+        (click)="addToCart()">
+        <ion-icon name="cart"></ion-icon>&nbsp;
+        Cart
+      </ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button class="btn" color="primary" (click)="buyNow()">
+        Buy Now
       </ion-button>
     </ion-col>
   </ion-row>
-
-</ion-content>
+</ion-footer>

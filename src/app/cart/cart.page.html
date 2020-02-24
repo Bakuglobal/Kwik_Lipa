@@ -132,8 +132,8 @@
 
 </ion-content>
 <ion-footer *ngIf="cart.length != 0;">
-  <ion-label color="warning" *ngIf="delivery == 'Deliver it to me'" style="text-align: center;" padding>You will be charged on delivery
-  </ion-label>
+  <div color="medium" *ngIf="delivery == 'Deliver it to me'" style="text-align: center;" >You will be charged on delivery
+  </div>
   <ion-toolbar color="primary" style="height: 40px;border-radius: 5px;">
     <ion-buttons slot="start" style="padding-bottom: 15px;">Total : </ion-buttons>
     <ion-buttons class="price-slot" slot="end" style="padding-bottom: 15px;">

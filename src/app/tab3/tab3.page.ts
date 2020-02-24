@@ -45,8 +45,6 @@ export class Tab3Page {
   constructor(
     private navCtrl: Router,
     private modalCtrl: ModalController,
-    // private fileChooser: FileChooser,
-    // private filePath: FilePath,
     private asC: ActionSheetController,
     private storage: AngularFireStorage, 
     private database: AngularFirestore,
