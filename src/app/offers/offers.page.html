@@ -9,7 +9,7 @@
       <ion-buttons slot="end">
         <ion-button (click)="sendCart()" >
           <ion-icon size="large" name="cart"></ion-icon>
-          <ion-badge color="light">{{fireApi.getCount()}}</ion-badge>
+          <ion-badge color="light">{{db.getCartCount()}}</ion-badge>
         </ion-button>
       </ion-buttons>
     <ion-title class="shopname">{{shopSelected}}</ion-title>
@@ -43,14 +43,15 @@
 
     <!-- FEATURED PRODUCTS -->
     <div class="featured-products" *ngIf="offers.length > 0">
-      <!-- <div class="featured-products-title">
-          <div class="featured-products-title-left">Featured products</div>
-      </div> -->
+      
       <div class="featured-products-content" >
           <ion-row >
               <!-- FIRST ROW OF PRODUCTS -->
-              <ion-col class="featured-products-content-card" size="6" *ngFor="let item of offers">
+              <ion-col class="featured-products-content-card" size="6" *ngFor="let item of offers" [ngClass]="{'soldout': item.stock == 0}">
                   <div class="featured-products-content-card-image">
+                    <div *ngIf="item.stock == 0" class="soldTag">
+                      <ion-label color="danger"> SOLD OUT </ion-label>
+                  </div>
                       <img src="{{item.image}}" (click)="viewProduct(item)">
                   </div>
                   <div class="featured-products-content-card-content">
@@ -60,7 +61,7 @@
                       </ion-row>
                       <ion-row style="width: 100%;">
                         <ion-col size="12">
-                          <ion-button expand="full" (click)="addToCart(item)">Add to cart</ion-button>
+                          <ion-button expand="full" (click)="addToCart(item)" [disabled]="item.stock == 0">Add to cart</ion-button>
                         </ion-col>
                       </ion-row>
                   </div>

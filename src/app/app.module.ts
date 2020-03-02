@@ -51,6 +51,7 @@ import { ImageDisplayPageModule } from './image-display/image-display.module';
 import { DiscountmodalPageModule } from './discountmodal/discountmodal.module';
 import { NotificationsPageModule } from './notifications/notifications.module';
 import { Badge } from '@ionic-native/badge/ngx';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
 
 
 @NgModule({
@@ -100,6 +101,7 @@ import { Badge } from '@ionic-native/badge/ngx';
     AppLauncher,
     Badge,
     // OneSignal,
+    GooglePlus,
     SplashScreen,
     BarcodeScanner,
     FirestoreService,

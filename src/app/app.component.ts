@@ -191,14 +191,14 @@ export class AppComponent {
                       // this.navCtrl.navigate([data.landing_page, data.price]);
                       this.service.showNotice(true);
                       this.saveNoticeTofirebase(data);
-                      this.viewNotice();
                       this.badge.increase(1);
+                      this.viewNotice();
                     } else {
                       console.log('Received in foreground', data);
                       // this.navCtrl.navigate([data.landing_page, data.price]);
                       this.service.showNotice(true);
-                      this.showAlert(data);
                       this.badge.increase(1);
+                      this.showAlert(data);
                     }
                   });
                 }
@@ -324,7 +324,8 @@ saveNoticeTofirebase(data){
     message: data.body,
     Date: Date(),
     title: data.title,
-    userID: localStorage.getItem('userID')
+    userID: localStorage.getItem('userID'),
+    status: 'unread'
   }
   this.database.collection('Notifications').add(notice).catch(err => console.log(err));
 }

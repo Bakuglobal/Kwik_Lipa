@@ -54,12 +54,25 @@ hr {
             margin-top: -10px;
         }
     }
+    .soldout{
+        opacity: 0.7;
+        background-color: #a5a5a58a;
+    }
+    .soldTag{
+        height: 25px; width: 60px; position: absolute; top: 5px; float: right;right: 0px;
+       
+        ion-label {
+            font-size: .6em;font-weight: bold;
+            height: 20px;
+        }
+      }
     .featured-products-content {
         padding-top: 20px; 
         padding-left: 5px; 
         padding-right: 5px;
         .featured-products-content-card {
             box-shadow: 0px 3px 3px -2px rgba(0,0,0,0.75);
+            border: 1px solid #02abe252 ;
             .featured-products-content-card-image {
                 margin: auto; 
                 padding-top: 10px;
@@ -89,5 +102,6 @@ hr {
             }
         }
     }
+
 }
   

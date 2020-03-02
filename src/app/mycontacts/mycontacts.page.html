@@ -8,44 +8,22 @@
       <ion-icon slot="end" name="search" (click)="showSearch()"></ion-icon>
     </ion-buttons>
   </ion-toolbar>
-
-  <!-- <ion-row (click)="viewList(item)" *ngFor="let item of myList">
-    <ion-col size="2" class="date" padding>
-      <ion-label>{{item.DueDate | date}}</ion-label>
-    </ion-col>
-    <ion-col size="10">
-      <ion-card padding style="border-radius: 10px;width: 100%;" color="primary">
-        <ion-card-title padding>
-          <ion-label style="float: left;">{{item.Title}}</ion-label>
-          <ion-label style="float: right">Budget <br> {{totalBudget(item)}}</ion-label>
-        </ion-card-title><br>
-        <ion-card-content padding>
-          <ion-label padding class="list-title">{{item.Items.length}} Item</ion-label><br>
-          <ion-icon name="people"></ion-icon>&nbsp;&nbsp;
-          <ion-label *ngFor="let item of item.members">{{item.firstName}}&nbsp;</ion-label>
-
-        </ion-card-content>
-        <div style="margin-bottom: 0px;">
-          <ion-label>CreatedBy: &nbsp; {{item.createdBy}}</ion-label>
-        </div>
-      </ion-card>
-    </ion-col>
-  </ion-row> -->
   <ion-label class="ion-padding title"> My Lists</ion-label>
   <ion-card *ngFor="let item of myList" class="ion-padding" color="primary" (click)="viewList(item)">
     <ion-card-title>
       <ion-label class="ion-float-left">Created : {{item.DueDate | date}} </ion-label>
-      <ion-label class="ion-float-right"> By : <span *ngIf="item.createdBy !== myName">{{item.createdBy}}</span> <span
-          *ngIf="item.createdBy == myName">You</span></ion-label> <br>
+      <ion-text class="ion-float-right"> By : <span *ngIf="item.createdBy !== myName">{{item.createdBy}}</span> <span
+          *ngIf="item.createdBy == myName">You</span></ion-text> <br>
     </ion-card-title>
     <ion-card-content>
-      <ion-label class="ion-padding">Title : {{item.Title}}</ion-label><br>
-      <ion-label padding class="list-title">{{item.Items.length}} Items</ion-label><br>
+      <ion-label class="ion-padding" class="list-title">Title : {{item.Title}}</ion-label><br>
+      <ion-text padding >{{item.Items.length}} Items</ion-text><br>
+    </ion-card-content>
+    <div style="margin-top: 10px;">
       <ion-label>Shared with :</ion-label><br>
       <ion-icon name="people"></ion-icon>&nbsp;&nbsp;
-      <ion-label *ngFor="let item of item.members">{{item.firstName}}&nbsp;</ion-label>
-
-    </ion-card-content>
+      <ion-text *ngFor="let item of item.members">{{item.firstName}}&nbsp;</ion-text>
+    </div>
   </ion-card>
   <ion-label class="ion-padding title"> Shared Lists</ion-label>
 

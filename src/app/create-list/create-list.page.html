@@ -15,10 +15,10 @@
       </ion-input>
     </ion-item>
     <div padding>
-      <ion-label>Set Shopping Date </ion-label>
+      <ion-label>Set Shopping Date <span style="color: red;">*</span></ion-label>
     </div>
     <ion-item>
-      <ion-input type="date" min="Date()" name="DueDate" [(ngModel)]="DueDate"></ion-input>
+      <ion-input type="date" min="Date()" name="DueDate" [(ngModel)]="DueDate" required></ion-input>
     </ion-item>
     <div padding>
       <ion-label>Share List with </ion-label>

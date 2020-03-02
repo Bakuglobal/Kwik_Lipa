@@ -52,6 +52,19 @@
    transition: 1s linear;
    opacity: 1;
   }
+  .soldout{
+      opacity: 0.7;
+      background-color: #a5a5a58a;
+  }
+  .soldTag{
+    height: 25px; width: 60px; position: absolute; top: 5px; float: left;left: 0px;
+   
+    ion-label {
+        font-size: .6em;font-weight: bold;
+        height: 20px;
+    }
+  }
+
 
   .shops-title {
       font-weight: bold;
@@ -334,6 +347,8 @@
           padding-right: 10px;
           .featured-products-content-card {
               box-shadow: 3px 3px 3px -2px rgba(0,0,0,0.30);
+              border: 1px solid #02abe252 ;
+              margin-right: 5px;
               .featured-products-content-card-image {
                   width: 125px; 
                   margin: auto; 

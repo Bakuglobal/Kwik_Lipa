@@ -31,10 +31,12 @@ export class WelcomePage implements OnInit {
     private menu : MenuController
   ) {}
   ngOnInit() {
-    this.redirect();
-    this.removeBannerAd();
+   
     this.service.hiddenTabs = true ;
     this.menu.enable(false);
+  }
+  ionViewWillEnter(){
+    this.redirect();
   }
   redirect(){
     const id = localStorage.getItem('userID');
@@ -44,11 +46,6 @@ export class WelcomePage implements OnInit {
     }
   }
  
-  removeBannerAd(){
-    // this.admobFree.banner.remove();
-  }
-
-
   slidechanged(){
     
     if(this.slides.isEnd()){

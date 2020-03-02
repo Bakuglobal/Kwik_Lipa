@@ -56,19 +56,15 @@ export class NotificationsPage implements OnInit {
   //   };
   // };
 
-  viewOrder(title) {
+  viewOrder(title,docId) {
+    this.fs.collection('Notifications').doc(docId).update({'status':'read'});
     let id = title.substring(0, 8);
     console.log(id);
     this.getOder(id);
-    if (this.Order == undefined) {
       this.loader();
       setTimeout( () => {
         this.gotoModal(this.Order);
       },3000)
-    } else {
-      this.gotoModal(this.Order);
-    }
-
   }
   async getOder(id) {
     await this.fs.collection('Orders').doc(id).valueChanges().subscribe(res => {

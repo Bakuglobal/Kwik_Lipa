@@ -289,7 +289,7 @@ getPlace(place,key){
 // get open orders
 openOrders(id){
   this.OpenOrdersCollection = this.fs.collection('Orders', ref => {
-    return ref.where('userID','==',id).where('status','==','open')
+    return ref.where('userID','==',id).where('status','==','open').orderBy('Date','desc')
   })
   return this.OpenOrdersCollection.valueChanges() ;
 

@@ -27,7 +27,6 @@ export class CartPage implements OnInit {
   count: number;
   disableBtn = false;
   notes = '';
-  Today;
   delivery: string;
   areas;
   deliveryFee = 0;
@@ -35,9 +34,10 @@ export class CartPage implements OnInit {
   noPickUpTime = false;
   Number;
   paid = false;
+  CurrentTime ;
 
   //objects and arrays
-  hour = ['08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18']
+  hour = []
   minute = ['00', '15', '30', '45']
   Days = ['Today', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'sat'];
 
@@ -50,26 +50,39 @@ export class CartPage implements OnInit {
     private fs: AngularFirestore,
     private alert: AlertController,
     private mpesa: MpesaService,
-    private location : Location
+    private location: Location,
   ) {
     this.fireApi.getAreas().subscribe(res => {
       this.areas = res;
       console.log(this.areas);
     });
+    this.CurrentTime = new Date().getHours();
+    console.log(this.CurrentTime);
+    if(this.CurrentTime < 8){
+      for(var i = 8;i < 19;i++){
+        this.hour.push(i);
+      }
+    }
+    if(this.CurrentTime > 8){
+      let start = this.CurrentTime + 1 ;
+      for(var i: number = start;i < 19;i++){
+        this.hour.push(i);
+      }
+    }
 
   }
 
   ngOnInit() {
-
+    this.cart = this.service.getCart();
+    console.log(this.cart);
   }
   ionViewWillEnter() {
-    this.cart = this.service.getData();
-    console.log(this.cart)
     this.showShop();
     this.fireApi.hiddenTabs = true;
     this.Number = localStorage.getItem('Number');
     this.formatNumber();
   }
+
   formatNumber() {
     let num = this.Number;
     let check = num.charAt(0);
@@ -162,13 +175,15 @@ export class CartPage implements OnInit {
         "OrderID": id,
         "Delivery": this.delivery,
         "DeliveryFee": this.deliveryFee,
+        "Location": this.selectedarea,
         "userID": localStorage.getItem('userID'),
+        "pickDay": "Today"
       }
-      this.fs.collection('Orders').doc(id).set(data)
+      this.fs.collection('Orders').doc(id).set(data).catch(err => {console.log(err)})
       this.Ordersuccess = true;
       this.showTimeSelect = false;
       this.cart.length = 0;
-      this.fireApi.setCount('0');
+      this.service.resetCart();
       this.delivery = '';
       this.deliveryFee = 0;
       this.pickDay = '';
@@ -196,11 +211,11 @@ export class CartPage implements OnInit {
           "userID": localStorage.getItem('userID'),
         }
 
-        this.fs.collection('Orders').doc(id).set(data)
+        this.fs.collection('Orders').doc(id).set(data).catch(err => {console.log(err)})
         this.Ordersuccess = true;
         this.showTimeSelect = false;
         this.cart.length = 0;
-        this.fireApi.setCount('0');
+        this.service.resetCart();
         this.delivery = '';
         this.deliveryFee = 0;
         this.pickDay = '';
@@ -226,25 +241,12 @@ export class CartPage implements OnInit {
   //back to the previous page
 
   back() {
-    // if (this.cart.length == 0) {
-    //   this.Ordersuccess = false;
-    //   this.fireApi.hiddenTabs = false;
-    //   this.navCtrl.navigate(['tabs/offers'])
-    // } else {
-    //   // let count = this.cart.reduce((a,b) => a + (b.count * 1),0);
-    //   let ct = this.items();
-    //   this.fireApi.setCount(ct);
-    //   this.navCtrl.navigate(['tabs/offers']);
-    // }
     this.location.back();
-
   }
   //remove item from cart
-  remove(index) {
-    this.cart.splice(index, 1);
-    let ct = this.items();
-    this.fireApi.setCount(ct);
-
+  remove(item) {
+    this.service.removeFromCart(item);
+    this.cart = this.service.getCart();
   }
   //get total of items in cart
   items() {
@@ -264,18 +266,15 @@ export class CartPage implements OnInit {
     return (Number(this.total) + Number(this.deliveryFee));
   }
   //add quantity for an item in cart
-  add(index) {
-    this.cart[index].count++;
-    let ct = this.items();
-    this.fireApi.setCount(ct);
+  add(item) {
+    this.service.addCount(item);
+    this.cart = this.service.getCart();
   }
   //reduce quantity for an item in cart
-
-  reduce(index) {
-    if (this.cart[index].count > 1) {
-      this.cart[index].count--;
-      let ct = this.items();
-      this.fireApi.setCount(ct);
+  reduce(item) {
+    if(item.count > 1){
+      this.service.reduceCount(item);
+      this.cart = this.service.getCart();
     }
   }
   //alert
@@ -285,8 +284,8 @@ export class CartPage implements OnInit {
       buttons: [
         {
           text: 'close',
-          role: 'cancel'
-        }
+          role: 'cancel',
+        },
       ]
 
     })

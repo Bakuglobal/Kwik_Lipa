@@ -203,7 +203,6 @@ export class Tab1Page implements OnInit {
   }
 
   async  gotoDiscountModal(item) {
-    item.cart = this.fireApi.getCount();
     const mod = await this.modal.create({
       component: DiscountmodalPage,
       componentProps: item

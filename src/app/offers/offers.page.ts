@@ -52,26 +52,18 @@ export class OffersPage implements OnInit {
     public alertCtrl: AlertController,
     private fs: AngularFirestore,
     private toastCtrl: ToastController,
-    private db: DatabaseService,
+    public db: DatabaseService,
     private modal: ModalController,
     private location: Location,
     private nav: NavController
   ) {
-    
+
     console.log('shop name -- ' + this.shopSelected)
 
   }
   ngOnInit() {
+    
   }
-
-  // //cart count
-  //     changeCount(number){
-  //       // this.count = number ;
-  //       this.fireApi.
-  //         .subscribe(data => (this.shopSelected = data));
-  //       console.log("sent data from home page : ", this.shopSelected);
-  //     }
-  //get products from database
 
   ionViewWillEnter() {
     this.showShop();
@@ -83,7 +75,6 @@ export class OffersPage implements OnInit {
       this.UnfilteredOffers = res;
     })
     console.log('products' + this.offers);
-    // this.count = this.fireApi.getCount() ;
 
   }
 
@@ -101,35 +92,51 @@ export class OffersPage implements OnInit {
       console.log(this.offers)
     }
   }
+
   filterItems() {
     return this.UnfilteredOffers.filter(item => {
       return item.product.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
     });
   }
 
-
   //add items to the cart
-
-  addToCart(item) {
-    if (this.cart.includes(item)) {
-      let index = this.cart.indexOf(item);
-      this.cart[index].count++;
-      let ct = this.count++;
-      this.count = ct;
-      this.fireApi.setCount(ct);
-
-
-    } else {
-      let mod = item;
+  contains(a, obj) {
+    if (a.length === 0) {
+      let mod = obj;
       mod.count = 1;
       this.cart.push(mod);
       this.count = this.fireApi.getCount();
       this.count++;
-      this.fireApi.setCount(this.count)
-
-      console.log('Cart --> ' + JSON.stringify(this.cart));
+      this.fireApi.setCount(this.count);
+      console.log('Cart --> ', (this.cart));
       this.toast('Product added To cart');
+    }else {
+      for (var i = 0; i < a.length; i++) {
+        console.log('kkk');
+        if (a[i].product === obj.product) {
+          console.log(a[i].product,obj.product);
+          a[i].count++;
+          let ct = this.count++;
+          this.count = ct;
+          this.fireApi.setCount(ct);
+          console.log(this.cart);
+        } else {
+          console.log('frg')
+          let mod = obj;
+          mod.count = 1;
+          this.cart.push(mod);
+          this.count = this.fireApi.getCount();
+          this.count++;
+          this.fireApi.setCount(this.count);
+          console.log('Cart --> ', (this.cart));
+          this.toast('Product added To cart');
+        }
+      }
     }
+  }
+  addToCart(item) {
+    // this.contains(this.cart, item);
+    this.db.addCart(item);
   }
   // go to home page
 
@@ -163,9 +170,6 @@ export class OffersPage implements OnInit {
   //  share cart details with cart page
 
   sendCart() {
-    this.cart.forEach(item => {
-      this.db.setData(item);
-    })
     this.fireApi.hiddenTabs = true;
     this.navCtrl.navigate(['tabs/cart'])
   }
@@ -174,8 +178,7 @@ export class OffersPage implements OnInit {
     const mod = await this.modal.create({
       component: CPage,
       componentProps: item
-
-    })
+    });
     await mod.present()
   }
 }

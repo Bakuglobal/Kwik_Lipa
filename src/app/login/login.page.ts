@@ -4,7 +4,7 @@ import { LoadingController, ToastController, Events, AlertController, MenuContro
 import { Router } from '@angular/router';
 
 import * as firebase from 'firebase/app';
-// import {GooglePlus} from '@ionic-native/google-plus/ngx';
+import {GooglePlus} from '@ionic-native/google-plus/ngx';
 // import { AdMobFree } from '@ionic-native/admob-free/ngx';
 import { tap } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -50,7 +50,7 @@ export class LoginPage implements OnInit {
     public toastController: ToastController,
     public navCtrl: Router,
     private service : FirestoreService,
-    // public googleplus:GooglePlus,
+    public googleplus:GooglePlus,
     public events: Events,
     // private admobFree: AdMobFree,
     private alertCtrl: AlertController,
@@ -163,4 +163,15 @@ export class LoginPage implements OnInit {
         })
         ts.present();
       }
+
+
+  // ---google login 
+  login(){
+    this.googleplus.login({
+      'webClientId':'587167744825-2fo3p2fm7rr583qup08qk68j1uj9iidl.apps.googleusercontent.com',
+      'offline': true
+    })
+  .then(res => alert(res))
+  .catch(err => alert(err));
+  }
 }

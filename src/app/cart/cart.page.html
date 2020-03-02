@@ -40,22 +40,22 @@
         <img class="img" src="{{item.image}}">
       </ion-col>
       <ion-col class="details" size="6">
-        <ion-label style="color:red;text-transform:capitalize;" (click)="remove(cart.indexOf(item))">Remove</ion-label>
+        <ion-label style="color:red;text-transform:capitalize;" (click)="remove(item)">Remove</ion-label>
         <br>
         <ion-label>{{item.product}} &nbsp; {{item.quantity}}</ion-label><br>
         <ion-label>Kshs. <b>{{item.currentprice}}</b></ion-label>
       </ion-col>
-      <ion-col  style="text-align: left;">
+      <ion-col style="text-align: left;">
         <ion-card style="border-radius: 20px;width: 100%;">
           <ion-row>
             <ion-col>
-              <ion-icon name="remove" (click)="reduce(cart.indexOf(item))"></ion-icon>
+              <ion-icon name="remove" (click)="reduce(item)"></ion-icon>
             </ion-col>
             <ion-col>
               <ion-label><b>{{item.count}} </b></ion-label>
             </ion-col>
             <ion-col>
-              <ion-icon name="add" (click)="add(cart.indexOf(item))" color="dark"></ion-icon>
+              <ion-icon name="add" (click)="add(item)" color="dark"></ion-icon>
             </ion-col>
           </ion-row>
         </ion-card>
@@ -63,7 +63,7 @@
     </ion-item>
   </div>
   <!-- Pick up time section-->
-  <div  *ngIf="cart.length != 0;">
+  <div *ngIf="cart.length != 0;">
     <form #time=ngForm padding>
       <ion-label color="primary" style="font-size: large;" *ngIf="!noPickUpTime">Choose a Pickup Time</ion-label>
       <ion-row *ngIf="!noPickUpTime">
@@ -132,7 +132,7 @@
 
 </ion-content>
 <ion-footer *ngIf="cart.length != 0;">
-  <div color="medium" *ngIf="delivery == 'Deliver it to me'" style="text-align: center;" >You will be charged on delivery
+  <div color="medium" *ngIf="delivery == 'Deliver it to me'" style="text-align: center;">You will be charged on delivery
   </div>
   <ion-toolbar color="primary" style="height: 40px;border-radius: 5px;">
     <ion-buttons slot="start" style="padding-bottom: 15px;">Total : </ion-buttons>

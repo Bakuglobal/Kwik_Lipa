@@ -7,7 +7,7 @@
   <ion-title text-center>{{product}}</ion-title>
   <ion-buttons slot="end" (click)="goToCart()">
     <ion-icon name="cart"></ion-icon>
-    <ion-badge style="color:white">{{cart}}</ion-badge>
+    <ion-badge style="color:white">{{service.getCartCount()}}</ion-badge>
   </ion-buttons>
 </ion-toolbar>
 <!-- </ion-header> -->
@@ -37,7 +37,7 @@
       of our products and have them delivered to you at the click of a button.
     </p>
   </div>
-  <div padding>
+  <div padding [ngClass]="{'soldout': stock == 0}">
     <ion-label class="desc">Quantity</ion-label>
     <ion-row>
       <ion-col class="price">
@@ -52,19 +52,18 @@
       </ion-col>
     </ion-row>
   </div>
-
 </ion-content>
-<ion-footer >
+<ion-footer  >
   <ion-row >
     <ion-col>
       <ion-button fill="outline" style="width: 100%;height: 50px;padding-top: 0px;padding-bottom: 5px;"
-        (click)="addToCart()">
+        (click)="addToCart()" [disabled]="stock == 0">
         <ion-icon name="cart"></ion-icon>&nbsp;
         Cart
-      </ion-button>
+      </ion-button >
     </ion-col>
     <ion-col>
-      <ion-button class="btn" color="primary" (click)="buyNow()">
+      <ion-button class="btn" color="primary" (click)="buyNow()" [disabled]="stock == 0">
         Buy Now
       </ion-button>
     </ion-col>

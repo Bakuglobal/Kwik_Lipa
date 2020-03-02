@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
 import { AuthService } from '../Auth/auth.service';
-import { LogsService } from '../Auth/logs.service';
 const routes: Routes = [
   {
     path: 'tabs',
@@ -71,7 +70,7 @@ const routes: Routes = [
       { path: 'transactions', loadChildren: () => import('../transactions/transactions.module').then(m=>m.TransactionsPageModule),canActivate : [AuthService]},
        { path: 'support', loadChildren: () => import('../support/support.module').then(m=>m.SupportPageModule),canActivate : [AuthService] },
       { path: 'settings', loadChildren: () => import('../settings/settings.module').then(m=>m.SettingsPageModule), canActivate : [AuthService] },
-      { path: 'welcome', loadChildren:() =>import( '../welcome/welcome.module').then(m => m.WelcomePageModule),canActivate: [LogsService]},
+      { path: 'welcome', loadChildren:() =>import( '../welcome/welcome.module').then(m => m.WelcomePageModule)},
       {path : 'shop', loadChildren: () => import ('../shop/shop.module').then(m => m.ShopPageModule)},
       {path: 'cart', loadChildren: () => import ('../cart/cart.module').then(m=>m.CartPageModule),canActivate : [AuthService]},
       { path: 'c', loadChildren: () => import('../c/c.module').then(m => m.CPageModule), canActivate : [AuthService] },
