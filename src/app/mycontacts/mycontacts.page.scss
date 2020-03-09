@@ -9,6 +9,18 @@
 }
 .title{
     font-weight: bold;
-    color: grey;
+    color: var(--ion-color-primary);
     font-size: 1.5em;
+}
+.icon{
+    width: 80px;
+    height: 80px;
+    margin: auto;
+    img{
+        object-position: center;
+        object-fit: contain;
+    }
+}
+ion-title{
+    font-size: 1.8em;
 }

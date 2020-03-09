@@ -1,25 +1,28 @@
-<!-- <ion-header> -->
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<ion-toolbar padding color="primary">
+<ion-header>
+<ion-toolbar  color="primary">
   <ion-buttons slot="start">
     <ion-icon name="arrow-back" (click)="close()"></ion-icon>
   </ion-buttons>
   <ion-title text-center>{{product}}</ion-title>
   <ion-buttons slot="end" (click)="goToCart()">
-    <ion-icon name="cart"></ion-icon>
+    <ion-button>
+    <ion-icon name="cart" size="large"></ion-icon>&nbsp;
     <ion-badge style="color:white">{{service.getCartCount()}}</ion-badge>
+  </ion-button>
   </ion-buttons>
 </ion-toolbar>
-<!-- </ion-header> -->
+</ion-header>
 
 <ion-content>
   <div class="image">
     <img src="{{image}}">
     
   </div>
-  <div padding>
-    <ion-col>
-      <ion-label class="name">{{shop}}</ion-label>
+  <div>
+    <ion-col class="ion-padding">
+      <ion-label class="name" >{{shop}}</ion-label>
     </ion-col>
     <ion-col>
       <ion-icon name="star-outline" class="checked"></ion-icon>
@@ -30,25 +33,25 @@
     </ion-col>
   </div>
   <div padding>
-    <ion-label class="desc">Description</ion-label>
-    <p padding>
+    <ion-label class="tag">Description</ion-label>
+    <p class="desc">
       Get {{product}} from {{shop}} Your daily shopping now made easier! Kwik Lipa has partnered with
       {{shop}} to save you the hustle of long supermarket queues. Order today and enjoy the great quality and freshness
       of our products and have them delivered to you at the click of a button.
     </p>
   </div>
   <div padding [ngClass]="{'soldout': stock == 0}">
-    <ion-label class="desc">Quantity</ion-label>
+    <ion-label class="tag">Quantity</ion-label>
     <ion-row>
       <ion-col class="price">
         Kshs. <span>{{currentprice * count}}</span>
       </ion-col>
       <ion-col size="2" class="icon" (click)="reduce()">
-        <ion-icon name="remove" size="large"></ion-icon>
+        <ion-icon name="remove" ></ion-icon>
       </ion-col>
       <ion-col size="3" class="qty">{{count}}<br>{{quantity}}</ion-col>
       <ion-col size="2" class="icon" (click)="add()">
-        <ion-icon name="add" size="large"></ion-icon>
+        <ion-icon name="add" ></ion-icon>
       </ion-col>
     </ion-row>
   </div>

@@ -15,6 +15,7 @@ import { FirestoreService } from '../services/firestore.service';
 // import { FileSizeFormatPipe } from './file-size-format.pipe';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx'
 import { ImageDisplayPage } from '../image-display/image-display.page';
+import { DatabaseService } from '../services/database.service';
 
 
 
@@ -40,7 +41,8 @@ export class Tab3Page {
  
   // SHOW SEARCHBAR
   showSearch = false;
-
+  Posts = [] ;
+  count = '' ;
 
   constructor(
     private navCtrl: Router,
@@ -49,12 +51,17 @@ export class Tab3Page {
     private storage: AngularFireStorage, 
     private database: AngularFirestore,
     private service: FirestoreService,
-    private socialSharing: SocialSharing
+    private socialSharing: SocialSharing,
+    private db: DatabaseService
 
 
   ) {
     this.isUploading = false;
     this.isUploaded = false;
+    this.service.serviceNotice.subscribe(res => {
+      this.count = res ;
+      console.log(this.count)
+    });
     
   }
 
@@ -75,6 +82,10 @@ export class Tab3Page {
   }
   
   ngOnInit(): void {
+    this.db.getPosts().subscribe(res => {
+      this.Posts = res ;
+      console.log('POSTS :',res)
+    });
     
   }
   AddComment(){

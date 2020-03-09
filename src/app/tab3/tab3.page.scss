@@ -6,25 +6,25 @@ ion-card {
         padding: 0px;
     }
    
-}
-
-a{
+  }
+  
+  a{
     text-decoration: none;
     }
     .color {
         color: #00ade5 ;
     }
-.post-img{
+  .post-img{
     widows: 100%;
-}
-
-ion-toolbar {
+  }
+  
+  ion-toolbar {
     border-radius: 0 !important;
-}
-
-
-// NOTIFICATION PART
-ion-badge {
+  }
+  
+  
+  // NOTIFICATION PART
+  ion-badge {
     margin-left: -12px; 
     margin-top: -12px; 
     border-radius: 100%; 
@@ -32,21 +32,21 @@ ion-badge {
     div {
         margin-bottom: -2px;
     }
-}
-
-
- .line {
+  }
+  
+  
+  .line {
     height: 1px; 
     background-color: #636363; 
     margin-left: 15px;
     margin-right: 15px; 
     opacity: 0.2;
- }
-
-
-
-
-.page-content {
+  }
+  
+  
+  
+  
+  .page-content {
     padding-left: 0px; 
     padding-right: 0px; 
     background-color: #e7ebf3;
@@ -164,9 +164,10 @@ ion-badge {
                 .view-all-comments {
                     color: #636363; 
                     font-size: 10px;
+                    font-weight: bold;
                 }
             }
             
         }
     }
-}
+  }

@@ -10,6 +10,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Platform } from '@ionic/angular';
 import { Product } from '../models/product';
 import { FirestoreService } from './firestore.service';
+import { Post } from '../models/post';
 export interface ShoppingList {
   Title: string,
   First: string,
@@ -212,7 +213,20 @@ export class DatabaseService {
   getCartCount() {
     return this.cartCount;
   }
- 
+  getPosts(){
+    let posts = this.fs.collection<Post>('posts',ref => {
+      return ref.orderBy('time','desc')
+    })
+    return posts.snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const id = a.payload.doc.id ;
+          const data = a.payload.doc.data();
+          return {id, ... data}
+        });
+      })
+    )
+  }
   // Handle Notifications
   async getToken() {
     let token;
@@ -288,6 +302,7 @@ export class DatabaseService {
       })
     )
   }
+  
 
 
 }

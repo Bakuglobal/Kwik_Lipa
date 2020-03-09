@@ -5,6 +5,7 @@ import { DatabaseService } from '../services/database.service';
 import { Shops } from '../models/shops';
 import { map } from 'rxjs/operators';
 import { MenuController, AlertController } from '@ionic/angular';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-selectshop',
@@ -23,7 +24,8 @@ export class SelectshopPage implements OnInit {
     private navCtrl: Router,
     private fireApi: FirestoreService,
     private menuCtrl: MenuController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private location: Location
   ) { }
 
   ngOnInit() {
@@ -67,7 +69,8 @@ export class SelectshopPage implements OnInit {
    }
    // to home page view
    back(){
-    this.navCtrl.navigate(['tabs/tab1']);
+    // this.navCtrl.navigate(['tabs/tab1']);
+    this.location.back();
   }
   // handle searchbar 
   setFilteredItems(){

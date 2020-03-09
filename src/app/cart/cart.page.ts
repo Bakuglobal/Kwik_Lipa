@@ -69,6 +69,11 @@ export class CartPage implements OnInit {
         this.hour.push(i);
       }
     }
+    if(this.CurrentTime == 8){
+      for(var i =9;i<19;i++){
+        this.hour.push(i);
+      }
+    }
 
   }
 
@@ -81,6 +86,7 @@ export class CartPage implements OnInit {
     this.fireApi.hiddenTabs = true;
     this.Number = localStorage.getItem('Number');
     this.formatNumber();
+    
   }
 
   formatNumber() {
@@ -93,6 +99,16 @@ export class CartPage implements OnInit {
       let clean = num.replace(/\s+/g, '');
       let cut = '254' + clean.substring(1, 10);
       this.Number = cut;
+    }
+  }
+  changeDay(){
+    if(this.pickDay == 'Today'){
+      // pick time remains
+    }else {
+      // show all pick time period 
+      for(var i =9;i<19;i++){
+        this.hour.push(i);
+      }
     }
   }
   //goto orders
@@ -156,6 +172,7 @@ export class CartPage implements OnInit {
   }
   //Send the order to the shop
   sendOrder() {
+
     if (this.delivery === 'Deliver it to me') {
       // no pick up time and no online payment
       if (this.selectedarea == undefined || this.selectedarea == null) {

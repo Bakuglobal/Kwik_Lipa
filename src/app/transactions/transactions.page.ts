@@ -48,7 +48,11 @@ export class TransactionsPage implements OnInit {
     private navCtrl: Router
   ) {
     this.userID = localStorage.getItem('userID');
-    console.log(this.userID)
+    console.log(this.userID);
+    this.fireApi.serviceNotice.subscribe(res => {
+      this.count = res ;
+      console.log(this.count)
+    });
   }
 
   ngOnInit() {

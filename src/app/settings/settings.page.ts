@@ -54,6 +54,10 @@ export class SettingsPage implements OnInit {
     private db: DatabaseService
   ) {
     // this.fireApi.hiddenTabs = true ;
+    this.fireApi.serviceNotice.subscribe(res => {
+      this.count = res ;
+      console.log(this.count)
+    });
 
   }
 

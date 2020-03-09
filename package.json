@@ -110,7 +110,8 @@
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
-    "typescript": "~3.4.3"
+    "typescript": "~3.4.3",
+    "cordova-plugin-google-plus": "^8.4.0"
   },
   "description": "An Ionic project",
   "cordova": {
@@ -146,7 +147,6 @@
       "cordova-plugin-fcm-with-dependecy-updated": {},
       "cordova-plugin-badge": {},
       "cordova-plugin-googleplus": {
-        "REVERSED_CLIENT_ID": "587167744825-2fo3p2fm7rr583qup08qk68j1uj9iidl.apps.googleusercontent.com",
         "PLAY_SERVICES_VERSION": "15.0.1"
       }
     },

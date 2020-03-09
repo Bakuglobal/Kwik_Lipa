@@ -7,6 +7,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { ModalController, LoadingController } from '@ionic/angular';
 import { ViewOrderPage } from '../view-order/view-order.page';
 import { Order } from '../models/order';
+import { Badge } from '@ionic-native/badge/ngx';
 
 @Component({
   selector: 'app-notifications',
@@ -16,17 +17,23 @@ import { Order } from '../models/order';
 export class NotificationsPage implements OnInit {
 
   Order: Order;
-  notifications;
+  notifications = [];
   Name;
+  count = '';
   constructor(
     private service: FirestoreService,
     private navCtrl: Router,
     private modal: ModalController,
     private fs: AngularFirestore,
-    private load: LoadingController
+    private load: LoadingController,
+    private badge: Badge
   ) {
     this.service.hiddenTabs = true;
     this.Name = localStorage.getItem('Name');
+    this.service.serviceNotice.subscribe(res => {
+      this.count = res ;
+      console.log(this.count)
+    });
   }
 
   ionViewWillEnter() {
@@ -41,23 +48,12 @@ export class NotificationsPage implements OnInit {
     this.navCtrl.navigate(['tabs/tab1']);
   }
 
-  //  onScroll(event) {
-  //   // used a couple of "guards" to prevent unnecessary assignments if scrolling in a direction and the var is set already:
-  //   if (event.detail.deltaY > 0 && this.header && this.service.hiddenTabs) return;
-  //   if (event.detail.deltaY < 0 && !this.header && this.service.hiddenTabs) return;
-  //   if (event.detail.deltaY > 0) {
-  //     console.log("scrolling down, hiding footer...");
-  //     this.header = true;
-  //     this.service.hiddenTabs = false ;
-  //   } else {
-  //     console.log("scrolling up, revealing footer...");
-  //     this.header = false;
-  //     this.service.hiddenTabs = true ;
-  //   };
-  // };
-
-  viewOrder(title,docId) {
+  viewOrder(title,docId,status) {
+    if(status == "unread"){
+      this.changeNoticeBadgeCount();
+    }
     this.fs.collection('Notifications').doc(docId).update({'status':'read'});
+    this.badge.increase(-1);
     let id = title.substring(0, 8);
     console.log(id);
     this.getOder(id);
@@ -75,6 +71,10 @@ export class NotificationsPage implements OnInit {
     )
   }
   ngOnInit() {
+  }
+  changeNoticeBadgeCount(){
+    let count = Number(this.count);
+    this.service.showNotice(count - 1);
   }
 
   async gotoModal(order) {

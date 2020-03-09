@@ -33,6 +33,9 @@ userID ;
 totaItems ;
 budget ;
 myName ;
+zeroList = false ;
+sharedList;
+phone;
   
   constructor(
     public navCtrl: Router,
@@ -51,8 +54,9 @@ myName ;
     this.fireApi.hiddenTabs = true ;
     this.userID = localStorage.getItem('userID');
     this.myName = localStorage.getItem('Name');
+    this.phone = localStorage.getItem('Number')
     console.log(this.userID)
-    this.getallLists();
+    
   }
   back(){
     this.fireApi.hiddenTabs = false ;
@@ -61,7 +65,9 @@ myName ;
   ngOnInit() {
     
   }
-  // ionViewDidEnter
+  ionViewDidEnter(){
+    this.getallLists();
+  }
 
   showSearch(){
     if(this.search === false){
@@ -76,8 +82,17 @@ myName ;
       componentProps: item
     });
     console.log(item);
+    mod.onDidDismiss().then(value =>{
+      if(value.data !== undefined && value.data !== null){
+        console.log('budget value',value.data);
+        this.fireApi.setBudget(value.data);
+        this.navCtrl.navigate(['tabs/recommend'])
+      }
+    });
     await mod.present();
+    
   }
+
 
   createList(){
     this.navCtrl.navigate(['tabs/createList']);
@@ -85,9 +100,19 @@ myName ;
   getallLists(){
     this.fireApi.getLists(this.userID).subscribe(res => {
       this.myList = res ;
+      if(res.length !== 0){
+        this.zeroList = true ;
+      }
       console.log(this.myList);
-    })
+    });
+    this.fireApi.getSharedLists(this.phone).subscribe(res => {
+      this.sharedList = res ;
+      if(res.length !== 0){
+        this.zeroList = true ;
+      }
+      console.log(this.sharedList);
 
+    })
   }
   getTotalCount() {
     this.totaItems = this.myList.Items.reduce((a, b) => a + (b.count * 1), 0);

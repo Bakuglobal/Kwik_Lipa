@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content #content>
   <ion-toolbar>
     <ion-buttons padding>
       <ion-icon name="arrow-back" slot="start" (click)="back()"></ion-icon>
@@ -28,6 +28,7 @@
         <!-- <ion-avatar><img src="{{item.image}}"></ion-avatar> -->
         <ion-label>{{item.firstName}}&nbsp;{{item.lastName}}</ion-label>
         <ion-label>{{item.phone}}</ion-label>
+        <ion-icon name="close" (click)="removeMember(Listmembers.indexOf(item))"></ion-icon>
       </ion-chip>
     </ion-item>
     <ion-item>
@@ -44,16 +45,15 @@
           <!-- <ion-avatar><ion-icon name="person"></ion-icon></ion-avatar> -->
           <ion-label>{{item.firstName}}&nbsp;{{item.lastName}}</ion-label>
           <ion-label>{{item.phone}}</ion-label>
-          <ion-icon name="close" (click)="removeMember(item)"></ion-icon>
         </ion-chip>
       </ion-row>
     </div>
     <div style="text-align: center;" *ngIf="showInvite">
-      <ion-row>
-        <ion-label>No user record with this phone number <br>
+        <div class="ion-text-center" style="padding-top: 20px;">
+        <ion-label >No user record with this phone number <br>
           <ion-label color="primary" (click)="sendInvite()">Send invite to {{name}} &nbsp; {{member}}</ion-label>
         </ion-label>
-      </ion-row>
+      </div>
     </div>
 
   </form>
@@ -63,46 +63,28 @@
   <ion-item>
     <ion-input type="text" name="item" placeholder="what do you want to buy ?" (ionChange)="searchItem()"
       [(ngModel)]="searchTerm"></ion-input>
+      <ion-icon name="add" size="large" slot="end" color="primary" *ngIf="suggestion" (click)="addItem()"></ion-icon>
   </ion-item>
-  <div *ngIf="suggestion" style="background-color: var(--ion-color-light);">
-    <ion-item *ngFor="let item of items" text-center padding (click)="addItem(item)">
-      <ion-col>
-        <ion-avatar><img src="{{item.image}}"></ion-avatar>
-      </ion-col>
-      <ion-col>
-        {{item.item}}
-      </ion-col>
-    </ion-item>
-  </div>
   <div *ngIf="newListItems.length > 0" style="margin-top: 15px;">
     <ion-item>
       <ion-col>
-        <ion-label >Icon</ion-label>
+        <ion-label>Items</ion-label>
       </ion-col>
       <ion-col>
-        <ion-label >Items</ion-label>
-      </ion-col>
-      <ion-col>
-        <ion-label >Budget</ion-label>
+        <ion-label>My Budget</ion-label>
       </ion-col>
       <ion-col>
         <ion-label >Quantity</ion-label>
       </ion-col>
     </ion-item>
     <ion-item-sliding *ngFor="let item of newListItems">
-      <!-- <ion-item> -->
         <ion-card  class="card">
           <ion-item>
-            <ion-col size="3">
-              <ion-avatar>
-                <img src="{{item.image}}">
-              </ion-avatar>
-            </ion-col>
             <ion-col>
               <ion-label>{{item.item}}</ion-label>
             </ion-col>
             <ion-col>
-              <ion-input name="price" type="number" value="{{item.price}}"></ion-input>
+              <ion-input name="price" type="number" [(ngModel)]="item.price"></ion-input>
             </ion-col>
             <ion-col size="4" text-center>
               <ion-card style="border-radius: 20px;width: 100%;margin-right:5px">
@@ -121,10 +103,9 @@
             </ion-col>
           </ion-item>
         </ion-card>
-      <!-- </ion-item> -->
       <ion-item-options side="end">
         <ion-item-option (click)="remove(newListItems.indexOf(item))" color="primary">
-          <ion-icon name="trash" slot="end" color="danger"></ion-icon>
+          <ion-icon name="trash" size="large" slot="end" color="danger"></ion-icon>
         </ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
@@ -134,10 +115,8 @@
 <ion-footer>
   <ion-row>
     <ion-col padding size="3" (click)="clearList()" text-center>
-      <!-- <ion-card padding style="border-radius: 15px;" > -->
       <ion-icon name="trash" size="large" color="primary"></ion-icon><br>
       Clear List
-      <!-- </ion-card> -->
     </ion-col>
     <ion-col>
       <ion-card padding style="border-radius: 15px;text-align: center;" color="danger" (click)="saveList()" [disabled]="newListItems.length == 0">

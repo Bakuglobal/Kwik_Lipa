@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Shops } from '../models/shops';
 import { FirestoreService } from '../services/firestore.service';
 import 'rxjs/add/operator/map';
@@ -13,12 +13,14 @@ import { Network } from '@ionic-native/network/ngx';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { IonSlides } from '@ionic/angular';
 import { DiscountmodalPage } from '../discountmodal/discountmodal.page';
+import { Badge } from '@ionic-native/badge/ngx';
 
 
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
-  styleUrls: ['tab1.page.scss']
+  styleUrls: ['tab1.page.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class Tab1Page implements OnInit {
   // Views
@@ -27,7 +29,7 @@ export class Tab1Page implements OnInit {
   @ViewChild(IonContent, { static: false }) content: IonContent;
 
   // Variables
-  count = false;
+  count = '0';
   shops: Shops[];
   unfilteredShops: Shops[];
 
@@ -45,7 +47,12 @@ export class Tab1Page implements OnInit {
   heading = false ;
   Name = '' ;
   featuredProducts = [] ;
-
+  slideme = {
+    initialSlide: 0,
+    speed: 500,
+    autoplay: false,
+    slidesPerView: 1.7
+  }
 
   constructor(
     private platform: Platform,
@@ -59,15 +66,14 @@ export class Tab1Page implements OnInit {
     public menuCtrl: MenuController,
     public service: FirestoreService,
     public fauth: AngularFireAuth,
-    public modal: ModalController
+    public modal: ModalController,
+    public badge: Badge
 
   ) {
-
     this.Name = localStorage.getItem('Name');
     //check if offline
     this.network.onDisconnect().subscribe(() => {
       this.Disconnected = true;
-
     });
 
     //check if online
@@ -79,7 +85,10 @@ export class Tab1Page implements OnInit {
     });
     // hide bottom tabs
     this.service.hiddenTabs = false;
-
+    this.service.serviceNotice.subscribe(res => {
+      this.count = res ;
+      console.log(this.count)
+    });
   }
   onScroll(event){
     if(event.detail.scrollTop == 0){
@@ -107,6 +116,9 @@ export class Tab1Page implements OnInit {
       this.featuredProducts = res ;
       console.log(res);
     })
+    // check for unread notices
+   
+    
   }
 
   onIonViewDidLoad() {

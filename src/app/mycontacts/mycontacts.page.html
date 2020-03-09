@@ -1,19 +1,19 @@
 <ion-content color="light">
   <ion-toolbar color="light" padding>
     <ion-buttons>
-      <ion-icon slot="start" (click)="back()" name="arrow-back"></ion-icon>
+      <ion-icon slot="start" (click)="back()" name="arrow-back" color="primary"></ion-icon>
       <!-- <ion-icon slot="start" name="arrow-back" (click)="back()"></ion-icon> -->
-      <ion-title text-center *ngIf="!search">Shopping Lists</ion-title>
-      <ion-searchbar placeholder="Enter list Title" *ngIf="search" fadein></ion-searchbar>
-      <ion-icon slot="end" name="search" (click)="showSearch()"></ion-icon>
+      <ion-title text-center *ngIf="!search" color="primary">Shopping Lists</ion-title>
+      <ion-searchbar placeholder="Enter list Title" *ngIf="search" ></ion-searchbar>
+      <ion-icon slot="end" name="search" (click)="showSearch()" color="primary"></ion-icon>
     </ion-buttons>
   </ion-toolbar>
   <ion-label class="ion-padding title"> My Lists</ion-label>
   <ion-card *ngFor="let item of myList" class="ion-padding" color="primary" (click)="viewList(item)">
     <ion-card-title>
       <ion-label class="ion-float-left">Created : {{item.DueDate | date}} </ion-label>
-      <ion-text class="ion-float-right"> By : <span *ngIf="item.createdBy !== myName">{{item.createdBy}}</span> <span
-          *ngIf="item.createdBy == myName">You</span></ion-text> <br>
+      <!-- <ion-text class="ion-float-right"> By : <span *ngIf="item.createdBy !== myName">{{item.createdBy}}</span> <span
+          *ngIf="item.createdBy == myName">You</span></ion-text> --> <br> 
     </ion-card-title>
     <ion-card-content>
       <ion-label class="ion-padding" class="list-title">Title : {{item.Title}}</ion-label><br>
@@ -25,10 +25,24 @@
       <ion-text *ngFor="let item of item.members">{{item.firstName}}&nbsp;</ion-text>
     </div>
   </ion-card>
+  <div style="text-align: center;margin-top: 20px;" *ngIf="!zeroList">
+    <div class="icon">
+    <img src="../../assets/list.svg">
+  </div>
+  <br><br><br>
+    <ion-label >You have not created any lists</ion-label>
+  </div>
+  <br><br><br>
   <ion-label class="ion-padding title"> Shared Lists</ion-label>
-
+  <div style="text-align: center;margin-top: 25px;" *ngIf="!zeroList"><br>
+    <div class="icon">
+    <img src="../../assets/share.svg">
+  </div>
+  <br><br><br>
+    <ion-label >You have no shared lists</ion-label>
+  </div>
   <ion-fab vertical="bottom" horizontal="center" slot="fixed" (click)="createList()">
-    <ion-fab-button color="danger">
+    <ion-fab-button color="primary">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

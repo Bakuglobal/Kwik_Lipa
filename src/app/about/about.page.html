@@ -36,7 +36,7 @@
   <div class="category-block" *ngFor="let item of information; let i = index"> 
       <ion-row  tappable (click)="toggleSection(i)"detail-none [ngClass]="{'section-active':item.open,'section':!item.open}">
           <ion-col class="category-banner">
-              {{item.name}}
+            <ion-label style="text-transform: capitalize;"> {{item.name}}</ion-label>
           </ion-col>
           <ion-col  size="1"class="arrow-right">
               <div style="text-align: right" *ngIf="!item.open"><ion-icon size="large"color="primary"name="arrow-dropright" item-right></ion-icon></div>
@@ -45,7 +45,7 @@
       </ion-row>
       <div *ngIf="item.children && item.open">
         <ion-list *ngFor="let child of item.children; let j = index" padding>
-          <h3>{{child.info}}</h3>
+          <ion-label>{{child.info}}</ion-label>
         </ion-list>
       </div>
 

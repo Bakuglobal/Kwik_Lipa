@@ -1,0 +1,84 @@
+<ion-content>
+  <div >
+    <ion-toolbar class="ion-padding" color="primary">
+      <ion-buttons>
+        <ion-icon name="arrow-back" size="large" (click)="back()" ></ion-icon>
+        <ion-title class="ion-text-center" >Good {{greeting}}, &nbsp;<span style="text-transform: capitalize;font-weight: bolder;"> {{name}} </span></ion-title>
+      </ion-buttons>
+    </ion-toolbar>
+    <div class="ion-padding budget">
+      Your Budget for this list is Kshs <span>{{budget}}.</span><br><br>
+      Your Current location is <span>here</span><br><br>
+      We recommend the following places to shop from.
+    </div>
+    <div>
+      <ion-searchbar placeholder="Enter a different location"></ion-searchbar>
+    </div>
+    <div>
+      <div class="featured-products">
+        <div class="featured-products-title">
+            <div class="featured-products-title-left">Shops Near you</div>
+            <div class="featured-products-title-right" (click)="viewAll()">
+                View all
+                <ion-icon src="/assets/images/arrow-right.svg"></ion-icon>
+            </div>
+        </div><br>
+      </div>
+      <ion-grid padding>
+        <ion-row>
+          <ion-col size="6" *ngFor="let shop of shops | slice:0:4" (click)="selectShop(shop)">
+
+            <div class="partion">
+              <img src="{{shop.file}}" class="shop-img">
+              <h5 class="shops-title" style="text-transform: uppercase">{{shop.name}} </h5>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+    <div>
+      <div class="featured-products">
+        <div class="featured-products-title">
+            <div class="featured-products-title-left">Recommended Products</div>
+            <div class="featured-products-title-right" >
+                View all
+                <ion-icon src="/assets/images/arrow-right.svg"></ion-icon>
+            </div>
+        </div><br>
+      </div>
+      <div class="featured-products-content">
+        <ion-row>
+          <!-- FIRST ROW OF PRODUCTS -->
+          <ion-slides pager="false" [options]="DiscountslideOpts">
+            <ion-slide *ngFor="let n of discontedProducts | slice:0:discontedProducts.length/2 let i=index ">
+              <ion-col class="featured-products-content-card" [ngClass]="{'soldout': item.stock == 0}"
+                *ngFor="let item of discontedProducts | slice:discontedProducts.indexOf(n):discontedProducts.indexOf(n)+2 "
+                >
+                <div class="featured-products-content-card-image">
+                  <div *ngIf="item.stock == 0" class="soldTag">
+                    <ion-label color="danger"> SOLD OUT </ion-label>
+                  </div>
+                  <img class="product-image" src="{{item.image}}">
+                  <ion-skeleton-text style="height: 100px;width: 100px;" *ngIf="!item.image">
+                  </ion-skeleton-text>
+                </div>
+                <div class="featured-products-content-card-content">
+                  <div class="featured-products-content-card-content-title">{{item.product}}</div>
+                  <ion-row class="featured-products-content-card-content-description">
+                    <ion-col size="6">Ksh {{item.currentprice}}</ion-col>
+                    <ion-col size="6" style="direction: rtl;"><s>Ksh {{item.currentprice * 1.2}}</s>
+                    </ion-col>
+                  </ion-row>
+                </div>
+              </ion-col>
+
+            </ion-slide>
+          </ion-slides>
+        </ion-row>
+      </div>
+    </div>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-button expand="full" shape="round" (click)="goToShop()">choose shop myself</ion-button>
+</ion-footer>

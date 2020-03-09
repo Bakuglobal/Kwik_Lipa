@@ -35,7 +35,7 @@ export class LoginPage implements OnInit {
     passwordIcon: string = 'eye-off';
     backButtonSubscription ;
     showSplash = true ;
-
+    unread = [] ;
 //objects
 
       public data: { email: any; password: any } = {
@@ -117,7 +117,8 @@ export class LoginPage implements OnInit {
           // localStorage.setItem('userEmail', resp.email);
           // localStorage.setItem('userName', resp.name);
           const id = resp.user.uid ;
-          localStorage.setItem('userID',id)
+          localStorage.setItem('userID',id);
+          this.unreadNotices(id);
           this.loading.dismiss();
           // this.presentToast1(' Loign successful ' + resp.name);
           this.service.hiddenTabs = false ;
@@ -152,7 +153,16 @@ export class LoginPage implements OnInit {
         localStorage.clear();
         this.location.back();
       }
-
+ unreadNotices(id) {
+    this.service.getunreadNotice(id).subscribe(res => {
+      this.unread = res;
+      let unreadCount = this.unread.length;
+      console.log(unreadCount.toString());
+      localStorage.setItem('noticeCount', unreadCount.toString());
+      let unreadNotice = Number(localStorage.getItem('noticeCount'));
+      this.service.showNotice(unreadNotice);
+    })
+  }
   
   
   //toast

@@ -8,3 +8,12 @@ blockquote{
 .unread{
     background-color: #80808021;
 }
+.icon{
+    width: 100px;
+    height: 100px;
+    margin: auto;
+    img{
+        object-position: center;
+        object-fit: contain;
+    }
+}

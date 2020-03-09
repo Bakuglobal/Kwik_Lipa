@@ -1,4 +1,4 @@
-<ion-header style="background-color: #3880ff">
+<ion-header color="primary">
   <ion-toolbar color="primary" >
       <ion-buttons slot="start">
           <ion-button (click)="back()">
@@ -21,7 +21,7 @@
 <ion-content >
   
     <ion-item class="top">
-      <span *ngIf="!showSearch" style="font-size: 13px;text-align: center;">Pick Pay and Collect</span>
+      <span *ngIf="!showSearch"  style="font-size: 13px;padding-left: 40%;">Pick Pay and Collect</span>
       <ion-searchbar placeholder="Enter product name" *ngIf="showSearch" [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()"></ion-searchbar>
       <ion-icon name="search" slot="end" (click)="showSearchBar()"></ion-icon>
     </ion-item>
@@ -46,11 +46,10 @@
       
       <div class="featured-products-content" >
           <ion-row >
-              <!-- FIRST ROW OF PRODUCTS -->
               <ion-col class="featured-products-content-card" size="6" *ngFor="let item of offers" [ngClass]="{'soldout': item.stock == 0}">
                   <div class="featured-products-content-card-image">
                     <div *ngIf="item.stock == 0" class="soldTag">
-                      <ion-label color="danger"> SOLD OUT </ion-label>
+                      <ion-label color="danger">OUT OF STOCK </ion-label>
                   </div>
                       <img src="{{item.image}}" (click)="viewProduct(item)">
                   </div>

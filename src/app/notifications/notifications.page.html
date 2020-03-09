@@ -10,8 +10,15 @@
 
 </ion-header>
 <ion-content>
+  <div style="text-align: center;margin-top: 40%;" *ngIf="notifications.length == 0">
+    <div class="icon">
+    <img src="../../assets/alarm.svg">
+  </div>
+  <br><br><br>
+    <ion-label >You have no notifications</ion-label>
+  </div>
   <div>
-    <ion-card *ngFor="let item of notifications" (click)="viewOrder(item.title,item.id)" [ngClass]="{'unread': item.status == 'unread'}">
+    <ion-card *ngFor="let item of notifications" (click)="viewOrder(item.title,item.id,item.status)" [ngClass]="{'unread': item.status == 'unread'}">
       <ion-row padding>
         <ion-col size="3" >
           <ion-avatar>
@@ -20,7 +27,7 @@
         </ion-col>
         <ion-col style="text-align: left;padding-top: 20px;">
           <ion-label>{{item.title}}</ion-label><br>
-          <ion-label>{{ item.Date | date }}</ion-label>
+          <ion-label>{{ item.Date.toDate() | date }}</ion-label>
         </ion-col>
       </ion-row>
       <ion-card-content>
@@ -29,7 +36,7 @@
           You ordered for : 
         </p>
         <blockquote>
-          {{item.message}}
+         <span *ngFor="let n of item.message">{{n}}&nbsp;,</span>
         </blockquote>
         
       </ion-card-content>

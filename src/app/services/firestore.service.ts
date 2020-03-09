@@ -54,6 +54,7 @@ export class FirestoreService {
       allLists: AngularFirestoreCollection<List> ;
       notices: AngularFirestoreCollection<Notice> ;
       count = 0 ;
+      budget = 0 ;
 
   // objects
       usermsg = {} ;
@@ -122,10 +123,10 @@ getCount(){
       this.phone.next(number);
     }
 // show new notification
-    private notice = new BehaviorSubject(false);
-    serviceNotice = this.phone.asObservable();
-    showNotice(show: boolean){
-      this.notice.next(show);
+    private notice = new BehaviorSubject("0");
+    serviceNotice = this.notice.asObservable();
+    showNotice(number: any){
+      this.notice.next(number);
     }
 // share shopBy Tag
     private shopBy = new BehaviorSubject("shopBy");
@@ -312,8 +313,22 @@ pastPaidOrders(id){
 // get all shopping list of the user
 getLists(id){
   this.allLists = this.fs.collection<List>('shopping-list', ref => {
-    // return ref.where('members','array-contains',{firstName:name}).orderBy('DueDate','asc');
     return ref.where('userID','==',id).orderBy('DueDate','asc');
+  })
+  return this.allLists.snapshotChanges().pipe(
+    map(actions => {
+      return actions.map(a => {
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id ;
+        return { id, ... data};
+      })
+    })
+  )
+}
+// get shared shopping lists
+getSharedLists(phone){
+  this.allLists = this.fs.collection<List>('shopping-list', ref => {
+    return ref.where('members','array-contains',phone).orderBy('DueDate','asc');
   })
   return this.allLists.snapshotChanges().pipe(
     map(actions => {
@@ -347,6 +362,28 @@ getNotifications(id){
       })
     })
   )
+}
+// get unreadnotice
+getunreadNotice(id){
+  this.notices =  this.fs.collection<Notice>('Notifications', ref => {
+    return ref.where('userID','==',id).where('status','==','unread').orderBy('Date','asc');
+  });
+  return this.notices.snapshotChanges().pipe(
+     map(actions => {
+       return actions.map(a => {
+         const data = a.payload.doc.data();
+         const id = a.payload.doc.id ;
+         return { id, ... data};
+       })
+     })
+   )
+}
+// share list budget
+setBudget(value){
+  this.budget = value ;
+}
+getBudget(){
+  return this.budget ;
 }
   
 }
