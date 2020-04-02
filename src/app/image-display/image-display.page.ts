@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { NavParams, ModalController } from '@ionic/angular';
 
 @Component({
@@ -7,7 +7,7 @@ import { NavParams, ModalController } from '@ionic/angular';
   styleUrls: ['./image-display.page.scss'],
 })
 export class ImageDisplayPage implements OnInit {
-    img: any;
+    @Input('url')url: string;
     liked = false ;
 
     // @ViewChild('slider', { read: ElementRef })slider: ElementRef;
@@ -17,12 +17,11 @@ export class ImageDisplayPage implements OnInit {
             maxRatio: 3
         }
     };
-
-
-    constructor(private navParams: NavParams, private modalController: ModalController) { }
-
+    constructor(
+        private modalController: ModalController
+    ) { }
+    
     ngOnInit() {
-        this.img = this.navParams.get('img');
     }
 
     zoom(zoomIn: boolean) {

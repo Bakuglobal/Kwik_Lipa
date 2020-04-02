@@ -48,19 +48,19 @@ export class ForgotPasswordPage implements OnInit {
 
 //forgot password
  
-      async forgotPassword(email){
+      async forgotPassword(){
           this.presentLoading();
-          return firebase.auth().sendPasswordResetEmail(email)
+          return firebase.auth().sendPasswordResetEmail(this.email)
           .then(
                     res =>  {
-                              this.presentToast('Password reset link send to '+' '+email,'bottom');
+                              this.presentToast('Password reset link send to '+' '+this.email,'bottom');
                               this.openGmail = true ;
                               this.loading.dismiss();
                             }
             )
           .catch( error => {
                              this.loading.dismiss();
-                             this.presentToast('No user record with '+email,'bottom')
+                             this.presentToast('No user record with '+this.email,'bottom')
                            }
           )
           
@@ -82,33 +82,5 @@ async presentLoading() {
     message: 'Wait ...'
   });
   return await this.loading.present();
-}
-//open gmail
-goToGmail(){
-
-  const options: AppLauncherOptions = {
-  }
-  
-  if(this.platform.is('android')) {
-
-        options.uri = 'googlegmail://' ;
-
-        this.appLauncher.canLaunch(options)
-        .then(
-                (canLaunch: boolean) => {
-                this.iab.create('android-app://'+options.uri, '_system', 'location=yes')
-              }
-          )
-        .catch(
-                (error: any) => {}
-              
-          );
-
-  } else {
-
-       options.packageName = 'com.google.android.gm'
-  }
-  
-  
 }
 }

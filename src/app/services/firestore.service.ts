@@ -25,6 +25,7 @@ import { HTTP } from '@ionic-native/http/ngx';
 import { Order } from '../models/order';
 import { List } from '../models/list';
 import { Notice } from '../models/upload';
+import { ADs } from '../models/ads';
 
 
 const httpOptions = {
@@ -209,8 +210,8 @@ getCount(){
       return this.operationSupport.push(data);
     }
 //get the list of shops   
-  getShops(): AngularFireList<Shops> {
-    return this.operationShops;
+  getShops(){
+    return this.fs.collection<Shops>('shops');
   }
 //get the message send to support
  getuserMessage() : AngularFireList<Support> {
@@ -384,6 +385,13 @@ setBudget(value){
 }
 getBudget(){
   return this.budget ;
+}
+getAds(){
+  let fs =  this.fs.collection<ADs>('Ads', ref => {
+    return ref.orderBy('priority','desc');
+  }) ;
+ return  fs.valueChanges();
+
 }
   
 }

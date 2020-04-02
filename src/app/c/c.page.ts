@@ -12,9 +12,8 @@ export class CPage implements OnInit {
   @Input() quantity: any ;
   @Input() currentprice: any ;
   @Input() initialprice: any ;
+  @Input() description: string ;
   
-
-
   constructor(
     private modal: ModalController
     ) { }
@@ -22,8 +21,8 @@ export class CPage implements OnInit {
   ngOnInit() {
   }
 
-
   close(){
     this.modal.dismiss();
   }
+  
 }

@@ -12,7 +12,7 @@ ion-col{
     text-align: start;
 }
 .top{
-    background-color: var(--ion-color-light);
+    background-color: var(--ion-color-medium);
 }
 ion-card{
     border-radius: 20px;
@@ -20,4 +20,16 @@ ion-card{
 .bottom {
     border-bottom: 1px solid var(--ion-color-primary);
     box-shadow: 1px red;
+}
+.left{
+    font-size: .8em;
+    color: grey;
+}
+.right{
+    font-size:.8em;
+    color: grey;
+    span{
+        font-size: 1.1em;
+        color: grey;
+    }
 }

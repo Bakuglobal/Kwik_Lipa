@@ -52,6 +52,7 @@ import { DiscountmodalPageModule } from './discountmodal/discountmodal.module';
 import { NotificationsPageModule } from './notifications/notifications.module';
 import { Badge } from '@ionic-native/badge/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { CallNumber} from '@ionic-native/call-number/ngx';
 
 
 @NgModule({
@@ -90,6 +91,7 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
   providers: [
     DeviceOrientation,
     InAppBrowser,
+    CallNumber,
     StatusBar,
     OffersPage,
     OpenNativeSettings,

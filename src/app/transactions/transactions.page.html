@@ -55,7 +55,7 @@
         <div *ngIf="!item.show">
           <ion-icon name="funnel" (click)="showMore(item)" style="float: left;" color="primary"></ion-icon>
           <ion-label style="float: right;" color="warning">{{item.OrderID}}</ion-label><br><br>
-          <div style="text-align:start;" (click)="viewOrder(item)">
+          <div style="text-align:start;" (click)="getShopNumber(item)">
             Order for <ion-label *ngFor="let item of item.products">{{item.product}},</ion-label> ...
           </div>
           <span style="float: left;bottom: 0;margin-top: 10px;color:var(--ion-color-primary)">
@@ -112,7 +112,7 @@
       <ion-card padding *ngFor="let item of myPastOrders " class="card">
         <div *ngIf="!item.show">
           <ion-icon name="funnel" (click)="showMore(item)" style="float: left;" color="primary"></ion-icon>&nbsp;
-          <ion-label>{{item.Date.toDate() | date }}</ion-label>
+          <ion-label>{{item.Date | date }}</ion-label>
           <ion-label style="float: right;" color="warning">{{item.OrderID}}</ion-label><br><br>
           <div style="text-align:start;" (click)="viewOrder(item)">
             Order for <ion-label *ngFor="let item of item.products">{{item.product}},</ion-label> ...

@@ -1,63 +1,10 @@
-<!-- <ion-header style="background-color: #3880ff;">
-    <ion-toolbar color="primary" >
-        <ion-buttons (click)="close()" slot="start">
-          <ion-icon name="arrow-back" size="large"></ion-icon>
-        </ion-buttons>
-        <ion-searchbar shape="round" style="border-radius: 10px;"></ion-searchbar>
-    </ion-toolbar>
-</ion-header>
-<ion-content>
-      
-  <div style="border-bottom: aquamarine ;" padding>
-    <ion-row>
-      <ion-col>
-      <ion-avatar><img src="../../assets/images/bg.png"></ion-avatar>
-      </ion-col>
-      <ion-col text-center>
-        <b style="font-size: 1.5rem;">1</b><br>
-        <ion-button color="primary" shape="round"disabled>Posts</ion-button>
-      </ion-col>
-    </ion-row>
-    <br>
-  </div> 
-<div padding>
-<ion-label><b>Quickmatt supermarket</b></ion-label><br><br>
-<ion-label><a (click)="maps()"> Moi Avenue Haruko house&nbsp;<ion-icon name="pin"></ion-icon></a></ion-label><br><br>
-<ion-label>Open from 9:00AM - 9:00PM Mon - Sat</ion-label><br><br>
-<ion-label>Website : <a (click)="inbrowser('https://www.quickmart.co.ke/')">https://www.quickmart.co.ke/</a></ion-label><br><br>
-</div>
-<div class="ion-text-center" style="margin-top: 20px;font-weight: bold;"><ion-label >Recent posts</ion-label></div>
-<ion-card>
-    <ion-card-header>
-        <ion-chip>
-          <ion-avatar><img src="../../assets/images/bg.png"></ion-avatar>
-          <ion-label>Quickmatt</ion-label>
-        </ion-chip>
-        1 hr . <ion-icon name="globe"></ion-icon>
-    </ion-card-header>
-    <ion-card-content>
-      <img src="../../assets/images/ad.jpg">
-      <ion-text>
-        Mega discounts this friday .
-      </ion-text>
-    </ion-card-content>
-    <ion-item style="margin-left:0;margin-right:0;">
-      <ion-icon [ngClass]="{'color': h}" (click)="like()" size="large" name="heart"></ion-icon>&nbsp;&nbsp;&nbsp;&nbsp;
-      <ion-icon  (click)="AddComment()" size="large" name="chatboxes"></ion-icon>&nbsp;&nbsp;&nbsp;&nbsp;
-      <ion-icon  (click)="share()" name="share-alt" size="large"></ion-icon>
-     
-    </ion-item>
-  </ion-card>
-</ion-content> -->
-
-
 <ion-header style="background-color: #3880ff;"  > 
-  <ion-toolbar color="primary" >
+  <ion-toolbar color="primary" class="ion-padding">
       <ion-buttons (click)="close()" slot="start">
-          <ion-icon name="arrow-back" size="large"></ion-icon>
+          <ion-icon name="arrow-back" ></ion-icon>
         </ion-buttons>
 
-      <ion-title *ngIf="!showSearch">Shop name here</ion-title>
+      <ion-title *ngIf="!showSearch">{{shopname}}</ion-title>
 
 
       <ion-searchbar *ngIf="showSearch" placeholder="Search for a shop "animated type="text"></ion-searchbar>
@@ -70,257 +17,143 @@
   </ion-toolbar>
 </ion-header>
 
-
-
-
 <ion-content>
 
   <div style="padding-bottom: 15px;">
-      <div>
-          <img src="../../assets/images/ad.jpg" style="width: 100%; object-fit: fill; height: 150px;">
+      <div *ngIf="shop.cover != undefined">
+          <img src="{{shop.cover}}"  alt="Cover image" style="width: 100%; object-fit: fill; height: 150px;">
       </div>
       <div>
           <ion-avatar style="width: 60px; height: 60px; margin-top: -35px; margin-left: 25px;">
-              <img src="../../assets/images/images.jpg" style="object-fit: fill;">
+              <img src="{{logo}}" style="object-fit: fill;">
           </ion-avatar>
       </div>
-      <div style="margin-left: 25px; margin-top: 20px;">
-          <div style="font-size: 15px; font-weight: bold;">Shop name</div>
+      <div style="margin-top: 20px;line-height: 1;" class="ion-padding">
+          <div style="font-size: 15px; font-weight: bold;">{{shopname}}</div>
           <div style="font-size: 13px; color: #636363; margin-top: 8px;">
-              <a (click)="maps()">Moi Avenue Haruko house <ion-icon name="pin"></ion-icon></a> 
+              <a (click)="maps()">{{shop.Location}} <ion-icon name="pin"></ion-icon></a> 
           </div>
-          <div style="font-size: 13px; color: #636363; margin-top: 8px;">Open from 9:00AM - 9:00PM Mon - Sat</div>
+          <div style="font-size: 13px; color: #636363; margin-top: 8px;">Open from {{shop.Open}} - {{shop.Close}} Mon - Sat</div>
           <div style="font-size: 13px; color: #636363; margin-top: 8px;">Website: 
-              <a (click)="inbrowser('https://www.quickmart.co.ke/')">https://www.quickmart.co.ke/</a>
+              <a (click)="inbrowser(shop.Website)">{{shop.Website}}</a>
           </div>
       </div>
   </div>
-
-
-
-
-
+  <div style="margin-top: 15px;">
+    <ion-label class="ion-padding">What would you like to do ?</ion-label><br>
+    <div class="ion-text-center" style="box-shadow: grey;background-color: var(--ion-color-light);">
+      <br>
+      <ion-row >
+        <ion-col size="3" (click)="scanAndPay()">
+          <div
+              style="width: 60px;height: 60px;margin: auto;position: relative;background-color: #00ade51c;border-radius: 100%;">
+              <img style="width: 40px;height: 40px;padding-top: 20px;padding-left: 5px;" src="/assets/scan2.svg">
+          </div>
+          <h2 style="font-size: 8pt;">Scan & Pay</h2>
+      </ion-col>
+      <ion-col size="3" (click)="pickPayCollect()">
+        <div
+            style="width: 60px;height: 60px;margin: auto;position: relative;background-color: #00ade51c;border-radius: 100%;">
+            <img style="width: 40px;height: 40px;padding-top: 20px;padding-left: 5px;" src="/assets/gift.svg">
+        </div>
+        <h2 style="font-size: 8pt;">Pay & Collect</h2>
+    </ion-col>
+    <ion-col size="3" (click)="Delivery()">
+        <div
+            style="width: 60px;height: 60px;margin: auto;position: relative;background-color: #00ade51c;border-radius: 100%;">
+            <img style="width: 40px;height: 40px;padding-top: 20px;padding-left: 5px;" src="/assets/parcel.svg">
+        </div>
+        <h2 style="font-size: 8pt;">Buy for Delivery</h2>
+    </ion-col>
+    <ion-col size="3" (click)="pickPayCollect()">
+        <div
+            style="width: 60px;height: 60px;margin: auto;position: relative;background-color: #00ade51c;border-radius: 100%;">
+            <img style="width: 40px;height: 40px;padding-top: 20px;padding-left: 5px;" src="/assets/price.svg">
+        </div>
+        <h2 style="font-size: 8pt;">Our products</h2>
+      </ion-col>
+      </ion-row>
+    </div>
+  </div>
 
   <div class="page-content"><br>
 
-      <div class="card">
-          <div class="header">
-              <div class="image" (click)="infoModal('QuickMatt')">
-                  <ion-avatar>
-                      <img src="../../assets/images/bg.png">
-                  </ion-avatar>
-              </div>
-              <div class="name" (click)="infoModal('QuickMatt')">
-                  Kakila
-              </div>
-              <div class="date">
-                  10 mins ago
-              </div>
-          </div>
-          <!-- DESCRIPTION -->
-          <p class="description">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident eius eveniet corporis 
-          </p>
-
-          <!-- MAIN IMAGE -->
-          <div class="main-image">
-              <img src="../../assets/images/ad.jpg" (click)="showImage()">
-          </div>
-
-          <!-- LIKE, COMMENT AND SHARE -->
-          <div class="like-comment-share">
-              <ion-row>
-                  <ion-col size="4">
-                      <ion-button fill="light" (click)="like()">
-                          <ion-icon [ngClass]="{'color': h}" size="large" src="../../assets/images/heart.svg"></ion-icon>
-                          &nbsp;&nbsp;<span class="ion-text-lowercase">{{likes.count}}</span>
-                      </ion-button>
-                  </ion-col>
-                  <ion-col size="4">
-                      <ion-button fill="light" (click)="comments()">
-                          <ion-icon size="large" src="../../assets/images/comment.svg" ></ion-icon>
-                          &nbsp;&nbsp;<span class="ion-text-lowercase">55</span>
-                      </ion-button>
-                  </ion-col>
-                  <ion-col size="4">
-                      <ion-button fill="light" (click)="share()">
-                          <ion-icon style="width: 14.5px; padding-right: 0px;" size="large" src="../../assets/images/share.svg" ></ion-icon> 
-                          &nbsp;&nbsp;<span class="ion-text-lowercase"></span>
-                      </ion-button>
-                  </ion-col>
-              </ion-row>
-          </div>
-
-          <div class="line"></div>
-
-          <!-- LAST USER COMMENT -->
-          <div class="user-comment">
-
-              <div class="user-avatar">
-                  <ion-avatar>
-                      <img src="../../assets/images/bg.png">
-                  </ion-avatar>
-              </div>
-              <div class="user-name-and-date">
-                  <div class="name">Maxime Lee</div>
-                  <div class="date">10 mins ago</div>
-              </div>
-
-              <div class="comment-container">
-                  <p class="comment">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati quidem nostrum nobis earum.
-                  </p>
-                  <div class="view-all-comments" (click)="comments()">View all comments</div>
-              </div>
-
-          </div>
-      </div><br>
-      <!-- END OF FIRST SOKO POST -->
-
-
-      <!-- SECOND SOKO POST -->
-      <div class="card">
-          <div class="header">
-              <div class="image" (click)="infoModal('QuickMatt')">
-                  <ion-avatar>
-                      <img src="../../assets/images/bg.png">
-                  </ion-avatar>
-              </div>
-              <div class="name" (click)="infoModal('QuickMatt')">
-                  Kakila
-              </div>
-              <div class="date">
-                  10 mins ago
-              </div>
-          </div>
-          <!-- DESCRIPTION -->
-          <p class="description">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident eius eveniet corporis 
-          </p>
-
-          <!-- LIKE, COMMENT AND SHARE -->
-          <div class="like-comment-share">
-              <ion-row>
-                  <ion-col size="4">
-                      <ion-button fill="light" (click)="like()">
-                          <ion-icon [ngClass]="{'color': h}" size="large" src="../../assets/images/heart.svg"></ion-icon>
-                          &nbsp;&nbsp;<span class="ion-text-lowercase">{{likes.count}}</span>
-                      </ion-button>
-                  </ion-col>
-                  <ion-col size="4">
-                      <ion-button fill="light" (click)="comments()">
-                          <ion-icon size="large" src="../../assets/images/comment.svg" ></ion-icon>
-                          &nbsp;&nbsp;<span class="ion-text-lowercase">55</span>
-                      </ion-button>
-                  </ion-col>
-                  <ion-col size="4">
-                      <ion-button fill="light" (click)="share()">
-                          <ion-icon style="width: 14.5px; padding-right: 0px;" size="large" src="../../assets/images/share.svg" ></ion-icon> 
-                          &nbsp;&nbsp;<span class="ion-text-lowercase"></span>
-                      </ion-button>
-                  </ion-col>
-              </ion-row>
-          </div>
-
-          <div class="line"></div>
-
-          <!-- LAST USER COMMENT -->
-          <div class="user-comment">
-
-              <div class="user-avatar">
-                  <ion-avatar>
-                      <img src="../../assets/images/bg.png" >
-                  </ion-avatar>
-              </div>
-              <div class="user-name-and-date">
-                  <div class="name">Maxime Lee</div>
-                  <div class="date">10 mins ago</div>
-              </div>
-
-              <div class="comment-container">
-                  <p class="comment">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati quidem nostrum nobis earum.
-                  </p>
-                  <div class="view-all-comments" (click)="comments()">View all comments</div>
-              </div>
-
-          </div>
-      </div><br>
-      <!-- END OF SECOND SOKO POST -->
-
-
-      <!-- THIRD SOKO POST -->
-      <div class="card">
-          <div class="header">
-              <div class="image" (click)="infoModal('QuickMatt')">
-                  <ion-avatar>
-                      <img src="../../assets/images/bg.png">
-                  </ion-avatar>
-              </div>
-              <div class="name" (click)="infoModal('QuickMatt')">
-                  Kakila
-              </div>
-              <div class="date">
-                  10 mins ago
-              </div>
-          </div>
-
-          <!-- MAIN IMAGE -->
-          <div class="main-image">
-              <img src="../../assets/images/ad.jpg" (click)="showImage()">
-          </div>
-
-          <!-- LIKE, COMMENT AND SHARE -->
-          <div class="like-comment-share">
-              <ion-row>
-                  <ion-col size="4">
-                      <ion-button fill="light" (click)="like()">
-                          <ion-icon [ngClass]="{'color': h}" size="large" src="../../assets/images/heart.svg"></ion-icon>
-                          &nbsp;&nbsp;<span class="ion-text-lowercase">{{likes.count}}</span>
-                      </ion-button>
-                  </ion-col>
-                  <ion-col size="4">
-                      <ion-button fill="light" (click)="comments()">
-                          <ion-icon size="large" src="../../assets/images/comment.svg" ></ion-icon>
-                          &nbsp;&nbsp;<span class="ion-text-lowercase">55</span>
-                      </ion-button>
-                  </ion-col>
-                  <ion-col size="4">
-                      <ion-button fill="light" (click)="share()">
-                          <ion-icon style="width: 14.5px; padding-right: 0px;" size="large" src="../../assets/images/share.svg" ></ion-icon> 
-                          &nbsp;&nbsp;<span class="ion-text-lowercase"></span>
-                      </ion-button>
-                  </ion-col>
-              </ion-row>
-          </div>
-
-          <div class="line"></div>
-
-          <!-- LAST USER COMMENT -->
-          <div class="user-comment">
-
-              <div class="user-avatar">
-                  <ion-avatar>
-                      <img src="../../assets/images/bg.png" >
-                  </ion-avatar>
-              </div>
-              <div class="user-name-and-date">
-                  <div class="name">Maxime Lee</div>
-                  <div class="date">10 mins ago</div>
-              </div>
-
-              <div class="comment-container">
-                  <p class="comment">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati quidem nostrum nobis earum.
-                  </p>
-                  <div class="view-all-comments" (click)="comments()">View all comments</div>
-              </div>
-
-          </div>
-      </div><br>
-      <!-- END OF THIRD SOKO POST -->
-
-  </div>
-  <!-- END OF SOKO POST -->
-
+    <ion-card class="card" *ngFor="let item of Posts">
+        <div class="header">
+            <div class="image" (click)="infoModal(item.shop,item.logo)">
+                <ion-avatar>
+                    <img src="{{item.logo}}">
+                </ion-avatar>
+            </div>
+            <div class="name" (click)="infoModal(item.shop,item.logo)">
+                {{item.shop}}
+            </div>
+            <div class="date">
+                10 mins ago
+            </div>
+        </div>
+        <!-- DESCRIPTION -->
+        <p class="description">
+        {{item.Text}}
+        </p>
   
+        <!-- MAIN IMAGE -->
+        <div class="main-image">
+          <ion-slides>
+            <ion-slide *ngFor="let n of item.Images">
+              <img src="{{n}}" (click)="showImage()">
+            </ion-slide>
+          </ion-slides>
+            
+        </div>
+  
+        <!-- LIKE, COMMENT AND SHARE -->
+        <div class="like-comment-share">
+            <ion-row>
+                <ion-col size="4">
+                    <ion-button fill="light" (click)="like()">
+                        <ion-icon [ngClass]="{'color': h}" size="large" src="../../assets/images/heart.svg"></ion-icon>
+                        &nbsp;&nbsp;<span class="ion-text-lowercase">{{item.likes}}</span>
+                    </ion-button>
+                </ion-col>
+                <ion-col size="4">
+                    <ion-button fill="light" (click)="comments()">
+                        <ion-icon size="large" src="../../assets/images/comment.svg" ></ion-icon>
+                        &nbsp;&nbsp;<span class="ion-text-lowercase">{{item.comments}}</span>
+                    </ion-button>
+                </ion-col>
+                <ion-col size="4">
+                    <ion-button fill="light" (click)="share()">
+                        <ion-icon style="width: 14.5px; padding-right: 0px;" size="large" src="../../assets/images/share.svg" ></ion-icon> 
+                        &nbsp;&nbsp;<span class="ion-text-lowercase"></span>
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+        </div>
+  
+        <div class="line"></div>
+  
+        <!-- LAST USER COMMENT -->
+        <div class="user-comment">
+            <div class="user-avatar">
+                <ion-avatar>
+                    <img src="{{item.lastComment.image}}">
+                </ion-avatar>
+            </div>
+            <div class="user-name-and-date">
+                <div class="name">{{item.lastComment.user}}</div>
+                <div class="date">10 mins ago</div>
+            </div>
+  
+            <div class="comment-container">
+                <p class="comment">
+                    {{item.lastComment.Text}}
+                </p>
+                <div class="view-all-comments" (click)="comments()">View all comments</div>
+            </div>
+  
+        </div>
+    </ion-card><br>
+  
+  </div>
+</ion-content>

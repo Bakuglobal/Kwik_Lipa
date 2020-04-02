@@ -13,3 +13,34 @@
 .shopname{
     text-transform: capitalize;
 }
+#title{
+    font-size: 1.7em;
+    color: grey;
+    // color: var(--ion-color-primary);
+    
+}
+ion-slides{
+    height: 300px;
+}
+.slide{
+    margin-top: 30px;
+    padding: 20px;
+    width: 100%;
+    ion-icon{
+        font-size: 10em;
+    }
+}
+
+#text{
+    position: absolute;
+    margin-top: 35px;
+    font-size: 1.5em;
+    color: grey;
+    text-align: center;
+    padding: 15px;
+}
+.swiper-container-horizontal.swiper-pagination-bullets, .swiper-pagination-custom, .swiper-pagination-fraction {
+    bottom: 0px;
+    left: 0;
+    width: 100%;
+}

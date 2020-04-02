@@ -10,7 +10,7 @@
   <ion-slides [options]="sliderOpts">
       <ion-slide>
           <div class="swiper-zoom-container" #slider>
-              <img src="../../assets/images/soko/big-basket-2.jpg" alt="">
+              <img [src]="url" alt="image">
           </div>
       </ion-slide>
   </ion-slides>
@@ -21,13 +21,13 @@
           <ion-col size="4">
               <ion-button fill="clear" color="light" (click)="like()">
                   <ion-icon [ngClass]="{'color': liked}" size="large" src="../../assets/images/heart.svg"></ion-icon>
-                  &nbsp;&nbsp;<span class="ion-text-lowercase">11</span>
+                  &nbsp;&nbsp;<span class="ion-text-lowercase">0</span>
               </ion-button>
           </ion-col>
           <ion-col size="4">
               <ion-button fill="clear" color="light" (click)="comments()">
                   <ion-icon size="large" src="../../assets/images/comment.svg" ></ion-icon>
-                  &nbsp;&nbsp;<span class="ion-text-lowercase">55</span>
+                  &nbsp;&nbsp;<span class="ion-text-lowercase">0</span>
               </ion-button>
           </ion-col>
           <ion-col size="4">

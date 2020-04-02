@@ -11,6 +11,9 @@ import { Platform } from '@ionic/angular';
 import { Product } from '../models/product';
 import { FirestoreService } from './firestore.service';
 import { Post } from '../models/post';
+import { Shops } from '../models/shops';
+import { Category} from '../models/categories';
+  import { from } from 'rxjs';
 export interface ShoppingList {
   Title: string,
   First: string,
@@ -272,10 +275,15 @@ export class DatabaseService {
   getUser() {
     return this.user;
   }
+  getproducts(shop){
+    return this.fs.collection(shop, ref => {
+      return ref.orderBy('currentprice', 'asc');
+    });
+  }
   // get disounted products
   getdiscountedProducts() {
     let prod = this.fs.collection<Product>('Kakila Organic', ref => {
-      return ref.where('currentprice', '<=', '150');
+      return ref.where('stock', '>', 0);
     });
     return prod.snapshotChanges().pipe(
       map(actions => {
@@ -287,10 +295,10 @@ export class DatabaseService {
       })
     )
   }
-  // get disounted products
+  // get featured products
   getFeaturedProducts() {
-    let prod = this.fs.collection<Product>('Penny Vintage', ref => {
-      return ref.orderBy('currentprice', 'asc');
+    let prod = this.fs.collection<Product>('Kipusa Beauty', ref => {
+      return ref.orderBy('currentprice','asc');
     });
     return prod.snapshotChanges().pipe(
       map(actions => {
@@ -302,7 +310,23 @@ export class DatabaseService {
       })
     )
   }
-  
-
+  getShopPhoneNumber(shop){
+    let obj = this.fs.collection<Shops>('shops', ref => {
+      return ref.where('shop','==',shop);
+    });
+   return  obj.snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data();
+          const id = a.payload.doc.id ;
+          return { id, ... data};
+        })
+      })
+    )
+  }
+  // get shop categories
+  getCategories(shop){
+    return this.fs.collection('Categories').doc<Category>(shop);
+  }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit , ViewChild, ElementRef} from '@angular/core';
+import { Component, OnInit , ViewChild, ElementRef, Input} from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
 import { Geolocation} from '@ionic-native/geolocation/ngx';
 import { OpenNativeSettings } from '@ionic-native/open-native-settings/ngx';
@@ -11,8 +11,10 @@ declare var google ;
   styleUrls: ['./sokomodal.page.scss'],
 })
 export class SokomodalPage implements OnInit {
+  @Input('shoplocation')shoplocation: string ;
+  @Input('shop') shop: any ;
   map;
-  shopLocation;
+  // shopLocation;
   @ViewChild('mapElement',{static: true}) mapElement:  ElementRef ;
 
   directionService = new google.maps.DirectionsService ;
@@ -50,7 +52,7 @@ calculateAndDisplayRoute(){
   const that = this ;
   this.directionService.route({
     origin: this.currentLocation,
-    destination: 'Nakumatt Mega',
+    destination: this.shoplocation,
     travelMode: 'WALKING'
   },( response , status) =>{
     if(status === 'OK'){
@@ -70,23 +72,23 @@ async alertController(){
         text: 'open settings',
         handler: ()=> {
           this.openSettings.open("location").then(val => {
-               this.ionViewWillEnter(); 
-            // this.geoLocation.getCurrentPosition().then((resp)=>{
-            //   this.currentLocation.lat =resp.coords.latitude ;
-            //   this.currentLocation.lng = resp.coords.longitude ;
-            // });
-            // const map =new google.maps.Map(this.mapElement.nativeElement, {
-            //   zoom: 8,
-            //   center: {lat: -1.3031934,lng: 36.5672003}
-            // });
-            // this.directionDisplay.setMap(map);
-            // this.calculateAndDisplayRoute(); 
+            this.geoLocation.getCurrentPosition().then((resp)=>{
+              this.currentLocation.lat =resp.coords.latitude ;
+              this.currentLocation.lng = resp.coords.longitude ;
+            });
+            const map =new google.maps.Map(this.mapElement.nativeElement, {
+              zoom: 8,
+              center: {lat: -1.3031934,lng: 36.5672003}
+            });
+            this.directionDisplay.setMap(map);
+            this.calculateAndDisplayRoute(); 
           })
         }
       }
     ]
 
-  })
+  });
+  await alt.present();
 }
   close(){
     this.modalCtrl.dismiss();

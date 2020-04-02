@@ -44,10 +44,15 @@ export class DiscountmodalPage implements OnInit {
     console.log(this.prepareCart());
   }
   add() {
+    
     this.count++;
   }
   reduce() {
+    if(this.count == 1){
+      // nothing
+    }else{
       this.count--;
+    }
   }
   prepareCart(){
     return {

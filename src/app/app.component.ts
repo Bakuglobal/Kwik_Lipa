@@ -25,6 +25,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { OneSignalService } from './OneSignal/one-signal.service';
 import { FCM } from '@ionic-native/fcm/ngx';
 import { Badge } from '@ionic-native/badge/ngx';
+import { app } from 'firebase';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -113,7 +115,8 @@ export class AppComponent {
     private notice: OneSignalService,
     private keyboard: Keyboard,
     private fcm: FCM,
-    private badge: Badge
+    private badge: Badge,
+    private location: Location
   ) {
 
     // Initiliaze APP
@@ -144,6 +147,7 @@ export class AppComponent {
       });
 
     }
+
 
   }
 
@@ -206,69 +210,8 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.statusBar.hide();
     });
-
-    //HIDE BOTTOM BANNER AD
-
-    this.platform.backButton.subscribe(async () => {
-      // close action sheet
-      try {
-        const element = await this.actionSheetCtrl.getTop();
-        if (element) {
-          element.dismiss();
-          return;
-        }
-      } catch (error) { }
-
-      // close popover
-      try {
-        const element = await this.popoverCtrl.getTop();
-        if (element) {
-          element.dismiss();
-          return;
-        }
-      } catch (error) { }
-
-      // close modal
-      try {
-        const element = await this.modalCtrl.getTop();
-        if (element) {
-          element.dismiss();
-          return;
-        }
-      } catch (error) {
-        console.log(error);
-      }
-
-      // close side menu
-      try {
-        const element = await this.menu.getOpen();
-        if (element !== null) {
-          this.menu.close();
-          return;
-        }
-      } catch (error) { }
-
-      this.routerOutlets.forEach(async (outlet: IonRouterOutlet) => {
-        if (outlet && outlet.canGoBack()) {
-          outlet.pop();
-        } else if (this.routerCtrl.url === '/tabs') {
-          if (
-            new Date().getTime() - this.lastTimeBackPress <
-            this.timePeriodToExit
-          ) {
-            this.service.hiddenTabs = true;
-            navigator['app'].exitApp(); // work for ionic 4
-          } else {
-            const toast = await this.toast.create({
-              message: 'Press back again to exit App.',
-              duration: 3000
-            });
-            toast.present();
-            this.lastTimeBackPress = new Date().getTime();
-          }
-        }
-      });
-    });
+    //  back button
+    this.backButtonEvent();
 
   }
   // open page on click an item in the side menu
@@ -302,6 +245,28 @@ export class AppComponent {
       let unreadNotice = Number(localStorage.getItem('noticeCount'));
       this.service.showNotice(unreadNotice);
     })
+  }
+  // active hardware back button
+  backButtonEvent() {
+    this.platform.backButton.subscribeWithPriority(666666,() => {
+      if(this.constructor.name === "Tab1Page" ||this.constructor.name ===  'LoginPage' ||this.constructor.name ===  'RegisterPage')
+      {
+        if(window.confirm('Do you want to exit the app'))
+        {
+          navigator["app"].exitApp();
+        }
+      }else {
+        this.location.back();
+      }
+    })
+  }
+  async toasted(msg) {
+    const ts = await this.toast.create({
+      message: msg,
+      duration: 2000,
+      position: 'middle'
+    });
+    ts.present();
   }
 
 }

@@ -10,6 +10,7 @@ import { User } from '../models/user';
 import { AppComponent } from '../app.component';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
 import { from } from 'rxjs';
+import { OneSignalService } from '../OneSignal/one-signal.service';
 
 
 @Component({
@@ -46,7 +47,8 @@ export class RegisterPage implements OnInit {
     public menuCtrl: MenuController,
     private fs: AngularFirestore,
     private app: AppComponent,
-    private inappBrowser: InAppBrowser
+    private inappBrowser: InAppBrowser,
+    private notice: OneSignalService
 
   ) 
   {
@@ -93,6 +95,7 @@ register(){
     this.fireApi.createUserProfile(this.data,res.user.uid).then(succ => {
       this.clear();
       this.app.getDetails(res.user.uid);
+      this.notice.sendTokenToFirebase(res.user.uid);
       this.loading.dismiss();
       this.navigation.navigate(["tabs/tab1"]);
     }).catch(

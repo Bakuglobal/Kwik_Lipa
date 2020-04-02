@@ -1,0 +1,148 @@
+
+<ion-content>
+  <div style="padding-bottom: 15px;">
+    <div class="back">
+      <ion-icon (click)="back()"  name="arrow-back" color="primary"></ion-icon>
+    </div>
+    <div *ngIf="data === undefined">
+      <ion-skeleton-text  animated style="width: 100%; object-fit: fill; height: 200px;border-radius: 0px;"></ion-skeleton-text>
+    </div>
+    <div >
+        <img src="{{data.cover}}"  alt="Cover image" style="width: 100%; object-fit: fill; height: 150px;">
+    </div>
+    <div>
+        <ion-avatar style="width: 60px; height: 60px; margin-top: -35px; margin-left: 25px;">
+            <img src="{{data.logo}}" style="object-fit: fill;">
+        </ion-avatar>
+    </div>
+    <div style="margin-top: 15px;line-height: 1;" class="ion-padding">
+        <div style="font-size: 15px; font-weight: bold;">{{data.shop}}</div><br>
+        <div *ngIf="data === undefined">
+          <br>
+          <ion-skeleton-text  animated style="width: 80%; object-fit: fill; height: 20px;"></ion-skeleton-text><br>
+          <ion-skeleton-text  animated style="width: 80%; object-fit: fill; height: 20px;"></ion-skeleton-text>
+        </div>
+        <div style="font-size: 13px; color: #636363; margin-top: 5px;"  *ngIf="shop !== undefined">
+            <a (click)="maps()">{{data.Location}} <ion-icon name="pin"></ion-icon></a> 
+        </div>
+        <div style="font-size: 13px; color: #636363; margin-top: 8px;"  *ngIf="data !== undefined">Open from {{data.Open}}&nbsp; - {{data.Close}}&nbsp; Mon - Sat</div>
+        <div style="font-size: 13px; color: #636363; margin-top: 8px;"  *ngIf="data !== undefined">Website: 
+            <a (click)="inbrowser(shop.Website)"  *ngIf="data !== undefined">{{data.Website}}</a>
+        </div>
+    </div>
+</div>
+<div style="margin-top: 20px;">
+  <ion-label class="ion-padding">What Would you like to do ?</ion-label><br>
+  <div class="ion-text-center" style="box-shadow: grey;background-color: var(--ion-color-light);">
+    <br>
+    <ion-row>
+      <ion-col size="3" (click)="scanAndPay()">
+        <div
+            style="width: 60px;height: 60px;margin: auto;position: relative;background-color: #00ade51c;border-radius: 100%;">
+            <img style="width: 40px;height: 40px;padding-top: 20px;padding-left: 5px;" src="/assets/scan2.svg">
+        </div>
+        <h2 style="font-size: 8pt;">Scan & Pay</h2>
+    </ion-col>
+    <ion-col size="3" (click)="pickPayCollect()">
+      <div
+          style="width: 60px;height: 60px;margin: auto;position: relative;background-color: #00ade51c;border-radius: 100%;">
+          <img style="width: 40px;height: 40px;padding-top: 20px;padding-left: 5px;" src="/assets/gift.svg">
+      </div>
+      <h2 style="font-size: 8pt;">Pay & Collect</h2>
+  </ion-col>
+  <ion-col size="3" (click)="Delivery()">
+    <div
+        style="width: 60px;height: 60px;margin: auto;position: relative;background-color: #00ade51c;border-radius: 100%;">
+        <img style="width: 40px;height: 40px;padding-top: 20px;padding-left: 5px;" src="/assets/parcel.svg">
+    </div>
+    <h2 style="font-size: 8pt;">Buy for Delivery</h2>
+</ion-col>
+<ion-col size="3" (click)="pickPayCollect()">
+  <div
+      style="width: 60px;height: 60px;margin: auto;position: relative;background-color: #00ade51c;border-radius: 100%;">
+      <img style="width: 40px;height: 40px;padding-top: 20px;padding-left: 5px;" src="/assets/price.svg">
+  </div>
+  <h2 style="font-size: 8pt;">Our products</h2>
+</ion-col>
+    </ion-row>
+  </div>
+</div>
+<div class="page-content"><br>
+
+  <ion-card class="card" *ngFor="let item of Posts">
+      <div class="header">
+          <div class="image" (click)="infoModal(item.shop,item.logo)">
+              <ion-avatar>
+                  <img src="{{item.logo}}">
+              </ion-avatar>
+          </div>
+          <div class="name" (click)="infoModal(item.shop,item.logo)">
+              {{item.shop}}
+          </div>
+          <div class="date">
+              10 mins ago
+          </div>
+      </div>
+      <!-- DESCRIPTION -->
+      <p class="description">
+      {{item.Text}}
+      </p>
+
+      <!-- MAIN IMAGE -->
+      <div class="main-image">
+        <ion-slides>
+          <ion-slide *ngFor="let n of item.Images">
+            <img src="{{n}}" (click)="showImage()">
+          </ion-slide>
+        </ion-slides>
+          
+      </div>
+
+      <!-- LIKE, COMMENT AND SHARE -->
+      <div class="like-comment-share">
+          <ion-row>
+              <ion-col size="4">
+                  <ion-button fill="light" (click)="like()">
+                      <ion-icon [ngClass]="{'color': h}" size="large" src="../../assets/images/heart.svg"></ion-icon>
+                      &nbsp;&nbsp;<span class="ion-text-lowercase">{{item.likes}}</span>
+                  </ion-button>
+              </ion-col>
+              <ion-col size="4">
+                  <ion-button fill="light" (click)="comments()">
+                      <ion-icon size="large" src="../../assets/images/comment.svg" ></ion-icon>
+                      &nbsp;&nbsp;<span class="ion-text-lowercase">{{item.comments}}</span>
+                  </ion-button>
+              </ion-col>
+              <ion-col size="4">
+                  <ion-button fill="light" (click)="share()">
+                      <ion-icon style="width: 14.5px; padding-right: 0px;" size="large" src="../../assets/images/share.svg" ></ion-icon> 
+                      &nbsp;&nbsp;<span class="ion-text-lowercase"></span>
+                  </ion-button>
+              </ion-col>
+          </ion-row>
+      </div>
+
+      <div class="line"></div>
+
+      <!-- LAST USER COMMENT -->
+      <div class="user-comment">
+          <div class="user-avatar">
+              <ion-avatar>
+                  <img src="{{item.lastComment.image}}">
+              </ion-avatar>
+          </div>
+          <div class="user-name-and-date">
+              <div class="name">{{item.lastComment.user}}</div>
+              <div class="date">10 mins ago</div>
+          </div>
+
+          <div class="comment-container">
+              <p class="comment">
+                  {{item.lastComment.Text}}
+              </p>
+              <div class="view-all-comments" (click)="comments()">View all comments</div>
+          </div>
+      </div>
+  </ion-card><br>
+</div>
+</ion-content>

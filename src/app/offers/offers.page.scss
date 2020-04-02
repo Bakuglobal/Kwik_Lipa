@@ -37,7 +37,41 @@ hr {
     background-color: rgb(241, 238, 238); 
     height: 2px;
 }
+.cat{
+    font-size: 0.6em;
+    padding-top: 25px;
+    width: 50px;
+}
+.prTag{
+    text-align: center;
+    position: absolute;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 100% ;
+    bottom: 0px;
+    background-color: var(--ion-color-primary);
+    #lb{
+        border-radius: 10px;
+        font-weight: bold;
+        color: var(--ion-color-primary);
+        width: 85%;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-left: 30px;
+        padding-right: 30px;
+        background-color: white;
+    }
+}
+.pr-name{
+    font-weight: bold; 
+    font-size: 1.1em;
+    text-transform: capitalize;
+}
+.pr-price{
+    font-size: .8em;
+    color: grey;
 
+}
 
 // FEATURED PRODUCTS
 .featured-products {

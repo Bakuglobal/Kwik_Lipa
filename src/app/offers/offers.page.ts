@@ -7,6 +7,8 @@ import { DatabaseService } from '../services/database.service';
 import { CPage } from '../c/c.page';
 import { Location } from '@angular/common';
 import { THIS_EXPR, ThrowStmt } from '@angular/compiler/src/output/output_ast';
+import { Category } from '../models/categories';
+import { Product } from '../models/product';
 // import { Observable } from 'rxjs';
 // import { AdMobFree } from '@ionic-native/admob-free/ngx';
 
@@ -34,17 +36,17 @@ export class OffersPage implements OnInit {
 
   shopSelected: any;
   offers = [];
-  UnfilteredOffers = [];
+  UnfilteredOffers :Product [];
   cart = [];
   showLoader = false;
   count = 0;
   showSearch = false;
   searchTerm: string;
   docID = [];
-
+  skeleton = [1,2,3,4,5];
+  category: string  = 'All';
+  categories = [] ;
   productCollection: AngularFirestoreCollection<product>;
-  // products: Observable<product[]>;
-
 
   constructor(
     public fireApi: FirestoreService,
@@ -54,11 +56,12 @@ export class OffersPage implements OnInit {
     private toastCtrl: ToastController,
     public db: DatabaseService,
     private modal: ModalController,
-    private location: Location,
-    private nav: NavController
+    private nav: NavController,
+    private location: Location
   ) {
 
-    console.log('shop name -- ' + this.shopSelected)
+    console.log('shop name -- ' + this.shopSelected);
+    this.fireApi.hiddenTabs = true ;
 
   }
   ngOnInit() {
@@ -67,15 +70,36 @@ export class OffersPage implements OnInit {
 
   ionViewWillEnter() {
     this.showShop();
-    this.productCollection = this.fs.collection(this.shopSelected, ref => {
-      return ref.orderBy('currentprice', 'asc');
-    })
-    this.productCollection.valueChanges().subscribe(res => {
+    // this.productCollection = this.fs.collection(this.shopSelected, ref => {
+    //   return ref.orderBy('currentprice', 'asc');
+    // })
+    this.db.getproducts(this.shopSelected).valueChanges().subscribe(res => {
       this.offers = res;
       this.UnfilteredOffers = res;
     })
-    console.log('products' + this.offers);
-
+    console.log('products' + this.UnfilteredOffers);
+    
+    this.db.getCategories(this.shopSelected).valueChanges().subscribe(res => {
+      this.categories = res.categories ;
+      console.log(this.categories);
+    });
+    this.category = 'All' ;
+  }
+  filterCategory(){
+    console.log(this.category);
+    if(this.category === "All"){
+      console.log(this.category);
+      this.offers = this.UnfilteredOffers ;
+    }else {
+      console.log('unfiltered',this.UnfilteredOffers);
+      this.offers  = this.filtercat();
+    }
+  }
+  filtercat(){
+    return this.UnfilteredOffers.filter(item => {
+      console.log(item.category);
+      return item.category.toLowerCase().indexOf(this.category.toLowerCase()) > -1;
+    });
   }
 
   // searchbar
@@ -99,44 +123,11 @@ export class OffersPage implements OnInit {
     });
   }
 
-  //add items to the cart
-  contains(a, obj) {
-    if (a.length === 0) {
-      let mod = obj;
-      mod.count = 1;
-      this.cart.push(mod);
-      this.count = this.fireApi.getCount();
-      this.count++;
-      this.fireApi.setCount(this.count);
-      console.log('Cart --> ', (this.cart));
-      this.toast('Product added To cart');
-    }else {
-      for (var i = 0; i < a.length; i++) {
-        console.log('kkk');
-        if (a[i].product === obj.product) {
-          console.log(a[i].product,obj.product);
-          a[i].count++;
-          let ct = this.count++;
-          this.count = ct;
-          this.fireApi.setCount(ct);
-          console.log(this.cart);
-        } else {
-          console.log('frg')
-          let mod = obj;
-          mod.count = 1;
-          this.cart.push(mod);
-          this.count = this.fireApi.getCount();
-          this.count++;
-          this.fireApi.setCount(this.count);
-          console.log('Cart --> ', (this.cart));
-          this.toast('Product added To cart');
-        }
-      }
-    }
-  }
   addToCart(item) {
     // this.contains(this.cart, item);
     this.db.addCart(item);
+    this.toast('Product added To cart');
+
   }
   // go to home page
 
@@ -144,8 +135,12 @@ export class OffersPage implements OnInit {
     this.offers.length = 0;
     this.cart.length = 0;
     this.fireApi.setCount(0);
+    this.categories.length = 0 ;
+    this.UnfilteredOffers.length = 0 ;
     this.fireApi.hiddenTabs = false;
-    this.navCtrl.navigate(['tabs/tab1']);
+    this.fireApi.shareShopBy('shopBy');
+    this.location.back();
+    // this.navCtrl.navigate(['tabs/tab1']);
   }
 
 
@@ -163,7 +158,7 @@ export class OffersPage implements OnInit {
     const toast = await this.toastCtrl.create({
       message: data,
       duration: 1000
-    })
+    });
     await toast.present();
   }
 

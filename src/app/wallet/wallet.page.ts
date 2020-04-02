@@ -79,16 +79,19 @@ export class WalletPage implements OnInit {
   }
 
   getShops() {
-    this.fireApi
-      .getShops()
-      .snapshotChanges()
-      .pipe(map(changes => {
-        return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-      }))
-      .subscribe(shops => {
-        this.shops = shops;
-        console.log(this.shops);
-      });
+    this.fireApi.getShops().valueChanges().subscribe(res => {
+      this.shops = res ;
+    });
+    // this.fireApi
+    //   .getShops()
+    //   .snapshotChanges()
+    //   .pipe(map(changes => {
+    //     return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+    //   }))
+    //   .subscribe(shops => {
+    //     this.shops = shops;
+    //     console.log(this.shops);
+    //   });
 
   }
 

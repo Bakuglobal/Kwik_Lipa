@@ -27,13 +27,24 @@
     text-align: center;
     border-radius: 25px;
   }
-  
+  .tags{
+      padding-top: 10px;
+      padding-bottom: 10px;
+      color: var(--ion-color-primary);
+  }
   .shop-img {
-    width: 65%;
-    height: 65%;
+    width: 45%;
+    height: 45%;
     margin: 5% auto;
     object-fit: contain;
     object-position: center;
+  }
+  
+  .shops-title {
+      font-weight: bold;
+      color: #666666;
+      font-size: 13px;
+      margin-top: -3%;
   }
   .header{
     width:100%;
@@ -167,7 +178,7 @@
       h2{
           margin-top: 5px;
           text-align: center;
-          font-size: 13px;
+          font-size: 8px;
           font-weight: bold;
           color: grey;
       }
@@ -276,8 +287,8 @@
       }
       .soko-content {
           padding-top: 5px; 
-          padding-left: 10px; 
-          padding-right: 10px;
+        //   padding-left: 10px; 
+        //   padding-right: 10px;
           .soko-image {
               width: 100%; 
               height: 250px;
@@ -286,6 +297,14 @@
               
           }
       }
+  }
+  .donate{
+    background-color: white; 
+    // padding: 10px;
+    margin: auto;
+    text-align: center;
+    width: 100%;
+
   }
   
   
@@ -321,6 +340,26 @@
           margin-top: -5px; 
           padding-left: 0px; 
           padding-right: 0px;
+      }
+  }
+  .prTag{
+      text-align: center;
+      position: absolute;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      width: 100% ;
+      bottom: 0px;
+      background-color: var(--ion-color-primary);
+      #lb{
+          border-radius: 10px;
+          font-weight: bold;
+          color: var(--ion-color-primary);
+          width: 80%;
+          padding-top: 5px;
+          padding-bottom: 5px;
+          padding-left: 50px;
+          padding-right: 50px;
+          background-color: white;
       }
   }
   .pr-name{

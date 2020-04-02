@@ -74,6 +74,7 @@ const routes: Routes = [
       {path : 'shop', loadChildren: () => import ('../shop/shop.module').then(m => m.ShopPageModule)},
       {path: 'cart', loadChildren: () => import ('../cart/cart.module').then(m=>m.CartPageModule),canActivate : [AuthService]},
       { path: 'c', loadChildren: () => import('../c/c.module').then(m => m.CPageModule), canActivate : [AuthService] },
+      { path: 'shopprofile', loadChildren: () => import('../shopprofile/shopprofile.module').then(m => m.ShopprofilePageModule)},
       { path: 'forgot-password', loadChildren:() => import('../forgot-password/forgot-password.module').then(m  => m.ForgotPasswordPageModule)},
       { path: 'recommend' , loadChildren:() => import('../recommend/recommend.module').then(m => m.RecommendPageModule), canActivate: [AuthService]},
       { path: 'ipaytransmodal', loadChildren:() => import('../modal/ipaytransmodal/ipaytransmodal.module').then(m => m.IpaytransmodalPageModule), canActivate: [AuthService]},

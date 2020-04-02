@@ -74,6 +74,12 @@ export class CartPage implements OnInit {
         this.hour.push(i);
       }
     }
+    this.fireApi.serviceshopBy.subscribe(data  => {
+      if(data == 'delivery'){
+        this.delivery = 'Deliver it to me' ;
+        this.noPickUpTime = true ;
+      }
+    })
 
   }
 
@@ -194,7 +200,8 @@ export class CartPage implements OnInit {
         "DeliveryFee": this.deliveryFee,
         "Location": this.selectedarea,
         "userID": localStorage.getItem('userID'),
-        "pickDay": "Today"
+        "pickDay": "Today",
+        "paid":"False"
       }
       this.fs.collection('Orders').doc(id).set(data).catch(err => {console.log(err)})
       this.Ordersuccess = true;
@@ -226,6 +233,7 @@ export class CartPage implements OnInit {
           "Delivery": this.delivery,
           "DeliveryFee": this.deliveryFee,
           "userID": localStorage.getItem('userID'),
+          "paid": "False"
         }
 
         this.fs.collection('Orders').doc(id).set(data).catch(err => {console.log(err)})
@@ -258,6 +266,7 @@ export class CartPage implements OnInit {
   //back to the previous page
 
   back() {
+    this.fireApi.shareShopBy('shopBy');
     this.location.back();
   }
   //remove item from cart
@@ -304,7 +313,6 @@ export class CartPage implements OnInit {
           role: 'cancel',
         },
       ]
-
     })
     alert.present();
   }

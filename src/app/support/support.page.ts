@@ -8,6 +8,7 @@ import { LoadingController, ToastController } from "@ionic/angular";
 import { timeout } from 'rxjs/operators';
 import { timer } from 'rxjs';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 // import { AdMobFree } from "@ionic-native/admob-free/ngx";
 
 @Component({
@@ -33,15 +34,20 @@ export class SupportPage implements OnInit {
     public fireApi: FirestoreService,
     public loadingController: LoadingController,
     public toastController: ToastController,
-    private navCtrl: Router
+    private navCtrl: Router,
+    private location: Location
     // private admobFree: AdMobFree
   )
    {
-    // this.fireApi.hiddenTabs = true ;
+    this.fireApi.hiddenTabs = true ;
   }
  // notifications page
  notifications(){
   this.navCtrl.navigate(['tabs/notifications']);
+}
+back(){
+this.fireApi.hiddenTabs = false ;
+this.location.back();
 }
 
   ngOnInit() {
@@ -52,9 +58,7 @@ export class SupportPage implements OnInit {
     // this.removeBannerAd();
     this.checkmsg();
   }
-  // removeBannerAd(){
-  //   this.admobFree.banner.remove();
-  // }
+
 //check if no msg
 checkmsg(){
   console.log(this.message);
@@ -65,6 +69,7 @@ checkmsg(){
 
   submit() {
     //this.presentLoading();
+    if(this.data.message === '' || this.data.message === ' '){this.presentToast('Can`t send Empty message');return ;}
     this.fireApi.sendSupport(this.data).then(
       resp => {
        // this.loading.dismiss();

@@ -1,72 +1,100 @@
 <ion-header color="primary">
-  <ion-toolbar color="primary" >
-      <ion-buttons slot="start">
-          <ion-button (click)="back()">
-            <ion-icon name="arrow-round-back"></ion-icon>
-            
-          </ion-button>
-      </ion-buttons>
-      <ion-buttons slot="end">
-        <ion-button (click)="sendCart()" >
-          <ion-icon size="large" name="cart"></ion-icon>
-          <ion-badge color="light">{{db.getCartCount()}}</ion-badge>
-        </ion-button>
-      </ion-buttons>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">
+        <ion-icon name="arrow-round-back"></ion-icon>
+
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="sendCart()">
+        <ion-icon size="large" name="cart"></ion-icon>
+        <ion-badge color="light">{{db.getCartCount()}}</ion-badge>
+      </ion-button>
+    </ion-buttons>
     <ion-title class="shopname">{{shopSelected}}</ion-title>
-   
+
   </ion-toolbar>
- 
+
 </ion-header>
 
-<ion-content >
+<ion-content>
+
+  <ion-item class="top">
+    <span *ngIf="!showSearch" style="font-size: 13px;padding-left: 40%;">Pay and Collect</span>
+    <ion-searchbar placeholder="Enter product name" *ngIf="showSearch" [(ngModel)]="searchTerm"
+      (ionChange)="setFilteredItems()"></ion-searchbar>
+    <ion-icon name="search" slot="end" (click)="showSearchBar()"></ion-icon>
+  </ion-item>
+  <div>
+    <div class="ion-padding">
+      <ion-label>Categories</ion-label>
+    </div>
+    <ion-segment scrollable [(ngModel)]="category" *ngIf="categories.length > 0" (ionChange)="filterCategory()">
+      <ion-label></ion-label>
+      <ion-segment-button selected value="All">
+        <ion-label>All</ion-label>
+      </ion-segment-button>
+      <ion-segment-button *ngFor="let item of categories" value="{{item}}">
+        <ion-label>{{item}}</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+    <ion-segment scrollable *ngIf="categories.length == 0" [(ngModel)]="category">
+      <ion-label></ion-label>
+      <ion-segment-button selected value="All">
+        <ion-label>All</ion-label>
+      </ion-segment-button>
+      <ion-segment-button *ngFor="let item of skeleton" value="{{item}}">
+        <ion-skeleton-text style="width: 100px;height: 20px;"></ion-skeleton-text>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+
+
+  <div style="text-align: center;margin-top: 40%; margin-left: 10px; margin-right: 20px; font-size: 13px;"
+    *ngIf="offers.length == 0">
+    <ion-label>Sorry !</ion-label><br>
+    <ion-label>No products found from this Category</ion-label>
+  </div>
+
+  <!-- show spinner when loading product on offers -->
+
+  <div class="loader" *ngIf="offers.length == 0 ">
+    <ion-spinner name="lines" color="primary"></ion-spinner>
+  </div>
+
+  <!-- Display a list of products on offer -->
+
+  <!-- FEATURED PRODUCTS -->
+  <div  *ngIf="offers.length > 0">
+    <ion-row>
+      <ion-col size="6" *ngFor="let item of offers">
+        <ion-card  style="height: 280px;" >
+          <div>
+            <!-- <div *ngIf="item.stock == 0" class="soldTag">
+              <ion-label color="danger">OUT OF STOCK</ion-label>
+            </div> -->
+            <!-- <ion-button expand="full"
+                style="height: 25px; width: 40px; position: absolute; top: 5px; right: 0px;border-radius: 10px 0px 0px 10px;">
+                <div style="font-size: 11px;">-20%</div>
+            </ion-button> -->
+          </div>
+          <img style="height: 150px;" src="{{item.image}}" (click)="viewProduct(item)">
+          <ion-card-content>
+            <ion-label class="pr-name">{{item.product}}</ion-label><br>
+            <ion-label class="pr-price">Ksh {{item.currentprice}}</ion-label><br>
+
+          </ion-card-content>
+          <div class="prTag">
+            <ion-label id="lb" (click)="addToCart(item)" >Add to Cart
+            </ion-label>
+          </div>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
   
-    <ion-item class="top">
-      <span *ngIf="!showSearch"  style="font-size: 13px;padding-left: 40%;">Pick Pay and Collect</span>
-      <ion-searchbar placeholder="Enter product name" *ngIf="showSearch" [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()"></ion-searchbar>
-      <ion-icon name="search" slot="end" (click)="showSearchBar()"></ion-icon>
-    </ion-item>
-
-   
-
-    <div style="text-align: center;margin-top: 40%; margin-left: 10px; margin-right: 20px; font-size: 13px;" *ngIf="offers.length == 0" >
-      <ion-label>Sorry</ion-label><br>
-      <ion-label>This shop does not offer the Pick pay and collect service</ion-label>
-    </div>
-
-<!-- show spinner when loading product on offers -->
-
-    <div class="loader" *ngIf="offers.length == 0 && shopSelected == 'Kakila Organic'">
-      <ion-spinner name="lines" color="primary"></ion-spinner>
-    </div>
-
-<!-- Display a list of products on offer -->
-
-    <!-- FEATURED PRODUCTS -->
-    <div class="featured-products" *ngIf="offers.length > 0">
-      
-      <div class="featured-products-content" >
-          <ion-row >
-              <ion-col class="featured-products-content-card" size="6" *ngFor="let item of offers" [ngClass]="{'soldout': item.stock == 0}">
-                  <div class="featured-products-content-card-image">
-                    <div *ngIf="item.stock == 0" class="soldTag">
-                      <ion-label color="danger">OUT OF STOCK </ion-label>
-                  </div>
-                      <img src="{{item.image}}" (click)="viewProduct(item)">
-                  </div>
-                  <div class="featured-products-content-card-content">
-                      <div class="featured-products-content-card-content-title"padding>{{item.product}} {{item.quantity}}</div>
-                      <ion-row class="featured-products-content-card-content-description" padding>
-                          <ion-col size="">Ksh {{item.currentprice}}</ion-col>
-                      </ion-row>
-                      <ion-row style="width: 100%;">
-                        <ion-col size="12">
-                          <ion-button expand="full" (click)="addToCart(item)" [disabled]="item.stock == 0">Add to cart</ion-button>
-                        </ion-col>
-                      </ion-row>
-                  </div>
-              </ion-col>
-          </ion-row>
-      </div>
   </div>
   <!-- END OF FEATURED PRODUCTS -->
 

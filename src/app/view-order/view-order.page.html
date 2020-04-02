@@ -6,9 +6,9 @@
     </ion-buttons>
   </ion-toolbar>
   <div class="body">
-    <h4>Ordered to {{shop}}</h4>
+    <h4>Ordered to {{shop}} &nbsp;&nbsp;&nbsp;&nbsp; <ion-icon name="call" color="success" (click)="callShop()"></ion-icon></h4> 
     <ion-row  class="top" padding>
-      <ion-col>
+      <ion-col >
         Product
       </ion-col>
       <ion-col>
@@ -55,35 +55,28 @@
       <ion-col>
       <h4 style="text-align: center;" color="primary">Delivery Options</h4>
       <p ><strong>
-        {{Delivery}}
+       Deliver it to {{Location}}
       </strong>
       </p>
     </ion-col>
     </ion-row>
   </div>
-  <div *ngIf="status === 'canceled'">
-    <ion-label padding>You canceled this Order</ion-label>
+   <ion-item class="top">
+      <ion-label slot="start" class="left">Total:</ion-label>
+     <ion-label slot="end" class="right">Ksh: &nbsp;<span>{{getTotal()}}</span></ion-label>
+   </ion-item>
   </div>
-    <!-- <ion-row>
-      <ion-col class="bottom">
-        <ion-label>Total Items</ion-label>
-        <span style="font-size: 1.8em;">0</span>
-      </ion-col>
-      <ion-col class="bottom">
-        Ksh. <span style="font-size: 1.8em;">0.00</span>
-      </ion-col>
-    </ion-row> -->
+  <br><br>
+  <div *ngIf="status === 'canceled'" class="ion-text-center">
+    <ion-label   color="danger">You canceled this Order</ion-label>
   </div>
+  
 </ion-content>
-<ion-footer *ngIf="status == 'open'">
+<ion-footer *ngIf="status == 'Ready'||status == 'open'">
+  <div class="ion-padding ion-text-center"><ion-label color="danger" *ngIf="status == 'Ready'">This Order is Ready.You can't cancel it</ion-label></div>
   <ion-row > 
-    <!-- <ion-col >
-      <ion-card color="success" padding text-center disabled>
-        <ion-label>Pay Now</ion-label>
-      </ion-card>
-    </ion-col> -->
     <ion-col >
-      <ion-card color="warning" padding text-center (click)="confirm()">
+      <ion-card color="warning" padding text-center (click)="confirm()" [disabled]="status == 'Ready'">
         <ion-label>Cancel Order</ion-label>
       </ion-card>
     </ion-col>

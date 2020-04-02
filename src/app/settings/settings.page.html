@@ -30,7 +30,7 @@
       </ion-item>
       <ion-item>
         <ion-select placeholder="select a Shop" [(ngModel)]="shopSelected" slot="start">
-          <ion-select-option *ngFor="let shop of shops" style="font-size: small;">{{shop.name}}</ion-select-option>
+          <ion-select-option *ngFor="let shop of shops" style="font-size: small;">{{shop.shop}}</ion-select-option>
         </ion-select>
         <span slot="end"
           style="font-size: 1.7em;font-weight: bold;color: var(--ion-color-primary);">{{wallet | number:'1.1-5'}}</span>

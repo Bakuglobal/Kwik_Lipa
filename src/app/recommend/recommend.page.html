@@ -7,7 +7,7 @@
       </ion-buttons>
     </ion-toolbar>
     <div class="ion-padding budget">
-      Your Budget for this list is Kshs <span>{{budget}}.</span><br><br>
+      Your Budget for this list is Kshs <span >{{budget}}.</span> &nbsp;&nbsp;<ion-label (click)="back()" class="chBtn">&nbsp;Change&nbsp;</ion-label> <br><br>
       Your Current location is <span>here</span><br><br>
       We recommend the following places to shop from.
     </div>
@@ -29,8 +29,8 @@
           <ion-col size="6" *ngFor="let shop of shops | slice:0:4" (click)="selectShop(shop)">
 
             <div class="partion">
-              <img src="{{shop.file}}" class="shop-img">
-              <h5 class="shops-title" style="text-transform: uppercase">{{shop.name}} </h5>
+              <img src="{{shop.logo}}" class="shop-img">
+              <h5 class="shops-title" style="text-transform: uppercase">{{shop.shop}} </h5>
             </div>
           </ion-col>
         </ion-row>
@@ -46,36 +46,33 @@
             </div>
         </div><br>
       </div>
-      <div class="featured-products-content">
-        <ion-row>
-          <!-- FIRST ROW OF PRODUCTS -->
-          <ion-slides pager="false" [options]="DiscountslideOpts">
-            <ion-slide *ngFor="let n of discontedProducts | slice:0:discontedProducts.length/2 let i=index ">
-              <ion-col class="featured-products-content-card" [ngClass]="{'soldout': item.stock == 0}"
-                *ngFor="let item of discontedProducts | slice:discontedProducts.indexOf(n):discontedProducts.indexOf(n)+2 "
-                >
-                <div class="featured-products-content-card-image">
-                  <div *ngIf="item.stock == 0" class="soldTag">
-                    <ion-label color="danger"> SOLD OUT </ion-label>
-                  </div>
-                  <img class="product-image" src="{{item.image}}">
-                  <ion-skeleton-text style="height: 100px;width: 100px;" *ngIf="!item.image">
-                  </ion-skeleton-text>
-                </div>
-                <div class="featured-products-content-card-content">
-                  <div class="featured-products-content-card-content-title">{{item.product}}</div>
-                  <ion-row class="featured-products-content-card-content-description">
-                    <ion-col size="6">Ksh {{item.currentprice}}</ion-col>
-                    <ion-col size="6" style="direction: rtl;"><s>Ksh {{item.currentprice * 1.2}}</s>
-                    </ion-col>
-                  </ion-row>
-                </div>
-              </ion-col>
-
-            </ion-slide>
-          </ion-slides>
-        </ion-row>
-      </div>
+    <ion-slides pager="false" [options]="slideme">
+        <ion-slide  *ngFor="let item of discontedProducts " (click)="gotoDiscountModal(item)">
+            <ion-card  style="width: 400px;height: 280px;">
+                    <div>
+                        <div *ngIf="item.stock == 0" class="soldTag">
+                            <ion-label color="danger">OUT OF STOCK</ion-label>
+                        </div>
+                        <ion-button expand="full"
+                            style="height: 25px; width: 40px; position: absolute; top: 5px; right: 0px;border-radius: 10px 0px 0px 10px;">
+                            <div style="font-size: 11px;">-20%</div>
+                        </ion-button>
+                    </div>
+            <img  style="height: 150px;" src="{{item.image}}">
+            <ion-card-content >
+                <ion-label class="pr-name">{{item.product}}</ion-label><br>
+                <ion-label class="pr-price">{{item.shop}}</ion-label><br>
+                
+            </ion-card-content>
+            <div class="prTag">
+                <ion-label id="lb" >K E S {{item.currentprice}}
+                </ion-label>
+            </div>
+            <br>
+            <ion-label style="height: 30px;"></ion-label>
+        </ion-card>
+        </ion-slide>
+    </ion-slides>
     </div>
   </div>
 </ion-content>

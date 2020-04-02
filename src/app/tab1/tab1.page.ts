@@ -3,7 +3,6 @@ import { Shops } from '../models/shops';
 import { FirestoreService } from '../services/firestore.service';
 import 'rxjs/add/operator/map';
 import 'rxjs/Rx';
-import { map } from 'rxjs/operators';
 import { User } from '../models/user';
 import { Router } from '@angular/router';
 import { DatabaseService } from '../services/database.service';
@@ -14,6 +13,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { IonSlides } from '@ionic/angular';
 import { DiscountmodalPage } from '../discountmodal/discountmodal.page';
 import { Badge } from '@ionic-native/badge/ngx';
+import { ADs } from '../models/ads';
 
 
 @Component({
@@ -47,12 +47,14 @@ export class Tab1Page implements OnInit {
   heading = false ;
   Name = '' ;
   featuredProducts = [] ;
+  skeleton = [1,2,3,4,5];
   slideme = {
     initialSlide: 0,
     speed: 500,
-    autoplay: false,
-    slidesPerView: 1.7
+    autoplay: true,
+    slidesPerView: 1.7,
   }
+  ads: ADs[] ;
 
   constructor(
     private platform: Platform,
@@ -117,12 +119,13 @@ export class Tab1Page implements OnInit {
       console.log(res);
     })
     // check for unread notices
-   
-    
+    this.getAds();
+    this.getShops();
   }
 
   onIonViewDidLoad() {
     this.selectShop = false;
+   
   }
   gotoShop(shop){
     this.fireApi.changeData(shop);
@@ -172,9 +175,15 @@ export class Tab1Page implements OnInit {
     this.navCtrl.navigate(['tabs/selectshop']);
   }
   // goto shoppinglist page
-  shoppingList() {
+  Delivery() {
     this.fireApi.hiddenTabs = true;
-    this.navCtrl.navigate(['tabs/mycontacts'])
+    this.fireApi.shareShopBy('delivery');
+    this.navCtrl.navigate(['tabs/selectshop']);
+  }
+  // go to shops page
+  Showshops(){
+    // this.fireApi.shareShopBy('pick');
+    this.navCtrl.navigate(['tabs/selectshop']);
   }
   // an alert for network info
   async msgNetwork() {
@@ -222,6 +231,22 @@ export class Tab1Page implements OnInit {
     console.log(item);
     await mod.present();
   }
+
+  getAds(){
+    this.fireApi.getAds().subscribe(res => {
+      this.ads = res ;
+    })
+  }
+  getShops() {
+    console.log('==========')
+    this.fireApi.getShops().valueChanges()
+    .subscribe(res => {
+      this.shops = res ;
+      this.unfilteredShops = res ;
+      console.log('shops',this.shops);
+    });
+  }
+  
 }
 
 

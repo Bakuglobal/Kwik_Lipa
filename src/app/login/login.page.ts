@@ -75,9 +75,6 @@ export class LoginPage implements OnInit {
   ngOnInit() {
     this.service.hiddenTabs = true ;
   }
-
- 
-           
  // hide password btn
       
         hideShowPassword() {
@@ -114,8 +111,7 @@ export class LoginPage implements OnInit {
           );
         }
         next(resp) {
-          // localStorage.setItem('userEmail', resp.email);
-          // localStorage.setItem('userName', resp.name);
+         
           const id = resp.user.uid ;
           localStorage.setItem('userID',id);
           this.unreadNotices(id);
@@ -127,9 +123,7 @@ export class LoginPage implements OnInit {
           // this.navCtrl.navigate(['tabs/tab1']);
           this.location.back();
         }
-
 // Loaders
-
       async presentLoading() {
         this.loading = await this.loadingController.create({
           message: 'Wait ...'

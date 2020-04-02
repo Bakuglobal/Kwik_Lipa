@@ -25,8 +25,35 @@
   </ion-card> -->
 
 <div *ngIf="myCart.length == 0" padding>
+  <ion-label id="title">How to scan and pay ?</ion-label>
+
+    <ion-slides pager="true" [options]="slider" #slidevw (ionSlideDidChange)="slideChanged()" >
+      <ion-slide class="slide">
+        <img src="../../assets/tapscan.png">
+      </ion-slide>
+      <ion-slide class="slide">
+        <ion-icon color="primary" src="../../assets/smartphone.svg"></ion-icon>
+      </ion-slide>
+      <ion-slide class="slide">
+        <ion-icon  color="primary" src="../../assets/submit.svg"></ion-icon>
+      </ion-slide>
+      <ion-slide class="slide">
+        <ion-icon  color="primary" src="../../assets/travel.svg"></ion-icon>
+      </ion-slide>
+      <ion-slide class="slide">
+        <ion-icon color="primary" src="../../assets/success.svg"></ion-icon>
+        
+      </ion-slide>
+    </ion-slides>
+    <div>
+      <ion-text id="text">
+        {{slideContent}}
+      </ion-text>
+    </div>
+    
+      
   
-        <ion-card style="width: 100%; margin-right: 0px;margin-left: 0px;">
+        <!-- <ion-card style="width: 100%; margin-right: 0px;margin-left: 0px;">
            <ion-img src="../../assets/images/ad.jpg"></ion-img>
            <ion-card-content>
              50% off Today
@@ -38,7 +65,7 @@
            <ion-card-content>
              up to 30% off on all groceries
            </ion-card-content>
-      </ion-card>
+      </ion-card> -->
           
 </div>
 

@@ -8,6 +8,7 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   { path: 'recommend', loadChildren: './recommend/recommend.module#RecommendPageModule' },
+  { path: 'shopprofile', loadChildren: './shopprofile/shopprofile.module#ShopprofilePageModule' },
 ];
 @NgModule({
   imports: [

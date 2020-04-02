@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Shops } from '../models/shops';
 import { FirestoreService } from '../services/firestore.service';
 import {
@@ -6,20 +6,18 @@ import {
 import { User } from '../models/user';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 // import { AdMobFree, AdMobFreeBannerConfig, AdMobFreeInterstitialConfig } from '@ionic-native/admob-free/ngx';
-import { Router , NavigationExtras , ActivatedRoute} from '@angular/router';
-import { Contacts, ContactFieldType, ContactFindOptions } from '@ionic-native/contacts/ngx';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router  , ActivatedRoute} from '@angular/router';
+import { Contacts,   } from '@ionic-native/contacts/ngx';
+import { HttpClient,  } from '@angular/common/http';
 // import { RequestOptions } from '@angular/http';
 import { OnDestroy } from "@angular/core";
 import { DatabaseService } from '../services/database.service';
 import { Observable} from 'rxjs/Observable' ;
 // import { settings } from 'cluster';
-import { map } from 'rxjs/operators';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { PaymentPage } from '../payment/payment.page';
 import { ScannedModalPage } from '../scanned-modal/scanned-modal.page';
 import { Location } from '@angular/common';
-
+import {IonSlides} from '@ionic/angular';
 
 @Component({
   selector: 'app-shop',
@@ -27,6 +25,8 @@ import { Location } from '@angular/common';
   styleUrls: ['./shop.page.scss'],
 })
 export class ShopPage implements OnInit, OnDestroy {
+
+  @ViewChild('slidevw',{static: false}) slidevw: IonSlides;
 
  // navigationExtras: {} ;
   shops: Shops[];
@@ -38,21 +38,15 @@ export class ShopPage implements OnInit, OnDestroy {
   cart = [] ;
   encodeData: any ;
   items = [] ;
-  prd: {} ;
- 
-    wallet: number = 0;
-  
-    submission: boolean = false;
-  
-  
-    payment_channels: any[];
-  
-    activate: boolean = false;
-
 user: User = new User();
-
-text: string = "Select payment method";
-
+slideText = [
+  "Click scan and pay button, to start buying",
+  "Scan the product you want to buy from this shop",
+  "Check the total sum of the products you scaned. Pay and checkout",
+  "Show your Qr-code of the receipt to teller ",
+  "Congratulations you just Scan and paid. Super easy Right ?"
+]
+slideContent : string ;
 myContacts ;
 phone ;
 name ;
@@ -79,6 +73,13 @@ userSub ;
 userDetails ;
 time ;
 data: any ;
+slider = {
+  initialSlide: 0,
+  speed: 500,
+  autoplay: true,
+  slidesPerView: 1,
+}
+
 
   constructor(
     public fireApi: FirestoreService,
@@ -99,9 +100,16 @@ data: any ;
   ) {
    this.fireApi.hiddenTabs = true ;
    this.menuCtrl.enable(false);
-   
+   this.slideContent = this.slideText[0];
    
   }
+
+  slideChanged() { 
+    this.slidevw.getActiveIndex().then(index => {
+       this.slideContent = this.slideText[index];
+    });
+    }
+ 
   ngOnInit() {
 
     this.showShop();
@@ -255,6 +263,7 @@ getData() {
               this.fireApi.shareCartDetails(this.myCart);
               this.menuCtrl.enable(true);
               this.fireApi.hiddenTabs = false ;
+              this.fireApi.shareShopBy('shopBy');
               this.location.back();
             }
           }
@@ -264,6 +273,7 @@ getData() {
     }else {
       this.menuCtrl.enable(true);
       this.fireApi.hiddenTabs = false ;
+      this.fireApi.shareShopBy('shopBy');
       this.location.back();
     }
     

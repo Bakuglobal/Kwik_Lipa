@@ -154,14 +154,26 @@ export class Tab3Page {
    }
     
   }
-  async infoModal(url){
+  async infoModal(shop,logo){
     const modal = await this.modalCtrl.create({
       component: InfomodalPage,
       componentProps: {
-        shopname: url
+        'shopname': shop,
+        'logo':logo
       }
+    });
+    modal.onDidDismiss().then(data  => {
+      console.log(data.data);
+      this.service.shareShopBy(data.data[0]);
+      this.service.changeData(data.data[1]);
     })
+    
+  //  modal.onDidDismiss((data)  => {
+  //     
+  //   }); 
+  
     await modal.present();
+    
    }
   async openPostModal(){
     const modal = await this.modalCtrl.create({
@@ -196,11 +208,11 @@ export class Tab3Page {
   }
 
 // DISPLAY IMAGE IN A MODEL
-  showImage(){
+  showImage(image){
     this.modalCtrl.create({
         component: ImageDisplayPage,
         componentProps: {
-            img: "maxwell"
+            url: image
         }
     }).then(modal => modal.present());
 

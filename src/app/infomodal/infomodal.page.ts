@@ -1,15 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ModalController, ActionSheetController } from '@ionic/angular';
 import { SokomodalPage } from '../sokomodal/sokomodal.page';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-
+import {  AngularFirestore } from '@angular/fire/firestore';
+import { map } from 'rxjs/operators';
+import { Shops } from '../models/shops';
+import { Post } from '../models/post';
+import { Router } from '@angular/router';
+import { ThrowStmt } from '@angular/compiler';
 @Component({
   selector: 'app-infomodal',
   templateUrl: './infomodal.page.html',
   styleUrls: ['./infomodal.page.scss'],
 })
 export class InfomodalPage implements OnInit {
-  //variables
+  @Input('shopname')shopname:string ;
+  @Input('logo')logo:string;
+  shop: Shops;
+  Posts;
+    //variables
       liked = false ;
       h     = false ;
       Addcomment = false ;
@@ -21,14 +30,31 @@ export class InfomodalPage implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private iab: InAppBrowser,
-    private asC: ActionSheetController
+    private asC: ActionSheetController,
+    private fs: AngularFirestore,
+    private navCtrl: Router
 
-  ) { }
+  ) { 
+    console.log(this.logo);
+  }
 
   ngOnInit() {
+    this.getShop();
+  }
+  scanAndPay() {
+    this.modalCtrl.dismiss(["scan",this.shopname]);
+    this.navCtrl.navigate(['tabs/shop']);
+  }
+  pickPayCollect() {
+    this.modalCtrl.dismiss(["pick",this.shopname]);
+    this.navCtrl.navigate(['tabs/offers']);
+  }
+  // goto shoppinglist page
+  Delivery() {
+    this.modalCtrl.dismiss(["delivery",this.shopname]);
+    this.navCtrl.navigate(['tabs/offers']);
   }
 //share via whatsapp
-
     async share(){
       const asc = await this.asC.create({
         animated: true ,
@@ -37,12 +63,9 @@ export class InfomodalPage implements OnInit {
         buttons: [{
           icon: 'logo-whatsapp',
           text: 'Whatsapp',
-          
           handler: () => {
-            
           }
         },
-        
         {
           text: 'Cancel',
           role: 'cancel'
@@ -50,7 +73,6 @@ export class InfomodalPage implements OnInit {
       ]
       });
       await asc.present();
-      
     }
 //add a comment
       AddComment(){
@@ -86,8 +108,9 @@ export class InfomodalPage implements OnInit {
       async maps(){
         const map = await this.modalCtrl.create({
           component: SokomodalPage,
-          componentProps: {} 
-        })
+          componentProps: {'shoplocation':this.shop.Location} 
+        });
+        console.log('location',this.shop.Location);
         await map.present();
       }
 //open a link in a browser inside the app
@@ -96,12 +119,12 @@ export class InfomodalPage implements OnInit {
         console.log("Opens link in the app");
         const target = '_blank';
         // const options = { location : 'no' } ;
-        const refLink = this.iab.create(link,target);
+        this.iab.create(link,target);
       }
       show(){
 
       }
-      infoModal(shop){
+      infoModal(shop,logo){
 
       }
       showImage(){
@@ -109,6 +132,44 @@ export class InfomodalPage implements OnInit {
       }
       comments(){
 
+      }
+      // get shop details
+      getShop(){
+       let data = this.fs.collection<Shops>('shops',ref => {
+         return  ref.where('shop','==',this.shopname)
+        });
+         let snap = data.snapshotChanges().pipe(
+          map(actions => {
+            return actions.map(a => {
+              const data = a.payload.doc.data();
+              const id = a.payload.doc.id ;
+              return { id, ... data};
+            });
+          })
+        );
+        snap.subscribe(res => {
+          this.shop = res[0];
+          console.log('shop details', this.shop);
+        });
+        this.getPosts();
+      }
+      getPosts(){
+        let posts = this.fs.collection<Post>('posts',ref => {
+          return ref.where('shop','==',this.shopname).orderBy('time','desc')
+        })
+        let fd = posts.snapshotChanges().pipe(
+          map(actions => {
+            return actions.map(a => {
+              const id = a.payload.doc.id ;
+              const data = a.payload.doc.data();
+              return {id, ... data}
+            });
+          })
+        );
+        fd.subscribe(res => {
+          this.Posts = res ;
+          console.log(this.Posts);
+        })
       }
      
     

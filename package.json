@@ -29,6 +29,7 @@
     "@ionic-native/app-launcher": "^5.19.1",
     "@ionic-native/badge": "^5.21.6",
     "@ionic-native/barcode-scanner": "^5.16.0",
+    "@ionic-native/call-number": "^5.22.0",
     "@ionic-native/contacts": "^5.21.2",
     "@ionic-native/core": "^5.20.0",
     "@ionic-native/date-picker": "^5.18.0",
@@ -49,6 +50,7 @@
     "@ionic/angular": "^4.7.1",
     "@types/jquery": "^3.3.31",
     "animate.css": "^3.7.2",
+    "call-number": "^1.0.1",
     "cordova-android": "8.1.0",
     "cordova-ios": "5.1.1",
     "cordova-open-native-settings": "1.5.2",
@@ -148,7 +150,8 @@
       "cordova-plugin-badge": {},
       "cordova-plugin-googleplus": {
         "PLAY_SERVICES_VERSION": "15.0.1"
-      }
+      },
+      "mx.ferreyra.callnumber": {}
     },
     "platforms": [
       "ios",

@@ -14,6 +14,7 @@ import { Order } from '../models/order';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen/ngx';
 import { ViewOrderPage } from '../view-order/view-order.page';
 import { Router } from '@angular/router';
+import { DatabaseService } from '../services/database.service';
 // import { AdMobFree } from "@ionic-native/admob-free/ngx";
 
 @Component({
@@ -45,7 +46,8 @@ export class TransactionsPage implements OnInit {
     public fs: AngularFirestore,
     public modalController: ModalController,
     private androidfullscreen: AndroidFullScreen,
-    private navCtrl: Router
+    private navCtrl: Router,
+    private db: DatabaseService
   ) {
     this.userID = localStorage.getItem('userID');
     console.log(this.userID);
@@ -62,13 +64,21 @@ export class TransactionsPage implements OnInit {
     this.getPastOrders();
 
   }
+  
   async viewOrder(item) {
-    const mod = await this.modalController.create({
-      component: ViewOrderPage,
-      componentProps: item
+      const mod = await this.modalController.create({
+        component: ViewOrderPage,
+        componentProps: item
+      });
+      console.log(item);
+      await mod.present();
+  }
+   getShopNumber(item){
+     this.db.getShopPhoneNumber(item.shop).subscribe(res => {
+     console.log(res[0].Contacts);
+     item.phone =  res[0].Contacts ;
+     this.viewOrder(item) ;
     });
-    console.log(item);
-    await mod.present();
   }
    // notifications page
    notifications(){
@@ -98,7 +108,7 @@ export class TransactionsPage implements OnInit {
     this.fireApi.openOrders(this.userID).subscribe(res => {
       this.myOpenOrders = res;
       console.log(res)
-    })
+    });
 
   }
   // get past orders

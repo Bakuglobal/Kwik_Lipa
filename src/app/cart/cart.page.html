@@ -30,7 +30,7 @@
   </ion-card>
   <!-- Shows when the cart is empty -->
   <div *ngIf="cart.length == 0" class="empty">
-    <ion-label>Your cart is Empty</ion-label><br><br><br>
+    <ion-label></ion-label><br><br><br>
     <ion-button (click)="back()" shape="round">Continue shopping</ion-button>
   </div>
   <!-- Shows items in the cart and there total  -->
@@ -65,29 +65,6 @@
   <!-- Pick up time section-->
   <div *ngIf="cart.length != 0;">
     <form #time=ngForm padding>
-      <ion-label color="primary" style="font-size: large;" *ngIf="!noPickUpTime">Choose a Pickup Time</ion-label>
-      <ion-row *ngIf="!noPickUpTime">
-        <ion-col>
-          <ion-select name="pickTime" [(ngModel)]="pickHour" Placeholder="Hour" required style="width: 100%;">
-            <ion-select-option *ngFor="let time of hour">{{time}}</ion-select-option>
-          </ion-select>
-        </ion-col>
-        <ion-col>
-          <ion-select name="pickTime" [(ngModel)]="pickMinute" Placeholder="Mins" required>
-            <ion-select-option *ngFor="let time of minute">{{time}}</ion-select-option>
-          </ion-select>
-        </ion-col>
-        <ion-col>
-          <ion-select name="pickTime" [(ngModel)]="pickDay" Placeholder="Day" required (ionChange)="changeDay()">
-            <ion-select-option *ngFor="let time of Days">{{time}}</ion-select-option>
-          </ion-select>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-label color="primary">Notes</ion-label><br><br>
-        <ion-textarea name="notes" [(ngModel)]="notes" placeholder="Add notes for this order eg. Ripe, packed etc">
-        </ion-textarea>
-      </ion-row>
       <ion-row>
         <ion-label color="primary">Delivery Option</ion-label><br><br><br><br>
         <ion-select name="delivery" placeholder="select delivery" [(ngModel)]="delivery"
@@ -105,6 +82,30 @@
           </ion-select><br>
           <ion-label>Delivery fee : <span style="float: right;">Kshs {{deliveryFee}}</span></ion-label>
         </div>
+      </ion-row>
+      <br><br>
+      <ion-label color="primary" style="font-size: large;" *ngIf="!noPickUpTime">Choose a Pickup Time</ion-label>
+      <ion-row *ngIf="!noPickUpTime">
+        <ion-col>
+          <ion-select name="pickTime" [(ngModel)]="pickDay" Placeholder="Day" required (ionChange)="changeDay()">
+            <ion-select-option *ngFor="let time of Days">{{time}}</ion-select-option>
+          </ion-select>
+        </ion-col>
+        <ion-col>
+          <ion-select name="pickTime" [(ngModel)]="pickHour" Placeholder="Hour" required style="width: 100%;">
+            <ion-select-option *ngFor="let time of hour">{{time}}</ion-select-option>
+          </ion-select>
+        </ion-col>
+        <ion-col>
+          <ion-select name="pickTime" [(ngModel)]="pickMinute" Placeholder="Mins" required>
+            <ion-select-option *ngFor="let time of minute">{{time}}</ion-select-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-label color="primary">Notes</ion-label><br><br>
+        <ion-textarea name="notes" [(ngModel)]="notes" placeholder="Add notes for this order eg. Ripe, packed etc">
+        </ion-textarea>
       </ion-row>
     </form>
     <!-- Payment section -->
