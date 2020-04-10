@@ -14,6 +14,8 @@ import { IonSlides } from '@ionic/angular';
 import { DiscountmodalPage } from '../discountmodal/discountmodal.page';
 import { Badge } from '@ionic-native/badge/ngx';
 import { ADs } from '../models/ads';
+import { VideoPlayer } from '@ionic-native/video-player/ngx';
+
 
 
 @Component({
@@ -55,6 +57,7 @@ export class Tab1Page implements OnInit {
     slidesPerView: 1.7,
   }
   ads: ADs[] ;
+  poster: any ;
 
   constructor(
     private platform: Platform,
@@ -69,8 +72,8 @@ export class Tab1Page implements OnInit {
     public service: FirestoreService,
     public fauth: AngularFireAuth,
     public modal: ModalController,
-    public badge: Badge
-
+    public badge: Badge,
+    private videoPlayer: VideoPlayer, 
   ) {
     this.Name = localStorage.getItem('Name');
     //check if offline
@@ -91,6 +94,7 @@ export class Tab1Page implements OnInit {
       this.count = res ;
       console.log(this.count)
     });
+    this.playVideoHosted();
   }
   onScroll(event){
     if(event.detail.scrollTop == 0){
@@ -121,11 +125,18 @@ export class Tab1Page implements OnInit {
     // check for unread notices
     this.getAds();
     this.getShops();
+    this.getDonationPoster();
   }
 
   onIonViewDidLoad() {
     this.selectShop = false;
    
+  }
+  getDonationPoster(){
+    this.fireApi.getPoster().subscribe(res => {
+      this.poster = res ;
+      console.log('poster',this.poster);
+    })
   }
   gotoShop(shop){
     this.fireApi.changeData(shop);
@@ -244,6 +255,13 @@ export class Tab1Page implements OnInit {
       this.shops = res ;
       this.unfilteredShops = res ;
       console.log('shops',this.shops);
+    });
+  }
+  playVideoHosted() {
+   return this.videoPlayer.play('https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4').then(() => {
+      console.log('video completed');
+    }).catch(err => {
+      console.log(err);
     });
   }
   

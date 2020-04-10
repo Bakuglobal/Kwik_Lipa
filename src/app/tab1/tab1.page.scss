@@ -304,6 +304,7 @@
     margin: auto;
     text-align: center;
     width: 100%;
+    object-fit: contain;
 
   }
   
@@ -354,12 +355,13 @@
           border-radius: 10px;
           font-weight: bold;
           color: var(--ion-color-primary);
-          width: 80%;
+        //   width: 60%;
           padding-top: 5px;
           padding-bottom: 5px;
           padding-left: 50px;
           padding-right: 50px;
           background-color: white;
+          font-size: .7em;
       }
   }
   .pr-name{

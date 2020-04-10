@@ -379,6 +379,10 @@ getunreadNotice(id){
      })
    )
 }
+// get donation poster
+getPoster(){
+  return this.fs.collection('donations').valueChanges();
+}
 // share list budget
 setBudget(value){
   this.budget = value ;

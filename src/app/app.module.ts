@@ -53,6 +53,8 @@ import { NotificationsPageModule } from './notifications/notifications.module';
 import { Badge } from '@ionic-native/badge/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { CallNumber} from '@ionic-native/call-number/ngx';
+import { VideoPlayer } from '@ionic-native/video-player/ngx';
+
 
 
 @NgModule({
@@ -102,7 +104,7 @@ import { CallNumber} from '@ionic-native/call-number/ngx';
     Geolocation,
     AppLauncher,
     Badge,
-    // OneSignal,
+    VideoPlayer,
     GooglePlus,
     SplashScreen,
     BarcodeScanner,
