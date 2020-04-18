@@ -291,7 +291,7 @@
         //   padding-right: 10px;
           .soko-image {
               width: 100%; 
-              height: 250px;
+              height: 200px;
               object-position: center;
               object-fit: fill;
               
@@ -392,6 +392,12 @@
   .label{
     padding-top: 30px; 
     padding-bottom: 10px;
+  }
+  .tagTitle{
+    margin-left: 8px;
+    font-weight: bold;
+    color: grey;
+    margin-top: 10px;
   }
   
   // FEATURED PRODUCTS

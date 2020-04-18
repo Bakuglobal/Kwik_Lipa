@@ -258,7 +258,7 @@ export class Tab1Page implements OnInit {
     });
   }
   playVideoHosted() {
-   return this.videoPlayer.play('https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4').then(() => {
+   return this.videoPlayer.play('https://firebasestorage.googleapis.com/v0/b/kwikapp-77d77.appspot.com/o/CORONA%20VIRUS%20AWARENESS%20-%20ENGLISH%20on%20Vimeo.mp4?alt=media&token=b492e8c9-482d-428b-991d-260ca419c4dd').then(() => {
       console.log('video completed');
     }).catch(err => {
       console.log(err);

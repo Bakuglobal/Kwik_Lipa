@@ -54,14 +54,25 @@
         </ion-col>
     </ion-row>
 
-
+    <!-- Donations -->
+    <div class="donate" (click)="playVideoHosted()">
+        <!-- <ion-button (click)="playVideoHosted()"> play</ion-button> -->
+        <!-- <img class="soko-image" src="/assets/images/Kakila.jpg">  -->
+        <br><br>
+        <ion-label class="tagTitle"><b>#HelpFightCorona</b></ion-label><br><br>
+        <video src="https://firebasestorage.googleapis.com/v0/b/kwikapp-77d77.appspot.com/o/CORONA%20VIRUS%20AWARENESS%20-%20ENGLISH%20on%20Vimeo.mp4?alt=media&token=b492e8c9-482d-428b-991d-260ca419c4dd" controls muted height="200px" width="100%" poster="../../assets/images/donate.jpeg">
+         </video>
+        
+    </div>
     <!-- ADVERTS -->
     <div class="soko">
         <div class="space"></div>
+        <ion-label class="tagTitle">New Shops</ion-label>
         <div class="soko-content">
             <ion-slides pager="true" [options]="AdvertslideOpts">
                 <ion-slide *ngFor="let item of ads ">
                     <img class="soko-image" src="{{item.image}}" (click)="gotoShop(item.shop)">
+                    <ion-skeleton-text animated style="width: 100%;height: 200px;" *ngIf="ads.length == 0"></ion-skeleton-text>
                 </ion-slide>
                 <!-- <ion-slide>
                     <img class="soko-image" src="/assets/images/Kakila.jpg">
@@ -69,13 +80,7 @@
             </ion-slides>
         </div>
     </div>
-    <!-- Donations -->
-    <div class="donate" *ngIf="poster !== undefined">
-        <!-- <img width="100%" height="250px" src="{{poster[0].image}}" > -->
-        <video width="100%" height="250px" muted controls autoplay   poster="{{poster[0].image}}">
-            <source src="../../assets/rona.mp4" type="video/mp4">
-        </video>
-    </div>
+    
     <div class="body">
         <!-- DISCOUNTED PRODUCTS -->
         <div style="background-color: #F5F5F5; height: 5px;"></div>

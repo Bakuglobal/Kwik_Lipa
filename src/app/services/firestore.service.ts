@@ -207,7 +207,10 @@ getCount(){
   }
 //send message to support
     sendSupport(data) {
-      return this.operationSupport.push(data);
+      return this.fs.collection('messages').doc(localStorage.getItem('userID')).set(data);
+    }
+    addToReplies(data){
+      return this.fs.collection('messages').doc(localStorage.getItem('userID')).collection('replies').add(data);
     }
 //get the list of shops   
   getShops(){

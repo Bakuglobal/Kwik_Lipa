@@ -1,14 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { FirestoreService } from "../services/firestore.service";
-import { Support } from "../models/support";
-
 import "rxjs/Rx";
-import { Observable } from "rxjs/Rx";
 import { LoadingController, ToastController } from "@ionic/angular";
-import { timeout } from 'rxjs/operators';
-import { timer } from 'rxjs';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { User } from '../models/user';
 // import { AdMobFree } from "@ionic-native/admob-free/ngx";
 
 @Component({
@@ -23,6 +19,7 @@ export class SupportPage implements OnInit {
   };
   message: any ;
   loading: any;
+  user: User;
   msg = false ;
   count = '' ;
   date;
@@ -54,6 +51,8 @@ this.location.back();
     this.fireApi.getCurrentUser().then(resp => {
       this.data.userID = resp.uid;
       this.data.message = resp.message ;
+      this.user = resp ;
+      console.log(this.user)
     });
     // this.removeBannerAd();
     this.checkmsg();
@@ -70,7 +69,13 @@ checkmsg(){
   submit() {
     //this.presentLoading();
     if(this.data.message === '' || this.data.message === ' '){this.presentToast('Can`t send Empty message');return ;}
-    this.fireApi.sendSupport(this.data).then(
+    let msg = {
+      "messageID": localStorage.getItem('userID'),
+      "userName": localStorage.getItem('Name'),
+      "message":this.data.message,
+      "Date": new Date()
+    }
+    this.fireApi.sendSupport(msg).then(
       resp => {
        // this.loading.dismiss();
        this.message = this.data.message ;
