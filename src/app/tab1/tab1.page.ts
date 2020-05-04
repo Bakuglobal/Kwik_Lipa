@@ -127,7 +127,7 @@ export class Tab1Page implements OnInit {
     this.getShops();
     this.getDonationPoster();
   }
-
+  
   onIonViewDidLoad() {
     this.selectShop = false;
    
@@ -137,6 +137,9 @@ export class Tab1Page implements OnInit {
       this.poster = res ;
       console.log('poster',this.poster);
     })
+  }
+  goToDonations(){
+    this.navCtrl.navigate(['tabs/home']);
   }
   gotoShop(shop){
     this.fireApi.changeData(shop);

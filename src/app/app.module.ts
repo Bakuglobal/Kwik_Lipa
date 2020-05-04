@@ -28,7 +28,7 @@ import { InfomodalPageModule } from './infomodal/infomodal.module';
 import { SokomodalPageModule } from './sokomodal/sokomodal.module';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import {InAppBrowser} from '@ionic-native/in-app-browser/ngx';
-import { LoanPageModule } from './loan/loan.module';
+// import { LoanPageModule } from './loan/loan.module';
 import { CommentsPageModule } from './comments/comments.module';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { TransModalPageModule } from './modal/trans-modal/trans-modal.module';

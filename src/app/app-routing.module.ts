@@ -9,6 +9,11 @@ const routes: Routes = [
   },
   { path: 'recommend', loadChildren: './recommend/recommend.module#RecommendPageModule' },
   { path: 'shopprofile', loadChildren: './shopprofile/shopprofile.module#ShopprofilePageModule' },
+  { path: 'home', loadChildren: './Donations/home/home.module#HomePageModule' },
+  { path: 'regions', loadChildren: './Donations/regions/regions.module#RegionsPageModule' },
+  { path: 'packages', loadChildren: './Donations/packages/packages.module#PackagesPageModule' },
+  { path: 'shop', loadChildren: './Donations/shop/shop.module#ShopPageModule' },
+  { path: 'cart', loadChildren: './Donations/cart/cart.module#CartPageModule' },
 ];
 @NgModule({
   imports: [

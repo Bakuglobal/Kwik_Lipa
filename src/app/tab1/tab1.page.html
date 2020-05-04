@@ -55,13 +55,13 @@
     </ion-row>
 
     <!-- Donations -->
-    <div class="donate" (click)="playVideoHosted()">
-        <!-- <ion-button (click)="playVideoHosted()"> play</ion-button> -->
-        <!-- <img class="soko-image" src="/assets/images/Kakila.jpg">  -->
-        <br><br>
+    <div class="donate" (click)="goToDonations()" *ngIf="poster !== undefined">
         <ion-label class="tagTitle"><b>#HelpFightCorona</b></ion-label><br><br>
-        <video src="https://firebasestorage.googleapis.com/v0/b/kwikapp-77d77.appspot.com/o/CORONA%20VIRUS%20AWARENESS%20-%20ENGLISH%20on%20Vimeo.mp4?alt=media&token=b492e8c9-482d-428b-991d-260ca419c4dd" controls muted height="200px" width="100%" poster="../../assets/images/donate.jpeg">
-         </video>
+        <!-- <ion-button (click)="playVideoHosted()"> play</ion-button> -->
+        <img class="soko-image" style="height:200px;" src="{{poster[0].image}}"> 
+        <br><br>
+        <!-- <video src="https://firebasestorage.googleapis.com/v0/b/kwikapp-77d77.appspot.com/o/CORONA%20VIRUS%20AWARENESS%20-%20ENGLISH%20on%20Vimeo.mp4?alt=media&token=b492e8c9-482d-428b-991d-260ca419c4dd" controls muted height="200px" width="100%" poster="../../assets/images/donate.jpeg">
+         </video> -->
         
     </div>
     <!-- ADVERTS -->

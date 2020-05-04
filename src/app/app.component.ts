@@ -157,6 +157,7 @@ export class AppComponent {
     this.menu.close();
     this.routerCtrl.navigate(['tabs/login']);
   }
+
   //Get user profile details from firestore
 
   getDetails(id) {
@@ -268,5 +269,6 @@ export class AppComponent {
     });
     ts.present();
   }
+  
 
 }

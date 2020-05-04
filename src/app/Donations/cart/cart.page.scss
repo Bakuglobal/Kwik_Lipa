@@ -1,0 +1,41 @@
+.btn{
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+}
+#img-sz{
+    object-fit: contain;
+    object-position: center;
+    width: 50px;
+    height: 50px;
+}
+#icon{
+    font-size: .9rem;
+}
+#name{
+    font-size: .9rem;
+}
+.total{
+    position: fixed;
+    bottom: 70px;
+    width: 100%;
+    padding: 10px;
+}
+#total{
+    font-size: 1.2rem;
+    color: grey;
+    float: left;
+}
+#amount{
+    font-size: 1.5rem;
+    color: grey;
+    float: right;
+}
+.disclaimer{
+    margin: 10px;
+    padding: 10px;
+    font-size: 1rem;
+    color: grey;
+    font-weight: bold;
+    text-align: center;
+}

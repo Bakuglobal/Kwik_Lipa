@@ -1,0 +1,21 @@
+<ion-toolbar color="primary" class="ion-padding">
+  <ion-buttons>
+    <ion-icon name="arrow-back" style="color: white;" (click)="back()"></ion-icon>
+    <ion-title style="color: white;">Select a shop from Kibera </ion-title>
+  </ion-buttons>
+ 
+</ion-toolbar>
+<ion-content >
+<ion-grid  padding >
+  <ion-row>
+  <ion-col size="6" *ngFor="let item of shops" (click)="selectPackage(item)" (click)="cart()">
+      <div class="body">
+        <ion-label >Shop A</ion-label>
+      </div>
+  </ion-col>
+  </ion-row>
+</ion-grid>
+
+
+
+</ion-content>

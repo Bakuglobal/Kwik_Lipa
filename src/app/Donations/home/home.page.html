@@ -1,0 +1,47 @@
+<ion-content color="light">
+  <ion-icon  name="arrow-back" style="position: absolute;padding-top: 10px;left: 20px;color: white;" (click)="back()">
+  </ion-icon>
+  <div class="top-card">
+    <div class="top-title">
+      <ion-text>
+        Welcome to the donation platform that allows you to give a lifetime to vulnerable families and children facing
+        starvation due to Covid-19 pandemic,with a few clicks on your phone.
+      </ion-text>
+    </div>
+  </div>
+  <div class="container-steps">
+    <ion-card class="steps">
+      <ion-label>Step 1</ion-label><br><br>
+      <ion-label style="font-size: .7rem;">Select location of beneficiary</ion-label>
+    </ion-card>
+    <ion-card class="steps">
+      <ion-label>Step 2</ion-label><br><br>
+      <ion-label style="font-size: .7rem;">Purchase a package</ion-label>
+    </ion-card>
+    <ion-card class="steps">
+      <ion-label>Step 3</ion-label><br><br>
+      <ion-label style="font-size: .7rem;">Beneficiary collects donation</ion-label>
+    </ion-card>
+  </div>
+  <div style="text-align: center;margin: 100px 10px 10px 10px;">
+    <div style="background-color: #00ade5ad;padding: 30px;">
+      <ion-label (click)="donate()" id="donate">Donate</ion-label>
+    </div>
+
+  </div>
+  <ion-label class="title">
+    Updates
+  </ion-label>
+  <div style="height: 100px;background-color: lightgrey;margin: 10px;">
+
+  </div>
+  <ion-label class="title">
+    Participating NGOs and Patners
+  </ion-label>
+  <div class="NGO">
+    <ion-card class="ngo-box" *ngFor="let item of NGOs">
+
+    </ion-card>
+  </div>
+
+</ion-content>

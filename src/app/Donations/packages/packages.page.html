@@ -1,0 +1,55 @@
+<ion-toolbar color="primary" class="ion-padding">
+  <ion-buttons>
+    <ion-icon name="arrow-back" style="color: white;" (click)="back()"></ion-icon>
+    <ion-title style="color: white;">Select a package to donate</ion-title>
+  </ion-buttons>
+
+</ion-toolbar>
+<ion-content>
+
+  <div class="tagline">
+    <ion-text>
+      In Kibera, all donations made in this platform are administered by SHOFCO who have identified beneficiary families
+      and local shops from which the donations with be sourced.
+    </ion-text>
+  </div>
+  <ion-grid padding>
+    <ion-row>
+      <ion-col size="6" *ngFor="let item of packages" >
+        <div class="body">
+          <ion-label id="title">A family of 4</ion-label>
+          <br><br>
+          <ion-row id="col-head">
+            <ion-col>Product</ion-col>
+            <ion-col>Quantity</ion-col>
+          </ion-row>
+          <ion-row id="col-item">
+            <ion-col>Xxx</ion-col>
+            <ion-col>2 Kg</ion-col>
+          </ion-row>
+          <ion-row id="col-item">
+            <ion-col>Xxx</ion-col>
+            <ion-col>2 Kg</ion-col>
+          </ion-row>
+          <ion-row id="col-item">
+            <ion-col>Xxx</ion-col>
+            <ion-col>2 Kg</ion-col>
+          </ion-row>
+          <ion-row id="col-item">
+            <ion-col>Xxx</ion-col>
+            <ion-col>2 Kg</ion-col>
+          </ion-row>
+         
+          <ion-row>
+            <ion-col id="total">Total</ion-col>
+            <ion-col><span style="font-size: .6rem;">Kshs</span> 000</ion-col>
+          </ion-row>
+          <div class="btn" (click)="goToShops(item)">
+            <ion-label>Sponsor now</ion-label>
+          </div>
+          <!-- <ion-button size="small" shape="round" style="width: 100px;">Sponsor now</ion-button> -->
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
