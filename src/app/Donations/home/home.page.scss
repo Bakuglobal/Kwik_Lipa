@@ -1,5 +1,4 @@
 .container-steps{
-
  position: absolute;
  display: flex;
  flex-flow: row nowrap;
@@ -7,8 +6,9 @@
  text-align: center;
  top: 140px;
  align-items: center;
-left: 10px;
+left: 20px;
 }
+
 .top-title{
     margin: 30px;
     background-color: var(--ion-color-primary);;
@@ -61,3 +61,18 @@ left: 10px;
     color: grey;
     margin: 10px;
 }
+@media only screen and (max-width: 320px) {
+    .container-steps{
+     position: absolute;
+     display: flex;
+     flex-flow: row nowrap;
+     align-content: space-around;
+     text-align: center;
+     top: 155px;
+     align-items: center;
+    left: 10px;
+    }
+    .steps{
+        width: 80px;
+    }
+   }
