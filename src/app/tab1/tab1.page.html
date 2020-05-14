@@ -50,20 +50,21 @@
                 style="width: 60px;height: 60px;margin: auto;position: relative;background-color: #00ade51c;border-radius: 100%;">
                 <img style="width: 40px;height: 40px;padding-top: 20px;padding-left: 20px;" src="/assets/images/address.svg">
             </div>
-            <h2>Shops</h2>
+            <h2>Outlets</h2>
         </ion-col>
     </ion-row>
 
-    <!-- Donations -->
-    <div  (click)="goToDonations()" *ngIf="poster !== undefined" style="margin-top: 20px;">
-        <ion-label class="tagTitle"><b>Corona Compaign </b></ion-label><br><br>
+    <!-- Donations (click)="goToDonations()"  -->
+    <!-- <div   *ngIf="poster !== undefined" style="margin-top: 20px;">
+        <ion-label class="tagTitle"><b>Corona Compaign </b></ion-label><br><br> -->
         <!-- <ion-button (click)="playVideoHosted()"> play</ion-button> -->
-        <img style="width: 100%;height: 200px;" src="{{poster[0].image}}"> 
-        <br><br>
+        <!-- <img style="width: 100%;height: 200px;" src="{{poster[0].image}}"> 
+        <br><br> -->
         <!-- <video src="https://firebasestorage.googleapis.com/v0/b/kwikapp-77d77.appspot.com/o/CORONA%20VIRUS%20AWARENESS%20-%20ENGLISH%20on%20Vimeo.mp4?alt=media&token=b492e8c9-482d-428b-991d-260ca419c4dd" controls muted height="200px" width="100%" poster="../../assets/images/donate.jpeg">
          </video> -->
         
-    </div>
+    <!-- </div> -->
+    
     <!-- ADVERTS -->
     <ion-label class="tagTitle">New Shops</ion-label>
     <div class="soko">
@@ -183,7 +184,7 @@
 
         <div style="background-color: #F5F5F5; height: 5px;"></div>
         <div class="label">
-            <ion-label class="left">Shops Near You</ion-label>
+            <ion-label class="left">Outlets Near You</ion-label>
             <div (click)="Showshops()" class="right">
                 View all
                 <ion-icon src="/assets/images/arrow-right.svg"></ion-icon>

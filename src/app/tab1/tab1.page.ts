@@ -94,7 +94,7 @@ export class Tab1Page implements OnInit {
       this.count = res ;
       console.log(this.count)
     });
-    this.playVideoHosted();
+    // this.playVideoHosted();
   }
   onScroll(event){
     if(event.detail.scrollTop == 0){
@@ -143,7 +143,7 @@ export class Tab1Page implements OnInit {
   }
   gotoShop(shop){
     this.fireApi.changeData(shop);
-    this.navCtrl.navigate(['tabs/offers']);
+    this.navCtrl.navigate(['tabs/shopprofile']);
   }
   AdvertslideOpts = {
     initialSlide: 1,
@@ -260,13 +260,13 @@ export class Tab1Page implements OnInit {
       console.log('shops',this.shops);
     });
   }
-  playVideoHosted() {
-   return this.videoPlayer.play('https://firebasestorage.googleapis.com/v0/b/kwikapp-77d77.appspot.com/o/CORONA%20VIRUS%20AWARENESS%20-%20ENGLISH%20on%20Vimeo.mp4?alt=media&token=b492e8c9-482d-428b-991d-260ca419c4dd').then(() => {
-      console.log('video completed');
-    }).catch(err => {
-      console.log(err);
-    });
-  }
+  // playVideoHosted() {
+  //  return this.videoPlayer.play('https://firebasestorage.googleapis.com/v0/b/kwikapp-77d77.appspot.com/o/CORONA%20VIRUS%20AWARENESS%20-%20ENGLISH%20on%20Vimeo.mp4?alt=media&token=b492e8c9-482d-428b-991d-260ca419c4dd').then(() => {
+  //     console.log('video completed');
+  //   }).catch(err => {
+  //     console.log(err);
+  //   });
+  // }
   
 }
 
