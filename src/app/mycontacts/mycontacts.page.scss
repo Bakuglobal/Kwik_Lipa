@@ -1,8 +1,8 @@
 
 .list-title {
-
     font-size: 1.4em;
     font-weight: bold;
+    text-transform: capitalize;
 }
 .date{
     padding-top: 80px;
@@ -22,5 +22,8 @@
     }
 }
 ion-title{
-    font-size: 1.8em;
+    font-size: .9rem;
+}
+#list-title{
+    font-size: .9rem;
 }

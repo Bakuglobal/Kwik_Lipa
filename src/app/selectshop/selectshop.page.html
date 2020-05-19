@@ -9,17 +9,19 @@
                           <ion-buttons slot="start" (click)="back()">
                               <ion-icon name="arrow-back" size=""></ion-icon>
                           </ion-buttons>
-                          <ion-title text-center *ngIf="!showSearch"><span style="text-transform: uppercase ;font-size: .7em;padding-top: 5px">Select a shop</span></ion-title>
-                          <ion-searchbar *ngIf="showSearch" [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()" placeholder="Enter shop name"></ion-searchbar>
+                          <ion-title text-center ><span style="text-transform: uppercase ;font-size: .7em;padding-top: 5px">Select a shop</span></ion-title>
+                          <!-- <ion-searchbar *ngIf="showSearch" [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()" placeholder="Enter shop name"></ion-searchbar>
                           <ion-buttons slot="end">
                               <ion-button (click)="show()">
                                   <ion-icon name="search" size="large"></ion-icon>
                               </ion-button>
-                          </ion-buttons>
+                          </ion-buttons> -->
                       </ion-toolbar>
                   </ion-header>
 
-            
+            <div>
+                <ion-searchbar animated mode="ios" [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()" placeholder="Enter shop name"></ion-searchbar>
+            </div>
             
                   <!---   DISPLAY SKELETON WHEN LOADING OR INTERNET IS SLOW-->
                   <ion-grid   *ngIf="!shops">

@@ -4,14 +4,12 @@
         <ion-buttons slot="start">
             <ion-menu-button autoHide="false"></ion-menu-button>
         </ion-buttons>
-        <ion-title text-center *ngIf="!heading"> <br><br><span style="font-size: .8em;">Welcome back , <br> What
+        <ion-title text-center *ngIf="!heading && !searchBar"> <br><br><span style="font-size: .8em;">Welcome back , <br> What
             would you like to do ? </span></ion-title>
-        <ion-title *ngIf="heading" text-center>Hello {{Name}}</ion-title>
-        <ion-buttons slot="end" (click)="notifications()" style="padding-right: 5px;">
-            <ion-icon size="large" name="notifications"></ion-icon><br>
-            <ion-badge color="danger">
-                <div *ngIf="count != '0'">{{count}}</div>
-            </ion-badge>
+        <ion-title *ngIf="heading && !searchBar" text-center>Hello {{Name}}</ion-title>
+        <ion-searchbar placeholder="Enter term here" *ngIf="searchBar" mode="ios" animated class="searchbar"></ion-searchbar>
+        <ion-buttons slot="end" (click)="search()" style="padding-right: 5px;">
+            <ion-icon size="large" name="search"></ion-icon><br>
         </ion-buttons>
 
     </ion-toolbar>
@@ -25,7 +23,7 @@
         <ion-col size="3" (click)="scanAndPay()">
             <div
                 style="width: 60px;height: 60px;margin: auto;position: relative;background-color: #00ade51c;border-radius: 100%;">
-                <img style="width: 40px;height: 40px;padding-top: 20px;padding-left: 20px;" src="/assets/scan2.svg">
+                <img style="width: 40px;height: 40px;padding-top: 20px;padding-left: 20px;" src="/assets/scan.svg">
             </div>
             <h2>Scan & Pay</h2>
         </ion-col>
@@ -45,14 +43,33 @@
             </div>
             <h2>Buy for Delivery</h2>
         </ion-col>
-        <ion-col size="3" (click)="Showshops()">
+        <ion-col size="3" (click)="shoppingList()">
             <div
                 style="width: 60px;height: 60px;margin: auto;position: relative;background-color: #00ade51c;border-radius: 100%;">
-                <img style="width: 40px;height: 40px;padding-top: 20px;padding-left: 20px;" src="/assets/images/address.svg">
+                <img style="width: 40px;height: 40px;padding-top: 20px;padding-left: 20px;" src="/assets/list1.svg">
             </div>
-            <h2>Outlets</h2>
+            <h2>Shopping List</h2>
         </ion-col>
     </ion-row>
+    <div>
+        <ion-label class="tagTitle">Kwik Access</ion-label>
+        <ion-grid >
+            <ion-row>
+                <ion-col size="6">
+                    <ion-card class="k-access" (click)="goToRestaurants()">
+                        <img src="../../assets/images/food.jpg">
+                        <ion-label style="position: absolute;top: 40%;left: 30%;font-weight: bolder;color: white;font-size: 1.5rem;">FOOD</ion-label>
+                    </ion-card>
+                </ion-col>
+                <ion-col size="6">
+                    <ion-card class="k-access" (click)="goToselectShop()">
+                        <img src="../../assets/images/supermarket.jpg">
+                        <ion-label style="position: absolute;top: 40%;left: 30%;font-weight: bolder;color: white;font-size: 1.5rem;">SHOPS</ion-label>
+                    </ion-card>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
 
     <!-- Donations (click)="goToDonations()"  -->
     <!-- <div   *ngIf="poster !== undefined" style="margin-top: 20px;">
@@ -87,7 +104,7 @@
         <div style="background-color: #F5F5F5; height: 5px;"></div>
         <div class="label">
             <ion-label class="left">Discounted products</ion-label>
-            <div (click)="gotoShop('Kakila Organic')" class="right">
+            <div (click)="shopProducts('Kakila Organic')" class="right">
                 View all
                 <ion-icon src="/assets/images/arrow-right.svg"></ion-icon>
             </div>
@@ -137,7 +154,7 @@
         <div style="background-color: #F5F5F5; height: 5px;"></div>
         <div class="label">
             <ion-label class="left">Featured products</ion-label>
-            <div (click)="gotoShop('Penny Vintage')" class="right">
+            <div (click)="shopProducts('Kipusa Beauty')" class="right">
                 View all
                 <ion-icon src="/assets/images/arrow-right.svg"></ion-icon>
             </div>
@@ -185,13 +202,13 @@
         <div style="background-color: #F5F5F5; height: 5px;"></div>
         <div class="label">
             <ion-label class="left">Outlets Near You</ion-label>
-            <div (click)="Showshops()" class="right">
+            <div (click)="goToselectShop()" class="right">
                 View all
                 <ion-icon src="/assets/images/arrow-right.svg"></ion-icon>
             </div>
         </div><br>
         <ion-slides pager="false" [options]="slideme">
-            <ion-slide *ngFor="let shop of shops " (click)="gotoShop(shop.shop)">
+            <ion-slide *ngFor="let shop of shops " (click)="gotoShop(shop)">
                 <ion-col  >
                     <div class="partion ion-padding" >
                     <img src="{{shop.logo}}" style="width: 65%;height: 65%;">

@@ -1,0 +1,51 @@
+.prTag{
+    text-align: center;
+    position: absolute;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 100% ;
+    bottom: 0px;
+    background-color: var(--ion-color-primary);
+    #lb{
+        border-radius: 10px;
+        font-weight: bold;
+        color: var(--ion-color-primary);
+      //   width: 60%;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-left: 50px;
+        padding-right: 50px;
+        background-color: white;
+        font-size: .7em;
+    }
+}
+.pr-name{
+    font-weight: bold; 
+    font-size: 1.1em;
+    text-transform: capitalize;
+}
+.pr-price{
+    font-size: .8em;
+    color: grey;
+
+}
+.right{
+    float: right; 
+    margin-right: 8px; 
+    font-size: 13px; 
+    color: grey;
+    ion-icon {
+        height: 10px;
+    }
+  }
+  .left{
+    float: left; 
+    margin-left: 8px;
+    font-weight: bold;
+    color: grey;
+  }
+  .soko-image {
+    width: 100%; 
+    height: 200px;
+    object-position: contain;
+}

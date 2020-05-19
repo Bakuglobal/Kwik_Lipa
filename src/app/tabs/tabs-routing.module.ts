@@ -78,6 +78,7 @@ const routes: Routes = [
       { path: 'region', loadChildren: () => import('../Donations/regions/regions.module').then(m => m.RegionsPageModule)},
       { path: 'packages', loadChildren:() => import('../Donations/packages/packages.module').then(m  => m.PackagesPageModule)},
       { path: 'Regionshop', loadChildren: () => import('../Donations/shop/shop.module').then(m => m.ShopPageModule)},
+      { path: 'restaurants', loadChildren: () => import('../Restaurants/home/home.module').then(m => m.HomePageModule)},
       { path: 'Donationcart', loadChildren: () => import('../Donations/cart/cart.module').then(m => m.CartPageModule)},
       { path: 'recommend' , loadChildren:() => import('../recommend/recommend.module').then(m => m.RecommendPageModule), canActivate: [AuthService]},
       { path: 'ipaytransmodal', loadChildren:() => import('../modal/ipaytransmodal/ipaytransmodal.module').then(m => m.IpaytransmodalPageModule), canActivate: [AuthService]},

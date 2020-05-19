@@ -6,14 +6,14 @@
         <ion-title>Soko</ion-title>
         <ion-searchbar placeholder="Search for a shop " animated type="text" *ngIf="showSearch"></ion-searchbar>
         <!-- SEARCH BAR -->
-        <ion-buttons slot="end" style="padding-right: 5px;">
+        <!-- <ion-buttons slot="end" style="padding-right: 5px;">
             <ion-button (click)="notifications()">
                 <ion-icon size="large" name="notifications"></ion-icon><br>
                 <ion-badge color="danger">
                     <div *ngIf="count != '0'">{{count}}</div>
                 </ion-badge>
             </ion-button>
-        </ion-buttons>
+        </ion-buttons> -->
     </ion-toolbar>
 </ion-header>
 
@@ -24,7 +24,7 @@
 
     <div class="page-content"><br>
         <div>
-            <ion-searchbar placeholder="Search for a shop " animated type="text"></ion-searchbar>
+            <ion-searchbar mode="ios" animated placeholder="Search for a shop " type="text"></ion-searchbar>
         </div>
 
         <ion-card class="card" *ngFor="let item of Posts">

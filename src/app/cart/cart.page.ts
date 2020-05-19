@@ -203,7 +203,8 @@ export class CartPage implements OnInit {
         "pickDay": "Today",
         "paid":"False"
       }
-      this.fs.collection('Orders').doc(id).set(data).catch(err => {console.log(err)})
+      console.log('data',data);
+      this.fs.collection('Orders').doc(id).set(data).catch(err => {console.log('error msg',err)})
       this.Ordersuccess = true;
       this.showTimeSelect = false;
       this.cart.length = 0;
@@ -235,8 +236,8 @@ export class CartPage implements OnInit {
           "userID": localStorage.getItem('userID'),
           "paid": "False"
         }
-
-        this.fs.collection('Orders').doc(id).set(data).catch(err => {console.log(err)})
+        console.log('data',data);
+        this.fs.collection('Orders').doc(id).set(data).catch(err => {console.log('error msg',err)})
         this.Ordersuccess = true;
         this.showTimeSelect = false;
         this.cart.length = 0;

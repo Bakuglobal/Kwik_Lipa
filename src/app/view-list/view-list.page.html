@@ -1,15 +1,9 @@
 <ion-content color="light">
-  <div padding style="margin-top: 20px;">
-    <ion-buttons>
-      <ion-button fill="clear" (click)="close()" slot="start">
-        <ion-icon name="arrow-back"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-buttons>
-      <ion-title color="primary" style="text-align: center;font-size: 1.2em;text-transform: capitalize;">{{Title}}</ion-title>
-      <ion-icon name="add" class="edit" slot="end" (click)="addItem()"></ion-icon>
-    </ion-buttons>
-  </div>
+  <ion-toolbar>
+    <ion-icon name="arrow-back" (click)="close()"></ion-icon>
+    <ion-title color="primary" style="text-align: center;font-size: 1.2em;text-transform: capitalize;">{{Title}}</ion-title>
+    <ion-icon name="add" class="edit" slot="end" (click)="addItem()"></ion-icon>
+  </ion-toolbar>
   <div class="body">
     <div class="members" padding>
       <ion-label>Sharing with</ion-label>
@@ -36,7 +30,7 @@
       <ion-col></ion-col>
       <ion-col style="float: right;" (click)="deleteList()">
         <ion-icon name="trash" color="primary"></ion-icon>
-        Delete
+        <!-- Delete -->
       </ion-col>
     </ion-item>
     <!-- LIST ITEMS -->

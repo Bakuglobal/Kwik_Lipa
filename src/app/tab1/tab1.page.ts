@@ -4,7 +4,7 @@ import { FirestoreService } from '../services/firestore.service';
 import 'rxjs/add/operator/map';
 import 'rxjs/Rx';
 import { User } from '../models/user';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { DatabaseService } from '../services/database.service';
 import { Platform, IonContent, ModalController } from '@ionic/angular';
 import { AlertController, ToastController, LoadingController, MenuController } from '@ionic/angular';
@@ -31,7 +31,6 @@ export class Tab1Page implements OnInit {
   @ViewChild(IonContent, { static: false }) content: IonContent;
 
   // Variables
-  count = '0';
   shops: Shops[];
   unfilteredShops: Shops[];
 
@@ -58,6 +57,7 @@ export class Tab1Page implements OnInit {
   }
   ads: ADs[] ;
   poster: any ;
+  searchBar = false ;
 
   constructor(
     private platform: Platform,
@@ -90,10 +90,6 @@ export class Tab1Page implements OnInit {
     });
     // hide bottom tabs
     this.service.hiddenTabs = false;
-    this.service.serviceNotice.subscribe(res => {
-      this.count = res ;
-      console.log(this.count)
-    });
     // this.playVideoHosted();
   }
   onScroll(event){
@@ -142,8 +138,15 @@ export class Tab1Page implements OnInit {
     this.navCtrl.navigate(['tabs/home']);
   }
   gotoShop(shop){
+    this.fireApi.changeData(shop.shop);
+    let navigationExtras: NavigationExtras = {
+      queryParams: shop
+    };
+    this.navCtrl.navigate(['tabs/shopprofile'],navigationExtras);
+  }
+  shopProducts(shop){
     this.fireApi.changeData(shop);
-    this.navCtrl.navigate(['tabs/shopprofile']);
+    this.navCtrl.navigate(['tabs/offers']);
   }
   AdvertslideOpts = {
     initialSlide: 1,
@@ -194,10 +197,14 @@ export class Tab1Page implements OnInit {
     this.fireApi.shareShopBy('delivery');
     this.navCtrl.navigate(['tabs/selectshop']);
   }
-  // go to shops page
-  Showshops(){
-    // this.fireApi.shareShopBy('pick');
+  shoppingList() {
+    this.navCtrl.navigate(['tabs/mycontacts']);
+  }
+  goToselectShop(){
     this.navCtrl.navigate(['tabs/selectshop']);
+  }
+  goToRestaurants(){
+    this.navCtrl.navigate(['tabs/restaurants']);
   }
   // an alert for network info
   async msgNetwork() {
@@ -232,12 +239,15 @@ export class Tab1Page implements OnInit {
     toast.present();
   }
 
-  // notifications page
-  notifications() {
-    this.navCtrl.navigate(['tabs/notifications']);
+  
+  search(){
+    this.searchBar = !this.searchBar ;
   }
 
   async  gotoDiscountModal(item) {
+    if(item.barcode === undefined){
+      item.barcode = '';
+    }
     const mod = await this.modal.create({
       component: DiscountmodalPage,
       componentProps: item

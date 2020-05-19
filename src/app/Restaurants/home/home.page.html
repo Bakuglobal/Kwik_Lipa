@@ -1,0 +1,68 @@
+  <ion-toolbar color="primary">
+    <ion-icon name="arrow-back" (click)="back()"></ion-icon>
+    <ion-title style="text-align: center;color: white;">Select Restaurant</ion-title>
+  </ion-toolbar>
+<ion-content>
+  <div style="text-align: center;">
+<ion-searchbar animated placeholder="search Restaurant" mode="ios"></ion-searchbar>
+  </div>
+  <div>
+    <ion-slides pager="true" [options]="AdvertslideOpts">
+      <ion-slide >
+          <img class="soko-image" src="../../../assets/images/adfood.jpg" >
+      </ion-slide>
+      <ion-slide >
+        <img class="soko-image" src="../../../assets/images/foodad.jpg" >
+    </ion-slide>
+  </ion-slides>
+  </div>
+ 
+<div>
+  <div class="label">
+    <ion-label class="left">Your Top Picks</ion-label>
+    <div  class="right">
+        View all
+        <ion-icon src="/assets/images/arrow-right.svg"></ion-icon>
+    </div>
+</div><br>
+  <ion-slides  pager="false" [options]="slideme">
+    <ion-slide *ngFor="let item of skeleton">
+        <ion-card style="width: 400px;height: 280px;">
+            <ion-skeleton-text animated style="width: 100%;height: 150px;border-radius: 0px;"></ion-skeleton-text>
+            <ion-card-content>
+                <ion-skeleton-text animated class="pr-name"></ion-skeleton-text><br>
+                <ion-skeleton-text animated class="pr-price"></ion-skeleton-text>
+            </ion-card-content>
+            <div class="prTag">
+                <ion-skeleton-text animated ></ion-skeleton-text>
+            </div>
+        </ion-card>
+    </ion-slide>
+</ion-slides>
+
+</div>
+<div>
+  <div class="label">
+    <ion-label class="left">All Vendors</ion-label>
+    <div  class="right">
+        View all
+        <ion-icon src="/assets/images/arrow-right.svg"></ion-icon>
+    </div>
+</div><br>
+  <ion-slides  pager="false" [options]="slideme">
+    <ion-slide *ngFor="let item of skeleton">
+        <ion-card style="width: 400px;height: 280px;">
+            <ion-skeleton-text animated style="width: 100%;height: 150px;border-radius: 0px;"></ion-skeleton-text>
+            <ion-card-content>
+                <ion-skeleton-text animated class="pr-name"></ion-skeleton-text><br>
+                <ion-skeleton-text animated class="pr-price"></ion-skeleton-text>
+            </ion-card-content>
+            <div class="prTag">
+                <ion-skeleton-text animated ></ion-skeleton-text>
+            </div>
+        </ion-card>
+    </ion-slide>
+</ion-slides>
+
+</div>
+</ion-content>

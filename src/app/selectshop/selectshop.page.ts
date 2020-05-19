@@ -98,7 +98,7 @@ export class SelectshopPage implements OnInit {
   }
   filterItems() {
     return this.unfilteredShops.filter(item => {
-      return item.name.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
+      return item.shop.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
     });
   }
   // show searchBar

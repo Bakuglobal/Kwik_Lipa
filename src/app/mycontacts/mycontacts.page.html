@@ -3,24 +3,27 @@
     <ion-buttons>
       <ion-icon slot="start" (click)="back()" name="arrow-back" color="primary"></ion-icon>
       <!-- <ion-icon slot="start" name="arrow-back" (click)="back()"></ion-icon> -->
-      <ion-title text-center *ngIf="!search" color="primary">Shopping Lists</ion-title>
-      <ion-searchbar placeholder="Enter list Title" *ngIf="search" ></ion-searchbar>
-      <ion-icon slot="end" name="search" (click)="showSearch()" color="primary"></ion-icon>
+      <ion-title text-center color="primary">Shopping Lists</ion-title>
+      <!-- <ion-searchbar animated mode="ios" placeholder="Enter list Title"></ion-searchbar> -->
+      <!-- <ion-icon slot="end" name="search" (click)="showSearch()" color="primary"></ion-icon> -->
     </ion-buttons>
   </ion-toolbar>
+  <div>
+    <ion-searchbar animated mode="ios" placeholder="search list"></ion-searchbar>
+  </div>
   <ion-label class="ion-padding title"> My Lists</ion-label>
   <ion-card *ngFor="let item of myList" class="ion-padding" color="primary" (click)="viewList(item)">
     <ion-card-title>
-      <ion-label class="ion-float-left">Created : {{item.DueDate | date}} </ion-label>
+      <ion-label class="ion-float-left" id="list-title">Created : {{item.DueDate | date}} </ion-label>
       <!-- <ion-text class="ion-float-right"> By : <span *ngIf="item.createdBy !== myName">{{item.createdBy}}</span> <span
           *ngIf="item.createdBy == myName">You</span></ion-text> --> <br> 
     </ion-card-title>
     <ion-card-content>
-      <ion-label class="ion-padding" class="list-title">Title : {{item.Title}}</ion-label><br>
+      <ion-label  class="list-title">{{item.Title}}</ion-label><br>
       <ion-text padding >{{item.Items.length}} Items</ion-text><br>
     </ion-card-content>
     <div style="margin-top: 10px;">
-      <ion-label>Shared with :</ion-label><br>
+      <!-- <ion-label>Shared with :</ion-label><br> -->
       <ion-icon name="people"></ion-icon>&nbsp;&nbsp;
       <ion-text *ngFor="let item of item.members">{{item.firstName}}&nbsp;</ion-text>
     </div>
