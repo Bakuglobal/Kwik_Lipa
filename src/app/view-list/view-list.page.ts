@@ -65,7 +65,6 @@ export class ViewListPage implements OnInit {
     });
   }
   shopNow(){
-
     if(this.budget == 0){
       this.setBudget();
     }else{

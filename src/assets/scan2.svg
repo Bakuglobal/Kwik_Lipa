@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="64pt" height="64pt" viewBox="0 0 64 64" version="1.1">
-<g id="surface1">
-<path style="fill:none;stroke-width:32;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:4;" d="M 336 448 L 392 448 C 422.9375 448 448 422.9375 448 392 L 448 336 " transform="matrix(0.125,0,0,0.125,0,0)"/>
-<path style="fill:none;stroke-width:32;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:4;" d="M 448 176 L 448 120 C 448 89.0625 422.9375 64 392 64 L 336 64 " transform="matrix(0.125,0,0,0.125,0,0)"/>
-<path style="fill:none;stroke-width:32;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:4;" d="M 176 448 L 120 448 C 89.0625 448 64 422.9375 64 392 L 64 336 " transform="matrix(0.125,0,0,0.125,0,0)"/>
-<path style="fill:none;stroke-width:32;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:4;" d="M 64 176 L 64 120 C 64 89.0625 89.0625 64 120 64 L 176 64 " transform="matrix(0.125,0,0,0.125,0,0)"/>
-</g>
-</svg>

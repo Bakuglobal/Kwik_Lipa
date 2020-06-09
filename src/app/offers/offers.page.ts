@@ -127,7 +127,6 @@ export class OffersPage implements OnInit {
     // this.contains(this.cart, item);
     this.db.addCart(item);
     this.toast('Product added To cart');
-
   }
   // go to home page
 

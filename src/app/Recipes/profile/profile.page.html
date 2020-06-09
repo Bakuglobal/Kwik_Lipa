@@ -1,0 +1,62 @@
+<ion-content [scrollEvents]="true" (ionScroll)="onScroll($event)">
+  <div style="padding-bottom: 15px;">
+    <div class="back">
+      <ion-icon (click)="back()" name="arrow-back" color="primary"></ion-icon>
+    </div>
+    <div *ngIf="data === undefined">
+      <ion-skeleton-text animated style="width: 100%; object-fit: fill; height: 200px;border-radius: 0px;">
+      </ion-skeleton-text>
+    </div>
+    <div>
+      <img src="{{data.cover}}" alt="Cover image" style="width: 100%; object-fit: fill; height: 150px;">
+    </div>
+    <div>
+      <ion-avatar style="width: 60px; height: 60px; margin-top: -35px; margin-left: 25px;">
+        <img src="{{data.logo}}" style="object-fit: fill;">
+      </ion-avatar>
+    </div>
+    <div style="margin-top: 15px;line-height: 1;" class="ion-padding">
+      <div style="font-size: 25px; font-weight: bold;">{{data.shop}}</div><br>
+      <div *ngIf="data === undefined">
+        <br>
+        <ion-skeleton-text animated style="width: 80%; object-fit: fill; height: 20px;"></ion-skeleton-text><br>
+        <ion-skeleton-text animated style="width: 80%; object-fit: fill; height: 20px;"></ion-skeleton-text>
+      </div>
+      <div style="font-size: 13px; color: #636363; margin-top: 5px;">
+        <a>{{data.Location}} <ion-icon name="pin"></ion-icon></a>
+      </div>
+      <div style="font-size: 13px; color: #636363; margin-top: 8px;" *ngIf="data !== undefined">Open from
+        {{data.Open}}&nbsp; - {{data.Close}}&nbsp; Mon - Sat</div>
+      <div style="font-size: 13px; color: #636363; margin-top: 8px;" *ngIf="data !== undefined">Website:
+        <a *ngIf="data !== undefined">{{data.Website}}</a>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <ion-searchbar animated mode="ios" [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()"
+      placeholder="Search menu"></ion-searchbar>
+  </div>
+  <ion-segment scrollable (ionChange)="categoryBar($event)" id="meals">
+    <ion-segment-button checked value="All">
+      All
+    </ion-segment-button>
+    <ion-segment-button scrollable *ngFor="let item of categories" value="{{item}}">
+      {{item}}
+    </ion-segment-button>
+  </ion-segment>
+  <div *ngFor="let item of meals" class="ion-padding" style="background-color: var(--ion-color-light);margin-top: 10px;" (click)="seeDetails(item)">
+      <ion-row>
+        <ion-col>
+          <img height="100px" width="100%" src="{{item.image}}">
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-label style="font-size: 1.2rem;font-weight: bold;">{{item.recipe}}</ion-label><br><br>
+          <ion-label style="color: grey;">{{item.persons}} Persons</ion-label><br><br>
+          <ion-label style="color: grey;">Kshs. {{item.currentprice}}</ion-label>
+        </ion-col>
+      </ion-row>
+  </div><br>
+</ion-content>

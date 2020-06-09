@@ -74,12 +74,14 @@ export class TransactionsPage implements OnInit {
       await mod.present();
   }
    getShopNumber(item){
+     console.log('item',item);
      this.db.getShopPhoneNumber(item.shop).subscribe(res => {
      console.log(res[0].Contacts);
      item.phone =  res[0].Contacts ;
      this.viewOrder(item) ;
     });
   }
+
    // notifications page
    notifications(){
     this.navCtrl.navigate(['tabs/notifications']);

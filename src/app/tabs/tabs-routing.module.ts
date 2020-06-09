@@ -80,6 +80,11 @@ const routes: Routes = [
       { path: 'Regionshop', loadChildren: () => import('../Donations/shop/shop.module').then(m => m.ShopPageModule)},
       { path: 'restaurants', loadChildren: () => import('../Restaurants/home/home.module').then(m => m.HomePageModule)},
       { path: 'Donationcart', loadChildren: () => import('../Donations/cart/cart.module').then(m => m.CartPageModule)},
+      { path: 'recipes', loadChildren: () => import('../Recipes/home/home.module').then(m => m.HomePageModule)},
+      { path: 'profile', loadChildren: () => import('../Restaurants/profile/profile.module').then(m => m.ProfilePageModule)},
+      { path: 'details', loadChildren: () => import('../Restaurants/details-modal/details-modal.module').then(m => m.DetailsModalPageModule)},
+      { path: 'Recipeprofile', loadChildren: () => import('../Recipes/profile/profile.module').then(m => m.ProfilePageModule)},
+      { path: 'recipeDetails', loadChildren: () => import('../Recipes/details-modal/details-modal.module').then(m => m.DetailsModalPageModule)},
       { path: 'recommend' , loadChildren:() => import('../recommend/recommend.module').then(m => m.RecommendPageModule), canActivate: [AuthService]},
       { path: 'ipaytransmodal', loadChildren:() => import('../modal/ipaytransmodal/ipaytransmodal.module').then(m => m.IpaytransmodalPageModule), canActivate: [AuthService]},
       {

@@ -24,4 +24,18 @@ ion-select-option{
 ion-textarea{
     width: 100%;
 }
-
+.ripple-parent {
+    position: relative;
+    overflow: hidden;
+  }
+  .icon{
+    border:  1px solid grey;
+    border-radius: 20px;
+    text-align: center;
+    padding-top: 10px;
+}
+.qty{
+    font-size: 0.6em;
+    text-align: center;
+    font-weight: bolder;
+}

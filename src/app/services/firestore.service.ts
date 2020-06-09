@@ -26,6 +26,7 @@ import { Order } from '../models/order';
 import { List } from '../models/list';
 import { Notice } from '../models/upload';
 import { ADs } from '../models/ads';
+import { Category } from '../models/categories';
 
 
 const httpOptions = {
@@ -216,6 +217,9 @@ getCount(){
   getShops(){
     return this.fs.collection<Shops>('shops');
   }
+  getRecipe(){
+    return this.fs.collection<Shops>('recipes');
+  }
 //get the message send to support
  getuserMessage() : AngularFireList<Support> {
    return this.operationSupport;
@@ -398,7 +402,16 @@ getAds(){
     return ref.orderBy('priority','desc');
   }) ;
  return  fs.valueChanges();
-
 }
-  
+// get restaurants
+getRest(){
+  return this.fs.collection('restaurants').valueChanges();
+}
+getMeals(shop){
+  return this.fs.collection(shop).valueChanges();
+}
+getCategory(shop){
+  return this.fs.collection('Categories').doc<Category>(shop).valueChanges();
+}
+
 }

@@ -44,20 +44,20 @@ export class Tab1Page implements OnInit {
   header: boolean;
   tabbar: boolean;
   selectShop = false;
-  discontedProducts = [] ;
-  heading = false ;
-  Name = '' ;
-  featuredProducts = [] ;
-  skeleton = [1,2,3,4,5];
+  discontedProducts = [];
+  heading = false;
+  Name = '';
+  featuredProducts = [];
+  skeleton = [1, 2, 3, 4, 5];
   slideme = {
     initialSlide: 0,
     speed: 500,
     autoplay: true,
     slidesPerView: 1.7,
   }
-  ads: ADs[] ;
-  poster: any ;
-  searchBar = false ;
+  ads: ADs[];
+  poster: any;
+  searchBar = false;
 
   constructor(
     private platform: Platform,
@@ -73,7 +73,7 @@ export class Tab1Page implements OnInit {
     public fauth: AngularFireAuth,
     public modal: ModalController,
     public badge: Badge,
-    private videoPlayer: VideoPlayer, 
+    private videoPlayer: VideoPlayer,
   ) {
     this.Name = localStorage.getItem('Name');
     //check if offline
@@ -92,59 +92,77 @@ export class Tab1Page implements OnInit {
     this.service.hiddenTabs = false;
     // this.playVideoHosted();
   }
-  onScroll(event){
-    if(event.detail.scrollTop == 0){
-      this.service.hiddenTabs = false ;
-      this.heading = false ;
+  onScroll(event) {
+    if (event.detail.scrollTop == 0) {
+      this.service.hiddenTabs = false;
+      this.heading = false;
       console.log("00000000")
-    }else{
-    if (event.detail.scrollTop > 30) {
-      console.log(">>>> 30");
-      this.service.hiddenTabs = true ;
-      this.heading = true ;
     } else {
-      this.service.hiddenTabs = false ;
+      if (event.detail.scrollTop > 30) {
+        console.log(">>>> 30");
+        this.service.hiddenTabs = true;
+        this.heading = true;
+      } else {
+        this.service.hiddenTabs = false;
+      }
     }
   }
-  }
-  ionViewWillEnter(){
+  ionViewWillEnter() {
+    this.getAds();
     // get discounted products
     this.database.getdiscountedProducts().subscribe(res => {
-      this.discontedProducts = res ;
+      this.discontedProducts = res;
       console.log(res);
     });
     // get featured products 
     this.database.getFeaturedProducts().subscribe(res => {
-      this.featuredProducts = res ;
+      this.featuredProducts = res;
       console.log(res);
     })
     // check for unread notices
-    this.getAds();
     this.getShops();
     this.getDonationPoster();
   }
-  
+
   onIonViewDidLoad() {
     this.selectShop = false;
-   
+
   }
-  getDonationPoster(){
+  getDonationPoster() {
     this.fireApi.getPoster().subscribe(res => {
-      this.poster = res ;
-      console.log('poster',this.poster);
+      this.poster = res;
+      console.log('poster', this.poster);
     })
   }
-  goToDonations(){
+  goToDonations() {
     this.navCtrl.navigate(['tabs/home']);
   }
-  gotoShop(shop){
+  gotoRecipes(){
+    this.navCtrl.navigate(['tabs/recipes']);
+  }
+  posterToShop(shop) {
+    this.fireApi.changeData(shop);
+    let dt = this.filterItems(shop);
+    console.log('params',dt);
+    let navigationExtras: NavigationExtras = {
+      queryParams: dt[0]
+    };
+    this.navCtrl.navigate(['tabs/shopprofile'], navigationExtras);
+  }
+  filterItems(shop) {
+    return this.shops.filter(item => {
+      return item.shop.toLowerCase().indexOf(shop.toLowerCase()) > -1;
+    });
+  }
+
+  gotoShop(shop) {
     this.fireApi.changeData(shop.shop);
     let navigationExtras: NavigationExtras = {
       queryParams: shop
     };
-    this.navCtrl.navigate(['tabs/shopprofile'],navigationExtras);
+    this.navCtrl.navigate(['tabs/shopprofile'], navigationExtras);
   }
-  shopProducts(shop){
+  shopProducts(shop) {
     this.fireApi.changeData(shop);
     this.navCtrl.navigate(['tabs/offers']);
   }
@@ -200,10 +218,10 @@ export class Tab1Page implements OnInit {
   shoppingList() {
     this.navCtrl.navigate(['tabs/mycontacts']);
   }
-  goToselectShop(){
+  goToselectShop() {
     this.navCtrl.navigate(['tabs/selectshop']);
   }
-  goToRestaurants(){
+  goToRestaurants() {
     this.navCtrl.navigate(['tabs/restaurants']);
   }
   // an alert for network info
@@ -239,13 +257,13 @@ export class Tab1Page implements OnInit {
     toast.present();
   }
 
-  
-  search(){
-    this.searchBar = !this.searchBar ;
+
+  search() {
+    this.searchBar = !this.searchBar;
   }
 
   async  gotoDiscountModal(item) {
-    if(item.barcode === undefined){
+    if (item.barcode === undefined) {
       item.barcode = '';
     }
     const mod = await this.modal.create({
@@ -256,19 +274,19 @@ export class Tab1Page implements OnInit {
     await mod.present();
   }
 
-  getAds(){
+  getAds() {
     this.fireApi.getAds().subscribe(res => {
-      this.ads = res ;
-    })
+      this.ads = res;
+    });
   }
   getShops() {
     console.log('==========')
     this.fireApi.getShops().valueChanges()
-    .subscribe(res => {
-      this.shops = res ;
-      this.unfilteredShops = res ;
-      console.log('shops',this.shops);
-    });
+      .subscribe(res => {
+        this.shops = res;
+        this.unfilteredShops = res;
+        console.log('shops', this.shops);
+      });
   }
   // playVideoHosted() {
   //  return this.videoPlayer.play('https://firebasestorage.googleapis.com/v0/b/kwikapp-77d77.appspot.com/o/CORONA%20VIRUS%20AWARENESS%20-%20ENGLISH%20on%20Vimeo.mp4?alt=media&token=b492e8c9-482d-428b-991d-260ca419c4dd').then(() => {
@@ -277,7 +295,7 @@ export class Tab1Page implements OnInit {
   //     console.log(err);
   //   });
   // }
-  
+
 }
 
 

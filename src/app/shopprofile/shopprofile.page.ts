@@ -77,24 +77,6 @@ export class ShopprofilePage implements OnInit {
     await map.present();
   }
   
-  // getShop(){
-  //   let data = this.fs.collection<Shops>('shops',ref => {
-  //     return  ref.where('shop','==',this.data.shop)
-  //    });
-  //     let snap = data.snapshotChanges().pipe(
-  //      map(actions => {
-  //        return actions.map(a => {
-  //          const data = a.payload.doc.data();
-  //          const id = a.payload.doc.id ;
-  //          return { id, ... data};
-  //        });
-  //      })
-  //    );
-  //    snap.subscribe(res => {
-  //      this.shop = res[0];
-  //      console.log('shop details', this.shop);
-  //    });
-  //  }
    scanAndPay() {
     this.service.shareShopBy('scan');
     this.navCtrl.navigate(['tabs/shop']);

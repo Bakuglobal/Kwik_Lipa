@@ -4,10 +4,12 @@
         <ion-buttons slot="start">
             <ion-menu-button autoHide="false"></ion-menu-button>
         </ion-buttons>
-        <ion-title text-center *ngIf="!heading && !searchBar"> <br><br><span style="font-size: .8em;">Welcome back , <br> What
-            would you like to do ? </span></ion-title>
+        <ion-title text-center *ngIf="!heading && !searchBar"> <br><br><span style="font-size: .8em;">Welcome back ,
+                <br> What
+                would you like to do ? </span></ion-title>
         <ion-title *ngIf="heading && !searchBar" text-center>Hello {{Name}}</ion-title>
-        <ion-searchbar placeholder="Enter term here" *ngIf="searchBar" mode="ios" animated class="searchbar"></ion-searchbar>
+        <ion-searchbar placeholder="Enter term here" *ngIf="searchBar" mode="ios" animated class="searchbar">
+        </ion-searchbar>
         <ion-buttons slot="end" (click)="search()" style="padding-right: 5px;">
             <ion-icon size="large" name="search"></ion-icon><br>
         </ion-buttons>
@@ -20,15 +22,15 @@
     <!-- MAIN  MENU -->
 
     <ion-row class="main-menu">
-        <ion-col size="3" (click)="scanAndPay()">
+        <!-- <ion-col size="3" (click)="scanAndPay()">
             <div
                 style="width: 60px;height: 60px;margin: auto;position: relative;background-color: #00ade51c;border-radius: 100%;">
                 <img style="width: 40px;height: 40px;padding-top: 20px;padding-left: 20px;" src="/assets/scan.svg">
             </div>
             <h2>Scan & Pay</h2>
-        </ion-col>
+        </ion-col> -->
 
-        <ion-col size="3" (click)="pickPayCollect()">
+        <ion-col size="4" (click)="pickPayCollect()">
             <div
                 style="width: 60px;height: 60px;margin: auto;position: relative;background-color: #00ade51c;border-radius: 100%;">
                 <img style="width: 40px;height: 40px;padding-top: 20px;padding-left: 20px;" src="/assets/gift.svg">
@@ -36,14 +38,14 @@
             <h2>Pay & Collect</h2>
         </ion-col>
 
-        <ion-col size="3" (click)="Delivery()">
+        <ion-col size="4" (click)="Delivery()">
             <div
                 style="width: 60px;height: 60px;margin: auto;position: relative;background-color: #00ade51c;border-radius: 100%;">
                 <img style="width: 40px;height: 40px;padding-top: 20px;padding-left: 20px;" src="/assets/parcel.svg">
             </div>
             <h2>Buy for Delivery</h2>
         </ion-col>
-        <ion-col size="3" (click)="shoppingList()">
+        <ion-col size="4" (click)="shoppingList()">
             <div
                 style="width: 60px;height: 60px;margin: auto;position: relative;background-color: #00ade51c;border-radius: 100%;">
                 <img style="width: 40px;height: 40px;padding-top: 20px;padding-left: 20px;" src="/assets/list1.svg">
@@ -53,18 +55,30 @@
     </ion-row>
     <div>
         <ion-label class="tagTitle">Kwik Access</ion-label>
-        <ion-grid >
+        <ion-grid>
             <ion-row>
-                <ion-col size="6">
+                <ion-col size="4">
                     <ion-card class="k-access" (click)="goToRestaurants()">
-                        <img src="../../assets/images/food.jpg">
-                        <ion-label style="position: absolute;top: 40%;left: 30%;font-weight: bolder;color: white;font-size: 1.5rem;">FOOD</ion-label>
+                        <img src="../../assets/images/rest.jpg">
+                        <ion-label
+                            style="position: absolute;top: 40%;left: 20%;font-weight: bolder;color: white;font-size: 1.5rem;">
+                            FOOD</ion-label>
                     </ion-card>
                 </ion-col>
-                <ion-col size="6">
+                <ion-col size="4">
+                    <ion-card class="k-access" (click)="gotoRecipes()">
+                        <img src="../../assets/images/recipe.jpg">
+                        <ion-label
+                            style="position: absolute;top: 40%;left: 10%;font-weight: bolder;color: white;font-size: 1.5rem;">
+                            RECIPES</ion-label>
+                    </ion-card>
+                </ion-col>
+                <ion-col size="4">
                     <ion-card class="k-access" (click)="goToselectShop()">
                         <img src="../../assets/images/supermarket.jpg">
-                        <ion-label style="position: absolute;top: 40%;left: 30%;font-weight: bolder;color: white;font-size: 1.5rem;">SHOPS</ion-label>
+                        <ion-label
+                            style="position: absolute;top: 40%;left: 20%;font-weight: bolder;color: white;font-size: 1.5rem;">
+                            SHOPS</ion-label>
                     </ion-card>
                 </ion-col>
             </ion-row>
@@ -74,31 +88,34 @@
     <!-- Donations (click)="goToDonations()"  -->
     <!-- <div   *ngIf="poster !== undefined" style="margin-top: 20px;">
         <ion-label class="tagTitle"><b>Corona Compaign </b></ion-label><br><br> -->
-        <!-- <ion-button (click)="playVideoHosted()"> play</ion-button> -->
-        <!-- <img style="width: 100%;height: 200px;" src="{{poster[0].image}}"> 
+    <!-- <ion-button (click)="playVideoHosted()"> play</ion-button> -->
+    <!-- <img style="width: 100%;height: 200px;" src="{{poster[0].image}}"> 
         <br><br> -->
-        <!-- <video src="https://firebasestorage.googleapis.com/v0/b/kwikapp-77d77.appspot.com/o/CORONA%20VIRUS%20AWARENESS%20-%20ENGLISH%20on%20Vimeo.mp4?alt=media&token=b492e8c9-482d-428b-991d-260ca419c4dd" controls muted height="200px" width="100%" poster="../../assets/images/donate.jpeg">
+    <!-- <video src="https://firebasestorage.googleapis.com/v0/b/kwikapp-77d77.appspot.com/o/CORONA%20VIRUS%20AWARENESS%20-%20ENGLISH%20on%20Vimeo.mp4?alt=media&token=b492e8c9-482d-428b-991d-260ca419c4dd" controls muted height="200px" width="100%" poster="../../assets/images/donate.jpeg">
          </video> -->
-        
+
     <!-- </div> -->
-    
+
     <!-- ADVERTS -->
-    <ion-label class="tagTitle">New Shops</ion-label>
-    <div class="soko">
-        <div class="space"></div>
-        <div class="soko-content">
-            <ion-slides pager="true" [options]="AdvertslideOpts">
-                <ion-slide *ngFor="let item of ads ">
-                    <img class="soko-image" src="{{item.image}}" (click)="gotoShop(item.shop)">
-                    <ion-skeleton-text animated style="width: 100%;height: 200px;" *ngIf="ads.length == 0"></ion-skeleton-text>
-                </ion-slide>
-                <!-- <ion-slide>
+    <div *ngIf="ads !== undefined">
+        <ion-label class="tagTitle">New Shops</ion-label>
+        <div class="soko">
+            <div class="space"></div>
+            <div class="soko-content">
+                <ion-slides pager="true" [options]="AdvertslideOpts">
+                    <ion-slide *ngFor="let item of ads ">
+                        <img class="soko-image" src="{{item.image}}" (click)="posterToShop(item.shop)">
+                        <ion-skeleton-text animated style="width: 100%;height: 200px;" *ngIf="ads.length == 0">
+                        </ion-skeleton-text>
+                    </ion-slide>
+                    <!-- <ion-slide>
                     <img class="soko-image" src="/assets/images/Kakila.jpg">
                 </ion-slide> -->
-            </ion-slides>
+                </ion-slides>
+            </div>
         </div>
     </div>
-    
+
     <div class="body">
         <!-- DISCOUNTED PRODUCTS -->
         <div style="background-color: #F5F5F5; height: 5px;"></div>
@@ -110,7 +127,7 @@
             </div>
         </div><br>
         <ion-slides pager="false" [options]="slideme">
-            <ion-slide *ngFor="let item of discontedProducts   " (click)="gotoDiscountModal(item)" >
+            <ion-slide *ngFor="let item of discontedProducts   " (click)="gotoDiscountModal(item)">
                 <ion-card style="width: 400px;height: 280px;" *ngIf="item.stock !== 0">
                     <div>
                         <!-- <div *ngIf="item.stock == 0" class="soldTag">
@@ -124,7 +141,8 @@
                     <img style="height: 150px;width: 400px;" src="{{item.image}}">
                     <ion-card-content>
                         <ion-label class="pr-name">{{item.product}}</ion-label><br>
-                        <ion-label class="pr-price"><span style="color: grey;">Shop : </span>{{item.shop}}</ion-label><br>
+                        <ion-label class="pr-price"><span style="color: grey;">Shop : </span>{{item.shop}}</ion-label>
+                        <br>
 
                     </ion-card-content>
                     <div class="prTag">
@@ -137,13 +155,14 @@
         <ion-slides *ngIf="discontedProducts.length == 0" pager="false" [options]="slideme">
             <ion-slide *ngFor="let item of skeleton">
                 <ion-card style="width: 400px;height: 280px;">
-                    <ion-skeleton-text animated style="width: 100%;height: 150px;border-radius: 0px;"></ion-skeleton-text>
+                    <ion-skeleton-text animated style="width: 100%;height: 150px;border-radius: 0px;">
+                    </ion-skeleton-text>
                     <ion-card-content>
                         <ion-skeleton-text animated class="pr-name"></ion-skeleton-text><br>
                         <ion-skeleton-text animated class="pr-price"></ion-skeleton-text>
                     </ion-card-content>
                     <div class="prTag">
-                        <ion-skeleton-text animated ></ion-skeleton-text>
+                        <ion-skeleton-text animated></ion-skeleton-text>
                     </div>
                 </ion-card>
             </ion-slide>
@@ -174,7 +193,8 @@
                     <img style="height: 150px;width: 400px;" src="{{item.image}}">
                     <ion-card-content>
                         <ion-label class="pr-name">{{item.product}}</ion-label><br>
-                        <ion-label class="pr-price"><span style="color: grey;">Shop : </span> {{item.shop}}</ion-label><br>
+                        <ion-label class="pr-price"><span style="color: grey;">Shop : </span> {{item.shop}}</ion-label>
+                        <br>
                     </ion-card-content>
                     <div class="prTag">
                         <ion-label id="lb">K E S {{item.currentprice}}
@@ -186,7 +206,8 @@
         <ion-slides *ngIf="featuredProducts.length == 0" pager="false" [options]="slideme">
             <ion-slide *ngFor="let item of skeleton">
                 <ion-card style="width: 400px;height: 280px;">
-                    <ion-skeleton-text animated style="width: 100%;height: 150px;border-radius: 0px;"></ion-skeleton-text>
+                    <ion-skeleton-text animated style="width: 100%;height: 150px;border-radius: 0px;">
+                    </ion-skeleton-text>
                     <ion-card-content>
                         <ion-skeleton-text animated class="pr-name"></ion-skeleton-text><br>
                         <ion-skeleton-text animated class="pr-price"></ion-skeleton-text>
@@ -209,42 +230,20 @@
         </div><br>
         <ion-slides pager="false" [options]="slideme">
             <ion-slide *ngFor="let shop of shops " (click)="gotoShop(shop)">
-                <ion-col  >
-                    <div class="partion ion-padding" >
-                    <img src="{{shop.logo}}" style="width: 65%;height: 65%;">
-                    <br><br>
-                    <h5 class="shops-title" style="text-transform: uppercase">{{shop.shop}} </h5>
+                <ion-col>
+                    <div class="partion ion-padding">
+                        <img src="{{shop.logo}}" style="width: 65%;height: 65%;">
+                        <br><br>
+                        <h5 class="shops-title" style="text-transform: uppercase">{{shop.shop}} </h5>
                     </div>
                 </ion-col>
-                <!-- <ion-card >
-                    <div class="partion" >
-                        <img src="{{item.logo}}" class="shop-img">
-                        <h5 class="shops-title" style="text-transform: uppercase">{{item.shop}} </h5>
-                        </div> -->
-                    <!-- <div>
-                        <ion-button expand="full"
-                            style="height: 25px; width: 40px; position: absolute; top: 5px; right: 0px;border-radius: 10px 0px 0px 10px;">
-                            <div style="font-size: 11px;">-20%</div>
-                        </ion-button>
-                    </div> -->
-                    <!-- <img style="height: 150px;" src="{{item.logo}}">
-                    <ion-card-content> -->
-                        <!-- <ion-label class="pr-name">{{item.product}}</ion-label><br> -->
-                        <!-- <ion-label class="pr-price">{{item.shop}}</ion-label><br>
-                    </ion-card-content> -->
-                    <!-- <div class="prTag">
-                        <ion-label id="lb">K E S {{item.currentprice}}
-                        </ion-label>
-                    </div> -->
-                    <!-- <br>
-                    <ion-label style="height: 30px;"></ion-label> -->
-                <!-- </ion-card> -->
             </ion-slide>
         </ion-slides>
         <ion-slides *ngIf="discontedProducts.length == 0" pager="false" [options]="slideme">
             <ion-slide *ngFor="let item of skeleton">
                 <ion-card style="width: 400px;height: 280px;">
-                    <ion-skeleton-text animated style="width: 100%;height: 150px;border-radius: 0px;"></ion-skeleton-text>
+                    <ion-skeleton-text animated style="width: 100%;height: 150px;border-radius: 0px;">
+                    </ion-skeleton-text>
                     <ion-card-content>
                         <ion-skeleton-text animated class="pr-name"></ion-skeleton-text><br>
                         <ion-skeleton-text animated class="pr-price"></ion-skeleton-text>
