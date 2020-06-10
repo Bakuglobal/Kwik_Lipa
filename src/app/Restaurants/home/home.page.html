@@ -64,7 +64,7 @@
     <ion-slides pager="false" [options]="slideme">
       <ion-slide *ngFor="let shop of Restaurants " (click)="goToRest(shop)">
         <ion-card style="width: 400px;height: 220px;">
-          <img src="{{shop.logo}}" style="height: 150px;">
+          <img src="{{shop.logo}}" style="height: 150px; width: 100%;">
           <ion-card-content style="text-align: left;">
            <h5 class="pr-name" style="text-transform: uppercase">{{shop.Restaurant}} </h5>
           </ion-card-content>
