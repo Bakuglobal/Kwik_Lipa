@@ -1,0 +1,160 @@
+// FIRST CONTENT
+.first-content {
+    margin-right: 5px; 
+    margin-left: 5px; 
+    background-color: #00AEE5; 
+    margin-top: -10px; 
+    margin-bottom: -10px;
+    p {
+        font-size: 13px; 
+        color: white; 
+        padding: 10px;
+    }
+}
+
+
+// SECOND CONTENT
+.second-content {
+    background: url('/assets/images/wall-bricks-baird-thumb.jpg'); 
+    border-top-right-radius: 10px; 
+    border-top-left-radius: 10px; 
+    margin-left: 5px; 
+    margin-right: 5px;
+    .main-container {
+        background-color: rgba(0, 174, 229, 0.7); 
+        transform: translate(0%, 0%); 
+        border-top-right-radius: 10px; 
+        border-top-left-radius: 10px;
+
+        // CONTAINER 1
+        .container1 {
+            margin-left: 10px; 
+            margin-right: 10px;
+            .title {
+                color: white; 
+                font-size: 13px; 
+                padding-top: 10px; 
+                padding-bottom: 3px;
+            }
+            .video-content {
+                img {
+                    width: 100%;
+                }
+                .play-controller {
+                    position: absolute;
+                    ion-col {
+                        width: 50px; 
+                        height: 30px; 
+                        border-radius: 2px; 
+                        background-color: rgba(0, 174, 229, 0.7); 
+                        transform: translate(0%, 0%);
+                        ion-icon {
+                            color: white; 
+                            margin-top: 1px;
+                        }
+                    }
+                }
+                .duration {
+                    position: absolute; 
+                    bottom: 10px; 
+                    right: 10px;
+                    ion-col {
+                        margin-top: 20px; border-radius: 2px; 
+                        height: 20px; 
+                        background-color: rgba(0, 174, 229, 0.7); 
+                        transform: translate(0%, 0%);
+                        div {
+                            font-size: 12px; 
+                            color: white;
+                        }
+                    }
+                }
+            }
+        }
+
+        // CONTAINER 2
+        .container2 {
+            margin-left: 10px; 
+            margin-right: 10px; 
+            padding-top: 10px;
+            .title {
+                color: white; 
+                font-size: 13px; 
+                padding-top: 10px;
+                margin-bottom: -4px;
+            }
+            .content {
+                margin-left: -1.5px; 
+                margin-right: -3.5%;
+                ion-row {
+                    margin-right: -2%; 
+                    margin-left: -5%; 
+                    width: 100%;
+                    ion-col {
+                        width: 34%; 
+                        background-color: white; 
+                        margin: 2%;
+                        .product-image img {
+                            object-fit: fill; 
+                            width: 100%;
+                        }
+                        .product-content p {
+                            font-size: 10px; 
+                            padding-top: 5px; 
+                            padding-bottom: 5px; 
+                            color: #666666;
+                        }
+                    }
+                }
+            }
+        }
+
+        // CONTAINER 3
+        .container3 {
+            margin-left: 10px; 
+            margin-right: 10px; 
+            padding-top: 10px; 
+            padding-bottom: 10px;
+            .title {
+                color: white; 
+                font-size: 13px; 
+                padding-top: 10px; 
+                padding-bottom: 3px;
+            }
+            .video-content {
+                img {
+                    width: 100%;
+                }
+                .play-controller {
+                    position: absolute;
+                    ion-col {
+                        width: 50px; 
+                        height: 30px; 
+                        border-radius: 2px; 
+                        background-color: rgba(0, 174, 229, 0.7); 
+                        transform: translate(0%, 0%);
+                        ion-icon {
+                            color: white; 
+                            margin-top: 1px;
+                        }
+                    }
+                }
+                .duration {
+                    position: absolute; 
+                    bottom: 10px; 
+                    right: 10px;
+                    ion-col {
+                        margin-top: 20px; border-radius: 2px; 
+                        height: 20px; 
+                        background-color: rgba(0, 174, 229, 0.7); 
+                        transform: translate(0%, 0%);
+                        div {
+                            font-size: 12px; 
+                            color: white;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

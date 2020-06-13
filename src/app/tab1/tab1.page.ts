@@ -15,6 +15,7 @@ import { DiscountmodalPage } from '../discountmodal/discountmodal.page';
 import { Badge } from '@ionic-native/badge/ngx';
 import { ADs } from '../models/ads';
 import { VideoPlayer } from '@ionic-native/video-player/ngx';
+import { LifestylePage } from '../lifestyle/lifestyle.page';
 
 
 
@@ -295,6 +296,12 @@ export class Tab1Page implements OnInit {
   //     console.log(err);
   //   });
   // }
+
+
+
+  goToLifestyle() {
+    this.navCtrl.navigate(['/lifestyle']);
+  }
 
 }
 

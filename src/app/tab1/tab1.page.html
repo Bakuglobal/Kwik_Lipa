@@ -85,6 +85,65 @@
         </ion-grid>
     </div>
 
+
+
+    <!-- NEW KWIK ACCESS -->
+    <div style="">
+    <ion-row>
+        <div class="order-food" style="width: 100%; margin-left: 10px; margin-right: 10px;" (click)="goToRestaurants()">
+            <img src="/assets/images/order-food.png" style="width: 100%; border-radius: 5px;" alt="">
+            <div class="container" style="margin-left: 50%; width: 100%; margin-top: -32px; background-color: rgba(0, 174, 229, 0.7); transform: translate(-50%, -50%); border-radius: 5px;">
+                <h1 style="font-size: 14px; color: white; text-align: center; font-weight: bold;">Order Food</h1>
+            </div>
+        </div>
+    </ion-row>
+
+    <ion-row style="margin-right: 10px; margin-left: 10px; margin-top: -15px;">
+        <ion-col no-padding style="margin-right: 5px" (click)="goToLifestyle()">
+            <img src="/assets/images/lifestyle.png" alt="" style="width: 100%; border-radius: 3px;">
+            <div class="container" style="margin-left: 50%; width: 100%; margin-top: -32px; background-color: rgba(0, 174, 229, 0.7); transform: translate(-50%, -50%); border-radius: 5px;">
+                <h1 style="font-size: 14px; color: white; text-align: center; font-weight: bold;">Lifestyle</h1>
+            </div>
+        </ion-col>
+        <ion-col no-padding>
+            <img src="/assets/images/soko.png" alt="" style="width: 100%; border-radius: 3px;">
+            <div class="container" style="margin-left: 50%; width: 100%; margin-top: -50px; background-color: rgba(0, 174, 229, 1); transform: translate(-50%, -50%); border-radius: 5px;">
+                <h1 style="font-size: 14px; color: white; text-align: center; font-weight: bold;">Soko</h1>
+            </div>
+        </ion-col>
+        <ion-col no-padding style="margin-left: 5px;">
+            <img src="/assets/images/donatation.png" alt="" style="width: 100%; border-radius: 3px;">
+            <div class="container" style="margin-left: 50%; width: 100%; margin-top: -32px; background-color: rgba(0, 174, 229, 0.7); transform: translate(-50%, -50%); border-radius: 5px;">
+                <h1 style="font-size: 14px; color: white; text-align: center; font-weight: bold;">Donate</h1>
+            </div>
+        </ion-col>
+    </ion-row>
+
+    <div style="margin-right: 20px;">
+        <div class="shop" style="width: 100%; margin-left: 10px; margin-right: 10px; margin-top: -15px;">
+            <img src="/assets/images/shop.png" style="width: 100%; border-radius: 5px;" alt="">
+            <div class="container" style="margin-left: 50%; width: 100%; margin-top: -32px; background-color: rgba(0, 174, 229, 0.7); transform: translate(-50%, -50%); border-radius: 5px;">
+                <h1 style="font-size: 14px; color: white; text-align: center; font-weight: bold;">Shop</h1>
+            </div>
+        </div>
+    </div>
+
+    <!-- <ion-row no-padding style="">
+        <div class="shop" style="width: 100%; margin-left: 10px; margin-right: 10px; margin-top: -15px;">
+            <img src="/assets/images/shop.png" style="width: 100%; border-radius: 5px;" alt="">
+            <div class="container" style="margin-left: 50%; width: 100%; margin-top: -32px; background-color: rgba(0, 174, 229, 0.7); transform: translate(-50%, -50%); border-radius: 5px;">
+                <h1 style="font-size: 14px; color: white; text-align: center; font-weight: bold;">Shop</h1>
+            </div>
+        </div>
+    </ion-row> -->
+</div>
+    <!-- END OF NEW KWIK ACCESS -->
+    
+<div style="margin-top: -80px;"></div>
+
+
+
+
     <!-- Donations (click)="goToDonations()"  -->
     <!-- <div   *ngIf="poster !== undefined" style="margin-top: 20px;">
         <ion-label class="tagTitle"><b>Corona Compaign </b></ion-label><br><br> -->
@@ -98,19 +157,32 @@
 
     <!-- ADVERTS -->
     <div *ngIf="ads !== undefined">
-        <ion-label class="tagTitle">New Shops</ion-label>
-        <div class="soko">
+        <ion-label class="tagTitle">What's new</ion-label>
+        <div class="soko" style=" margin-right: 10px; margin-left: 10px;">
             <div class="space"></div>
             <div class="soko-content">
-                <ion-slides pager="true" [options]="AdvertslideOpts">
+                <!-- <ion-slides pager="true" [options]="AdvertslideOpts">
+
                     <ion-slide *ngFor="let item of ads ">
-                        <img class="soko-image" src="{{item.image}}" (click)="posterToShop(item.shop)">
+                        <img class="soko-image" src="/assets/images/Kakila-poster.png" style="" (click)="posterToShop(item.shop)">
                         <ion-skeleton-text animated style="width: 100%;height: 200px;" *ngIf="ads.length == 0">
                         </ion-skeleton-text>
                     </ion-slide>
-                    <!-- <ion-slide>
+
+
+                     <ion-slide>
                     <img class="soko-image" src="/assets/images/Kakila.jpg">
-                </ion-slide> -->
+                </ion-slide> 
+
+
+                </ion-slides> -->
+
+                <ion-slides pager="true" [options]="AdvertslideOpts">
+                    <ion-slide *ngFor="let item of ads">
+                        <img class="soko-image" src="/assets/images/news.png" style="width: 100%;" (click)="posterToShop(item.shop)">
+                        <ion-skeleton-text animated style="width: 100%; height: 125px;" *ngIf="ads.length == 0">
+                        </ion-skeleton-text>
+                    </ion-slide>
                 </ion-slides>
             </div>
         </div>
