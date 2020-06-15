@@ -48,6 +48,7 @@
     "@ionic-native/splash-screen": "^5.0.0",
     "@ionic-native/status-bar": "^5.0.0",
     "@ionic-native/video-player": "^5.23.0",
+    "@ionic-native/youtube-video-player": "^5.26.0",
     "@ionic/angular": "^4.7.1",
     "@types/jquery": "^3.3.31",
     "animate.css": "^3.7.2",
@@ -71,12 +72,14 @@
     "cordova-plugin-network-information": "2.0.2",
     "cordova-plugin-video-player": "git+https://github.com/moust/cordova-plugin-videoplayer.git",
     "cordova-plugin-x-socialsharing": "5.6.2",
+    "cordova-plugin-youtube-video-player": "^2.4.0",
     "core-js": "^2.5.4",
     "es6-promise-plugin": "4.2.2",
     "firebase": "^7.6.2",
     "hammerjs": "^2.0.8",
     "jquery": "^3.4.1",
     "material-design-icons": "^3.0.1",
+    "mx.ferreyra.callnumber": "0.0.2",
     "ngx-qrcode2": "0.0.9",
     "phonegap-plugin-barcodescanner": "8.1.0",
     "rxjs": "^6.5.4",
@@ -148,13 +151,20 @@
       },
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-fullscreen": {},
-      "cordova-plugin-fcm-with-dependecy-updated": {},
+      "cordova-plugin-fcm-with-dependecy-updated": {
+        "FCM_CORE_VERSION": "16.0.9",
+        "FCM_VERSION": "18.0.0",
+        "GRADLE_TOOLS_VERSION": "3.5.0",
+        "GOOGLE_SERVICES_VERSION": "4.2.0"
+      },
       "cordova-plugin-badge": {},
       "cordova-plugin-googleplus": {
         "PLAY_SERVICES_VERSION": "15.0.1"
       },
       "mx.ferreyra.callnumber": {},
-      "com.moust.cordova.videoplayer": {}
+      "com.moust.cordova.videoplayer": {},
+      "cordova-plugin-youtube-video-player": {},
+      "call-number": {}
     },
     "platforms": [
       "ios",

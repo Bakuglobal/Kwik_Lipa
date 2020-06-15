@@ -56,6 +56,9 @@ import { CallNumber} from '@ionic-native/call-number/ngx';
 import { VideoPlayer } from '@ionic-native/video-player/ngx';
 import { DetailsModalPage } from './Restaurants/details-modal/details-modal.page';
 
+// YOUTUBE API 
+import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player/ngx';
+
 @NgModule({
   declarations: [AppComponent,   ],
   entryComponents: [],
@@ -110,6 +113,7 @@ import { DetailsModalPage } from './Restaurants/details-modal/details-modal.page
     Tab1Page,
     HTTP,
     FCM,
+    YoutubeVideoPlayer,
     Keyboard,
     AndroidFullScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
