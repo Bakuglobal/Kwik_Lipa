@@ -13,6 +13,9 @@ const routes: Routes = [
   { path: 'details-modal', loadChildren: './Restaurants/details-modal/details-modal.module#DetailsModalPageModule' },
   { path: 'details-modal', loadChildren: './Recipes/details-modal/details-modal.module#DetailsModalPageModule' },
   { path: 'lifestyle', loadChildren: './lifestyle/lifestyle.module#LifestylePageModule' },
+  { path: 'new-sign-up', loadChildren: './new-sign-up/new-sign-up.module#NewSignUpPageModule' },
+  { path: 'new-sign-in', loadChildren: './new-sign-in/new-sign-in.module#NewSignInPageModule' },
+  { path: 'new-sign-in-code', loadChildren: './new-sign-in-code/new-sign-in-code.module#NewSignInCodePageModule' },
 ];
 @NgModule({
   imports: [

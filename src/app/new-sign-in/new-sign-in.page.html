@@ -1,0 +1,63 @@
+<ion-content>
+    <!-- FIRST CONTENT -->
+    <div class="first-content">
+        <img src="/assets/images/sign-in.png">
+    </div>
+
+    <!-- SECOND CONTENT -->
+    <div class="second-content">
+        <div class="logo">
+            <img src="/assets/images/new-logo.png">
+        </div>
+
+        <div class="title">
+            <p class="head-title">Making Your Shopping</p>
+            <p class="sub-title">Great Again!</p>
+        </div>
+        
+        <form>
+            <div class="content-one">
+                <div class="content">
+                    <ion-row>
+                        <ion-col size="12">
+                            <ion-list>
+                                <ion-item>
+                                    <ion-label>
+                                        <ion-icon color="primary" name="call" slot="start" size="small"></ion-icon>
+                                    </ion-label>
+                                    <ion-input clearInput name="email" required type="text" placeholder="+254-700-000-000"></ion-input>
+                                </ion-item>
+                            </ion-list>
+                        </ion-col>
+                    </ion-row>
+
+                    <div>
+                        <p>YOUR PHONE NUMBER MUST CONTAIN</p>
+                        <div>
+                            <span class="bullet">&bull;</span> <p class="bullet-content">Contries code</p>
+                        </div>
+                        <div>
+                            <span class="bullet">&bull;</span> <p class="bullet-content">9 Numbers</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="content-two">
+                <ion-buttons>
+                    <ion-button shape="round">Next</ion-button>
+                </ion-buttons>
+                <ion-list>
+                    <div class="form-group">
+                        <div class="ion-text-center have-account">
+                            Have an account?<br>
+                            <b (click)="back()" style="color: #00ade5;">Create Now</b>
+                        </div>  
+                    </div>  
+                </ion-list>
+            </div>
+        </form>
+    </div>
+
+    
+</ion-content>
