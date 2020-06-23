@@ -12,6 +12,7 @@ const routes: Routes = [
   { path: 'profile', loadChildren: './Recipes/profile/profile.module#ProfilePageModule' },
   { path: 'details-modal', loadChildren: './Restaurants/details-modal/details-modal.module#DetailsModalPageModule' },
   { path: 'details-modal', loadChildren: './Recipes/details-modal/details-modal.module#DetailsModalPageModule' },
+  { path: 'lifestyle', loadChildren: './lifestyle/lifestyle.module#LifestylePageModule' },
 ];
 @NgModule({
   imports: [

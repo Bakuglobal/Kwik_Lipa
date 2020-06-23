@@ -22,13 +22,17 @@
           <ion-skeleton-text  animated style="width: 80%; object-fit: fill; height: 20px;"></ion-skeleton-text><br>
           <ion-skeleton-text  animated style="width: 80%; object-fit: fill; height: 20px;"></ion-skeleton-text>
         </div>
-        <div style="font-size: 13px; color: #636363; margin-top: 5px;"  *ngIf="shop !== undefined">
-            <a (click)="maps()">{{data.Location}} <ion-icon name="pin"></ion-icon></a> 
+        <div style="font-size: 13px; color: #636363; margin-top: 5px;"  >
+            <a (click)="maps()"><ion-icon name="pin"></ion-icon> &nbsp; {{data.Location}} </a> 
         </div>
         <div style="font-size: 13px; color: #636363; margin-top: 8px;"  *ngIf="data !== undefined">Open from {{data.Open}}&nbsp; - {{data.Close}}&nbsp; Mon - Sat</div>
         <div style="font-size: 13px; color: #636363; margin-top: 8px;"  *ngIf="data !== undefined">Website: 
             <a (click)="inbrowser(shop.Website)"  *ngIf="data !== undefined">{{data.Website}}</a>
         </div>
+        <div style="font-size: 13px; color: #636363; margin-top: 5px;"  >
+            <a (click)="maps()"><ion-icon name="mail"></ion-icon> &nbsp; {{data.Email}} </a> 
+        </div>
+        
     </div>
 </div>
 <div style="margin-top: 20px;">

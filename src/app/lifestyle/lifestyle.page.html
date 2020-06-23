@@ -1,0 +1,147 @@
+<ion-toolbar color="primary" class="ion-padding">
+  <ion-buttons>
+      <ion-icon name="arrow-back" (click)="back()"></ion-icon>
+      <ion-title style="text-align: center;color: white;">Lifestyle</ion-title>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-content>
+  <div class="first-content">
+      <p>
+          Top lifestyle trends and content curated for your enjoyment.
+      </p>
+  </div>
+
+
+  <div class="second-content">
+      <div class="main-container">
+          <div class="container1">
+              <div class="title">
+                  Trending diets
+              </div>
+
+              <div class="video-content">
+                  <ion-slides pager="true" [options]="AdvertslideOpts">
+                      <ion-slide>
+                          <img src="/assets/images/video2.png">
+                          <ion-row class="play-controller">
+                              <ion-col (click)="openMyVideo('UPfDS1zhh6c')">
+                                  <ion-icon name="play"></ion-icon>
+                              </ion-col>
+                          </ion-row>
+                          <ion-row class="duration">
+                              <ion-col>
+                                  <div>10: 03</div>
+                              </ion-col>
+                          </ion-row>
+                      </ion-slide>
+                      
+                      <ion-slide>
+                          <img src="/assets/images/video2.png">
+                          <ion-row class="play-controller">
+                              <ion-col (click)="openMyVideo('rhQmy93LZH8')">
+                                  <ion-icon name="play"></ion-icon>
+                              </ion-col>
+                          </ion-row>
+                          <ion-row class="duration">
+                              <ion-col>
+                                  <div>07: 03</div>
+                              </ion-col>
+                          </ion-row>
+                      </ion-slide>
+
+                      <ion-slide>
+                          <img src="/assets/images/video2.png">
+                          <ion-row class="play-controller">
+                              <ion-col (click)="openMyVideo('1f8yoFFdkcY')">
+                                  <ion-icon name="play"></ion-icon>
+                              </ion-col>
+                          </ion-row>
+                          <ion-row class="duration">
+                              <ion-col>
+                                  <div>03: 00</div>
+                              </ion-col>
+                          </ion-row>
+                      </ion-slide>
+                  </ion-slides>
+              </div>
+
+          </div>
+
+          <div class="container2">
+              <div class="title">
+                  For exciting products, check these Kwik stores
+              </div>
+
+              <div class="content">
+                  <!-- <ion-slides pager="true" [options]="AdvertslideOpts" no-padding>
+                      <ion-slide no-padding *ngFor="let item of shops">
+                          <ion-row no-padding>
+                              <ion-col no-padding >
+                                  <div class="product-image">
+                                      <img class="logo" src="{{item.logo}}">
+                                  </div>
+                                  <div class="product-content">
+                                      <p>{{item.shop}}</p>
+                                  </div>
+                              </ion-col>
+                          </ion-row>
+                      </ion-slide>
+                  </ion-slides> -->
+                  <ion-slides pager="false" [options]="slideme">
+                    <ion-slide *ngFor="let item of shops" >
+                        <ion-card style="width: 100px;height: 110px;" *ngIf="item.stock !== 0" (click)="shopProfile(item)">
+                            <img style="height: 50px;width: 100px;" src="{{item.logo}}">
+                            <ion-card-content class="ion-padding">
+                                <ion-label style="font-size: 9px;color: black;">{{item.shop}}</ion-label><br>
+                            </ion-card-content>
+                        </ion-card>
+                    </ion-slide>
+                </ion-slides>
+              </div>
+          </div>
+          
+
+          <!-- THIS WEEK'S PICKS FOR TOP FASHION BLOGS -->
+
+          <div class="container3">
+              <div class="title">
+                  This week's picks for top fashion vlogs
+              </div>
+
+              <div class="video-content">
+                  <ion-slides pager="true" [options]="AdvertslideOpts">
+                      <ion-slide>
+                          <img src="/assets/images/video2.png">
+                          <ion-row class="play-controller">
+                              <ion-col (click)="openMyVideo('rhQmy93LZH8')">
+                                  <ion-icon name="play"></ion-icon>
+                              </ion-col>
+                          </ion-row>
+                          <ion-row class="duration">
+                              <ion-col>
+                                  <div>10: 03</div>
+                              </ion-col>
+                          </ion-row>
+                      </ion-slide>
+                  </ion-slides>
+              </div>
+
+          </div>
+
+      </div>
+
+  
+
+      <!-- <div class="content3" style="margin-left: 10px; margin-right: 10px; margin-top: 10px; background-color: green;">
+          <div class="title" style="margin-left: 10px; margin-right: 10px; color: white; font-size: 14px; padding-top: 10px; padding-bottom: 3px;">
+              Our faverecipes
+          </div>
+          <ion-row style=" padding-bottom: 10px; margin-left: 10px; margin-right: 10px;">
+              <ion-col style="height: 100px; border-radius: 5px; background-color: white; margin-right: 3px;"></ion-col>
+              <ion-col style="height: 100px; border-radius: 5px; background-color: white;"></ion-col>
+          </ion-row>
+      </div> -->
+  </div>
+  
+</ion-content>

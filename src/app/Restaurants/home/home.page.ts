@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { NavigationExtras, Router } from '@angular/router';
+import { ADs } from 'src/app/models/ads';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +11,7 @@ import { NavigationExtras, Router } from '@angular/router';
 })
 export class HomePage implements OnInit {
   Restaurants;
-
+  Ads: ADs[]
   AdvertslideOpts = {
     initialSlide: 1,
     speed: 500,
@@ -30,6 +31,7 @@ export class HomePage implements OnInit {
     private navCtrl: Router
   ) { 
     this.service.hiddenTabs = true ;
+    this.getAds();
   }
 
   ngOnInit() {
@@ -52,5 +54,11 @@ export class HomePage implements OnInit {
     };
     this.service.hiddenTabs = true ;
     this.navCtrl.navigate(['tabs/profile'], navigationExtras);
+  }
+  getAds(){
+    this.service.getFoodAds().subscribe(res => {
+      this.Ads = res ;
+      console.log(this.Ads);
+    })
   }
 }

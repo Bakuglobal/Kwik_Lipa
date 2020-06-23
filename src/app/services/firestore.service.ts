@@ -57,6 +57,8 @@ export class FirestoreService {
       notices: AngularFirestoreCollection<Notice> ;
       count = 0 ;
       budget = 0 ;
+      region: any ;
+      package: any ;
 
   // objects
       usermsg = {} ;
@@ -89,6 +91,30 @@ setCount(num){
 }
 getCount(){
   return this.count ;
+}
+getNGO(){
+  return this.fs.collection('NGO');
+}
+getRegions(){
+  return this.fs.collection('Regions')
+}
+setRegion(item){
+  this.region = item ;
+}
+getRegion(){
+  return this.region ;
+}
+getPackages(){
+  return this.fs.collection('Packages');
+}
+setPackage(item){
+  this.package = item ;
+}
+getPackage(){
+  return this.package ;
+}
+getNgoShops(){
+  return this.fs.collection('NGOShops');
 }
 //get message send to support
     viewMessage(){
@@ -219,6 +245,14 @@ getCount(){
   }
   getRecipe(){
     return this.fs.collection<Shops>('recipes');
+  }
+  getCats(){
+    return this.fs.collection('videocat');
+  }
+  getvideos(cat){
+    return this.fs.collection('lifestyleVideos',ref => {
+      return ref.where('category','==',cat);
+    })
   }
 //get the message send to support
  getuserMessage() : AngularFireList<Support> {
@@ -399,7 +433,7 @@ getBudget(){
 }
 getAds(){
   let fs =  this.fs.collection<ADs>('Ads', ref => {
-    return ref.orderBy('priority','desc');
+    return ref.where('type','==','shop').orderBy('priority','desc');
   }) ;
  return  fs.valueChanges();
 }
@@ -412,6 +446,12 @@ getMeals(shop){
 }
 getCategory(shop){
   return this.fs.collection('Categories').doc<Category>(shop).valueChanges();
+}
+getFoodAds(){
+  let fs =  this.fs.collection<ADs>('Ads', ref => {
+    return ref.where('type','==','food').orderBy('priority','desc');
+  }) ;
+ return  fs.valueChanges();
 }
 
 }

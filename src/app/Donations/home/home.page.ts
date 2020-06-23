@@ -9,13 +9,14 @@ import { FirestoreService } from 'src/app/services/firestore.service';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-  NGOs = [1,3,5]
+  NGOs: any[];
   constructor(
     private location: Location,
     private navCrtl : Router,
     private service: FirestoreService
   ) {
     this.service.hiddenTabs = true ;
+    this.getNGO();
    }
 
   ngOnInit() {
@@ -26,5 +27,11 @@ back(){
 }
 donate(){
 this.navCrtl.navigate(['tabs/region']);
+}
+getNGO(){
+  this.service.getNGO().valueChanges().subscribe(res => {
+    this.NGOs = res ;
+    console.log('NGOS',this.NGOs);
+  })
 }
 }

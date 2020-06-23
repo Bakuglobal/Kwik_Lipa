@@ -8,9 +8,9 @@
 <ion-content >
   <ion-grid  padding >
     <ion-row>
-    <ion-col size="6" *ngFor="let item of regions" (click)="selectPackage(item)">
-        <div class="body">
-          <ion-label >Kibera</ion-label>
+    <ion-col size="6" *ngFor="let item of regions" (click)="selectPackage(item)" >
+        <div class="body" [ngStyle]="{'background-image':'url(' + item.image + ')'}">
+          <ion-label id="label">{{item.name}}</ion-label>
         </div>
     </ion-col>
     </ion-row>

@@ -86,6 +86,7 @@ const routes: Routes = [
       { path: 'Recipeprofile', loadChildren: () => import('../Recipes/profile/profile.module').then(m => m.ProfilePageModule)},
       { path: 'recipeDetails', loadChildren: () => import('../Recipes/details-modal/details-modal.module').then(m => m.DetailsModalPageModule)},
       { path: 'recommend' , loadChildren:() => import('../recommend/recommend.module').then(m => m.RecommendPageModule), canActivate: [AuthService]},
+      { path: 'lifestyle' , loadChildren:() => import('../lifestyle/lifestyle.module').then(m => m.LifestylePageModule)},
       { path: 'ipaytransmodal', loadChildren:() => import('../modal/ipaytransmodal/ipaytransmodal.module').then(m => m.IpaytransmodalPageModule), canActivate: [AuthService]},
       {
         path: '',

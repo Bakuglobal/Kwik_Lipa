@@ -87,6 +87,7 @@ export class SelectshopPage implements OnInit {
    back(){
     // 
     this.fireApi.shareShopBy('shopBy');
+    this.fireApi.hiddenTabs = false ;
     this.navCtrl.navigate(['tabs/tab1']);
   }
   // handle searchbar 

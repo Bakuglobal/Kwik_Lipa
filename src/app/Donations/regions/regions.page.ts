@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
+import { FirestoreService } from 'src/app/services/firestore.service';
 
 @Component({
   selector: 'app-regions',
@@ -8,11 +9,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./regions.page.scss'],
 })
 export class RegionsPage implements OnInit {
-  regions = [1,2,3,4,5,6]
+  regions: any[];
   constructor(
     private location: Location,
-    private navCtrl: Router
-  ) { }
+    private navCtrl: Router,
+    private service: FirestoreService
+  ) {
+    this.getRegions();
+   }
 
   ngOnInit() {
   }
@@ -22,7 +26,14 @@ export class RegionsPage implements OnInit {
     this.location.back();
   }
   selectPackage(item){
+    this.service.setRegion(item);
     console.log('selected : ', item);
     this.navCtrl.navigate(['tabs/packages']);
+  }
+  getRegions(){
+    this.service.getRegions().valueChanges().subscribe(res => {
+      this.regions = res ;
+      console.log(this.regions);
+    })
   }
 }

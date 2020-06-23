@@ -1,12 +1,12 @@
 <ion-toolbar color="primary" class="ion-padding">
   <ion-buttons>
     <ion-icon name="arrow-back" style="color: white;" (click)="back()"></ion-icon>
-    <ion-title style="color: white;">Select a shop from Kibera </ion-title>
+    <ion-title style="color: white;">Select a shop in {{region.name}} where this package should be picked </ion-title>
   </ion-buttons>
  
 </ion-toolbar>
 <ion-content >
-<ion-grid  padding >
+<!-- <ion-grid  padding >
   <ion-row>
   <ion-col size="6" *ngFor="let item of shops" (click)="selectPackage(item)" (click)="cart()">
       <div class="body">
@@ -14,8 +14,16 @@
       </div>
   </ion-col>
   </ion-row>
+</ion-grid> -->
+<ion-grid  padding >
+  <ion-row>
+  <ion-col size="6" *ngFor="let shop of shops" >
+      <ion-card style="height: 180px;">
+          <img src="{{shop.logo}}"  style="height:95px;width: 100%;">
+          <h5  style="text-transform: capitalize;text-align: center;padding: 20px;font-size: .9rem;font-weight: bold;">{{shop.shop}} </h5>
+      </ion-card>
+  </ion-col>
+  </ion-row>
 </ion-grid>
-
-
 
 </ion-content>

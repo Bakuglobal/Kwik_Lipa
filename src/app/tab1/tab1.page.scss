@@ -273,7 +273,7 @@
   .soko {
       background-color: white; 
       margin-top: 10px;
-      height: 260px;
+    //   height: 260px;
       .soko-title {
           padding-top: 20px; 
           padding-bottom: 10px;
@@ -311,15 +311,13 @@
   .soko-image {
     object-position: contain;
 }
-.soko-content{
-    height: 150px !important;
-}
+
 
   
   // SHOPS
   .shop {
       background-color: white; 
-      height: 160px;
+    //   height: 160px;
       margin-top: 3px;
       .shop-title {
           padding-top: 20px; 

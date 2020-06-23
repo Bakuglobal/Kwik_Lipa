@@ -197,8 +197,6 @@ export class Tab1Page implements OnInit {
     // this.count = Number(localStorage.getItem('NoticeCount'));
   }
 
-
-
   //scan and pay     
   scanAndPay() {
     this.fireApi.shareShopBy('scan');
@@ -219,6 +217,7 @@ export class Tab1Page implements OnInit {
     this.navCtrl.navigate(['tabs/mycontacts']);
   }
   goToselectShop() {
+    this.service.hiddenTabs = true ;
     this.navCtrl.navigate(['tabs/selectshop']);
   }
   goToRestaurants() {
@@ -277,6 +276,7 @@ export class Tab1Page implements OnInit {
   getAds() {
     this.fireApi.getAds().subscribe(res => {
       this.ads = res;
+      console.log('ADS',this.ads)
     });
   }
   getShops() {
@@ -287,6 +287,10 @@ export class Tab1Page implements OnInit {
         this.unfilteredShops = res;
         console.log('shops', this.shops);
       });
+  } 
+  goToLifestyle(){
+    this.service.hiddenTabs = true ;
+    this.navCtrl.navigate(['tabs/lifestyle']);
   }
   // playVideoHosted() {
   //  return this.videoPlayer.play('https://firebasestorage.googleapis.com/v0/b/kwikapp-77d77.appspot.com/o/CORONA%20VIRUS%20AWARENESS%20-%20ENGLISH%20on%20Vimeo.mp4?alt=media&token=b492e8c9-482d-428b-991d-260ca419c4dd').then(() => {

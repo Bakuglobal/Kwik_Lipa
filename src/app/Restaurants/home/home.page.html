@@ -10,12 +10,12 @@
   </div>
   <div>
     <ion-slides pager="true" [options]="AdvertslideOpts">
-      <ion-slide>
-        <img class="soko-image" src="../../../assets/images/adfood.jpg">
+      <ion-slide *ngFor="let item of Ads">
+        <img class="soko-image" src="{{item.image}}">
       </ion-slide>
-      <ion-slide>
+      <!-- <ion-slide>
         <img class="soko-image" src="../../../assets/images/foodad.jpg">
-      </ion-slide>
+      </ion-slide> -->
     </ion-slides>
   </div>
 

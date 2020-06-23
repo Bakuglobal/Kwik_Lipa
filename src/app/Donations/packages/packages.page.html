@@ -1,7 +1,7 @@
 <ion-toolbar color="primary" class="ion-padding">
   <ion-buttons>
     <ion-icon name="arrow-back" style="color: white;" (click)="back()"></ion-icon>
-    <ion-title style="color: white;">Select a package to donate</ion-title>
+    <ion-title style="color: white;text-align: center;">Select a package to Sponsor</ion-title>
   </ion-buttons>
 
 </ion-toolbar>
@@ -9,7 +9,7 @@
 
   <div class="tagline">
     <ion-text>
-      In Kibera, all donations made in this platform are administered by SHOFCO who have identified beneficiary families
+      In {{region.name}}, all donations made in this platform are administered by {{region.NGO}} who have identified beneficiary families
       and local shops from which the donations with be sourced.
     </ion-text>
   </div>
@@ -17,32 +17,19 @@
     <ion-row>
       <ion-col size="6" *ngFor="let item of packages" >
         <div class="body">
-          <ion-label id="title">A family of 4</ion-label>
+          <ion-label id="title">A family of {{item.family}}</ion-label>
           <br><br>
           <ion-row id="col-head">
             <ion-col>Product</ion-col>
             <ion-col>Quantity</ion-col>
           </ion-row>
-          <ion-row id="col-item">
-            <ion-col>Xxx</ion-col>
-            <ion-col>2 Kg</ion-col>
+          <ion-row id="col-item" *ngFor="let n of item.product">
+            <ion-col class="ion-text-start">{{n.product}}</ion-col>
+            <ion-col class="ion-text-start">{{n.quantity}}</ion-col>
           </ion-row>
-          <ion-row id="col-item">
-            <ion-col>Xxx</ion-col>
-            <ion-col>2 Kg</ion-col>
-          </ion-row>
-          <ion-row id="col-item">
-            <ion-col>Xxx</ion-col>
-            <ion-col>2 Kg</ion-col>
-          </ion-row>
-          <ion-row id="col-item">
-            <ion-col>Xxx</ion-col>
-            <ion-col>2 Kg</ion-col>
-          </ion-row>
-         
-          <ion-row>
-            <ion-col id="total">Total</ion-col>
-            <ion-col><span style="font-size: .6rem;">Kshs</span> 000</ion-col>
+          <ion-row style="margin-left: 20px;"> 
+            <ion-col id="total" class="ion-text-start">Total</ion-col>
+            <ion-col class="ion-text-start"><span style="font-size: .6rem;">Kshs</span> {{item.total}}</ion-col>
           </ion-row>
           <div class="btn" (click)="goToShops(item)">
             <ion-label>Sponsor now</ion-label>
