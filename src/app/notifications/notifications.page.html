@@ -1,22 +1,20 @@
-<ion-header color="primary">
-  <ion-toolbar color="primary" padding>
-    <ion-buttons slot="start" (click)="back()">
-      <ion-icon name="arrow-back" size="large"></ion-icon>
-    </ion-buttons>
-    <ion-title>
-      Notifications
-    </ion-title>
-  </ion-toolbar>
-
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start" (click)="back()">
+            <ion-icon class="go-back" name="arrow-back" size="small"></ion-icon>
+        </ion-buttons>
+        <ion-title>Notifications</ion-title>
+    </ion-toolbar>
 </ion-header>
+
+
 <ion-content>
-  <div style="text-align: center;margin-top: 40%;" *ngIf="notifications.length == 0">
-    <div class="icon">
-    <img src="../../assets/alarm.svg">
-  </div>
-  <br><br><br>
-    <ion-label >You have no notifications</ion-label>
-  </div>
+    <div class="no-notification" *ngIf="notifications.length == 0">
+        <div class="icon">
+            <img src="../../assets/alarm.svg">
+        </div>
+        <ion-label>You have no notifications</ion-label>
+    </div>
   <div>
     <ion-card *ngFor="let item of notifications" (click)="viewOrder(item.title,item.id,item.status)" [ngClass]="{'unread': item.status == 'unread'}">
       <ion-row padding>

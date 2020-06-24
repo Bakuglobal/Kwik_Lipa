@@ -1,3 +1,38 @@
+// ION HEADER
+ion-header {
+    .go-back {
+        padding-left: 5px;
+    }
+    ion-title {
+        text-align: center;
+    }
+    .notification {
+        padding-right: 5px;
+        ion-icon {
+            width: 20px; 
+            height: 20px;
+        }
+    }
+}
+
+// Header display banner
+.display-icon {
+    ion-icon {
+        width: 23px; 
+        height: 23px; 
+        margin-top: 3px;
+    }
+}
+.display-content {
+    margin-left: 5px;
+    span {
+        padding-top: 5px; 
+        font-size: 14px;
+    }
+}
+
+
+// message input area
 .form-control {
     width: 100%;
     border: thin solid #e3e3e3;
@@ -12,6 +47,7 @@
     bottom: 0px ;
     height: 100px;
 }
+
 .customer{
     width:50px;
     height: 50px;
@@ -23,42 +59,39 @@
     background-size: cover;
     margin: 0 auto;
 }
+
 .chat {
+    color: white;
     display: flex;
+    font-size: 14px;
     flex-direction: column;
     .me{
         position: relative;
         float: right;
-        margin: 20px 5px 0px;
+        margin-right: 10px;
+        margin-bottom: 5px;
         max-width: 80%;
         align-self: flex-end;
         padding: 6px 10px 7px;
         border-radius: 15px 15px 0px ;
-        font-size: medium;
         background: var(--ion-color-primary);
-        line-height: 1.4;
+        line-height: 1.2;
         animation-name: fadeIn;
         animation-duration: 3s;
-          
-
     }
-
     .you{
         position: relative;
         float: left;
-        margin: 15px;
+        margin-left: 10px;
+        margin-bottom: 5px;
         max-width: 80%;
         align-self: flex-start;
         padding: 6px 10px 7px;
         border-radius: 0px 15px 15px ;
         background: #32de23;
-        font-size: medium;
-        line-height: 1.4;
-
+        line-height: 1.2;
         .name{
-            font-size: small;
             font-weight: bold;
         }
-
     }
 }

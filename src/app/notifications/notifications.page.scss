@@ -1,3 +1,13 @@
+// ION HEADER
+ion-header {
+    .go-back {
+        padding-left: 10px;
+    }
+    ion-title {
+        text-align: center;
+    }
+}
+
 ion-avatar{
     width: 30px;
     height: 30px;
@@ -8,12 +18,23 @@ blockquote{
 .unread{
     background-color: #80808021;
 }
-.icon{
-    width: 100px;
-    height: 100px;
-    margin: auto;
-    img{
-        object-position: center;
-        object-fit: contain;
+
+// NO NOTIFICATION
+.no-notification {
+    text-align: center; 
+    margin-top: 60%;
+    .icon{
+        margin-bottom: 10px; 
+        img{
+            width: 30px; 
+            height: 30px;
+            object-position: center;
+            object-fit: contain;
+        }
+    }
+    ion-label {
+        color: #737373; 
+        font-size: 14px;
     }
 }
+

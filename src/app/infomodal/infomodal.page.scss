@@ -1,4 +1,27 @@
-a{
+// ION HEADER
+ion-header {
+    .go-back {
+        padding-left: 10px;
+        ion-icon {
+            width: 20px; 
+            height: 20px;
+        }
+    }
+    ion-title {
+        text-align: center;
+    }
+    .search {
+        ion-icon {
+            width: 20px; 
+            height: 20px;
+        }
+    }
+}
+
+
+
+
+.a{
     text-decoration: none;
 }
 

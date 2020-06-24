@@ -1,92 +1,93 @@
-<ion-header style="background-color: #3880ff;">
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-buttons slot="end" (click)="notifications()" style="padding-right: 5px;">
-      <ion-icon size="large" name="notifications"></ion-icon><br>
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="end" (click)="notifications()" style="padding-right: 5px;">
+            <ion-icon size="small" class="notification" name="notifications"></ion-icon><br>
             <ion-badge color="danger">
                 <div *ngIf="count != '0'">{{count}}</div>
             </ion-badge>
-    </ion-buttons>
-    <ion-title>
-      <span>My Account
-      </span>
-    </ion-title>
-  </ion-toolbar>
+        </ion-buttons>
+        <ion-title>My Account</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
 
   <!-- Personal information-->
-  <div *ngIf="User != undefined">
-    <ion-card>
-      <ion-item>
-        <ion-col>
-          <h3 style="color: var(--ion-color-primary);">Loyalty Points</h3>
-        </ion-col>
+    <div *ngIf="User != undefined">
+        <!-- FIRST CARD -->
+        <ion-card class="first-card">
+            <ion-item>
+                <ion-col>
+                    <h3>Loyalty Points</h3>
+                </ion-col>
+            </ion-item>
+            <ion-item>
+                <ion-select placeholder="select a Shop" [(ngModel)]="shopSelected" slot="start">
+                    <ion-select-option *ngFor="let shop of shops">{{shop.shop}}</ion-select-option>
+                </ion-select>
+                <span slot="end">{{wallet | number:'1.1-5'}}</span>
+                <!-- <label class="labels" style="padding-left: 20px"> Primary M-pesa :&nbsp; {{User.phone}}</label> -->
+            </ion-item>
+        </ion-card>
 
-      </ion-item>
-      <ion-item>
-        <ion-select placeholder="select a Shop" [(ngModel)]="shopSelected" slot="start">
-          <ion-select-option *ngFor="let shop of shops" style="font-size: small;">{{shop.shop}}</ion-select-option>
-        </ion-select>
-        <span slot="end"
-          style="font-size: 1.7em;font-weight: bold;color: var(--ion-color-primary);">{{wallet | number:'1.1-5'}}</span>
-        <!-- <label class="labels" style="padding-left: 20px"> Primary M-pesa :&nbsp; {{User.phone}}</label> -->
-      </ion-item>
-    </ion-card>
-    <ion-card>
-      <ion-item no-lines>
-        <ion-col>
-          <h3 style="color: var(--ion-color-primary);">Personal Information</h3>
-        </ion-col>
-        <ion-col size="2">
-          <ion-icon name="create" color="primary" (click)="editPersonalDetails()"></ion-icon>
-        </ion-col>
-      </ion-item>
-      <ion-list>
-        <ion-label class="labels" style="padding-left: 20px;">Name: &nbsp; {{User.firstName}} {{User.lastName}}
-        </ion-label><br>
-        <p></p>
-        <ion-label class="labels" style="padding-left: 20px">Email:&nbsp; &nbsp; {{User.email}}</ion-label><br>
-        <p></p>
-        <p></p>
-        <ion-label class="labels" style="padding-left: 20px">Phone: &nbsp; {{User.phone}}</ion-label><br>
-        <p></p>
-        <ion-label class="labels" style="padding-left: 20px">Gender: &nbsp; {{User.gender}}</ion-label><br>
-        <p></p>
-        <ion-label class="labels" style="padding-left: 20px">Residence: &nbsp; {{User.residence}}</ion-label>
-        <p></p>
-        <ion-label class="labels" style="padding-left: 20px">D.O.B: &nbsp; {{dob | date : 'EEEE, MMMM d, y'}}
-        </ion-label>
-        <p></p>
-      </ion-list>
-    </ion-card>
-    <ion-card>
-      <ion-item>
-        <ion-col>
-          <h3 style="color: var(--ion-color-primary);">Notification Subscriptions</h3>
-        </ion-col>
+        <!-- SECOND CARD -->
+        <ion-card class="second-card">
+            <ion-item no-lines>
+                <ion-col>
+                    <h3>Personal Information</h3>
+                </ion-col>
+                <ion-col size="2">
+                    <ion-icon class="display-icon" size="small" name="create" color="primary" (click)="editPersonalDetails()"></ion-icon>
+                </ion-col>
+            </ion-item>
+            <ion-list class="personal-info-content">
+                <ion-label class="labels">Name: &nbsp; {{User.firstName}} {{User.lastName}}
+                </ion-label><br>
+                <p></p>
+                <ion-label class="labels">Email:&nbsp; &nbsp; {{User.email}}</ion-label><br>
+                <p></p>
+                <p></p>
+                <ion-label class="labels">Phone: &nbsp; {{User.phone}}</ion-label><br>
+                <p></p>
+                <ion-label class="labels">Gender: &nbsp; {{User.gender}}</ion-label><br>
+                <p></p>
+                <ion-label class="labels">Residence: &nbsp; {{User.residence}}</ion-label>
+                <p></p>
+                <ion-label class="labels">D.O.B: &nbsp; {{dob | date : 'EEEE, MMMM d, y'}}
+                </ion-label>
+                <p></p>
+            </ion-list>
+        </ion-card>
 
-      </ion-item>
-      <ion-list>
-        <ion-label padding>Accept to Receive notifications from this shops</ion-label>
-        <ion-item text-center>
-          <ion-col size="3" *ngIf="!toggleOn">
-            <ion-icon name="notifications-off"></ion-icon>
-          </ion-col>
-          <ion-col size="3" *ngIf="toggleOn">
-            <ion-icon color="primary" name="notifications"></ion-icon>
-          </ion-col>
-          <ion-col>Kakila Organic</ion-col>
-          <ion-col size="3">
-            <ion-toggle [(ngModel)]="toggleOn" color="primary"></ion-toggle>
-          </ion-col>
-        </ion-item>
-      </ion-list>
-    </ion-card>
+        <!-- THIRD CARD -->
+        <ion-card class="third-card">
+            <ion-item>
+                <ion-col>
+                <h3>Notification Subscriptions</h3>
+                </ion-col>
+            </ion-item>
+            <ion-list class="content">
+                <ion-label>Accept to Receive notifications from this shops</ion-label>
+                <ion-row text-left>
+                    <ion-col size="3" *ngIf="!toggleOn">
+                        <ion-icon name="notifications-off"></ion-icon>
+                    </ion-col>
+                    <ion-col size="3" *ngIf="toggleOn">
+                        <ion-icon color="primary" name="notifications"></ion-icon>
+                    </ion-col>
+                    <ion-col class="content-text">
+                        Kakila Organic
+                    </ion-col>
+                    <ion-col size="3">
+                        <ion-toggle [(ngModel)]="toggleOn" color="primary"></ion-toggle>
+                    </ion-col>
+                </ion-row>
+            </ion-list>
+        </ion-card>
   </div>
   
 

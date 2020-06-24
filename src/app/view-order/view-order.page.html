@@ -1,84 +1,117 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons class="go-back" slot="start">
+            <ion-icon slot="start" size="small" name="arrow-back" (click)="back()"></ion-icon>
+        </ion-buttons>
+        <ion-title>Order ID: {{OrderID}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+
+
+
 <ion-content>
-  <ion-toolbar color="primary" padding>
-    <ion-buttons>
-      <ion-icon slot="start" name="arrow-back" (click)="back()"></ion-icon>
-      <ion-title text-center>{{OrderID}}</ion-title>
-    </ion-buttons>
-  </ion-toolbar>
-  <div class="body">
-    <h4>Ordered to {{shop}} &nbsp;&nbsp;&nbsp;&nbsp; <ion-icon name="call" color="success" (click)="callShop()"></ion-icon></h4> 
-    <ion-row  class="top" padding>
-      <ion-col >
-        Product
-      </ion-col>
-      <ion-col>
-        Price
-      </ion-col>
-      <ion-col>
-        Quantity
-      </ion-col>
-    </ion-row>
-    <ion-row *ngFor="let item of products" padding>
-      <ion-col>
-        {{item.product}}
-      </ion-col>
-      <ion-col>
-        {{item.currentprice}}
-      </ion-col>
-      <ion-col>
-        {{item.quantity}}
-      </ion-col>
-    </ion-row>
-    <h4>Your Notes</h4>
-    <ion-row padding>
-      <p >
-        {{notes}}
-      </p>
-      <p *ngIf="notes == ''">
-        No notes
-      </p>
-    </ion-row>
-    <div *ngIf="status !== 'canceled'">
-    <ion-row>
-      <ion-col>
-      <h4 style="text-align: center;" color="primary">Payment Option</h4>
-      <p ><strong *ngIf="Delivery === 'I will pick it'">
-        Will pay on pick up.
-      </strong>
-      <strong *ngIf="Delivery === 'Deliver it to me'">
-        Will pay on delivery.
-      </strong>
-      </p>
-    </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-      <h4 style="text-align: center;" color="primary">Delivery Options</h4>
-      <p ><strong>
-       Deliver it to {{Location}}
-      </strong>
-      </p>
-    </ion-col>
-    </ion-row>
-  </div>
-   <ion-item class="top">
-      <ion-label slot="start" class="left">Total:</ion-label>
-     <ion-label slot="end" class="right">Ksh:<span>{{getTotal()}}</span></ion-label>
-   </ion-item>
-  </div>
-  <br><br>
-  <div *ngIf="status === 'canceled'" class="ion-text-center">
-    <ion-label   color="danger">You canceled this Order</ion-label>
-  </div>
-  
+    
+    <div class="body">
+        <!-- FIRST CONTENT -->
+        <div class="first-content">
+            <ion-row>
+                <ion-col class="first-col">
+                    Ordered to {{shop}}
+                </ion-col>
+                <ion-col size="2" class="second-col">
+                    <ion-icon name="call" (click)="callShop()"></ion-icon>
+                </ion-col>
+            </ion-row>
+        </div>
+
+        <!-- SECOND CONTENT -->
+        <div class="second-content">
+            <ion-row class="content-1">
+                <ion-col size="8">
+                    Product
+                </ion-col>
+                <ion-col size="2" class="ion-text-right">
+                    Price
+                </ion-col>
+                <ion-col size="2" class="ion-text-right">
+                    Qty
+                </ion-col>
+            </ion-row>
+            <ion-row class="content-2" *ngFor="let item of products" no-padding>
+                <ion-col size="8">
+                    {{item.product}}
+                </ion-col>
+                <ion-col size="2" class="ion-text-center">
+                    {{item.currentprice}}
+                </ion-col>
+                <ion-col size="2" class="ion-text-center">
+                    {{item.quantity}}
+                </ion-col>
+            </ion-row>
+        </div>
+
+        <!-- THIRD CONTENT -->
+        <div class="third-content">
+            <h4>Your Notes</h4>
+            <ion-row padding>
+                <p>
+                    {{notes}}
+                </p>
+                <p *ngIf="notes == ''">
+                    No notes
+                </p>
+            </ion-row>
+        </div>
+
+        <!-- FOURTH CONTENT -->
+        <div class="fourth-content" *ngIf="status !== 'canceled'">
+            <ion-row class="content-1">
+                <ion-col>
+                    <h4 color="primary">Payment Option</h4>
+                    <p>
+                        <strong *ngIf="Delivery === 'I will pick it'">
+                            Will pay on pick up.
+                        </strong>
+                        <strong *ngIf="Delivery === 'Deliver it to me'">
+                            Will pay on delivery.
+                        </strong>
+                    </p>
+                </ion-col>
+            </ion-row>
+
+            <ion-row class="content-2">
+                <ion-col>
+                    <h4 color="primary">Delivery Options</h4>
+                    <p>
+                        <strong>
+                            Deliver it to {{Location}}
+                        </strong>
+                    </p>
+                </ion-col>
+            </ion-row>
+        </div>
+
+        <!-- TOTAL SUM -->
+        <ion-item class="total">
+            <ion-label>Total: shl{{getTotal()}}</ion-label>
+        </ion-item>
+    </div> <br><br>
+
+    <div *ngIf="status === 'canceled'" class="ion-text-center">
+        <ion-label   color="danger">You canceled this Order</ion-label>
+    </div>
+    
 </ion-content>
-<ion-footer *ngIf="status == 'Ready'||status == 'open'">
-  <div class="ion-padding ion-text-center"><ion-label color="danger" *ngIf="status == 'Ready'">This Order is Ready.You can't cancel it</ion-label></div>
-  <ion-row > 
-    <ion-col >
-      <ion-card color="warning" padding text-center (click)="confirm()" [disabled]="status == 'Ready'">
-        <ion-label>Cancel Order</ion-label>
-      </ion-card>
-    </ion-col>
-  </ion-row>
+
+<!-- FOOTER -->
+<ion-footer class="footer" *ngIf="status == 'Ready'||status == 'open'">
+    <div class="ion-padding ion-text-center content-1">
+        <ion-label color="danger" *ngIf="status == 'Ready'">
+            This Order is Ready.You can't cancel it
+        </ion-label>
+    </div>
+    <div class="content-2">
+        <ion-button color="warning" expand="full" (click)="confirm()" [disabled]="status == 'Ready'">Cancel Order</ion-button>
+    </div>
 </ion-footer>

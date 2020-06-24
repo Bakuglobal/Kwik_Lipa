@@ -1,6 +1,30 @@
+// ION HEADER
+ion-header {
+    ion-title {
+        text-align: center;
+    }
+}
+
+ion-card {
+    --padding-start:0;
+    ion-card-title {
+        height: 100%;
+        ion-row {
+            span {
+                padding-top: 5px;
+                font-size: 14px;
+            }
+
+        }
+    }
+}
+
 .category-block {
     margin-bottom: 4px ;
     padding-top: 20px ;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #787C7D;
 }
 
 .category-banner{
@@ -9,14 +33,30 @@
     height: 40px ;
     padding: 10px ;
     font-weight: 500 ; 
-    
+    font-size: 14px;
 }
 .arrow-right{
     background: var(--ion-color-light) ;
     font-weight: 500 ; 
     height: 40px ;
-    padding-top: 5px ;
+    padding-top: 5px;
+    div {
+        text-align: right;
+        ion-icon {
+            width: 25px; 
+            height: 25px; 
+            margin-left: -5px;
+        }
+    }
+}
 
+.dropdown-content {
+    font-size: 14px;
+    text-align: justify;
+}
+
+.space {
+    padding-top: 10px;
 }
 h3{
     justify-content: center;

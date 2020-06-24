@@ -1,111 +1,125 @@
-<ion-header style="background-color: #3880ff;">
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <!-- <ion-buttons slot="end" (click)="notifications()" style="padding-right: 5px;">
-      <ion-icon size="large" name="notifications" ></ion-icon><br>
-      <ion-badge color="danger">
-        <div *ngIf="count != '0'">{{count}}</div>
-    </ion-badge>
-  </ion-buttons> -->
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <!-- <ion-buttons slot="end" (click)="notifications()" style="padding-right: 5px;">
+        <ion-icon size="large" name="notifications" ></ion-icon><br>
+        <ion-badge color="danger">
+            <div *ngIf="count != '0'">{{count}}</div>
+        </ion-badge>
+    </ion-buttons> -->
 
-    <ion-title>
-      <span>My Orders</span>
-    </ion-title>
-  </ion-toolbar>
+        <ion-title>My Orders</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-segment (ionChange)="orderChange($event)">
-    <ion-segment-button value="past">
-      <ion-label>Past orders</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="open" checked>
-      <ion-label>Open orders</ion-label>
-    </ion-segment-button>
-  </ion-segment>
+    <ion-segment (ionChange)="orderChange($event)">
+        <ion-segment-button value="past">
+            <ion-label>Past orders</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="open" checked>
+            <ion-label>Open orders</ion-label>
+        </ion-segment-button>
+    </ion-segment>
 
-  <!-- Scan and pay transactions -->
-  <div style="margin-top: 10px;" *ngIf="!open">
-    <ion-label padding color='primary'>Scan and Pay</ion-label>
-      <ion-item *ngFor="let trans of transactions" (click)="viewTransaction(trans)">
-        <ion-avatar slot="start">
-          <img src="assets/products/cash.png">
-        </ion-avatar>
-        <ion-label>
-          <h3>{{trans.key}}</h3>
-          <p>Click to view details.</p>
-        </ion-label>
-      </ion-item>
-    <div style="margin-top: 40px;margin-bottom: 30px;text-align:center" *ngIf="transactions.length == 0 ">
-      <ion-label>You have no scan and pay history</ion-label>
+    <!-- Scan and pay transactions -->
+    <div style="margin-top: 10px; text-align: center; font-size: 15px;" *ngIf="!open">
+        <ion-label padding color='primary'>Scan and Pay</ion-label>
+        <ion-item *ngFor="let trans of transactions" (click)="viewTransaction(trans)">
+            <ion-avatar slot="start">
+                <img src="assets/products/cash.png">
+            </ion-avatar>
+            <ion-label>
+                <h3>{{trans.key}}</h3>
+                <p>Click to view details.</p>
+            </ion-label>
+        </ion-item>
+        <div style="margin-top: 10px; margin-bottom: 30px; text-align: center; color: #737373; font-size: 13px;" *ngIf="transactions.length == 0 ">
+        <ion-label>You have no scan and pay history</ion-label>
+        </div>
     </div>
-  </div>
-  <!-- No Transactions -->
+    <!-- No Transactions -->
 
 
 
   <!-- Pick Pay collect  -->
-  <div [ngClass]="{'top': open == true}">
-    <ion-label padding color='primary'>Pick Pay Collect</ion-label>
-    <!-- OPen orders -->
-    <div *ngIf="open">
-      <ion-card padding *ngFor="let item of myOpenOrders " [ngClass]="{'card-ready': item.status == 'Ready'}">
-        <div *ngIf="!item.show">
-          <ion-icon name="funnel" (click)="showMore(item)" style="float: left;" color="primary"></ion-icon>
-          <ion-label style="float: right;" color="warning">{{item.OrderID}}</ion-label><br><br>
-          <div style="text-align:start;" (click)="getShopNumber(item)">
-            Order for <ion-label *ngFor="let item of item.products">{{item.product}},</ion-label> ...
-          </div>
-          <span style="float: left;bottom: 0;margin-top: 10px;color:var(--ion-color-primary)">
-            {{item.shop}}
-          </span>
-          <span style="float: right;bottom:0;margin-top: 10px;color:var(--ion-color-primary)" *ngIf="item.Delivery == 'I will pick it'">
-            Pick Up : {{item.pickHour}} : {{item.pickMins}} {{item.pickDay}}
-          </span>
-          <span style="float: right;bottom:0;margin-top: 10px;color:var(--ion-color-primary)" *ngIf="item.Delivery == 'Deliver it to me'">
-             To be Delivered
-          </span>
-        </div>
-        <div *ngIf="item.show">
+<div [ngClass]="{'top': open == true}" style="margin-top: -5px;">
+    <div padding color='primary' style="text-align: center; font-size: 15px; color: var(--ion-color-primary);">Pick Pay Collect</div>
+        <!-- OPen orders -->
+        <div *ngIf="open">
+            <ion-card padding *ngFor="let item of myOpenOrders " [ngClass]="{'card-ready': item.status == 'Ready'}">
+                <div *ngIf="!item.show">
+                    <ion-icon name="arrow-dropdown" (click)="showMore(item)" style="float: left; width: 20px; height: 20px; margin-left: -5px;" color="primary"></ion-icon>
+                    <ion-label style="float: right; font-size: 13px;" color="warning">{{item.OrderID}}</ion-label><br><br>
+                    <div style="text-align: start; font-size: 13px; font-weight: bold;" (click)="getShopNumber(item)">
+                        <!-- Order for  -->
+                        <ion-label *ngFor="let item of item.products">{{item.product}}, </ion-label> ...
+                    </div>
+                    <span style="float: left; bottom: 0; margin-top: 10px; color:var(--ion-color-primary); font-size: 13px;">
+                        {{item.shop}}
+                    </span>
+                    <span style="float: right; bottom:0; margin-top: 10px; color:var(--ion-color-primary); font-size: 13px;" *ngIf="item.Delivery == 'I will pick it'">
+                        Pick Up : {{item.pickHour}} : {{item.pickMins}} {{item.pickDay}}
+                    </span>
+                    <span style="float: right; bottom:0; margin-top: 10px; color:var(--ion-color-primary); font-size: 13px;" *ngIf="item.Delivery == 'Deliver it to me'">
+                        To be Delivered
+                    </span>
+                </div>
+                <div *ngIf="item.show" style="margin-left: -5px; margin-right: -5px; margin-bottom: -15px;">
 
-          <ion-card-title text-center (click)="showLess(item)">
-            <ion-icon name="arrow-dropup" color="primary" style="float: left;"></ion-icon>
-            {{item.OrderID}}<br>{{item.shop}}
-          </ion-card-title>
-          <ion-card-content>
-            <ion-row *ngFor="let item of item.products">
-              <ion-col>
-                {{item.product}}
-              </ion-col>
-              <ion-col>
-                {{item.currentprice}}
-              </ion-col>
-              <ion-col>{{item.quantity}}</ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col>
-                <span style="float: left;bottom:0;margin-top: 10px;color:var(--ion-color-primary);font-weight: bold;"
-                  (click)="viewOrder(item)">
-                  <ion-label>More ...</ion-label>
-                </span>
-                <span style="float: right;bottom:0;margin-top: 10px;color:var(--ion-color-primary)" *ngIf="item.Delivery == 'I will pick it'">
-                  Pick Up : {{item.pickHour}} : {{item.pickMins}} {{item.pickDay}}
-                </span>
-                <span style="float: right;bottom:0;margin-top: 10px;color:var(--ion-color-primary)" *ngIf="item.Delivery == 'Deliver it to me'">
-                   To be Delivered
-                </span>
-              </ion-col>
-            </ion-row>
-          </ion-card-content>
+                    <ion-card-title text-center (click)="showLess(item)">
+                        <ion-icon name="arrow-dropup" color="primary" style="float: left;"></ion-icon>
+                        <!-- <div style="font-size: 14px; color: #737373;">{{item.OrderID}}<br></div> -->
+                        <div style="font-size: 14px; color: #737373; font-weight: bold;">{{item.shop}}</div>
+                    </ion-card-title>
+                    <ion-card-content>
+                        <ion-row style="margin-left: -10px; margin-right: -10px; margin-bottom: 5px; font-size: 13px; border-bottom: 1px solid #e4e4e4;" no-padding>
+                            <ion-col size="8" no-padding>
+                                Product
+                            </ion-col>
+                            <ion-col size="2" style="text-align: right;" no-padding>
+                                Price
+                            </ion-col>
+                            <ion-col size="2" style="text-align: right;" no-padding>
+                                Qty
+                            </ion-col>
+                        </ion-row>
+                        <ion-row style="margin-left: -10px; margin-right: -10px; font-size: 13px;" *ngFor="let item of item.products" no-padding>
+                            <ion-col size="8" no-padding>
+                                {{item.product}}
+                            </ion-col>
+                            <ion-col size="2" no-padding style="text-align: right;">
+                                {{item.currentprice}}
+                            </ion-col>
+                            <ion-col size="2" no-padding style="text-align: right;">
+                                {{item.quantity}}
+                            </ion-col>
+                        </ion-row>
+                        <ion-row no-padding style="margin-left: -10px; margin-right: -10px;">
+                            <ion-col no-padding>
+                                <span style="float: left; bottom:0; margin-top: 10px; color:var(--ion-color-primary);" (click)="viewOrder(item)">
+                                    <ion-label style=" font-size: 13px;">More</ion-label>
+                                </span>
+                                <span style="float: right; bottom:0; margin-top: 10px; color:var(--ion-color-primary); font-size: 13px;" *ngIf="item.Delivery == 'I will pick it'">
+                                    Pick Up : {{item.pickHour}} : {{item.pickMins}} {{item.pickDay}}
+                                </span>
+                                <span style="float: right; bottom:0;  margin-top: 10px; color:var(--ion-color-primary); font-size: 13px;" *ngIf="item.Delivery == 'Deliver it to me'">
+                                    To be Delivered
+                                </span>
+                            </ion-col>
+                        </ion-row>
+                    </ion-card-content>
 
+                </div>
+            </ion-card>
+            <div style="margin-top: 0px; text-align: center; color: #737373; font-size: 13px;" *ngIf="myOpenOrders.length == 0 ">
+                <ion-label>You have no pick pay collect history</ion-label>
+            </div>
         </div>
-      </ion-card>
-      <div style="margin-top: 40px;text-align:center" *ngIf="myOpenOrders.length == 0 ">
-        <ion-label>You have no pick pay collect history</ion-label>
-      </div>
-    </div>
+
+    
     <!-- Past   orders -->
     <div *ngIf="past">
       <!-- canceled orders -->
@@ -155,7 +169,7 @@
 
         </div>
       </ion-card>
-      <div style="margin-top: 40px;text-align:center" *ngIf="myPastOrders.length == 0 ">
+      <div style="margin-top: 0px; text-align: center; color: #737373; font-size: 13px;" *ngIf="myPastOrders.length == 0 ">
         <ion-label>You have no pick pay collect history</ion-label>
       </div>
       <!-- Paid orders -->

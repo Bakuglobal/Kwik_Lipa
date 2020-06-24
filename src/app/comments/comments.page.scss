@@ -1,0 +1,43 @@
+// ION HEADER
+ion-header {
+    .go-back {
+        padding-left: 10px;
+        ion-icon {
+            width: 20px;
+            height: 20px;
+        }
+    }
+    ion-title {
+        text-align: center;
+    }
+}
+.content {
+    .top-space {
+        padding-top: 10px;
+        .image {
+            img {
+                width: 30px; 
+                height: 30px; 
+                border-radius: 50%;
+            }
+        }
+        .description {
+            margin-left: 40px; 
+            margin-top: -35px;  
+            color: #737373;  
+            margin-bottom: 5px;
+            ion-label {
+                font-size: 13px; 
+                font-weight: bold;
+                span {
+                    font-weight: normal; 
+                    font-size: 10px; 
+                    margin-left: 5px;
+                }
+            }
+            ion-text {
+                font-size: 12px;
+            }
+        }
+    }
+}
