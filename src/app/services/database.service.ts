@@ -31,6 +31,7 @@ export interface ShoppingList {
 })
 export class DatabaseService {
   shops;
+  data:any;
   cart = [];
   private listCollection: AngularFirestoreCollection<ShoppingList>;
   private lists: Observable<ShoppingList[]>;
@@ -329,4 +330,12 @@ export class DatabaseService {
     return this.fs.collection('Categories').doc<Category>(shop);
   }
 
+  // hold signup details
+  holddata(data){
+    this.data = data ;
+  }
+  sharedata(){
+    return this.data;
+  }
+ 
 }

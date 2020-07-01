@@ -178,7 +178,6 @@ getNgoShops(){
     }
     createUserProfile(data,id){
      return this.fs.collection('users').doc(id).set(data)
-
     }
  
 // login process
@@ -452,6 +451,9 @@ getFoodAds(){
     return ref.where('type','==','food').orderBy('priority','desc');
   }) ;
  return  fs.valueChanges();
+}
+getproducts(shop){
+  return this.fs.collection(shop);
 }
 
 }

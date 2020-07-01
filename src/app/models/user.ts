@@ -8,5 +8,6 @@ export class User {
     gender?: any;
     residence?: any;
     dob?: any;
-    wallet?: any
+    wallet?: any;
+    type?:any;
 }

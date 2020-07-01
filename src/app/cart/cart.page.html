@@ -7,7 +7,8 @@
       </ion-button>
     </ion-buttons>
 
-    <ion-title class="shopname">{{shopSelected}}</ion-title>
+    <!-- <ion-title class="shopname">{{shopSelected}}</ion-title> -->
+    <ion-title class="shopname">Checkout</ion-title>
 
   </ion-toolbar>
 
@@ -136,9 +137,9 @@
 <ion-footer *ngIf="cart.length != 0;">
   <div color="medium" *ngIf="delivery == 'Deliver it to me'" style="text-align: center;">You will be charged on delivery
   </div>
-  <ion-toolbar color="primary" style="height: 40px;border-radius: 5px;">
-    <ion-buttons slot="start" style="padding-bottom: 15px;">Total : </ion-buttons>
-    <ion-buttons class="price-slot" slot="end" style="padding-bottom: 15px;">
+  <ion-toolbar color="primary" style="height: 40px;border-radius: 20px;">
+    <ion-buttons slot="start" style="padding-bottom: 8px;padding-left: 5px;">Total : </ion-buttons>
+    <ion-buttons class="price-slot" slot="end" style="padding-bottom: 8px;padding-right: 5px;">
       KES &nbsp;<span style="font-size: medium;font-weight: bolder;"> {{getTotalCart() | number:'1.1-5'   }} </span>
     </ion-buttons>
   </ion-toolbar>

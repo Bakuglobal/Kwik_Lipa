@@ -16,6 +16,7 @@ import { FirestoreService } from '../services/firestore.service';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx'
 import { ImageDisplayPage } from '../image-display/image-display.page';
 import { DatabaseService } from '../services/database.service';
+import { Location } from '@angular/common';
 
 
 
@@ -52,7 +53,8 @@ export class Tab3Page {
     private database: AngularFirestore,
     private service: FirestoreService,
     private socialSharing: SocialSharing,
-    private db: DatabaseService
+    private db: DatabaseService,
+    private location: Location
 
 
   ) {
@@ -64,19 +66,22 @@ export class Tab3Page {
     });
     
   }
-
+  back(){
+    this.service.hiddenTabs = false;
+    this.location.back();
+  }
   onScroll(event){
     if(event.detail.scrollTop == 0){
-      this.service.hiddenTabs = false ;
+      // this.service.hiddenTabs = true ;
       this.hiddenHeader = false ;
       console.log("00000000")
     }else{
     if (event.detail.scrollTop > 30) {
       console.log(">>>> 30");
-      this.service.hiddenTabs = true ;
+      // this.service.hiddenTabs = true ;
       this.hiddenHeader = true ;
     } else {
-      this.service.hiddenTabs = false ;
+      this.service.hiddenTabs = true ;
     }
   }
   }

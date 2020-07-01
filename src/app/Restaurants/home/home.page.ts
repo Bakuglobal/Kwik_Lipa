@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { NavigationExtras, Router } from '@angular/router';
 import { ADs } from 'src/app/models/ads';
+import { error } from 'protractor';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +12,9 @@ import { ADs } from 'src/app/models/ads';
 })
 export class HomePage implements OnInit {
   Restaurants;
-  Ads: ADs[]
+  recipe: any[];
+  Ads: ADs[];
+  products = [];
   AdvertslideOpts = {
     initialSlide: 1,
     speed: 500,
@@ -22,43 +25,80 @@ export class HomePage implements OnInit {
     initialSlide: 0,
     speed: 500,
     autoplay: true,
-    slidesPerView: 1.7,
+    slidesPerView: 2.5,
   }
-  skeleton = [1,2,3];
+  skeleton = [1, 2, 3];
   constructor(
     private location: Location,
     private service: FirestoreService,
     private navCtrl: Router
-  ) { 
-    this.service.hiddenTabs = true ;
+  ) {
+    this.service.hiddenTabs = true;
     this.getAds();
   }
 
   ngOnInit() {
     this.getRestaurants();
+    this.getRecipeShop();
   }
-  back(){
-    this.service.hiddenTabs = false ;
+  back() {
+    this.service.hiddenTabs = false;
     this.location.back();
   }
-  getRestaurants(){
-    this.service.getRest().subscribe(res => {
-      console.log('restaurants',res);
-      this.Restaurants = res ;
-    });
+  viewRecipeShop(item){
+    console.log(item);
+    let navigationExtras: NavigationExtras = {
+      queryParams: item
+    };
+    this.service.hiddenTabs = true ;
+    this.navCtrl.navigate(['tabs/Recipeprofile'], navigationExtras);
   }
-  goToRest(rest){
+  gotoRecipes(){
+    this.service.hiddenTabs = true ;
+    this.navCtrl.navigate(['tabs/recipes']);
+  }
+  getRecipeShop() {
+    this.service.getRecipe().valueChanges().subscribe(res => {
+      this.recipe = res;
+      console.log("recipe", this.recipe);
+    })
+  }
+  getRestaurants() {
+    this.service.getRest().subscribe(res => {
+      console.log('restaurants', res);
+      this.Restaurants = res;
+      this.getProducts();
+    }, error => { console.log(error) }, () => { this.getProducts() })
+  }
+  getProducts() {
+    this.service.getproducts("La Tasca Spanish Corner").valueChanges().subscribe(res => {
+      res.forEach(item => { this.products.push(item); })
+      console.log(this.products);
+    }, error => { console.log(error) });
+    this.service.getproducts("Mara Bites").valueChanges().subscribe(res => {
+      res.forEach(item => { this.products.push(item); })
+      console.log(this.products);
+    }, error => { console.log(error) });
+  }
+  goToRest(rest) {
     this.service.changeData(rest.Restaurant);
     let navigationExtras: NavigationExtras = {
       queryParams: rest
     };
-    this.service.hiddenTabs = true ;
+    this.service.hiddenTabs = true;
     this.navCtrl.navigate(['tabs/profile'], navigationExtras);
   }
-  getAds(){
+  getAds() {
     this.service.getFoodAds().subscribe(res => {
-      this.Ads = res ;
+      this.Ads = res;
       console.log(this.Ads);
     })
+  }
+  seeDetails(item){
+    let navigationExtras: NavigationExtras = {
+      queryParams: item
+    };
+    this.service.hiddenTabs = true ;
+    this.navCtrl.navigate(['tabs/details'], navigationExtras);
   }
 }

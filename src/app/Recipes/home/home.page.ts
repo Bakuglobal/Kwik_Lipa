@@ -57,7 +57,7 @@ export class HomePage implements OnInit {
    back(){
     // 
     this.fireApi.shareShopBy('shopBy');
-    this.navCtrl.navigate(['tabs/tab1']);
+    this.location.back();
   }
   // handle searchbar 
   setFilteredItems(){

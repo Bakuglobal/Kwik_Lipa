@@ -4,9 +4,9 @@
         <ion-buttons slot="start">
             <ion-menu-button autoHide="false"></ion-menu-button>
         </ion-buttons>
-        <ion-title text-center *ngIf="!heading && !searchBar"> <br><br><span style="font-size: .8em;">Welcome back ,
+        <ion-title text-center *ngIf="!heading && !searchBar"> <br><br><span style="font-size: .8em;">Welcome back,
                 <br> What
-                would you like to do ? </span></ion-title>
+                would you like to do? </span></ion-title>
         <ion-title *ngIf="heading && !searchBar" text-center>Hello {{Name}}</ion-title>
         <ion-searchbar placeholder="Enter term here" *ngIf="searchBar" mode="ios" animated class="searchbar">
         </ion-searchbar>
@@ -93,7 +93,7 @@
             <div class="order-food" style="width: 100%; margin-left: 10px; margin-right: 10px;" (click)="goToRestaurants()">
                 <img src="/assets/images/order-food.png" style="width: 100%; border-radius: 5px;" alt="">
                 <div class="container" style="margin-left: 50%; width: 100%; margin-top: -32px; background-color: rgba(0, 174, 229, 0.7); transform: translate(-50%, -50%); border-radius: 5px;">
-                    <h1 style="font-size: 14px; color: white; text-align: center; font-weight: bold;">ORDER FOOD</h1>
+                    <h1 style="font-size: 14px; color: white; text-align: center; font-weight: bold;">FOOD</h1>
                 </div> 
             </div>
         </ion-row>
@@ -111,10 +111,10 @@
                     <h1 style="font-size: 14px; color: white; text-align: center; font-weight: bold;">Soko</h1>
                 </div>
             </ion-col> -->
-            <ion-col no-padding style="margin-left: 5px;" (click)="goToDonations()">
-                <img src="/assets/images/donatation.png" alt="" style="width: 100%; border-radius: 3px;">
+            <ion-col no-padding style="margin-left: 5px;" (click)="goToSoko()">
+                <img src="/assets/images/Konnect.png" alt="" style="width: 100%; border-radius: 3px;">
                 <div class="container" style="margin-left: 50%; width: 100%; margin-top: -32px; background-color: rgba(0, 174, 229, 0.7); transform: translate(-50%, -50%); border-radius: 5px;">
-                    <h1 style="font-size: 14px; color: white; text-align: center; font-weight: bold;">DONATE</h1>
+                    <h1 style="font-size: 14px; color: white; text-align: center; font-weight: bold;">Konnect</h1>
                 </div>
             </ion-col>
         </ion-row>

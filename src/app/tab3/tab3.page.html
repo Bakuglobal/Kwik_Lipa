@@ -1,10 +1,13 @@
 <ion-header color="primary" [hidden]="hiddenHeader">
-    <ion-toolbar color="primary">
-        <ion-buttons slot="start">
+    <ion-toolbar color="primary" class="ion-padding">
+        <!-- <ion-buttons slot="start">
             <ion-menu-button autoHide="false"></ion-menu-button>
+        </ion-buttons> -->
+        <ion-buttons>
+            <ion-icon name="arrow-back" (click)="back()"></ion-icon>
+            <ion-title style="text-align: center;">Konnect</ion-title>
         </ion-buttons>
-        <ion-title>Soko</ion-title>
-        <ion-searchbar placeholder="Search for a shop " animated type="text" *ngIf="showSearch"></ion-searchbar>
+        <!-- <ion-searchbar placeholder="Search for a shop " animated type="text" *ngIf="showSearch"></ion-searchbar> -->
         <!-- SEARCH BAR -->
         <!-- <ion-buttons slot="end" style="padding-right: 5px;">
             <ion-button (click)="notifications()">

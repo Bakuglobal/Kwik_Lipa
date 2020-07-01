@@ -1,0 +1,63 @@
+
+<ion-content>
+    
+  <div class="">
+      <ion-buttons slot="start" style="position: absolute; margin-left: 10px;"> 
+          <p>
+              <ion-icon size="small" (click)="back()" name="arrow-round-back" color="light"></ion-icon>
+          </p>
+      </ion-buttons>
+      <img src="/assets/images/sign-in-code.png">
+  </div>
+
+<!-- SECOND CONTENT -->
+  <div class="second-content">
+      <div class="logo">
+          <img src="/assets/images/new-logo.png" class="logo">
+      </div>
+      <div class="title">
+          <p class="head-title">Enter the Verification Code</p>
+          <p class="sub-title">Enter the 4 digit code sent to</p>
+          <p class="display-phone-number">{{data.phone}}</p>
+      </div>
+    
+
+    <!-- CONTENT -->
+    <div class="content">
+        
+      <form>
+          <ion-list>
+              <ion-item color="medium" text-center>
+                  <ion-input #otp1 required maxLength="1" (keyup)="otpController($event,otp2,'')">
+                  </ion-input>
+                  <ion-input #otp2 required maxLength="1" (keyup)="otpController($event,otp3,otp1)">
+                  </ion-input>
+                  <ion-input #otp3 required maxLength="1" (keyup)="otpController($event,otp4,otp2)">
+                  </ion-input>
+                  <ion-input #otp4  required maxLength="1" (keyup)="otpController($event,'',otp3)">
+                  </ion-input>
+              </ion-item>
+          </ion-list>
+
+          <ion-row>
+              <ion-col size="12">
+                  <ion-list class="submit-button">
+                      <div class="form-group">
+                          <ion-buttons>
+                              <ion-button (click)="register()"><b class="verify">VERIFY</b></ion-button>
+                          </ion-buttons>
+                          <div class="ion-text-center have-account">
+                              <ion-label (click)="resendCode()">Resend Code</ion-label>
+                          </div>  
+                      </div>
+                  </ion-list>
+              </ion-col>
+          </ion-row>
+
+        </form>
+    </div>
+    
+</div>
+
+
+</ion-content>

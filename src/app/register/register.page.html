@@ -1,4 +1,4 @@
-<ion-content>
+<!-- <ion-content>
   <ion-toolbar color="primary">
       <ion-buttons slot="start"> 
         <p >
@@ -6,13 +6,13 @@
         </p>
       </ion-buttons>
       <ion-title text-center>Register to kwik lipa
-        <!-- <h2 class="top-register">Register to kwik lipa</h2> -->
+        <!-- <h2 class="top-register">Register to kwik lipa</h2> 
       </ion-title>
   </ion-toolbar>
     
     <div class="bg-text">
 
-        <!-- FORM -->
+        <!-- FORM 
         <form [formGroup]="registerForm">
             <ion-list>
                 <ion-item>
@@ -106,4 +106,101 @@
     </div>
 
 
+</ion-content>
+ -->
+
+
+<ion-content>
+    <!-- FIRST CONTENT -->
+    <div class="first-content">
+        <img src="/assets/images/sign-up.png">
+    </div>
+
+    <!-- SECOND CONTENT -->
+    <div class="second-content">
+        <div class="logo">
+            <img src="/assets/images/new-logo.png">
+        </div>
+
+        <!-- CONTENT -->
+        <div class="content">
+
+            <form [formGroup]="registerForm">
+                <ion-row>
+                    <ion-col size="12">
+                        <ion-list>
+                            <ion-item class="item-border">
+                                <ion-label color="primary">
+                                    <ion-icon color="primary" name="person" slot="start" size="small"></ion-icon>
+                                </ion-label>
+                                <ion-input clearInput name="firstName" formControlName="firstName" required type="text" placeholder="First Name"
+                                    class="input-border-zero"></ion-input>
+                            </ion-item>
+                        </ion-list>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col size="12">
+                        <ion-list>
+                            <ion-item class="item-border">
+                                <ion-label color="primary">
+                                    <ion-icon color="primary" name="person" slot="start" size="small"></ion-icon>
+                                </ion-label>
+                                <ion-input clearInput name="lastName" formControlName="lastName" required type="text" placeholder="Last Name"
+                                    class="input-border-zero"></ion-input>
+                            </ion-item>
+                        </ion-list>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col size="12">
+                        <ion-list>
+                            <ion-item class="item-border">
+                                <ion-label color="primary">
+                                    <ion-icon color="primary" name="mail" slot="start" size="small"></ion-icon>
+                                </ion-label>
+                                <ion-input clearInput name="email" formControlName="email" required type="email" placeholder="Email"
+                                    class="input-border-zero"></ion-input>
+                            </ion-item>
+                        </ion-list>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row class="phone-validation">
+                    <ion-col size="3">
+                        <ion-select [interfaceOptions]="customActionSheetOptions" interface="action-sheet"
+                            placeholder="(+254)">
+                            <ion-select-option value="red">(+254)</ion-select-option>
+                            <ion-select-option value="purple">(+255)</ion-select-option>
+                            <ion-select-option value="yellow">(+256)</ion-select-option>
+                        </ion-select>
+                    </ion-col>
+                    <ion-col size="9" class="phone-col">
+                        <ion-item class="phone-item">
+                            <ion-input type="tel" class="phone-input" maxlength="9" clearInput name="name" formControlName="phone" required 
+                                placeholder="700-000-000"></ion-input>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="sign-up-button">
+                    <ion-col size="12">
+                        <ion-list class="submit-button">
+                            <div class="form-group">
+                                <ion-buttons>
+                                    <ion-button class="ion-text-center" (click)="register()" [disabled]="!registerForm.valid"><b>SIGN UP</b>
+                                    </ion-button>
+                                </ion-buttons>
+                                <div class="ion-text-center have-account">
+                                    Already have an account?
+                                    <b (click)="back()" style="text-align: center; color: #00ade5;">Login</b>
+                                </div>
+                            </div>
+                        </ion-list>
+                    </ion-col>
+                </ion-row>
+            </form>
+        </div>
+    </div>
 </ion-content>

@@ -1,4 +1,4 @@
-<ion-content>
+<!-- <ion-content>
     <p style="margin-top: 20px; background: transparent; position: absolute; padding: 20px;">
         <ion-icon size="large" (click)="back()" name="arrow-round-back" color="light"></ion-icon>
     </p>
@@ -8,7 +8,6 @@
     </div>
 
 	<div class="bg-text">
-        <!-- FORM -->
         <form #loginform=ngForm>
             <ion-list>
                 <ion-item color="medium">
@@ -63,8 +62,70 @@
 
         </form>
 	</div>
+</ion-content> -->
+
+
+<ion-content>
+    <!-- FIRST CONTENT -->
+    <div class="first-content">
+        <img src="/assets/images/sign-in.png">
+    </div>
+
+    <!-- SECOND CONTENT -->
+    <div class="second-content">
+        <div class="logo">
+            <img src="/assets/images/new-logo.png">
+        </div>
+
+        <div class="title">
+            <p class="head-title">Making Your Shopping</p>
+            <p class="sub-title">Great Again!</p>
+        </div>
+        
+        <form>
+            <div class="content-one">
+                <div class="content">
+                    <ion-row>
+                        <ion-col size="12">
+                            <ion-list>
+                                <ion-item>
+                                    <ion-label>
+                                        <ion-icon color="primary" name="call" slot="start" size="small"></ion-icon>
+                                    </ion-label>
+                                    <ion-input clearInput name="email" required type="tel" maxlength="13" placeholder="+254-700-000-000" [(ngModel)]="phonenumber"></ion-input>
+                                </ion-item>
+                            </ion-list>
+                        </ion-col>
+                    </ion-row>
+
+                    <div>
+                        <p>YOUR PHONE NUMBER MUST CONTAIN</p>
+                        <div>
+                            <span class="bullet">&bull;</span> <p class="bullet-content">Contries code</p>
+                        </div>
+                        <div>
+                            <span class="bullet">&bull;</span> <p class="bullet-content">9 Numbers</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="content-two">
+                <ion-buttons>
+                    <ion-button shape="round" (click)="verify()">Next</ion-button>
+                </ion-buttons>
+                <ion-list>
+                    <div class="form-group">
+                        <div class="ion-text-center have-account">
+                            Have an account?<br>
+                            <b (click)="register()" style="color: #00ade5;">Create Now</b>
+                        </div>  
+                    </div>  
+                </ion-list>
+            </div>
+        </form>
+    </div>
+
+    
 </ion-content>
 
-<!-- <ion-content>
-    <ion-button (click)="login()">Login with google</ion-button>
-</ion-content> -->

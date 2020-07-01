@@ -24,9 +24,11 @@ slideme = {
 AdvertslideOpts = {
 
 }
-vidoes: any[];
 categories: any[];
-trending: any[];
+Fashion: any[];
+diets:any[];
+fitness: any[];
+books:any[];
 
   constructor(    private location: Location,
     private service: FirestoreService, 
@@ -34,6 +36,11 @@ trending: any[];
     private navCtrl: Router
     ) {
       this.getShops();
+      this.getCategories();
+      this.getDietVideos();
+      this.getFashionVlogs();
+      this.getFitnessHealth();
+      this.getBooks();
      }
 
   ngOnInit() {
@@ -63,13 +70,35 @@ trending: any[];
       console.log(this.shops);
     })
   }
-  getVideos(cat){
-    this.service.getvideos(cat)
-
+  getDietVideos(){
+    this.service.getvideos('Diets and food').valueChanges().subscribe(res => {
+      this.diets = res ;
+      console.log('diets',this.diets);
+    })
   }
+  getFashionVlogs(){
+    this.service.getvideos('Fashion Vlogs').valueChanges().subscribe(res => {
+      this.Fashion = res ;
+      console.log('fashion',this.Fashion);
+    })
+  }
+  getFitnessHealth(){
+    this.service.getvideos('Fitness and Health').valueChanges().subscribe(res => {
+      this.fitness = res ;
+      console.log('fitness',this.fitness);
+    })
+  }
+  getBooks(){
+    this.service.getvideos('Book reviews').valueChanges().subscribe(res => {
+      this.books = res ;
+      console.log('books',this.books);
+    })
+  }
+  
   getCategories(){
     this.service.getCats().valueChanges().subscribe(res => {
-
+      this.categories = res ;
+      console.log("Categories",this.categories);
     })
   }
 

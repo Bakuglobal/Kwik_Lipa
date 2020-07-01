@@ -56,7 +56,7 @@ import { CallNumber} from '@ionic-native/call-number/ngx';
 import { VideoPlayer } from '@ionic-native/video-player/ngx';
 import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player/ngx';
 @NgModule({
-  declarations: [AppComponent,   ],
+  declarations: [AppComponent],
   entryComponents: [],
   imports: [
     BrowserModule,

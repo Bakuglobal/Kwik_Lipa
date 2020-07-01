@@ -134,8 +134,9 @@ export class Tab1Page implements OnInit {
       console.log('poster', this.poster);
     })
   }
-  goToDonations() {
-    this.navCtrl.navigate(['tabs/home']);
+  goToSoko() {
+    this.service.hiddenTabs = true ;
+    this.navCtrl.navigate(['tabs/tab3']);
   }
   gotoRecipes(){
     this.navCtrl.navigate(['tabs/recipes']);

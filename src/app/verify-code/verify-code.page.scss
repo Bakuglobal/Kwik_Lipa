@@ -1,0 +1,80 @@
+// FIRST CONTENT
+.first-content {
+    img {
+        width: 100%;
+    }
+}
+
+// SECOND CONTENT
+.second-content {
+    width: 100%; 
+    background-color: white; 
+    position: absolute; 
+    margin-top: -40px; 
+    border-top-left-radius: 40px; 
+    border-top-right-radius: 40px;
+    .logo {
+        margin: auto;
+        img {
+            width: 100%; 
+            vertical-align: middle; 
+            margin-top: -50px; 
+            margin-bottom: 30px;
+        }
+    }
+    .title {
+        text-align: center; 
+        margin-top: 0px;
+        .head-title {
+            font-weight: bold;
+            font-size: 15px;
+        }
+        .display-phone-number {
+            margin-top: -12px;
+            padding-bottom: 10px;
+        }
+    }
+    .content {
+        width: 85%; 
+        margin: auto;
+        ion-list{
+            background: transparent;
+            margin-bottom: 10px;
+            ion-item {
+                font-size: 15px;
+                border-radius: 20px;
+                border-bottom: 0px;
+                --border-color: transparent!important;
+                --highlight-height: 0;
+                --background: none;
+                ion-input {
+                    border-bottom: 2px solid #00ade5; 
+                    color: #696868; 
+                    margin: 5px;
+                }
+            }
+        }
+        ion-buttons {
+            ion-button {
+                width: 70%; 
+                height: 40px;
+                border-radius: 50px; 
+                background-color: #00ade5; 
+                color: white; 
+                margin: auto;
+                .verify {
+                    margin-top: 5px;
+                }
+            }
+        }
+        .have-account {
+            color: #00ade5;
+            margin-top: 15px;
+            font-size: 11px;
+        }
+    }
+}
+
+
+
+

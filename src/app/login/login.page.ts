@@ -36,6 +36,7 @@ export class LoginPage implements OnInit {
     backButtonSubscription ;
     showSplash = true ;
     unread = [] ;
+    phonenumber: string;
 //objects
 
       public data: { email: any; password: any } = {
@@ -66,10 +67,10 @@ export class LoginPage implements OnInit {
    
   ) {
     
-    setTimeout(()=>{
-      this.showSplash = false ;
-    },300);
-    
+    // setTimeout(()=>{
+    //   this.showSplash = false ;
+    // },300);
+    this.service.hiddenTabs = true ;
   }
  
   ngOnInit() {
@@ -91,9 +92,8 @@ export class LoginPage implements OnInit {
         }
 // go to register page
 
-        async register(){
+        register(){
             this.navCtrl.navigate(['tabs/register']);
-            
           }
 //send login credentials
 
@@ -178,4 +178,13 @@ export class LoginPage implements OnInit {
   .then(res => alert(res))
   .catch(err => alert(err));
   }
+
+  // goto verify phone number
+  verify(){
+    if(this.phonenumber === undefined ){this.toasted('Enter phone number'); return}
+    if(this.phonenumber.length < 13){ this.toasted('Sorry you Entered incomplete phone number'); return};
+    this.db.holddata({phone: this.phonenumber,type:"login"})
+    this.navCtrl.navigate(['tabs/verifycode']);
+    }
+  
 }

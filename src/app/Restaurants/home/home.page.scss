@@ -19,9 +19,12 @@
         font-size: .7em;
     }
 }
+.swiper-slide{
+  justify-content: start;
+}
 .pr-name{
     font-weight: bold; 
-    font-size: 1.1em;
+    font-size: .6rem;
     text-transform: capitalize;
 }
 .pr-price{
