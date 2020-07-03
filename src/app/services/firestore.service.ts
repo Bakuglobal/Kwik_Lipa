@@ -453,7 +453,9 @@ getFoodAds(){
  return  fs.valueChanges();
 }
 getproducts(shop){
-  return this.fs.collection(shop);
+  return this.fs.collection(shop, ref => {
+    return ref.orderBy('currentprice','desc').limitToLast(5);
+  });
 }
 
 }

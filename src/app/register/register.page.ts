@@ -55,14 +55,14 @@ export class RegisterPage implements OnInit {
       firstName: ['', Validators.compose([Validators.minLength(3), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
       lastName: ['', Validators.compose([Validators.minLength(3), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
       email: ['',Validators.required],
-      phone:['',Validators.compose([Validators.maxLength(9), Validators.required,Validators.minLength(9)])],
-      // gender:['',Validators.required],
-      // residence:['',Validators.required],
-      // // wallet:['',Validators.required],
-      // password:['',Validators.required],
-      // confPassword:['',Validators.required],
-      // dob: ['',Validators.required],
-      // privacyPolicy:['',Validators.required]
+      phone:['',Validators.required],
+      gender:['',Validators.required],
+      residence:['',Validators.required],
+      // wallet:['',Validators.required],
+      password:['',Validators.required],
+      confPassword:['',Validators.required],
+      dob: ['',Validators.required],
+      privacyPolicy:['',Validators.required]
   });
   }
 
@@ -85,31 +85,32 @@ login(){
   this.navigation.navigate(['tabs/login'])
 }
 register(){
-
+  this.presentLoading();
   this.data = this.registerForm.value;
-  this.data.phone = '+254'+this.registerForm.value.phone ;
-  this.data.type = "signup";
+  // this.data.phone = '+254'+this.registerForm.value.phone ;
+  // this.data.type = "signup";
   console.log(this.data)
-  // this.fireApi.register(this.data.email,this.data.password).then(res => {
-  //   localStorage.setItem('userID',res.user.uid);
-  //   this.fireApi.createUserProfile(this.data,res.user.uid).then(succ => {
-  //     this.clear();
-  //     this.app.getDetails(res.user.uid);
-  //     this.notice.sendTokenToFirebase(res.user.uid);
-  //     this.loading.dismiss();
-  //     this.navigation.navigate(["tabs/tab1"]);
-  //   }).catch(
-  //     err => {
-  //       this.loading.dismiss();
-  //       console.log(err) 
-  //     })
-  // }).catch(error => {
-  //   this.loading.dismiss();
-  //   console.error(error) 
-  // });
-  this.service.holddata(this.data);
-  this.navigation.navigate(['tabs/verifycode']);
-  this.fireApi.hiddenTabs = true;
+  this.fireApi.register(this.data.email,this.data.password).then(res => {
+    localStorage.setItem('userID',res.user.uid);
+    this.fireApi.createUserProfile(this.data,res.user.uid).then(succ => {
+      this.clear();
+      this.app.getDetails(res.user.uid);
+      this.notice.sendTokenToFirebase(res.user.uid);
+      // this.getResidence(this.registerForm.value.residence);
+      this.loading.dismiss();
+      this.navigation.navigate(["tabs/tab1"]);
+    }).catch(
+      err => {
+        this.loading.dismiss();
+        console.log(err) 
+      })
+  }).catch(error => {
+    this.loading.dismiss();
+    console.error(error) 
+  });
+  // this.service.holddata(this.data);
+  // this.navigation.navigate(['tabs/verifycode']);
+  // this.fireApi.hiddenTabs = true;
 }
 
  
@@ -159,9 +160,9 @@ register(){
     this.fireApi.hiddenTabs = false;
     this.location.back();
   }
-  getResidence(){
+  getResidence(place){
     let key = 'AIzaSyAcLMPO6PkIEoOuLJJ86Y_vjxqTCi7ZcvE' ;
-    this.fireApi.getPlace(this.place,key)
+    this.fireApi.getPlace(place,key)
     .subscribe(res => {
       this.residence = res ;
       alert(JSON.stringify(res));

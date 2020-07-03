@@ -54,7 +54,7 @@ export class ProfilePage implements OnInit {
   }
   onScroll(event) {
     if (event.detail.scrollTop == 0) {
-      this.service.hiddenTabs = false;
+      this.service.hiddenTabs = true;
       console.log("00000000");
       this.changeBackToRelative();
     } else {

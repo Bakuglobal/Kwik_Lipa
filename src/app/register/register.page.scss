@@ -1,139 +1,139 @@
-// ion-content {
-//     --background: #00ade5;
-// }
-// .invalid{
-//     background-color: red;
-// }
-
-// .bg-text {
-//     margin-top: 0%;
-//     margin-left: 5px;
-//     margin-right: 10px;
-//     background: transparent; 
-// }
-
-// ion-list{
-// 	background: transparent;
-//     ion-item {
-//         --border-color: transparent!important;
-//         --highlight-height: 0;
-//         --background: none;
-//         ion-input {
-//         	border-bottom: 1px solid white;
-//             color: white;
-//         }
-//     }
-// }
-
-// .button-create-account {
-//     margin-left: 15px;
-//     margin-right: 15px;
-//     margin-top: 25px;
-//     border-radius: 5px;
-//     color: #00ade5;
-//     background-color: white;
-//     width: auto;
-// }
-
-// ion-button {
-//     margin-left: auto;
-//     margin-right: auto;
-//     height: 47px;
-// }
-
-// .have-account {
-//     color: white; 
-//     font-size: 15px;
-// }
-
-// hr {
-//     border-bottom: 1px solid white; 
-//     color: white; 
-//     margin-top: -13px;
-//     margin-left: 15px;
-//     margin-right: 15px;
-// }
-
-// FIRST CONTENT
-.first-content {
-    img {
-        width: 100%;
-    }
+ion-content {
+    --background: #00ade5;
+}
+.invalid{
+    background-color: red;
 }
 
-// SECONDCONTENT
-.second-content {
-    width: 100%; 
-    background-color: white; 
-    position: absolute; 
-    margin-top: -40px; 
-    border-top-left-radius: 40px; 
-    border-top-right-radius: 40px;
-    .logo {
-        margin: auto;
-        img {
-            width: 100%; 
-            vertical-align: middle; 
-            margin-top: -50px; 
-            margin-bottom: 40px;
-        }
-    }
-    .content {
-        width: 90%; 
-        margin: auto;
-        .item-border {
-            border-radius: 15px; border: 1px solid #C9C9C9;
-        }
-        .input-border-zero {
-            border-bottom: 0px;
-        }
-        .sign-up-button {
-            padding-top: 10px
-        }
-        .phone-validation {
-            border-radius: 15px; border: 1px solid #C9C9C9; margin-left: 5px; margin-right: 5px; height: 50px; margin-top: 10px; margin-bottom: 10px;
-            .phone-col {
-                margin-top: -5px; border-left: 1px solid #C9C9C9; height: 25px; margin-top: 12px;
-                .phone-item {
-                    --border-color: transparent!important; --highlight-height: 0; --background: none;
-                    .phone-input {
-                        margin-top: -31px;
-                    }
-                }
-            }
-        }
-    }
-}
-
-
-ion-buttons {
-    ion-button {
-        width: 60%; 
-        height: 40px;
-        border-radius: 35px; 
-        background-color: #00ade5; 
-        color: white; 
-        margin: auto;
-    }
-}
-
-
-.have-account {
-    color: #696868; 
-    margin-top: 9px;
-    font-size: 11px;
-    b {
-        text-align: center;
-        color: #00ade5;
-    }
+.bg-text {
+    margin-top: 0%;
+    margin-left: 5px;
+    margin-right: 10px;
+    background: transparent; 
 }
 
 ion-list{
-    background: transparent;
+	background: transparent;
     ion-item {
         --border-color: transparent!important;
         --highlight-height: 0;
         --background: none;
+        ion-input {
+        	border-bottom: 1px solid white;
+            color: white;
+        }
     }
 }
+
+.button-create-account {
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 25px;
+    border-radius: 5px;
+    color: #00ade5;
+    background-color: white;
+    width: auto;
+}
+
+ion-button {
+    margin-left: auto;
+    margin-right: auto;
+    height: 47px;
+}
+
+.have-account {
+    color: white; 
+    font-size: 15px;
+}
+
+hr {
+    border-bottom: 1px solid white; 
+    color: white; 
+    margin-top: -13px;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+// FIRST CONTENT
+// .first-content {
+//     img {
+//         width: 100%;
+//     }
+// }
+
+// // SECONDCONTENT
+// .second-content {
+//     width: 100%; 
+//     background-color: white; 
+//     position: absolute; 
+//     margin-top: -40px; 
+//     border-top-left-radius: 40px; 
+//     border-top-right-radius: 40px;
+//     .logo {
+//         margin: auto;
+//         img {
+//             width: 100%; 
+//             vertical-align: middle; 
+//             margin-top: -50px; 
+//             margin-bottom: 40px;
+//         }
+//     }
+//     .content {
+//         width: 90%; 
+//         margin: auto;
+//         .item-border {
+//             border-radius: 15px; border: 1px solid #C9C9C9;
+//         }
+//         .input-border-zero {
+//             border-bottom: 0px;
+//         }
+//         .sign-up-button {
+//             padding-top: 10px
+//         }
+//         .phone-validation {
+//             border-radius: 15px; border: 1px solid #C9C9C9; margin-left: 5px; margin-right: 5px; height: 50px; margin-top: 10px; margin-bottom: 10px;
+//             .phone-col {
+//                 margin-top: -5px; border-left: 1px solid #C9C9C9; height: 25px; margin-top: 12px;
+//                 .phone-item {
+//                     --border-color: transparent!important; --highlight-height: 0; --background: none;
+//                     .phone-input {
+//                         margin-top: -31px;
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
+
+
+// ion-buttons {
+//     ion-button {
+//         width: 60%; 
+//         height: 40px;
+//         border-radius: 35px; 
+//         background-color: #00ade5; 
+//         color: white; 
+//         margin: auto;
+//     }
+// }
+
+
+// .have-account {
+//     color: #696868; 
+//     margin-top: 9px;
+//     font-size: 11px;
+//     b {
+//         text-align: center;
+//         color: #00ade5;
+//     }
+// }
+
+// ion-list{
+//     background: transparent;
+//     ion-item {
+//         --border-color: transparent!important;
+//         --highlight-height: 0;
+//         --background: none;
+//     }
+// }
 

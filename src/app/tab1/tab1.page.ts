@@ -1,12 +1,12 @@
 import { Component, AfterViewInit, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { Shops } from '../models/shops';
+import { Shops, Shop } from '../models/shops';
 import { FirestoreService } from '../services/firestore.service';
 import 'rxjs/add/operator/map';
 import 'rxjs/Rx';
 import { User } from '../models/user';
 import { Router, NavigationExtras } from '@angular/router';
 import { DatabaseService } from '../services/database.service';
-import { Platform, IonContent, ModalController } from '@ionic/angular';
+import { Platform, IonContent, ModalController, IonSearchbar } from '@ionic/angular';
 import { AlertController, ToastController, LoadingController, MenuController } from '@ionic/angular';
 import { Network } from '@ionic-native/network/ngx';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -14,7 +14,8 @@ import { IonSlides } from '@ionic/angular';
 import { DiscountmodalPage } from '../discountmodal/discountmodal.page';
 import { Badge } from '@ionic-native/badge/ngx';
 import { ADs } from '../models/ads';
-import { VideoPlayer } from '@ionic-native/video-player/ngx';
+import { ShuffleService } from '../services/shuffle.service';
+import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player/ngx';
 
 
 
@@ -29,7 +30,7 @@ export class Tab1Page implements OnInit {
 
   @ViewChild('picSlider', { static: false }) viewer: IonSlides;
   @ViewChild(IonContent, { static: false }) content: IonContent;
-
+  @ViewChild('IonSearchbar', { static: false }) myInput: IonSearchbar;
   // Variables
   shops: Shops[];
   unfilteredShops: Shops[];
@@ -55,9 +56,25 @@ export class Tab1Page implements OnInit {
     autoplay: true,
     slidesPerView: 1.7,
   }
+  resultSliders = {
+    initialSlide: 0,
+    speed: 500,
+    autoplay: true,
+    slidesPerView: 3,
+  }
   ads: ADs[];
   poster: any;
   searchBar = false;
+  restAd: any[];
+  Restaurants: any[];
+  searchTerm: string;
+  FoodResults = [];
+  ShopResults = [];
+  VideoResults = [];
+  ProductsResults = [];
+  RestaurantsResults = []
+  hideGuide = false;
+  stopSpinner = true;
 
   constructor(
     private platform: Platform,
@@ -73,7 +90,9 @@ export class Tab1Page implements OnInit {
     public fauth: AngularFireAuth,
     public modal: ModalController,
     public badge: Badge,
-    private videoPlayer: VideoPlayer,
+    private searchFn: ShuffleService,
+    private youtube: YoutubeVideoPlayer,
+
   ) {
     this.Name = localStorage.getItem('Name');
     //check if offline
@@ -91,6 +110,11 @@ export class Tab1Page implements OnInit {
     // hide bottom tabs
     this.service.hiddenTabs = false;
     // this.playVideoHosted();
+
+    this.searchFn.getShops();
+    // this.searchFn.createProductPool();
+    this.searchFn.getRestaurants();
+    this.searchFn.getAllvideos();
   }
   onScroll(event) {
     if (event.detail.scrollTop == 0) {
@@ -122,11 +146,116 @@ export class Tab1Page implements OnInit {
     // check for unread notices
     this.getShops();
     this.getDonationPoster();
+    this.getRestaurantAds();
+    this.getRestaurants();
   }
 
   onIonViewDidLoad() {
     this.selectShop = false;
+  }
+  clearSearchResults(){
+    this.FoodResults = [];
+    this.ProductsResults = [];
+    this.VideoResults = [];
+    this.ShopResults = [];
+    this.RestaurantsResults = [];
+  }
+  startSearch() {
+    if (this.searchTerm === undefined || this.searchTerm.length === 0) { 
+     this.clearSearchResults();
+      return ;
+     }
+    this.stopSpinner = false;
+    // get food results
+    this.FoodResults = this.searchFn.searchFood(this.searchTerm);
+    // get shops results
+    this.ShopResults = this.searchFn.ShopSearch(this.searchTerm);
+    // get videos results
+    this.VideoResults = this.searchFn.searchVideo(this.searchTerm);
+    // get products results
+    this.ProductsResults = this.searchFn.searchProduct(this.searchTerm);
+    // get restaurant results
+    this.RestaurantsResults = this.searchFn.searchRestaurant(this.searchTerm);
 
+    console.table(this.searchFn.searchFood(this.searchTerm));
+    console.table(this.searchFn.ShopSearch(this.searchTerm));
+    console.table(this.searchFn.searchVideo(this.searchTerm));
+    console.table(this.searchFn.searchProduct(this.searchTerm));
+    console.table(this.searchFn.searchRestaurant(this.searchTerm));
+
+    if (this.FoodResults.length > 0 || this.ShopResults.length > 0 || this.VideoResults.length > 0 || this.ProductsResults.length > 0 || this.RestaurantsResults.length > 0) {
+      this.hideGuide = true;
+      this.stopSpinner = true;
+    }
+  }
+  getRestaurantAds() {
+    this.service.getFoodAds().subscribe(res => {
+      this.restAd = res;
+      console.log(this.restAd);
+    })
+  }
+  getRestaurants() {
+    this.service.getRest().subscribe(res => {
+      console.log('restaurants', res);
+      this.Restaurants = res;
+    }, error => { console.log(error) });
+  }
+  posterToRest(shop) {
+    // this.service.changeData(shop);
+    let dt = this.filterRest(shop);
+    console.log('params', dt);
+    let navigationExtras: NavigationExtras = {
+      queryParams: dt[0]
+    };
+    this.fireApi.hiddenTabs = true;
+    this.navCtrl.navigate(['tabs/profile'], navigationExtras);
+  }
+  filterRest(shop) {
+    return this.Restaurants.filter(item => {
+      return item.Restaurant.toLowerCase().indexOf(shop.toLowerCase()) > -1;
+    });
+  }
+  seeDetails(item){
+    let navigationExtras: NavigationExtras = {
+      queryParams: item
+    };
+    this.service.hiddenTabs = true ;
+    this.navCtrl.navigate(['tabs/details'], navigationExtras);
+  }
+  openMyVideo(id){
+    this.youtube.openVideo(id);
+  }
+   //redirect to shop page
+   goToShop(shop){
+    this.fireApi.changeData(shop.shop);
+    this.fireApi.hiddenTabs = true ;
+    this.fireApi.serviceshopBy
+        .subscribe(data => {
+          console.log('shopBy -- ' + data)
+          if(data == 'scan'){
+            this.navCtrl.navigate(['tabs/shop']);
+          }
+          if(data == 'pick' || data == 'delivery'){
+              this.navCtrl.navigate(['tabs/offers']);
+            }
+          if(data == 'shopBy'){
+            // this.showAlert();
+            let navigationExtras: NavigationExtras = {
+              queryParams: shop
+            };
+            this.fireApi.hiddenTabs = true ;
+            this.navCtrl.navigate(['tabs/shopprofile'], navigationExtras);
+          }
+          
+        }); 
+  }
+  goToRest(rest) {
+    this.service.changeData(rest.Restaurant);
+    let navigationExtras: NavigationExtras = {
+      queryParams: rest
+    };
+    this.service.hiddenTabs = true;
+    this.navCtrl.navigate(['tabs/profile'], navigationExtras);
   }
   getDonationPoster() {
     this.fireApi.getPoster().subscribe(res => {
@@ -135,16 +264,16 @@ export class Tab1Page implements OnInit {
     })
   }
   goToSoko() {
-    this.service.hiddenTabs = true ;
+    this.service.hiddenTabs = true;
     this.navCtrl.navigate(['tabs/tab3']);
   }
-  gotoRecipes(){
+  gotoRecipes() {
     this.navCtrl.navigate(['tabs/recipes']);
   }
   posterToShop(shop) {
     this.fireApi.changeData(shop);
     let dt = this.filterItems(shop);
-    console.log('params',dt);
+    console.log('params', dt);
     let navigationExtras: NavigationExtras = {
       queryParams: dt[0]
     };
@@ -218,7 +347,7 @@ export class Tab1Page implements OnInit {
     this.navCtrl.navigate(['tabs/mycontacts']);
   }
   goToselectShop() {
-    this.service.hiddenTabs = true ;
+    this.service.hiddenTabs = true;
     this.navCtrl.navigate(['tabs/selectshop']);
   }
   goToRestaurants() {
@@ -259,10 +388,17 @@ export class Tab1Page implements OnInit {
 
 
   search() {
+
     this.searchBar = !this.searchBar;
+    // this.myInput.setFocus();
+    this.fireApi.hiddenTabs = !this.fireApi.hiddenTabs;
+    if (this.searchBar === false) {
+      this.searchTerm = '';
+      this.clearSearchResults();
+    }
   }
 
-  async  gotoDiscountModal(item) {
+  async gotoDiscountModal(item) {
     if (item.barcode === undefined) {
       item.barcode = '';
     }
@@ -277,7 +413,7 @@ export class Tab1Page implements OnInit {
   getAds() {
     this.fireApi.getAds().subscribe(res => {
       this.ads = res;
-      console.log('ADS',this.ads)
+      console.log('ADS', this.ads)
     });
   }
   getShops() {
@@ -288,18 +424,12 @@ export class Tab1Page implements OnInit {
         this.unfilteredShops = res;
         console.log('shops', this.shops);
       });
-  } 
-  goToLifestyle(){
-    this.service.hiddenTabs = true ;
+  }
+  goToLifestyle() {
+    this.service.hiddenTabs = true;
     this.navCtrl.navigate(['tabs/lifestyle']);
   }
-  // playVideoHosted() {
-  //  return this.videoPlayer.play('https://firebasestorage.googleapis.com/v0/b/kwikapp-77d77.appspot.com/o/CORONA%20VIRUS%20AWARENESS%20-%20ENGLISH%20on%20Vimeo.mp4?alt=media&token=b492e8c9-482d-428b-991d-260ca419c4dd').then(() => {
-  //     console.log('video completed');
-  //   }).catch(err => {
-  //     console.log(err);
-  //   });
-  // }
+
 
 }
 

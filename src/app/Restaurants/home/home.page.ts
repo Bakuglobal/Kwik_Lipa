@@ -4,6 +4,7 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 import { NavigationExtras, Router } from '@angular/router';
 import { ADs } from 'src/app/models/ads';
 import { error } from 'protractor';
+import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player/ngx';
 
 @Component({
   selector: 'app-home',
@@ -31,7 +32,8 @@ export class HomePage implements OnInit {
   constructor(
     private location: Location,
     private service: FirestoreService,
-    private navCtrl: Router
+    private navCtrl: Router,
+    private youtube: YoutubeVideoPlayer,
   ) {
     this.service.hiddenTabs = true;
     this.getAds();
@@ -80,6 +82,13 @@ export class HomePage implements OnInit {
       console.log(this.products);
     }, error => { console.log(error) });
   }
+  seeDetails(item){
+    let navigationExtras: NavigationExtras = {
+      queryParams: item
+    };
+    this.service.hiddenTabs = true ;
+    this.navCtrl.navigate(['tabs/details'], navigationExtras);
+  }
   goToRest(rest) {
     this.service.changeData(rest.Restaurant);
     let navigationExtras: NavigationExtras = {
@@ -94,11 +103,20 @@ export class HomePage implements OnInit {
       console.log(this.Ads);
     })
   }
-  seeDetails(item){
+ 
+  
+  posterToRest(shop) {
+    // this.service.changeData(shop);
+    let dt = this.filterItems(shop);
+    console.log('params',dt);
     let navigationExtras: NavigationExtras = {
-      queryParams: item
+      queryParams: dt[0]
     };
-    this.service.hiddenTabs = true ;
-    this.navCtrl.navigate(['tabs/details'], navigationExtras);
+    this.navCtrl.navigate(['tabs/profile'], navigationExtras);
+  }
+  filterItems(shop) {
+    return this.Restaurants.filter(item => {
+      return item.Restaurant.toLowerCase().indexOf(shop.toLowerCase()) > -1;
+    });
   }
 }

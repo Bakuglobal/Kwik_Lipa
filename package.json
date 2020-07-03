@@ -37,7 +37,6 @@
     "@ionic-native/fcm": "^5.20.0",
     "@ionic-native/firebase": "^5.19.1",
     "@ionic-native/geolocation": "^5.16.0",
-    "@ionic-native/google-plus": "^5.22.0",
     "@ionic-native/http": "^5.19.1",
     "@ionic-native/in-app-browser": "^5.16.0",
     "@ionic-native/keyboard": "^5.19.1",
@@ -47,7 +46,6 @@
     "@ionic-native/social-sharing": "^5.16.0",
     "@ionic-native/splash-screen": "^5.0.0",
     "@ionic-native/status-bar": "^5.0.0",
-    "@ionic-native/video-player": "^5.23.0",
     "@ionic-native/youtube-video-player": "^5.26.0",
     "@ionic/angular": "^4.7.1",
     "@types/jquery": "^3.3.31",
@@ -70,7 +68,6 @@
     "cordova-plugin-ionic-keyboard": "^2.2.0",
     "cordova-plugin-keyboard": "1.2.0",
     "cordova-plugin-network-information": "2.0.2",
-    "cordova-plugin-video-player": "git+https://github.com/moust/cordova-plugin-videoplayer.git",
     "cordova-plugin-x-socialsharing": "5.6.2",
     "cordova-plugin-youtube-video-player": "^2.4.0",
     "core-js": "^2.5.4",
@@ -79,6 +76,7 @@
     "hammerjs": "^2.0.8",
     "jquery": "^3.4.1",
     "material-design-icons": "^3.0.1",
+    "mx.ferreyra.callnumber": "0.0.2",
     "ngx-qrcode2": "0.0.9",
     "phonegap-plugin-barcodescanner": "8.1.0",
     "rxjs": "^6.5.4",
@@ -116,8 +114,7 @@
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
-    "typescript": "~3.4.3",
-    "cordova-plugin-google-plus": "^8.4.0"
+    "typescript": "~3.4.3"
   },
   "description": "An Ionic project",
   "cordova": {
@@ -150,14 +147,16 @@
       },
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-fullscreen": {},
-      "cordova-plugin-fcm-with-dependecy-updated": {},
-      "cordova-plugin-badge": {},
-      "cordova-plugin-googleplus": {
-        "PLAY_SERVICES_VERSION": "15.0.1"
+      "cordova-plugin-fcm-with-dependecy-updated": {
+        "FCM_CORE_VERSION": "16.0.9",
+        "FCM_VERSION": "18.0.0",
+        "GRADLE_TOOLS_VERSION": "3.5.0",
+        "GOOGLE_SERVICES_VERSION": "4.2.0"
       },
+      "cordova-plugin-badge": {},
       "mx.ferreyra.callnumber": {},
-      "com.moust.cordova.videoplayer": {},
-      "cordova-plugin-youtube-video-player": {}
+      "cordova-plugin-youtube-video-player": {},
+      "call-number": {}
     },
     "platforms": [
       "ios",

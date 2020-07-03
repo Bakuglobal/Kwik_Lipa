@@ -51,9 +51,8 @@ import { ImageDisplayPageModule } from './image-display/image-display.module';
 import { DiscountmodalPageModule } from './discountmodal/discountmodal.module';
 import { NotificationsPageModule } from './notifications/notifications.module';
 import { Badge } from '@ionic-native/badge/ngx';
-import { GooglePlus } from '@ionic-native/google-plus/ngx';
 import { CallNumber} from '@ionic-native/call-number/ngx';
-import { VideoPlayer } from '@ionic-native/video-player/ngx';
+// import { VideoPlayer } from '@ionic-native/video-player/ngx';
 import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player/ngx';
 @NgModule({
   declarations: [AppComponent],
@@ -102,8 +101,7 @@ import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player/ngx';
     Geolocation,
     AppLauncher,
     Badge,
-    VideoPlayer,
-    GooglePlus,
+    // VideoPlayer,
     SplashScreen,
     BarcodeScanner,
     FirestoreService,
