@@ -7,6 +7,7 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./comments.page.scss'],
 })
 export class CommentsPage implements OnInit {
+  message: string ;
 
   constructor(
     private modalCtrl: ModalController
@@ -16,5 +17,8 @@ export class CommentsPage implements OnInit {
   }
 close(){
 this.modalCtrl.dismiss();
+}
+submit(){
+  
 }
 }

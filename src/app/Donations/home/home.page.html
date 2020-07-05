@@ -1,8 +1,9 @@
 <ion-content color="light">
   <div class="top-card">
-    <ion-icon name="arrow-back" style="position: absolute;font-size:1.5rem;padding-top: 10px;left: 20px;float: left;"
+    <ion-icon name="arrow-back" style="position: absolute;font-size:1.5rem;padding-top: 10px;left: 20px;float: left;color: white;"
       (click)="back()">
     </ion-icon>
+    <br><br>
     <div class="top-title">
       <ion-text>
         Welcome to the donation platform that allows you to give a life line to vulnerable families and children facing
@@ -25,7 +26,7 @@
     </ion-card>
   </div>
   <div style="text-align: center;margin: 100px 10px 10px 10px;" class="donateBtn">
-    <div>
+    <div style="padding: 20px;border-radius: 20px;background-color: var(--ion-color-primary);">
       <ion-label (click)="donate()" id="donate">Donate</ion-label>
     </div>
   </div>
@@ -39,7 +40,7 @@
     Participating NGOs and Partners
   </ion-label>
   <div class="NGO">
-    <ion-card class="ngo-box" *ngFor="let item of NGOs">
+    <ion-card class="ngo-box" *ngFor="let item of NGOs" (click)="inbrowser(item.link)">
       <img src="{{item.logo}}">
     </ion-card>
   </div>

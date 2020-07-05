@@ -1,58 +1,56 @@
 
-    <ion-header style="background-color: #3880ff;">
+<ion-header>
   <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title >
-      <span >How it works</span>
-    </ion-title>
+      <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>How it works</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content >
+<ion-content>
 
 
   <!--Display header-->
-  <ion-card color="primary" style="--padding-start:0;"  class="display-header">
-    
-    <ion-card-title style="height: 100%">
-      <ion-row>
-        <ion-col size="1">
-          
-         
-            <ion-icon size="large"name="help"></ion-icon>
-         
-        </ion-col>
-        <ion-col size="0.2"></ion-col>
-        <ion-col > 
-          <span style="padding-top: 5px;font-size: 12pt;"> Frequently asked questions about Kwik</span>
-        </ion-col>
-      </ion-row>
-      
-    </ion-card-title>
-
+  <ion-card color="primary">
+      <ion-card-title>
+          <ion-row>
+              <ion-col size="1">
+                  <ion-icon size="large"name="help"></ion-icon>
+              </ion-col>
+              <ion-col size="0.2"></ion-col>
+              <ion-col> 
+                  <span> Frequently asked questions about Kwik</span>
+              </ion-col>
+          </ion-row>
+      </ion-card-title>
   </ion-card>
+
+
   <div class="category-block" *ngFor="let item of information; let i = index"> 
-      <ion-row  tappable (click)="toggleSection(i)"detail-none [ngClass]="{'section-active':item.open,'section':!item.open}">
+      <ion-row tappable (click)="toggleSection(i)"detail-none [ngClass]="{'section-active':item.open,'section':!item.open}" style="margin-bottom: -10px;">
           <ion-col class="category-banner">
-            <ion-label style="text-transform: capitalize;"> {{item.name}}</ion-label>
+              <ion-label style="text-transform: capitalize;"> {{item.name}}</ion-label>
           </ion-col>
-          <ion-col  size="1"class="arrow-right">
-              <div style="text-align: right" *ngIf="!item.open"><ion-icon size="large"color="primary"name="arrow-dropright" item-right></ion-icon></div>
-              <div style="text-align: right" *ngIf="item.open"><ion-icon size="large"color="primary"name="arrow-dropdown" item-right></ion-icon></div>
+          <ion-col  size="1" class="arrow-right">
+              <div *ngIf="!item.open"><ion-icon size="small" color="primary" name="arrow-dropright" item-right></ion-icon></div>
+              <div *ngIf="item.open"><ion-icon size="small" color="primary" name="arrow-dropdown" item-right></ion-icon></div>
           </ion-col>
       </ion-row>
-      <div *ngIf="item.children && item.open">
-        <ion-list *ngFor="let child of item.children; let j = index" padding>
-          <ion-label>{{child.info}}</ion-label>
-        </ion-list>
+      <div *ngIf="item.children && item.open" class="dropdown-content">
+          <ion-list *ngFor="let child of item.children; let j = index" padding>
+              <ion-label>{{child.info}}</ion-label>
+          </ion-list>
       </div>
+  </div>
+  <div class="space"></div>
 
 
-</div>
-<ion-button shape="round" expand="full" style="bottom: 0;padding-top: 10px" (click)="goToSupport()">
-  <ion-icon name="chatbubbles"></ion-icon>&nbsp;
-  ASK A QUESTION
-</ion-button>
+  <ion-button expand="full" style="bottom: 0; padding-top: 10px; margin-left: 10px; height: 50px; margin-right: 10px;" (click)="goToSupport()">
+      <ion-icon name="chatbubbles"></ion-icon>&nbsp;
+      ASK A QUESTION
+  </ion-button>
+  <div class="space"></div>
+
+  
 </ion-content>

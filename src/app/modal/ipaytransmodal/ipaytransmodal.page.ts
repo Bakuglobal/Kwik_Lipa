@@ -37,12 +37,12 @@ export class IpaytransmodalPage implements OnInit {
               // lastName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
               email: ['',Validators.required],
               phone:['',Validators.required],
-              gender:['',Validators.required],
-              residence:['',Validators.required],
+              // gender:['',Validators.required],
+              // residence:['',Validators.required],
               // wallet:['',Validators.required],
               // password:['',Validators.required],
               // confPassword:['',Validators.required],
-              dob: ['',Validators.required],
+              // dob: ['',Validators.required],
         
           });
           }
@@ -50,7 +50,7 @@ export class IpaytransmodalPage implements OnInit {
     ngOnInit() {
       this.user = this.db.getUser();
       console.log(this.user)
-      this.userID = localStorage.getItem('UserID');
+      this.userID = localStorage.getItem('userID');
     }
 
  
@@ -58,6 +58,7 @@ export class IpaytransmodalPage implements OnInit {
     update(){
       this.presentLoading();
       let data = this.userForm.value ;
+      console.log(this.userID);
       this.fs.collection('users').doc(this.userID).update(data).then(
         res => {
           this.loading.dismiss();

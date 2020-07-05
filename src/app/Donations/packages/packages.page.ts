@@ -18,7 +18,7 @@ region: any ;
     private navCtrl: Router,
     private service: FirestoreService,
     private fs: AngularFirestore,
-    private alert: AlertController
+    private alert: AlertController,
   ) { 
     this.getRegion();
     this.getPackages();
@@ -61,6 +61,10 @@ region: any ;
     });
     await lt.present();
   }
+
+ 
+
+
   // setprod(){
   //   let prod = [
   //     {"product":"Sugar","quantity":"2Kg","price":"200"},

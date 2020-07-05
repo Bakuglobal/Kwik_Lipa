@@ -1,78 +1,81 @@
 
-<ion-header style="background-color: #3880ff;">
-  <ion-toolbar color="primary" class="ion-padding">
-    <ion-buttons slot="start">
-      <ion-icon name="arrow-back" (click)="back()"></ion-icon>
-    </ion-buttons>
-    <ion-buttons slot="end" (click)="notifications()" style="padding-right: 5px;">
-      <ion-icon size="large" name="notifications" ></ion-icon><br>
+<ion-header>
+  <ion-toolbar color="primary">
+      <ion-buttons slot="start" class="go-back">
+          <ion-icon name="arrow-back" (click)="back()"></ion-icon>
+      </ion-buttons>
+      <ion-buttons slot="end" (click)="notifications()" class="notification">
+          <ion-icon size="small" name="notifications"></ion-icon><br>
       <!-- <ion-badge color="danger"><div *ngIf="count != '0'">{{count}}</div></ion-badge> -->
-  </ion-buttons>
-    <ion-title>
-      <span >Customer Care</span>
-    </ion-title>
+      </ion-buttons>
+      <ion-title>Customer Care</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content >
 
-  <!-- Header display banner-->
-    <ion-card color="primary" style="height: 50px!important" class="display-header">
-    
-        <ion-card-title style="height: 100%">
+<!-- Header display banner-->
+  <ion-card color="primary">
+      <ion-card-title>
           <ion-row>
-            <ion-col size="1">
-                <ion-icon size="large"name="chatbubbles"></ion-icon>
-            </ion-col>
-            <ion-col size="0.7"></ion-col>
-            <ion-col > 
-              <span style="padding-top: 5px;font-size: 12pt;">Send a question to Kwik support </span>
-            </ion-col>
+              <ion-col size="1" class="display-icon">
+                  <ion-icon size="small" name="chatbubbles"></ion-icon>
+              </ion-col>
+              <ion-col class="display-content"> 
+                  <span>Send a question to Kwik support </span>
+              </ion-col>
           </ion-row>
-        </ion-card-title>
-    
-      </ion-card>
+      </ion-card-title>
+  </ion-card>
 
-     
-      <div class="chat" >
-        <div *ngIf="message != undefined">
-            <div class="you">
-                {{message}} <br>
-              <span style="float: bottom-right;font-size: small;">
-                {{date  | date: 'h:mm a'}}
+   
+  <div class="chat">
+      <div *ngIf="message != undefined">
+          <div class="you">
+              {{message}} <br>
+              <span style="float: bottom-right; font-size: 11px;">
+                  {{date  | date: 'h:mm a'}}
               </span>
-            </div>
-        </div>
-      <div *ngIf="response">
-        <div class="me">
-          {{automsg}} <br>
-          <span style="float: bottom-right;font-size: small;"> {{date | date: 'h:mm a'}}</span>
-        </div>
+          </div>
       </div>
-    </div>
-   <!-- message input area-->
+      <div *ngIf="response">
+          <div class="me">
+              {{automsg}} <br>
+              <span style="float: bottom-right; font-size: 11px;"> 
+                  {{date | date: 'h:mm a'}}
+              </span>
+          </div>
+      </div>
+  </div>
 
-   <form #supportForm=ngForm style="position: fixed;bottom: 10px;left: 0px;right:0px">
-    <!-- <div class="support"> -->
-      <ion-row style="background-color: var(--ion-color-medium);border-radius: 40px;" >
-        <ion-col color="light" >
-            <!-- <ion-item> -->
-                <!-- <textarea  required  name="message" [(ngModel)]="data.message" placeholder="Enter Message here" style="width: 100%;"
-                 autocomplete="on" type="text"  autocorrect="on" >
-                </textarea> -->
-                <ion-textarea style="width: 100%;" clearOnEdit="true" required  name="message" [(ngModel)]="data.message" rows="2" 
-                spellcheck="true" wrap="soft" placeholder="Enter Message here"></ion-textarea>
-            <!-- </ion-item> -->
-        </ion-col>
-        <ion-col size="2" text-align-center >
-            <!-- <ion-button [disabled]="!supportForm.valid" (click)="submit()" fill="clear"> -->
-              <ion-icon size="large" name="send" item-right color="primary" class="ion-padding" (click)="submit()"></ion-icon>
-            <!-- </ion-button> -->
-            
-        </ion-col>
-      </ion-row>
-    <!-- </div> -->
-  </form>
+
+ 
 
 
 </ion-content>
+
+
+<ion-footer padding>
+  <!-- message input area-->
+  <form #supportForm=ngForm style="background-color: #e4e4e4; position: fixed; bottom: 0px; left: 0px; right: 0px; width: 100%; border-top: 1px solid #9b9b9b;">
+      <!-- <div class="support"> -->
+      <ion-row style="background-color: white; border-radius: 20px; height: 37px; margin-left: 10px; margin-right: 10px; margin-bottom: 5px; margin-top: 5px;">
+          <ion-col color="light" style="margin-top: -20px;">
+              <!-- <ion-item> -->
+                  <!-- <textarea  required  name="message" [(ngModel)]="data.message" placeholder="Enter Message here" style="width: 100%;"
+                  autocomplete="on" type="text"  autocorrect="on" >
+                  </textarea> -->
+                  <ion-textarea style="width: 100%; font-size: 13px;" clearOnEdit="true" required  name="message" [(ngModel)]="data.message"
+                  spellcheck="true" wrap="soft" placeholder="Enter Message here"></ion-textarea>
+              <!-- </ion-item> -->
+          </ion-col>
+          <ion-col size="2" text-align-center  style="margin-top: 4px;">
+              <!-- <ion-button [disabled]="!supportForm.valid" (click)="submit()" fill="clear"> -->
+              <ion-icon size="small" name="send" item-right color="primary" style="float: right; right: 0px;" (click)="submit()"></ion-icon>
+              <!-- </ion-button> -->
+              
+          </ion-col>
+      </ion-row>
+      <!-- </div> -->
+  </form>
+</ion-footer>

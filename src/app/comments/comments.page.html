@@ -1,45 +1,66 @@
-  <ion-header style="background-color: #3880ff;">
-      <ion-toolbar color="primary" >
-          <ion-buttons (click)="close()" slot="start">
-            <ion-icon name="arrow-back" size="large"></ion-icon>
-          </ion-buttons>
-        <ion-title>Comments</ion-title>
-        
-        </ion-toolbar>
-  </ion-header>
+<ion-header>
+  <ion-toolbar color="primary" >
+      <ion-buttons (click)="close()" slot="start" class="go-back">
+          <ion-icon name="arrow-back" size="small"></ion-icon>
+      </ion-buttons>
+      <ion-title>Comments</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+
+
 <ion-content>
-   
-<ion-list >
-<ion-item >
-    <ion-col size="3"><ion-avatar ><img src="../../assets/images/bg.png"></ion-avatar></ion-col>
-  <ion-col>
-    <ion-label style="font-size: 11pt;">QuickMatt</ion-label>
-    <ion-text style="font-size: 10pt;">We are very pleased with the turn up this week. looking forward to set out another mega sale discount</ion-text><br>
-    <ion-label>1 h</ion-label>
-  </ion-col>
-</ion-item>
-<ion-item >
-    <ion-col size="3" ><ion-avatar ><img src="../../assets/images/bg.png"></ion-avatar></ion-col>
-  <ion-col>
-    <ion-label style="font-size: 11pt;">Joseph</ion-label>
-    <ion-text style="font-size: 10pt;">We are very pleased with the turn up this week. looking forward to set out another mega sale discount</ion-text><br>
-    <ion-label>2 h</ion-label>
-  </ion-col>
-</ion-item>
-<ion-item >
-    <ion-col size="3"><ion-avatar ><img src="../../assets/images/bg.png"></ion-avatar></ion-col>
-  <ion-col>
-    <ion-label style="font-size: 11pt;">Martinez</ion-label>
-    <ion-text style="font-size: 10pt;">We are very pleased with the turn up this week. looking forward to set out another mega sale discount</ion-text><br>
-    <ion-label>3 h</ion-label>
-  </ion-col>
-</ion-item>
-</ion-list>
+ 
+  <ion-list>
+      <ion-item class="content">
+          <div class="top-space">
+              <div class="image">
+                <img src="../../assets/images/profile.svg">
+              </div>
+              <div class="description">
+                  <ion-label>Maxime Lee <span>1 h</span></ion-label>
+                  <ion-text>loved their service</ion-text><br>
+              </div>
+          </div>
+      </ion-item>
+
+
+  </ion-list>
+
+
+ 
 </ion-content>
+
+
 <ion-footer padding>
-<ion-item >
-    <ion-avatar ><img src="../../assets/images/bg.png"></ion-avatar>&nbsp;&nbsp;
-    <ion-textarea name="text" required placeholder="Add a comment..."></ion-textarea>
-    <a >Post</a>
-</ion-item>
+   <!-- message input area-->
+ <form #supportForm=ngForm style="background-color: #e4e4e4; position: fixed; bottom: 0px; left: 0px; right: 0px; width: 100%; border-top: 1px solid #9b9b9b;">
+  <!-- <div class="support"> -->
+      <img src="../../assets/images/profile.svg" style="width: 25px; height: 25px; border-radius: 50%; margin-top: 11px; position: absolute; margin-left: 10px;">
+  <ion-row style="background-color: white; border-radius: 20px; height: 37px; margin-left: 40px; margin-right: 10px; margin-bottom: 5px; margin-top: 5px;">
+      <ion-col color="light" style="margin-top: -20px;">
+          <!-- <ion-item> -->
+              <!-- <textarea  required  name="message" [(ngModel)]="data.message" placeholder="Enter Message here" style="width: 100%;"
+              autocomplete="on" type="text"  autocorrect="on" >
+              </textarea> -->
+              <ion-textarea style="width: 100%; font-size: 13px;" clearOnEdit="true" required  name="message" [(ngModel)]="message"
+              spellcheck="true" wrap="soft" placeholder="Add a comment..."></ion-textarea>
+          <!-- </ion-item> -->
+      </ion-col>
+      <ion-col size="2" text-align-center  style="margin-top: 4px;">
+          <!-- <ion-button [disabled]="!supportForm.valid" (click)="submit()" fill="clear"> -->
+          <ion-icon size="small" name="send" item-right color="primary" style="float: right; right: 0px;" (click)="submit()"></ion-icon>
+          <!-- </ion-button> -->
+          
+      </ion-col>
+  </ion-row>
+  <!-- </div> -->
+</form>
+  
+  <!-- <ion-item>
+      <ion-avatar ><img src="../../assets/images/Kakila-poster.jpg"></ion-avatar>&nbsp;&nbsp;
+      <ion-textarea name="text" required placeholder="Add a comment..."></ion-textarea>
+      <a >Post</a>
+  </ion-item> -->
 </ion-footer>

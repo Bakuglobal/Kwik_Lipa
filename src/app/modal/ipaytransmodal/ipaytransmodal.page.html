@@ -1,90 +1,78 @@
-
-  <ion-toolbar color="primary" >
-    <ion-buttons slot="start">
-        <ion-button (click)="toMyAccount()">
-            <ion-icon name="arrow-round-back"></ion-icon>
-            
+<ion-header>
+  <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+          <ion-button (click)="toMyAccount()">
+              <ion-icon name="arrow-round-back"></ion-icon>
           </ion-button>
-    </ion-buttons>
-    <ion-title>
-      <span >Personal Information
-      </span>
-    </ion-title>
+      </ion-buttons>
+      <ion-title>Personal Information</ion-title>
   </ion-toolbar>
+</ion-header>
+
+
+
 
 <ion-content>
 
 <!-- Header display banner-->
-<ion-card color="primary" style="--padding-start:0"  class="display-header">
-  
-    <ion-card-title style="height: 100%">
-      <ion-row>
-        <ion-col size="1">
-          
-            <ion-icon size="large"name="person"></ion-icon>
-        </ion-col>
-        <ion-col size="0.4"></ion-col>
-        <ion-col > 
-            <span style="padding-top:10px;font-size: 12pt;">Update your personal details </span>
-        </ion-col>
-      </ion-row>
-    </ion-card-title>
-
+  <ion-card color="primary">
+      <ion-card-title>
+          <ion-row>
+              <ion-col size="1" class="display-icon">
+                  <ion-icon size="small" name="person"></ion-icon>
+              </ion-col>
+              <ion-col class="display-content"> 
+                  <span>Update your personal details </span>
+              </ion-col>
+          </ion-row>
+      </ion-card-title>
   </ion-card>
 
-  <ion-grid >
-      <ion-row>
-        <ion-col size="12">
+
+
+  <form [formGroup]="userForm">
   
-          <form [formGroup]="userForm">
-  
-              <div class="form-group">
-    
-                <div class="form-control">
-                  <label class="labels">First Name</label>
-                  <br/>
-                  <input  formControlName="firstName" required name="name" class="inputs" type="text" placeholder="{{user.firstName}}">
-                </div>
-    
-                <div class="form-control">
-                  <label class="labels">Phone Number</label>
-                  <br/>
-                  <input  formControlName="phone" required name="phone" class="inputs" type="text" placeholder="{{user.phone}}">
-                </div>
-    
-                <div class="form-control">
-                  <label class="labels">Email Address</label>
-                  <br/>
-                  <input  formControlName="email" required name="email" class="inputs" type="text" placeholder='{{user.email}}'>
-                </div>
-                <div class="form-control">
-                  <ion-label >Date of birth</ion-label>
-                  <ion-datetime name="date" formControlName="dob" class="inputs" placeholder="{{user.dob | date :'yyyy/mm/dd'}}"></ion-datetime>
-                </div>
-                <div class="form-control">
-                  <label class="lables">Gender</label>
-                  <select class="inputs"  name="gender" #gender formControlName="gender" placeholder="gender">
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Other</option>
-                  </select>
-                </div>
-    
-                <div class="form-control">
-                  <label class="labels">Residence</label>
-                  <input   required name="residence" class="inputs" type="text" formControlName="residence" placeholder="{{user.residence}}">
-                </div>
-              </div>
-    
-            
-                <div class="form-control">
-                  <ion-button [disabled]="!userForm.valid" (click)="update()" color="primary" class="btn">UPDATE</ion-button>
-                </div>
-            
-          </form>
-  
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+      <div class="form-control">
+          <label class="labels">First Name</label>
+          <br/>
+          <input  formControlName="firstName" required name="name" class="inputs" type="text" placeholder="{{user.firstName}}">
+      </div>
+
+      <div class="form-control">
+          <label class="labels">Phone Number</label>
+          <br/>
+          <input  formControlName="phone" required name="phone" class="inputs" type="text" placeholder="{{user.phone}}">
+      </div>
+
+      <div class="form-control">
+          <label class="labels">Email Address</label>
+          <br/>
+          <input  formControlName="email" required name="email" class="inputs" type="text" placeholder='{{user.email}}'>
+      </div>
+
+      <!-- <div class="form-control">
+          <ion-label>Date of birth</ion-label>
+          <ion-datetime name="date" formControlName="dob" class="inputs" placeholder="{{user.dob | date :'yyyy/mm/dd'}}"></ion-datetime>
+      </div>
+
+      <div class="form-control">
+          <label class="lables">Gender</label>
+          <select class="inputs"  name="gender" #gender formControlName="gender" placeholder="gender">
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+          </select>
+      </div>
+
+      <div class="form-control">
+          <label class="labels">Residence</label>
+          <input   required name="residence" class="inputs" type="text" formControlName="residence" placeholder="{{user.residence}}">
+      </div> -->
+
+      <div class="form-control">
+          <ion-button expand="block" [disabled]="!userForm.valid" (click)="update()">UPDATE</ion-button>
+      </div>
+  </form>
+
 
 </ion-content>

@@ -135,12 +135,12 @@ export class Tab1Page implements OnInit {
     this.getAds();
     // get discounted products
     this.database.getdiscountedProducts().subscribe(res => {
-      this.discontedProducts = res;
+      this.discontedProducts = this.shuffle(res);
       console.log(res);
     });
     // get featured products 
     this.database.getFeaturedProducts().subscribe(res => {
-      this.featuredProducts = res;
+      this.featuredProducts = this.shuffle(res);
       console.log(res);
     })
     // check for unread notices
@@ -149,6 +149,16 @@ export class Tab1Page implements OnInit {
     this.getRestaurantAds();
     this.getRestaurants();
   }
+  
+  shuffle(ProductPool: any[]) {
+    for (let i = ProductPool.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = ProductPool[i];
+        ProductPool[i] = ProductPool[j];
+        ProductPool[j] = temp;
+    }
+    return ProductPool;
+}
 
   onIonViewDidLoad() {
     this.selectShop = false;

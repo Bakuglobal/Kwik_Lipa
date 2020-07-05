@@ -283,8 +283,8 @@ export class DatabaseService {
   }
   // get disounted products
   getdiscountedProducts() {
-    let prod = this.fs.collection<Product>('Kakila Organic', ref => {
-      return ref.where('stock', '>', 0);
+    let prod = this.fs.collection<Product>('Popular', ref => {
+      return ref.orderBy('currentprice', 'asc');
     });
     return prod.snapshotChanges().pipe(
       map(actions => {
@@ -298,7 +298,7 @@ export class DatabaseService {
   }
   // get featured products
   getFeaturedProducts() {
-    let prod = this.fs.collection<Product>('Kipusa Beauty', ref => {
+    let prod = this.fs.collection<Product>('Featured', ref => {
       return ref.orderBy('currentprice','asc');
     });
     return prod.snapshotChanges().pipe(

@@ -1,3 +1,65 @@
+// ION HEADER
+ion-header {
+    ion-title {
+        text-align: center;
+    }
+}
+.notification {
+    width: 20px; height: 20px;
+}
+
+// FIRST CARD
+.first-card {
+    ion-select {
+        // color: #737373;
+        float: left; 
+        left: 0px; 
+        margin-left: -10px;
+        ion-select-option {
+            font-size: 14px;
+        }
+    }
+    span {
+        font-size: 14px; 
+        font-weight: bold; 
+        color: var(--ion-color-primary);
+    }
+}
+
+// SECOND CARD 
+.second-card {
+    .display-icon {
+        float: right;
+        right: 0px;
+        width: 15px; 
+        height: 15px;
+    }
+    .personal-info-content {
+        padding-top: 10px; 
+        padding-left: 20px;
+    }
+}
+
+// THIRD CARD
+.third-card {
+    .content {
+        padding-left: 20px;
+        ion-row {
+            padding-top: 10px;
+            .content-text {
+                font-size: 15px; 
+                color: #737373;
+            }
+            ion-toggle {
+                margin-top: -10px;
+                float: right;
+                right: 0px;
+            }
+        }
+    }
+}
+
+
 .form-control {
     margin-bottom: 5%;
 }
@@ -5,6 +67,8 @@
 .labels {
      text-align: left !important;
 }
+
+
 
 .inputs {
     padding: 3%;
@@ -34,4 +98,9 @@
 }
 .points{
     color: var(--ion-color-primary);
+}
+
+h3 {
+    color: var(--ion-color-primary); 
+    font-size: 15px;
 }

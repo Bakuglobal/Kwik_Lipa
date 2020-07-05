@@ -18,6 +18,9 @@
     font-weight: bold;
     color: grey;
 }
+#card{
+    background-color: white !important;
+}
 .btn{
    
     margin-top: 10px;
@@ -32,6 +35,9 @@
         text-transform: uppercase;
         
     }
+}
+:host{
+    background-color: var(--ion-color-light);
 }
 #col-head{
  font-size: .8rem;

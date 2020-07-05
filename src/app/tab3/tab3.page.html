@@ -27,7 +27,7 @@
 
     <div class="page-content"><br>
         <div>
-            <ion-searchbar mode="ios" animated placeholder="Search for a shop " type="text"></ion-searchbar>
+            <ion-searchbar mode="ios" animated placeholder="Search for a shop " type="text" [(ngModel)]="searchTerm" (ionChange)="searchShops()"></ion-searchbar>
         </div>
 
         <ion-card class="card" *ngFor="let item of Posts">
@@ -41,7 +41,7 @@
                     {{item.shop}}
                 </div>
                 <div class="date">
-                    10 mins ago
+                    {{getTimePosted(item.time)}}  Ago
                 </div>
             </div>
             <!-- DESCRIPTION -->
@@ -94,7 +94,7 @@
                 </div>
                 <div class="user-name-and-date">
                     <div class="name">{{item.lastComment.user}}</div>
-                    <div class="date">10 mins ago</div>
+                    <div class="date">{{getTimePosted(item.time)}}  Ago</div>
                 </div>
       
                 <div class="comment-container">
@@ -107,7 +107,7 @@
             </div>
         </ion-card><br>
             <div class="ion-text-center ion-padding"  *ngIf="Posts.length == 0">
-                No internet connection <br><br><br>
+                No Posts found <br><br><br>
                 <ion-icon src="../../assets/reload-outline.svg" ></ion-icon><br><br>
             </div>
         <!-- </div> -->

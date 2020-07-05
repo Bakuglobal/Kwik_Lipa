@@ -71,6 +71,8 @@ export class SelectshopPage implements OnInit {
       this.shops = res ;
       this.unfilteredShops = res ;
       console.log('shops',this.shops);
+      // this.domything();
+
     });
     // this.fireApi
     //   .getShops()
@@ -110,7 +112,25 @@ export class SelectshopPage implements OnInit {
       this.showSearch = false ;
     }
   }
-  
+
+
+  // crazy product shuffle --- :-)
+  // domything(){
+  //   const ref = this.fs.collection("Kipusa Beauty",ref => {
+  //     return ref.limitToLast(10).orderBy('currentprice');
+  //   });
+  //   ref.valueChanges().subscribe(res => {
+  //     console.log('==-===')
+  //     console.table(res);
+  //     res.forEach(item => {
+  //       console.log(item);
+  //       this.fs.collection('Featured').add(item).catch(err => console.log(err));
+  //     })
+  //   },error => { console.log('get-err',error)});
+    
+  // }
+
+
   
 
 }
