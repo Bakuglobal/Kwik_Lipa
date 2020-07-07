@@ -1,42 +1,50 @@
-<ion-toolbar color="primary" class="ion-padding">
-  <ion-buttons>
-    <ion-icon name="arrow-back" style="color: white;" (click)="back()"></ion-icon>
-    <ion-title style="color: white;text-align: center;">Select a package to Sponsor</ion-title>
-  </ion-buttons>
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons style="margin-left: 10px; margin-right: 10px;">
+            <ion-icon name="arrow-back" style="width: 20px; height: 20px;" (click)="back()"></ion-icon>
+            <ion-title text-center>Select a package to Sponsor</ion-title>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
 
-</ion-toolbar>
-<ion-content>
+
+<ion-content style="--background: #f7f7f7;">
 
   <div class="tagline">
-    <ion-text>
-      In {{region.name}}, all donations made in this platform are administered by {{region.NGO}} who have identified beneficiary families
+    <ion-text no-padding style="font-size: 13px; text-align: center;">
+      In <b>{{region.name}}</b>, all donations made in this platform are administered by <b>{{region.NGO}}</b> who have identified beneficiary families
       and local shops from which the donations with be sourced.
     </ion-text>
   </div>
-  <ion-grid padding>
-    <ion-row>
-      <ion-col size="6" *ngFor="let item of packages" >
-        <div class="body">
-          <ion-label id="title">A family of {{item.family}}</ion-label>
-          <br><br>
-          <ion-row id="col-head">
-            <ion-col>Product</ion-col>
-            <ion-col>Quantity</ion-col>
-          </ion-row>
-          <ion-row id="col-item" *ngFor="let n of item.product">
-            <ion-col class="ion-text-start">{{n.product}}</ion-col>
-            <ion-col class="ion-text-start">{{n.quantity}}</ion-col>
-          </ion-row>
-          <ion-row style="margin-left: 20px;"> 
-            <ion-col id="total" class="ion-text-start">Total</ion-col>
-            <ion-col class="ion-text-start"><span style="font-size: .6rem;">Kshs</span> {{item.total}}</ion-col>
-          </ion-row>
-          <div class="btn" (click)="goToShops(item)">
-            <ion-label>Sponsor now</ion-label>
-          </div>
-          <!-- <ion-button size="small" shape="round" style="width: 100px;">Sponsor now</ion-button> -->
-        </div>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+
+    <ion-grid>
+        <ion-row no-padding>
+            <ion-col *ngFor="let item of packages" >
+                <div class="body">
+                    <ion-label style="font-size: 17px; color: var(--ion-color-primary);" id="title">A family of {{item.family}}</ion-label>
+                    <br><br>
+
+                    <ion-row id="col-head">
+                        <ion-col style="text-align: left; margin-left: 5px;">Product</ion-col>
+                        <ion-col style="text-align: right; margin-right: 5px;">Quantity</ion-col>
+                    </ion-row>
+
+                    <ion-row id="col-item" *ngFor="let n of item.product">
+                        <ion-col style="text-align: left; margin-top: 5px; margin-left: 5px;">{{n.product}}</ion-col>
+                        <ion-col style="text-align: right; margin-top: 5px; margin-right: 5px;">{{n.quantity}}</ion-col>
+                    </ion-row>
+
+                    <ion-row  id="col-item" no-padding style="padding-top: 5px;"> 
+                        <ion-col no-padding>
+                            <div style="font-size: 14px; margin-left: -10px; font-weight: bold; margin-top: 15px; color: var(--ion-color-danger);">Total: Ksh{{item.total}}</div>
+                        </ion-col>
+                        <ion-col no-padding>
+                            <ion-button (click)="goToShops(item)" style="font-style: 12px; padding-right: 5px;">Sponsor now</ion-button>
+                        </ion-col>
+                    </ion-row>
+                </div>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
 </ion-content>

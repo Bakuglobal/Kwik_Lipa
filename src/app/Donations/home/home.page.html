@@ -1,47 +1,68 @@
 <ion-content color="light">
-  <div class="top-card">
-    <ion-icon name="arrow-back" style="position: absolute;font-size:1.5rem;padding-top: 10px;left: 20px;float: left;"
-      (click)="back()">
-    </ion-icon>
-    <div class="top-title">
-      <ion-text>
-        Welcome to the donation platform that allows you to give a life line to vulnerable families and children facing
-        starvation due to Covid-19 pandemic,with a few clicks on your phone.
-      </ion-text>
+    <div class="top-card">
+        <ion-icon name="arrow-back" style="position: absolute; width: 20px; height: 20px; padding-top: 10px; left: 5px; float: left; color: white;"
+        (click)="back()">
+        </ion-icon>
+        <div class="top-title">
+            <ion-text>
+                Welcome to the donation platform that allows you to give a life line to vulnerable families and children facing
+                starvation due to Covid-19 pandemic,with a few clicks on your phone.
+            </ion-text>
+        </div>
     </div>
-  </div>
-  <div class="container-steps">
-    <ion-card class="steps">
-      <ion-label>Step 1</ion-label><br><br>
-      <ion-label style="font-size: .7rem;">Select location of beneficiary</ion-label>
-    </ion-card>
-    <ion-card class="steps">
-      <ion-label>Step 2</ion-label><br><br>
-      <ion-label style="font-size: .7rem;">Purchase a package</ion-label>
-    </ion-card>
-    <ion-card class="steps">
-      <ion-label>Step 3</ion-label><br><br>
-      <ion-label style="font-size: .7rem;">Beneficiary collects donation</ion-label>
-    </ion-card>
-  </div>
-  <div style="text-align: center;margin: 100px 10px 10px 10px;" class="donateBtn">
-    <div>
-      <ion-label (click)="donate()" id="donate">Donate</ion-label>
+
+
+    <ion-row style="width: 85%; margin-left: auto; margin-right: auto; color: white; margin-top: -35px; margin-bottom: -85px;">
+        <ion-col size="" style="background-color: var(--ion-color-primary); margin-right: 10px;">
+            <div style="font-size: 14px; text-align: center; font-weight: bold; margin-bottom: 5px; margin-top: 5px;">Step 1</div>
+            <div style="font-size: 13px; text-align: center; margin-bottom: 3px;">Select location of beneficiary</div>
+        </ion-col>
+        <ion-col size="" style="background-color: #00ade5; margin-right: 10px;">
+            <div style="font-size: 13px; text-align: center; font-weight: bold; margin-bottom: 5px; margin-top: 5px;">Step 2</div>
+            <div style="font-size: 12px; text-align: center; margin-bottom: 3px;">Purchase a package</div>
+        </ion-col>
+        <ion-col size="" style="background-color: var(--ion-color-primary);">
+            <div style="font-size: 14px; text-align: center; font-weight: bold; margin-bottom: 5px; margin-top: 5px;">Step 3</div>
+            <div style="font-size: 13px; text-align: center; margin-bottom: 3px;">Beneficiary collects donation</div>
+        </ion-col>
+    </ion-row>
+
+
+    <!-- <div class="container-steps">
+        
+        <ion-card class="steps">
+            <ion-label>Step 1</ion-label><br><br>
+            <ion-label style="font-size: .7rem;">Select location of beneficiary</ion-label>
+        </ion-card>
+        <ion-card class="steps">
+            <ion-label>Step 2</ion-label><br><br>
+            <ion-label style="font-size: .7rem;">Purchase a package</ion-label>
+        </ion-card>
+        <ion-card class="steps">
+            <ion-label>Step 3</ion-label><br><br>
+            <ion-label style="font-size: .7rem;">Beneficiary collects donation</ion-label>
+        </ion-card>
+    </div> -->
+
+    <div style="text-align: center;margin: 100px 10px 10px 10px;" class="donateBtn" (click)="donate()">
+        <div>
+            <ion-label id="donate">Donate</ion-label>
+        </div>
     </div>
-  </div>
-  <ion-label class="title">
-    Updates
-  </ion-label>
-  <div style="height: 100px;background-color: lightgrey;margin: 10px;">
+    
+    <ion-label class="title">
+        Updates
+    </ion-label>
+    <div style="height: 100px;background-color: lightgrey;margin: 10px;">
 
-  </div>
-  <ion-label class="title">
-    Participating NGOs and Partners
-  </ion-label>
-  <div class="NGO">
-    <ion-card class="ngo-box" *ngFor="let item of NGOs">
-      <img src="{{item.logo}}">
-    </ion-card>
-  </div>
+    </div>
+    <ion-label class="title">
+        Participating NGOs and Partners
+    </ion-label>
+    <div class="NGO">
+        <ion-card class="ngo-box" *ngFor="let item of NGOs">
+        <img src="{{item.logo}}">
+        </ion-card>
+    </div>
 
-</ion-content>
+    </ion-content>

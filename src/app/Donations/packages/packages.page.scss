@@ -1,20 +1,20 @@
 .tagline{
-    margin: 20px;
+    margin: 10px;
     padding: 10px;
     background-color: var(--ion-color-primary);
-    font-size: .7rem;
-    text-align: center;
+    // font-size: .7rem;
+    // text-align: center;
     color: white;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 .body{
     width: 100%;
-    height: 250px;
+    // height: 250px;
     // border: thin solid #92bcf3;
     text-align: center;
-    border-radius: 25px;
-    padding-top: 10px;
-    background-color: #00ade51f;  // var(--ion-color-light);
+    // border-radius: 25px;
+    padding-top: 5px;
+    // background-color: #00ade51f;  // var(--ion-color-light);
     font-weight: bold;
     color: grey;
 }
@@ -34,12 +34,21 @@
     }
 }
 #col-head{
- font-size: .8rem;
+    background-color: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 15px;
+    color: var(--ion-color-primary);
 }
 #col-item{
-margin-left: 20px;
-font-size: .7rem;
+// margin-left: 20px;
+    font-size: 13px;
+    background-color: white;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    padding-top: 10p;
+    padding-bottom: 5px;
 }
-#total{
-    font-size: .9rem;
-}
+// #total{
+//     font-size: .9rem;
+// }

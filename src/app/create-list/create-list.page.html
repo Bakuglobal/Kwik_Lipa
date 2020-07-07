@@ -1,127 +1,147 @@
-<ion-content #content>
-  <ion-toolbar>
-    <ion-buttons padding>
-      <ion-icon name="arrow-back" slot="start" (click)="back()"></ion-icon>
-    </ion-buttons>
-    <ion-title text-center color="primary">New Shopping List</ion-title>
-  </ion-toolbar>
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons style=" margin-left: 10px; margin-right: 10px">
+            <ion-icon style="width: 20px; height: 20px;" slot="start" (click)="back()" name="arrow-back"></ion-icon>
+            <ion-title style="font-size: 14px;" text-center>New Shopping List</ion-title>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
 
-  <form ngform="listForm">
-    <div padding>
-      <ion-label>Add a list Title <span style="color: red;">*</span></ion-label>
-    </div>
-    <ion-item>
-      <ion-input name="title" type="text" placeholder="Enter a title for the list" [(ngModel)]="title" required>
-      </ion-input>
-    </ion-item>
-    <div padding>
-      <ion-label>Set Shopping Date <span style="color: red;">*</span></ion-label>
-    </div>
-    <ion-item>
-      <ion-input type="date" min="Date()" name="DueDate" [(ngModel)]="DueDate" required></ion-input>
-    </ion-item>
-    <div padding>
-      <ion-label>Share List with </ion-label>
-    </div>
-    <ion-item *ngIf="Listmembers.length > 0">
-      <ion-chip *ngFor="let item of Listmembers">
-        <!-- <ion-avatar><img src="{{item.image}}"></ion-avatar> -->
-        <ion-label>{{item.firstName}}&nbsp;{{item.lastName}}</ion-label>
-        <ion-label>{{item.phone}}</ion-label>
-        <ion-icon name="close" (click)="removeMember(Listmembers.indexOf(item))"></ion-icon>
-      </ion-chip>
-    </ion-item>
-    <ion-item>
-      <ion-input name="member" placeholder="Enter phone number" [(ngModel)]="member" type="phone"
-        (ionChange)="suggestUsers()"></ion-input>
-      <ion-icon name="people" slot="end" color="primary" (click)="contactList()"></ion-icon>
-    </ion-item>
-    <div *ngIf="userSuggestion">
-      <ion-row padding>
-        <ion-icon name="close" size="large" (click)="closeSuggestion()"></ion-icon>
-      </ion-row><br>
-      <ion-row>
-        <ion-chip *ngFor="let item of users" (click)="addMembers(item); userSuggestion = false">
-          <!-- <ion-avatar><ion-icon name="person"></ion-icon></ion-avatar> -->
-          <ion-label>{{item.firstName}}&nbsp;{{item.lastName}}</ion-label>
-          <ion-label>{{item.phone}}</ion-label>
-        </ion-chip>
-      </ion-row>
-    </div>
-    <div style="text-align: center;" *ngIf="showInvite">
-        <div class="ion-text-center" style="padding-top: 20px;">
-        <ion-label >No user record with this phone number <br>
-          <ion-label color="primary" (click)="sendInvite()">Send invite to {{name}} &nbsp; {{member}}</ion-label>
-        </ion-label>
-      </div>
-    </div>
 
-  </form>
-  <div padding>
-    <ion-label>Add items <span style="color: red;">*</span></ion-label>
-  </div>
-  <ion-item>
-    <ion-input type="text" name="item" placeholder="what do you want to buy ?" (ionChange)="searchItem()"
-      [(ngModel)]="searchTerm"></ion-input>
-      <ion-icon name="add" size="large" slot="end" color="primary" *ngIf="suggestion" (click)="addItem()"></ion-icon>
-  </ion-item>
-  <div *ngIf="newListItems.length > 0" style="margin-top: 15px;">
-    <ion-item>
-      <ion-col>
-        <ion-label>Items</ion-label>
-      </ion-col>
-      <ion-col>
-        <ion-label>My Budget</ion-label>
-      </ion-col>
-      <ion-col>
-        <ion-label >Quantity</ion-label>
-      </ion-col>
+
+
+
+<ion-content>
+
+
+
+    <form ngform="listForm" style="margin-left: 10px; margin-right: 10px;">
+  
+        <ion-item style="margin-bottom: 10px;">
+            <ion-label position="stacked">Add a list Title <span style="color: var(--ion-color-danger);">*</span></ion-label>
+            <ion-input name="title" type="text" placeholder="Enter a title for the list" [(ngModel)]="title" required>
+            </ion-input>
+        </ion-item>
+
+        <ion-item style="margin-bottom: 10px;">
+            <ion-label position="stacked">Set Shopping Date <span style="color: var(--ion-color-danger);">*</span></ion-label>
+            <ion-input type="date" min="Date()" name="DueDate" [(ngModel)]="DueDate" required></ion-input>
+        </ion-item>
+
+        <!-- <div>
+            <ion-label>Share List with </ion-label>
+        </div> -->
+        <ion-item no-padding *ngIf="Listmembers.length > 0" style="margin-left: 0px;">
+            <ion-chip *ngFor="let item of Listmembers" style="border-radius: 0px; margin-left: 15px;">
+                <!-- <ion-avatar><img src="{{item.image}}"></ion-avatar> -->
+                <ion-label>{{item.firstName}}</ion-label>
+                <!-- <ion-label>{{item.phone}}</ion-label> -->
+                <ion-icon style="width: 20px; height: 20px;" name="close" (click)="removeMember(Listmembers.indexOf(item))"></ion-icon>
+            </ion-chip>
+        </ion-item>
+
+        <ion-item style="margin-bottom: 10px;">
+            <ion-label position="stacked">Share List with</ion-label>
+            <ion-input name="member" placeholder="Enter phone number" [(ngModel)]="member" type="phone"
+            (ionChange)="suggestUsers()"></ion-input>
+            <ion-icon style="width: 20px; height: 20px; margin-top: 25px;" name="people" slot="end" color="primary" (click)="contactList()"></ion-icon>
+        </ion-item>
+
+        <div *ngIf="userSuggestion"style="margin-top: 5px; margin-left:-10px; margin-right: -10px; background-color: var(--ion-color-primary); height: 100%;">
+            <ion-row>
+                <ion-icon style="width: 20px; height: 20px; margin-left: 6px; margin-top: 5px; color: white;" name="close" size="small" (click)="closeSuggestion()"></ion-icon>
+            </ion-row>
+            <ion-row style="background-color: var(--ion-color-primary);">
+                <ion-chip style="border-radius: 0px; background-color: white; color: #737373; font-size: 13px; border-radius: 0px; margin-left: 10px; margin-right: 10px;" *ngFor="let item of users" (click)="addMembers(item); userSuggestion = false">
+                <!-- <ion-avatar><ion-icon name="person"></ion-icon></ion-avatar> -->
+                <div>{{item.firstName}}&nbsp;{{item.lastName}}: {{item.phone}}</div>
+                </ion-chip>
+            </ion-row>  
+        </div>
+
+        <div style="text-align: center; background-color: var(--ion-color-primary); margin-bottom: 10px;" *ngIf="showInvite">
+            <div class="ion-text-center" style="padding-top: 10px; font-size: 13px; color: white; padding-bottom: 10px;">
+                <div>No user record with this phone number</div>
+                <div (click)="sendInvite()">Send invite to {{name}} {{member}}</div>
+            </div>
+        </div>
+
+    </form>
+
+    <ion-item style="margin-left: 10px; margin-right: 10px;">
+        <ion-label position="stacked">Add items <span style="color: var(--ion-color-danger);">*</span></ion-label>
+        <ion-input type="text" name="item" placeholder="what do you want to buy ?" (ionChange)="searchItem()"
+        [(ngModel)]="searchTerm"></ion-input>
+        <ion-icon style="width: 20px; height: 20px; margin-top: 25px;" name="add" size="large" slot="end" color="primary" *ngIf="suggestion" (click)="addItem()"></ion-icon>
     </ion-item>
-    <ion-item-sliding *ngFor="let item of newListItems">
-        <ion-card  class="card">
-          <ion-item>
+
+    <div *ngIf="newListItems.length > 0" style="margin-top: 15px;">
+        <ion-item style="color: #737373; font-size: 15px; font-weight: bold; margin-left: -5px; margin-right: 10px;">
             <ion-col>
-              <ion-label>{{item.item}}</ion-label>
+                <ion-label>Items</ion-label>
             </ion-col>
             <ion-col>
-              <ion-input name="price" type="number" [(ngModel)]="item.price"></ion-input>
+                <ion-label style="text-align: right;">My Budget</ion-label>
             </ion-col>
-            <ion-col size="4" text-center>
-              <ion-card style="border-radius: 20px;width: 100%;margin-right:5px">
-                <ion-item no-padding>
-                  <ion-col >
-                    <ion-icon name="remove" (click)="reduce(newListItems.indexOf(item))"></ion-icon>
-                  </ion-col>&nbsp;
-                  <ion-col padding>
-                    <ion-label><b>{{item.count}}</b></ion-label>
-                  </ion-col>
-                  <ion-col>
-                    <ion-icon name="add" (click)="add(newListItems.indexOf(item))"></ion-icon>
-                  </ion-col>
+            <ion-col>
+                <ion-label style="text-align: right;">Quantity</ion-label>
+            </ion-col>
+        </ion-item>
+
+
+        <ion-item-sliding no-padding *ngFor="let item of newListItems" style="margin-bottom: 10px;">
+            <ion-card no-padding style="margin-bottom: -5px; border-radius: 0px;">
+                <ion-item no-padding style="font-size: 13px; color: #737373;">
+                    <ion-col size="6">
+                        <ion-label style="margin-left: 3px;">{{item.item}}</ion-label>
+                    </ion-col>
+
+                    <ion-col size="3">
+                        <ion-input name="price" type="number" [(ngModel)]="item.price"></ion-input>
+                    </ion-col>
+
+                    <ion-col no-padding size="3">
+                        <ion-item no-padding style="float: right; right: -5px; margin-bottom: -6px;">
+                            <ion-col no-padding>
+                                <ion-icon style="background-color: #999999; color: white; border-radius: 15px; width: 13px; height: 13px;" name="remove" (click)="reduce(newListItems.indexOf(item))"></ion-icon>
+                            </ion-col>
+                            <ion-col no-padding>
+                                <div style="padding-left: 3px; padding-right: 3px; color: #737373; font-size: 13px; margin-top: -2px;">{{item.count}}</div>
+                            </ion-col>
+                            <ion-col no-padding>
+                                <ion-icon style="background-color: #999999; color: white; border-radius: 15px; width: 13px; height: 13px;" name="add" (click)="add(newListItems.indexOf(item))"></ion-icon>
+                            </ion-col>
+                        </ion-item>
+                    </ion-col>
                 </ion-item>
-              </ion-card>
-            </ion-col>
-          </ion-item>
-        </ion-card>
-      <ion-item-options side="end">
-        <ion-item-option (click)="remove(newListItems.indexOf(item))" color="primary">
-          <ion-icon name="trash" size="large" slot="end" color="danger"></ion-icon>
-        </ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-  </div>
+
+                <ion-item-options side="end">
+                    <ion-item-option (click)="remove(newListItems.indexOf(item))" color="primary">
+                        <ion-icon name="trash" size="small" style="width: 20px; height: 20px;" slot="end" color="danger"></ion-icon>
+                    </ion-item-option>
+                </ion-item-options>
+            </ion-card>
+        </ion-item-sliding>
+    </div>
 
 </ion-content>
+
+
 <ion-footer>
-  <ion-row>
-    <ion-col padding size="3" (click)="clearList()" text-center>
-      <ion-icon name="trash" size="large" color="primary"></ion-icon><br>
-      Clear List
-    </ion-col>
-    <ion-col>
-      <ion-card padding style="border-radius: 15px;text-align: center;" color="danger" (click)="saveList()" [disabled]="newListItems.length == 0">
-        Create List
-      </ion-card>
-    </ion-col>
-  </ion-row>
+    <ion-row style="background-color: #F7F7F7; padding-top: 10px; padding-bottom: 10px;">
+        <ion-col size="6" (click)="clearList()">
+            <ion-button expand="full" color="danger" style="font-size: 12px;">
+                <!-- <ion-icon slot="start" size="small" name="trash" style="width: 20px; height: 20px;"></ion-icon> -->
+                Clear List
+            </ion-button>
+        </ion-col>
+        <ion-col size="6">
+            <ion-button style="font-size: 12px;" expand="full" (click)="saveList()" [disabled]="newListItems.length == 0">
+                Create List
+            </ion-button>
+            <!-- <ion-card padding style="border-radius: 15px;text-align: center;" color="danger" (click)="saveList()" [disabled]="newListItems.length == 0">
+                Create List
+            </ion-card> -->
+        </ion-col>
+    </ion-row>
 </ion-footer>
