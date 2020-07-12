@@ -1,126 +1,167 @@
-<ion-content color="light">
-  <ion-toolbar class="ion-padding">
-    <ion-buttons>
-      <ion-icon name="arrow-back" (click)="close()"></ion-icon>
-      <ion-title color="primary" style="text-align: center;font-size: 1.2em;text-transform: capitalize;">{{Title}}
-      </ion-title>
-      <ion-icon name="add" class="edit" slot="end" (click)="addItem()"></ion-icon>
-    </ion-buttons>
-  </ion-toolbar>
-  <div class="body">
-    <div class="members" padding>
-      <ion-label>Sharing with</ion-label>
-      <ion-row>
-        <ion-col size="9">
-          <ion-chip *ngFor="let item of members">
-            <ion-label>{{item.firstName}}</ion-label>
-            <ion-icon name="close" (click)="removeMember(members.indexOf(item))"></ion-icon>
-          </ion-chip>
-        </ion-col>
-        <ion-col size="3">
-          <ion-icon name="contacts" style="float: right;padding-top: 5px;" size="large" color="primary"
-            (click)="addMember()"></ion-icon>
-        </ion-col>
-      </ion-row>
-    </div>
-    <ion-item>
-      <ion-col padding>
-        Items
-      </ion-col>
-      <ion-col>
-        <ion-label>My Budget</ion-label>
-      </ion-col>
-      <ion-col></ion-col>
-      <ion-col style="float: right;" (click)="deleteList()">
-        <ion-icon name="trash" color="primary"></ion-icon>
-        <!-- Delete -->
-      </ion-col>
-    </ion-item>
-    <!-- LIST ITEMS -->
-    <div *ngIf="!edit">
-      <ion-item-sliding *ngFor="let item of Items">
-        <ion-card>
-          <ion-item>
-            <ion-col>
-              <ion-label>{{item.item}}</ion-label>
-            </ion-col>
-            <ion-col>
-              <ion-input name="price" type="number" [(ngModel)]="item.price" (ionChange)="priceUpdate(item)">
-              </ion-input>
-            </ion-col>
-            <ion-col size="4" text-center>
-              <ion-card style="border-radius: 20px;width: 98%;">
-                <ion-item no-padding>
-                  <ion-col>
-                    <ion-icon name="remove" (click)="reduce(Items.indexOf(item))"></ion-icon>
-                  </ion-col>&nbsp;
-                  <ion-col>
-                    <ion-label><b>{{item.count}} </b></ion-label>
-                  </ion-col>
-                  <ion-col>
-                    <ion-icon name="add" (click)="add(Items.indexOf(item))"></ion-icon>
-                  </ion-col>
-                </ion-item>
-              </ion-card>
-            </ion-col>
-          </ion-item>
-        </ion-card>
-        <ion-item-options side="end">
-          <ion-item-option (click)="remove(Items.indexOf(item),item)" color="primary">
-            <ion-icon name="trash" slot="end" size="large" color="danger"></ion-icon>
-          </ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
-    </div>
-    <!-- ADD NEW ITEMS -->
-    <div *ngIf="edit">
-      <ion-icon name="close" (click)="edit = false" size="large"></ion-icon>
-      <div style="text-align: center;">
-        <ion-label color="dark">{{label}}</ion-label>
-      </div>
-      <ion-item>
-        <ion-input clearInput type="text" placeholder="{{placeholder}}" [(ngModel)]="searchTerm" required
-          (ionChange)="suggestion()"></ion-input>
-        <ion-icon name="{{icon}}" slot="end" (click)="addNewItem()" color="primary"></ion-icon>
-      </ion-item>
-      <div *ngIf="icon ==  'person' && searchTerm !== ''">
-        <ion-row>
-          <ion-chip *ngFor="let item of users" (click)="addMembersToList(item); userSuggestion = false">
-            <ion-label>{{item.firstName}}&nbsp;{{item.lastName}}</ion-label>
-            <ion-label>{{item.phone}}</ion-label>
-          </ion-chip>
-        </ion-row>
-        <div style="text-align: center;" *ngIf="showInvite">
-          <div class="ion-text-center" style="padding-top: 20px;">
-            <ion-label>No user record with this phone number <br>
-              <ion-label color="primary" (click)="sendInvite()">Send invite to &nbsp; {{searchTerm}}</ion-label>
-            </ion-label>
-          </div>
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons style="margin-left: 10px; margin-right: 10px;">
+            <ion-icon style="width: 20px; height: 20px;" name="arrow-back" (click)="close()"></ion-icon>
+            <ion-title text-center>{{Title}}</ion-title>
+            <ion-icon style="width: 20px; height: 20px;"name="add" class="edit" slot="end" (click)="addItem()"></ion-icon>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content>
+    <div class="body">
+        <div class="members" padding>
+            <div style="font-size: 15px; font-weight: bold; color: #737373;">Sharing with</div>
+            <ion-row no-padding style="margin-left: -10px;">
+                <ion-col size="9" no-padding>
+                    <ion-chip *ngFor="let item of members" style="border-radius: 0px;">
+                        <ion-label>{{item.firstName}}</ion-label>
+                        <ion-icon name="close" (click)="removeMember(members.indexOf(item))"></ion-icon>
+                    </ion-chip>
+                </ion-col>
+                <ion-col size="3" no-padding>
+                    <ion-icon name="contacts" style="float: right; padding-top: 5px; width: 20px; height: 20px;" size="small" color="primary"
+                    (click)="addMember()"></ion-icon>
+                </ion-col>
+            </ion-row>
         </div>
-      </div>
-      <!-- <div *ngIf="placeholder ==  'Enter what you want to buy'">
-        <ion-item *ngFor="let item of newItems" text-center padding (click)="addItemToList(item)">
-          <ion-col>
-            {{item.item}}
-          </ion-col>
-        </ion-item>
-      </div> -->
+
+        <ion-row style="margin-left: 10px; margin-right: 10px; color: var(--ion-color-primary); font-size: 15px; font-weight: bold; background-color: white; padding-top: 10px; padding-bottom: 3px;">
+            <ion-col size="5" style="margin-left: 10px;">
+                Items
+            </ion-col>
+            <ion-col size="4">
+                <ion-label>My Budget</ion-label>
+            </ion-col>
+            <ion-col size="2" (click)="deleteList()">
+                <ion-icon style="text-align: center; width: 20px; height: 20px;" name="trash" color="danger"></ion-icon>
+            </ion-col>
+        </ion-row>
+
+        <!-- LIST ITEMS -->
+        <div *ngIf="!edit">
+            <ion-item-sliding *ngFor="let item of Items">
+                <ion-card no-padding style="margin-bottom: -7px; border-radius: 0px;">
+                    <ion-item no-padding style="font-size: 13px; color: #737373;">
+                        <ion-col size="6">
+                            <ion-label style="margin-left: 10px;">{{item.item}}</ion-label>
+                        </ion-col>
+
+                        <ion-col size="3">
+                            <ion-input name="price" type="number" [(ngModel)]="item.price" (ionChange)="priceUpdate(item)"></ion-input>
+                            <!-- <ion-input name="price" type="number" [(ngModel)]="item.price"></ion-input> -->
+                        </ion-col>
+
+                        <ion-col no-padding size="3">
+                            <ion-item no-padding style="float: right; right: -5px; margin-bottom: -6px;">
+                                <ion-col no-padding>
+                                    <ion-icon style="background-color: #999999; color: white; border-radius: 15px; width: 13px; height: 13px;" name="remove" (click)="reduce(newListItems.indexOf(item))"></ion-icon>
+                                </ion-col>
+                                <ion-col no-padding>
+                                    <div style="padding-left: 3px; padding-right: 3px; color: #737373; font-size: 13px; margin-top: -2px;">{{item.count}}</div>
+                                </ion-col>
+                                <ion-col no-padding>
+                                    <ion-icon style="background-color: #999999; color: white; border-radius: 15px; width: 13px; height: 13px;" name="add" (click)="add(newListItems.indexOf(item))"></ion-icon>
+                                </ion-col>
+                            </ion-item>
+                        </ion-col>
+                    </ion-item>
+
+
+                    <ion-item-options side="end">
+                        <ion-item-option (click)="remove(Items.indexOf(item),item)" color="primary">
+                            <ion-icon name="trash" style="width: 20px; height: 20px;" slot="end" size="small" color="danger"></ion-icon>
+                        </ion-item-option>
+                    </ion-item-options>
+                </ion-card>
+
+
+                <!-- <ion-card>
+                    <ion-item>
+                        <ion-col>
+                        <ion-label>{{item.item}}</ion-label>
+                        </ion-col>
+                        <ion-col>
+                        <ion-input name="price" type="number" [(ngModel)]="item.price" (ionChange)="priceUpdate(item)">
+                        </ion-input>
+                        </ion-col>
+                        <ion-col size="4" text-center>
+                        <ion-card style="border-radius: 20px;width: 98%;">
+                            <ion-item no-padding>
+                            <ion-col>
+                                <ion-icon name="remove" (click)="reduce(Items.indexOf(item))"></ion-icon>
+                            </ion-col>&nbsp;
+                            <ion-col>
+                                <ion-label><b>{{item.count}} </b></ion-label>
+                            </ion-col>
+                            <ion-col>
+                                <ion-icon name="add" (click)="add(Items.indexOf(item))"></ion-icon>
+                            </ion-col>
+                            </ion-item>
+                        </ion-card>
+                        </ion-col>
+                    </ion-item>
+                </ion-card> -->
+
+            </ion-item-sliding>
+        </div>
+
+
+        <!-- ADD NEW ITEMS -->
+        <div *ngIf="edit" style="margin-top: 5px; background-color: var(--ion-color-primary); width: 100%; height: 100%;">
+            <ion-icon name="close" (click)="edit = false" size="small" style="width: 20px; height: 20px; margin-left: 6px; color: white;"></ion-icon>
+            <div style="text-align: center; margin-bottom: 5px;">
+                <div style="font-size: 14px; color: white; text-align: center;">{{label}}</div>
+            </div>
+            
+            <ion-item style="margin-right: 10px; margin-left: 10px;">
+                <ion-input clearInput type="text" placeholder="{{placeholder}}" [(ngModel)]="searchTerm" required (ionChange)="suggestion()"></ion-input>
+                <ion-icon style="width: 20px; height: 20px;" name="{{icon}}" slot="end" (click)="addNewItem()" color="primary"></ion-icon>
+            </ion-item>
+
+            <div *ngIf="icon ==  'person' && searchTerm !== ''" style="background-color: var(--ion-color-primary);">
+                <ion-row>
+                    <ion-chip style="background-color: white; color: #737373; font-size: 13px; border-radius: 0px; margin-left: 10px; margin-right: 10px;" *ngFor="let item of users" (click)="addMembersToList(item); userSuggestion = false">
+                        <div>{{item.firstName}}&nbsp;{{item.lastName}}: {{item.phone}}</div>
+                    </ion-chip>
+                </ion-row>
+
+                <div style="text-align: center;" *ngIf="showInvite">
+                    <div class="ion-text-center" style="padding-top: 20px; color: white; font-size: 13px;">
+                        <ion-label>No user record with this phone number <br>
+                        <ion-label color="primary" (click)="sendInvite()">Send invite to &nbsp; {{searchTerm}}</ion-label>
+                        </ion-label>
+                    </div>
+                </div>
+            </div>
+            <!-- <div *ngIf="placeholder ==  'Enter what you want to buy'">
+                <ion-item *ngFor="let item of newItems" text-center padding (click)="addItemToList(item)">
+                <ion-col>
+                    {{item.item}}
+                </ion-col>
+                </ion-item>
+            </div> -->
+        </div>
 
     </div>
-
-  </div>
 </ion-content>
+
+
+<!-- FOOTER -->
 <ion-footer>
-  <ion-item>
-    <ion-col>
-      <ion-label class="estimate">Total items <span style="font-size: 1.3em;">{{totaItems}}</span></ion-label>
-      <br>
-      Kshs<span style="font-weight: bold;font-size: 1.4em;"> &nbsp; {{getBudget()}}</span>
-    </ion-col>
-    <ion-col>
-      <ion-card style="border-radius: 20px;text-align: center;" padding color="primary" (click)="shopNow()">
-        <ion-label text-center>Shop Now</ion-label>
-      </ion-card>
-    </ion-col>
-  </ion-item>
+    <ion-row style="background-color: #F7F7F7; padding-top: 10px; padding-bottom: 10px;">
+        <ion-col>
+            <div style="margin-left: 7px; color: #737373; margin-top: 5px;">
+                <div style="font-size: 13px; margin-bottom: 5px;">Total items: {{ totaItems }}</div>
+                <div style="font-size: 15px; font-weight: bold; color: var(--ion-color-danger);">Kshs {{getBudget()}}</div>
+            </div>
+        </ion-col>
+        <ion-col>
+            <ion-button style="font-size: 12px;" expand="full" (click)="shopNow()">
+                Shop Now
+            </ion-button>
+        </ion-col>
+    </ion-row>
 </ion-footer>
