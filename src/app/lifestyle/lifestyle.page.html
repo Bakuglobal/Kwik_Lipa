@@ -144,6 +144,33 @@
 
             </div>
 
+            <!-- HAIR AND BEAUTY -->
+            <div class="container3">
+                <div class="title">
+                    This week's picks for top Hair & Beauty
+                </div>
+                <br>
+                <div class="video-content">
+                    <ion-slides pager="true" [options]="AdvertslideOpts">
+                        <ion-slide *ngFor="let item of hair">
+                            <img style="width: 385px;height: 200px;" src="/assets/images/video2.png" *ngIf="item.thumbnail === undefined">
+                            <img style="width: 385px;height: 200px;" src="{{item.thumbnail}}" *ngIf="item.thumbnail !== undefined">
+                            <ion-row class="play-controller">
+                                <ion-col (click)="openMyVideo(item.videoId)">
+                                    <ion-icon name="play"></ion-icon>
+                                </ion-col>
+                            </ion-row>
+                            <!-- <ion-row class="duration">
+                                <ion-col>
+                                    <div>10: 03</div>
+                                </ion-col>
+                            </ion-row> -->
+                        </ion-slide>
+                    </ion-slides>
+                </div>
+
+            </div>
+
         </div>
 
     </div>

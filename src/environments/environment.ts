@@ -11,7 +11,8 @@ export const environment = {
     projectId: "kwikapp-77d77",
     storageBucket: "kwikapp-77d77.appspot.com",
     messagingSenderId: "587167744825",
-    appId: "1:587167744825:web:337af354888bcd1c"
+    appId: "1:587167744825:web:337af354888bcd1c",
+    measurementId: "G-Y5K4EH61JD"
   }
   
 };

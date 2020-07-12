@@ -1,13 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastController, AlertController } from '@ionic/angular';
+import { ToastController, AlertController, LoadingController } from '@ionic/angular';
 import { DatabaseService } from '../services/database.service';
 import { FirestoreService } from '../services/firestore.service';
 import { OffersPage } from '../offers/offers.page';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { MpesaService } from '../mpesa/mpesa.service';
 import { Location } from '@angular/common';
+import { userInfo } from 'os';
+import { access } from 'fs';
 
+export class mpesaRes {
+  CheckoutRequestID?: any;
+  CustomerMessage?: any;
+  MerchantRequestID?: any;
+  ResponseCode?: any;
+  ResponseDescription?: any;
+  errorMessage?:any;
+}
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.page.html',
@@ -34,7 +44,9 @@ export class CartPage implements OnInit {
   noPickUpTime = false;
   Number;
   paid = false;
-  CurrentTime ;
+  CurrentTime;
+  loader: any;
+  paymentMethod: string;
 
   //objects and arrays
   hour = []
@@ -51,6 +63,7 @@ export class CartPage implements OnInit {
     private alert: AlertController,
     private mpesa: MpesaService,
     private location: Location,
+    private loadCtrl: LoadingController
   ) {
     this.fireApi.getAreas().subscribe(res => {
       this.areas = res;
@@ -58,26 +71,26 @@ export class CartPage implements OnInit {
     });
     this.CurrentTime = new Date().getHours();
     console.log(this.CurrentTime);
-    if(this.CurrentTime < 8){
-      for(var i = 8;i < 19;i++){
+    if (this.CurrentTime < 8) {
+      for (var i = 8; i < 19; i++) {
         this.hour.push(i);
       }
     }
-    if(this.CurrentTime > 8){
-      let start = this.CurrentTime + 1 ;
-      for(var i: number = start;i < 19;i++){
+    if (this.CurrentTime > 8) {
+      let start = this.CurrentTime + 1;
+      for (var i: number = start; i < 19; i++) {
         this.hour.push(i);
       }
     }
-    if(this.CurrentTime == 8){
-      for(var i =9;i<19;i++){
+    if (this.CurrentTime == 8) {
+      for (var i = 9; i < 19; i++) {
         this.hour.push(i);
       }
     }
-    this.fireApi.serviceshopBy.subscribe(data  => {
-      if(data == 'delivery'){
-        this.delivery = 'Deliver it to me' ;
-        this.noPickUpTime = true ;
+    this.fireApi.serviceshopBy.subscribe(data => {
+      if (data == 'delivery') {
+        this.delivery = 'Deliver it to me';
+        this.noPickUpTime = true;
       }
     })
 
@@ -92,7 +105,7 @@ export class CartPage implements OnInit {
     this.fireApi.hiddenTabs = true;
     this.Number = localStorage.getItem('Number');
     this.formatNumber();
-    
+
   }
 
   formatNumber() {
@@ -107,12 +120,12 @@ export class CartPage implements OnInit {
       this.Number = cut;
     }
   }
-  changeDay(){
-    if(this.pickDay == 'Today'){
+  changeDay() {
+    if (this.pickDay == 'Today') {
       // pick time remains
-    }else {
+    } else {
       // show all pick time period 
-      for(var i =9;i<19;i++){
+      for (var i = 9; i < 19; i++) {
         this.hour.push(i);
       }
     }
@@ -186,7 +199,7 @@ export class CartPage implements OnInit {
         return;
       }
       let Today = new Date();
-      let id = this.genearteOrderID().substring(0, 8).toUpperCase();
+      let id = this.generateOrderID().substring(0, 8).toUpperCase();
       console.log(id)
       let data = {
         "Date": Today,
@@ -201,25 +214,34 @@ export class CartPage implements OnInit {
         "Location": this.selectedarea,
         "userID": localStorage.getItem('userID'),
         "pickDay": "Today",
-        "paid":"False"
+        "payment": ""
       }
-      console.log('data',data);
-      this.fs.collection('Orders').doc(id).set(data).catch(err => {console.log('error msg',err)})
-      this.Ordersuccess = true;
-      this.showTimeSelect = false;
-      this.cart.length = 0;
-      this.service.resetCart();
-      this.delivery = '';
-      this.deliveryFee = 0;
-      this.pickDay = '';
-      this.pickHour = '';
-      this.pickMinute = '';
+      console.log('data', data);
+      if (this.paymentMethod === "mpesa") {
+        data.payment = "mpesa";
+        this.payForOrder(id);
+
+
+      } else {
+        if (this.paymentMethod === "cash") {
+          data.payment = "cash";
+          this.fs.collection('Orders').doc(id).set(data).then(res => {
+            this.Ordersuccess = true;
+            this.showTimeSelect = false;
+            this.clearCart();
+            this.loader.dismiss();
+          })
+            .catch(err => { console.log('error msg', err); this.loader.dismiss(); });
+        }
+      }
+      // this.fs.collection('Orders').doc(id).set(data).catch(err => {console.log('error msg',err)})
+
     } else {
       // pick time and online payment
-      if (this.pickHour != undefined && this.pickDay != undefined && this.pickMinute != undefined && this.delivery != undefined) {
+      if (this.pickHour !== undefined && this.pickDay !== undefined && this.pickMinute !== undefined && this.delivery !== undefined) {
         let Today = new Date();
-        let id = this.genearteOrderID().substring(0, 8).toUpperCase();
-        console.log(id)
+        let id = this.generateOrderID().substring(0, 8).toUpperCase();
+        console.log(id);
         let data = {
           "Date": Today,
           "products": this.cart,
@@ -234,35 +256,207 @@ export class CartPage implements OnInit {
           "Delivery": this.delivery,
           "DeliveryFee": this.deliveryFee,
           "userID": localStorage.getItem('userID'),
-          "paid": "False"
+          "payment": ""
         }
-        console.log('data',data);
-        this.fs.collection('Orders').doc(id).set(data).catch(err => {console.log('error msg',err)})
-        this.Ordersuccess = true;
-        this.showTimeSelect = false;
-        this.cart.length = 0;
-        this.service.resetCart();
-        this.delivery = '';
-        this.deliveryFee = 0;
-        this.pickDay = '';
-        this.pickHour = '';
-        this.pickMinute = '';
+        console.log('data', data);
+        if (this.paymentMethod === "mpesa") {
+          data.payment = "mpesa";
+          this.payForOrder(id);
+
+
+        } else {
+          if (this.paymentMethod === "cash") {
+            data.payment = "cash";
+            this.fs.collection('Orders').doc(id).set(data).then(res => {
+              this.Ordersuccess = true;
+              this.showTimeSelect = false;
+              this.clearCart();
+              this.loader.dismiss();
+            })
+              .catch(err => { console.log('error msg', err); this.loader.dismiss(); });
+          }
+        }
       } else {
         this.alertPop("Please set pick up time and delivery option");
       }
     }
-
+  }
+  clearCart() {
+    this.cart.length = 0;
+    this.service.resetCart();
+    this.delivery = '';
+    this.deliveryFee = 0;
+    this.pickDay = '';
+    this.pickHour = '';
+    this.pickMinute = '';
+  }
+  checkDeliveryDetails() {
+    if (this.delivery === 'Deliver it to me') {
+      if (this.selectedarea == undefined || this.selectedarea == null) {
+        this.alertPop("Please select a delivery location near you");
+        this.loader.dismiss();
+        return "quit";
+      }
+    } else {
+      if (this.pickHour === undefined && this.pickDay === undefined && this.pickMinute === undefined && this.delivery === undefined) {
+        this.alertPop("Please set pick up time and delivery option");
+        this.loader.dismiss();
+        return "quit";
+      }
+    }
+    return "proceed";
+  }
+  // method of payment
+  async payment() {
+    const pop = await this.alert.create({
+      header: "Select method of payment",
+      inputs: [
+        {
+          type: 'radio',
+          label: 'Cash',
+          value: 'cash'
+        },
+        {
+          type: 'radio',
+          label: 'M-pesa',
+          value: 'mpesa'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: (data: string) => {
+            console.log('clicked', data);
+            // if(data === undefined)
+          }
+        },
+        {
+          text: 'Proceed',
+          handler: (data: string) => {
+            console.log('clicked', data);
+            this.paymentMethod = data;
+            // this.loading();
+            this.sendOrder();
+          }
+        }
+      ]
+    });
+    await pop.present();
   }
   // pay for order
-  payForOrder() {
-    this.mpesa.sendStkRequest(this.total, this.Number);
+  payForOrder(id) {
+    if (this.checkDeliveryDetails() !== "proceed") {
+      this.loader.dismiss();
+      return;
+    }
+    this.loading();
+    let desc = localStorage.getItem('userID');
+    this.mpesa.getToken().subscribe(res => {
+      let token = res;
+      if (token === null) {
+        console.log('TOKEN NULL');
+        this.toaster("Something went wrong try again");
+        this.loader.dismiss();
+        return;
+      } else {
+        this.sendSTK(desc, token);
+      }
+    })
   }
+  sendSTK(desc, token) {
+    this.mpesa.sendStkRequest(this.total, this.Number, desc, token).subscribe(data => {
+      let dt:mpesaRes = data;
+      console.log(dt.ResponseCode);
+      if (dt.errorMessage === "Invalid Access Token") {
+        //  this.getToken();
+        this.loader.dismiss();
+        this.toaster('Network issues try again');
+        return;
+      }
+      if (dt.errorMessage === "Bad Request - Invalid PhoneNumber") {
+        console.log("Invalid PhoneNumber");
+        this.toaster('The phone number in your account is incorrect')
+        this.loader.dismiss();
+        return;
+      }
+      if (dt.errorMessage === "Invalid grant type passed") {
+        this.toaster('something went wrong try checking out again');
+        this.loader.dismiss();
+        return;
+      }
+      if (dt.ResponseCode === 0) {
+        console.log("checking response");
+        setTimeout(() => {
+          this.mpesa.getMpesaResponse().subscribe(data => {
+            console.log(data);
+            const id = this.generateOrderID();
+            console.log(id);
+            if (data === "paid") {
+              this.fs.collection('Orders').doc(id).set(data).then(res => {
+                this.Ordersuccess = true;
+                this.showTimeSelect = false;
+                this.clearCart();
+                this.loader.dismiss();
+              })
+                .catch(err => { console.log('error msg', err); this.loader.dismiss(); });
+            } else {
+              if (data === 'canceled') {
+                this.toaster('the payment was canceled')
+              }
+              //this.clearLocalArrays();
+              // this.errorCheckingOut();
+              console.log(data);
+            }
+          }, error => {
+            console.log(error);
+          });
+        }, 6000)
+      }
+      setTimeout(()=>{
+        this.Ordersuccess = true;
+                this.showTimeSelect = false;
+                this.clearCart();
+                this.loader.dismiss();
+      },7000);
+      
+      console.log(dt.ResponseCode);
+      // this.fs.collection('Orders').doc(id).set(data).then(res =>{
+      //   this.Ordersuccess = true;
+      //   this.showTimeSelect = false;
+      //   this.clearCart();
+      //   this.loader.dismiss();
+      // })
+      // .catch(err => {console.log('error msg',err);this.loader.dismiss();});
+
+    }, error => {
+      console.log(error);
+      this.loader.dismiss();
+    });
+  }
+
   // generate orderID
-  genearteOrderID() {
+  generateOrderID() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
       var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
       return v.toString(16);
     });
+  }
+  // loader
+  async loading() {
+    this.loader = await this.loadCtrl.create({
+      message: 'Preparing payment ...'
+    });
+    await this.loader.present();
+  }
+  //  toaster
+  async toaster(msg) {
+    const ts = await this.toast.create({
+      message: msg,
+      position: "bottom",
+      duration: 2000
+    });
+    await ts.present();
   }
   //back to the previous page
 
@@ -274,6 +468,9 @@ export class CartPage implements OnInit {
   remove(item) {
     this.service.removeFromCart(item);
     this.cart = this.service.getCart();
+    if (this.cart.length === 0) {
+      this.clearCart();
+    }
   }
   //get total of items in cart
   items() {
@@ -299,7 +496,7 @@ export class CartPage implements OnInit {
   }
   //reduce quantity for an item in cart
   reduce(item) {
-    if(item.count > 1){
+    if (item.count > 1) {
       this.service.reduceCount(item);
       this.cart = this.service.getCart();
     }

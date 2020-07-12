@@ -19,7 +19,7 @@ quantity= 0 ;
   constructor(
     private navCtrl: Router,
     private toastCtrl: ToastController,
-    private db: DatabaseService,
+    public db: DatabaseService,
     private service: FirestoreService,
     private route: ActivatedRoute,
     private location: Location

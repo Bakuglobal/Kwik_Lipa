@@ -143,7 +143,7 @@
       KES &nbsp;<span style="font-size: medium;font-weight: bolder;"> {{getTotalCart() | number:'1.1-5'   }} </span>
     </ion-buttons>
   </ion-toolbar>
-  <ion-button expand="full" shape="round" style="height: 40px;border-radius: 5px;" (click)="sendOrder()"
+  <ion-button expand="full" shape="round" style="height: 40px;border-radius: 5px;" (click)="payment()"
     [disabled]="paid === true">
     Place Order
   </ion-button>

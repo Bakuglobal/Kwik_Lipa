@@ -29,6 +29,7 @@ Fashion: any[];
 diets:any[];
 fitness: any[];
 books:any[];
+hair:any[];
 
   constructor(    private location: Location,
     private service: FirestoreService, 
@@ -41,6 +42,8 @@ books:any[];
       this.getFashionVlogs();
       this.getFitnessHealth();
       this.getBooks();
+      this.getHairsBeauty();
+    
      }
 
   ngOnInit() {
@@ -92,6 +95,12 @@ books:any[];
     this.service.getvideos('Book reviews').valueChanges().subscribe(res => {
       this.books = res ;
       console.log('books',this.books);
+    })
+  }
+  getHairsBeauty(){
+    this.service.getvideos('Hair and Beauty').valueChanges().subscribe(res => {
+      this.hair = res ;
+      console.log('books',this.hair);
     })
   }
   

@@ -4,7 +4,7 @@
   </ion-buttons>
   <ion-buttons  *ngIf="showCartIcon" slot="end" (click)="goToCart()">
     <ion-icon name="cart" size="large"></ion-icon>&nbsp;
-    <ion-badge style="color:white">{{quantity}}</ion-badge>
+    <ion-badge style="color:white">{{db.getCartCount()}}</ion-badge>
   </ion-buttons>
 </ion-toolbar>
 
