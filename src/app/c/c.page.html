@@ -1,29 +1,39 @@
-
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-button (click)="close()">
-        <ion-icon name="arrow-back"  ></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title>{{product}}</ion-title>
-  </ion-toolbar>
-
+<!-- <ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+        <ion-button (click)="close()">
+            <ion-icon name="arrow-back"></ion-icon>
+        </ion-button>
+        </ion-buttons>
+        <ion-title text-center style="margin-left: -15px">{{product}}</ion-title>
+    </ion-toolbar>
+</ion-header> -->
 
 <ion-content>
+    <div (click)="close()" style="position: absolute; margin-left: 15px; margin-top: 20px; background-color: rgba(0, 174, 229, 0.7);">
+        <ion-icon style="width: 25px; height: 20px; color: white;" name="arrow-back"></ion-icon>
+    </div>
+
+    <div class="product" >
+        <img src="{{image}}">
+    </div>
+    <div style="margin-left: 14px; margin-right: 15px; margin-bottom: 10px;">
+        <div style="font-size: 14px; font-weight: bold; color: #737373; margin-top: 8px;">{{product}}</div>
+        <div style="font-size: 14px; color: #737373; margin-top: 7px;">Quantity :{{quantity}}</div>
+        <div style="font-size: 14px; font-weight: bold; color: var(--ion-color-primary); margin-top: 7px;">Current Price: Kshs. {{currentprice}}</div>
+
+        <div style="font-size: 14px; color: #737373; margin-top: 30px; font-weight: bold;">Description :</div>
+        <div style="font-size: 13px; color: #737373; margin-top: 7px;">{{description}}</div>
 
 
-  <div class="product" >
-    <img src="{{image}}">
-  </div>
-  <div>
-    <ion-card>
-      <ion-card-header><ion-label>Quantity : </ion-label> &nbsp; {{quantity}}</ion-card-header>
-      <ion-card-content>
-       <ion-label>Current Price: Kshs. &nbsp; <span><b>{{currentprice}}</b></span> </ion-label> <br><br>
-       <!-- <ion-label>Initial Price: Kshs. &nbsp; <span><b>{{initialprice}}</b></span> </ion-label>  -->
-       <ion-label>Description :</ion-label><br>
-       <ion-text>{{description}}</ion-text>
-      </ion-card-content>
-    </ion-card>
-  </div>
+        <!-- <ion-card>
+        <ion-card-header><ion-label>Quantity : </ion-label> &nbsp; {{quantity}}</ion-card-header>
+        <ion-card-content>
+        <ion-label>Current Price: Kshs. &nbsp; <span><b>{{currentprice}}</b></span> </ion-label> <br><br> -->
+        <!-- <ion-label>Initial Price: Kshs. &nbsp; <span><b>{{initialprice}}</b></span> </ion-label>  -->
+        <!-- <ion-label>Description :</ion-label><br>
+        <ion-text>{{description}}</ion-text>
+        </ion-card-content>
+        </ion-card> -->
+    </div>
 </ion-content>

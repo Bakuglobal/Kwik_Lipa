@@ -8,12 +8,12 @@
                 <br> What
                 would you like to do? </span></ion-title>
         <ion-title *ngIf="heading && !searchBar" text-center>Hello {{Name}}</ion-title>
-        <ion-searchbar #IonSearchbar placeholder="Enter term here" *ngIf="searchBar" mode="ios" animated class="searchbar"
+        <ion-searchbar style="font-size: 13px;" #IonSearchbar placeholder="Enter term here" *ngIf="searchBar" mode="ios" animated class="searchbar"
             [(ngModel)]="searchTerm" (ionChange)="startSearch()">
         </ion-searchbar>
         <ion-buttons slot="end" (click)="search()" style="padding-right: 5px;">
-            <ion-icon size="large" name="search" *ngIf="!searchBar"></ion-icon>
-            <ion-icon size="large" name="close" *ngIf="searchBar"></ion-icon>
+            <ion-icon style="width: 20px; height: 20px;" size="large" name="search" *ngIf="!searchBar"></ion-icon>
+            <ion-icon style="width: 20px; height: 20px;" size="large" name="close" *ngIf="searchBar"></ion-icon>
         </ion-buttons>
 
     </ion-toolbar>
@@ -163,7 +163,7 @@
                             </div> -->
                             <ion-button expand="full"
                                 style="height: 25px; width: 40px; position: absolute; top: 5px; right: 0px;border-radius: 10px 0px 0px 10px;">
-                                <div style="font-size: 11px;">-20%</div>
+                                <div style="font-size: 11px; background-color: rgba(0, 174, 229, 0.7);">-20%</div>
                             </ion-button>
                         </div>
                         <img style="height: 150px;width: 400px;" src="{{item.image}}">
@@ -311,8 +311,8 @@
     </div>
     <!-- SEARCH RESULTS CONTAINER -->
     <div *ngIf="searchBar">
-        <div style="text-align: center;padding-top:30%;" *ngIf="!hideGuide">
-            <ion-label class="ion-padding" color="primary">Search for Food, Restaurants or Shops near you from the searchbar above</ion-label>
+        <div style="text-align: center; padding-top:30%;" *ngIf="!hideGuide">
+            <ion-label style="font-size: 13px;" class="ion-padding" color="primary">Search for Food, Restaurants or Shops near you from the searchbar above</ion-label>
         </div>
         <div style="text-align: center;padding-top: 45%;" *ngIf="!stopSpinner">
             <ion-spinner name="circles"></ion-spinner>

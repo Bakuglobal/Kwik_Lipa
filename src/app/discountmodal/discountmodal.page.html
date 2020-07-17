@@ -1,66 +1,68 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <ion-header>
-<ion-toolbar  color="primary">
-  <ion-buttons slot="start">
-    <ion-icon name="arrow-back" (click)="close()"></ion-icon>
-  </ion-buttons>
-  <ion-title text-center>{{product}}</ion-title>
-  <ion-buttons slot="end" (click)="goToCart()">
-    <ion-button>
-    <ion-icon name="cart" size="large"></ion-icon>&nbsp;
-    <ion-badge style="color:white">{{service.getCartCount()}}</ion-badge>
-  </ion-button>
-  </ion-buttons>
-</ion-toolbar>
+    <ion-toolbar  color="primary">
+        <ion-buttons slot="start">
+            <ion-icon style="margin-left: 10px;" name="arrow-back" (click)="close()"></ion-icon>
+        </ion-buttons>
+        <ion-title text-center>{{product}}</ion-title>
+        <ion-buttons slot="end" (click)="goToCart()">
+            <ion-button>
+                <ion-icon style="width: 20px; height: 20px; margin-right: 1px;" name="cart" size="large"></ion-icon>&nbsp;
+                <ion-badge style="color: var(--ion-color-primary); background-color: white; text-align: center;">{{service.getCartCount()}}</ion-badge>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
+
+
 <ion-content>
-  <div class="image">
-    <img src="{{image}}">
-    
-  </div>
-  <div>
-    <ion-col class="ion-padding">
-      <ion-label class="tag"><span style="color: grey;"></span> {{shop}}</ion-label>
-    </ion-col>
-   
-  </div>
-  <div padding>
-    <ion-label class="tag">Description</ion-label>
-    <p class="desc">
-      {{description}}
-    </p>
-  </div>
-  <div padding [ngClass]="{'soldout': stock == 0}">
-    <ion-label class="tag">Quantity</ion-label>
-    <ion-row>
-      <ion-col class="price">
-        Kshs. <span>{{currentprice * count}}</span>
-      </ion-col>
-      <ion-col size="2" class="icon" (click)="reduce()">
-        <ion-icon name="remove" ></ion-icon>
-      </ion-col>
-      <ion-col size="3" class="qty"><br>{{count}}</ion-col>
-      <ion-col size="2" class="icon" (click)="add()">
-        <ion-icon name="add" ></ion-icon>
-      </ion-col>
-    </ion-row>
-  </div>
+    <div class="image">
+        <img src="{{image}}">
+    </div>
+
+    <div>
+        <ion-col>
+            <ion-label style="color: #737373; font-size: 15px; margin-top: 50px; margin-left: 10px;" class="tag"><span></span> {{shop}}</ion-label>
+        </ion-col>
+    </div>
+
+    <div padding [ngClass]="{'soldout': stock == 0}" style="margin-bottom: 20px; color: #737373; font-size: 13px;">
+        <div>
+            <div style="font-weight: bold;">Quantity</div>
+            <div style="margin-top: 5px; font-weight: bold; font-size: 14px; color: var(--ion-color-primary);">Kshs. {{currentprice * count}}</div>
+        </div>
+
+        <div style="margin-top: -17px; color: var(--ion-color-primary);">
+            <ion-icon name="remove" (click)="reduce()" style="position: absolute; float: right; right: 57px; border:  1px solid var(--ion-color-primary);"></ion-icon>
+            <div style="position: absolute; float: right; right: 40px;">{{count}}</div>
+            <ion-icon name="add" (click)="add()" style="position: absolute; float: right; right: 15px; border:  1px solid var(--ion-color-primary);"></ion-icon>
+        </div>
+    </div>
+
+    <div padding style="margin-top: 10px;">
+        <ion-label class="tag">Description</ion-label>
+        <p class="desc" style="color: #737373;">
+            {{description}}
+        </p>
+    </div>
 </ion-content>
-<ion-footer  >
-  <ion-row >
-    <ion-col>
-      <ion-button fill="outline" style="width: 100%;height: 50px;padding-top: 0px;padding-bottom: 5px;"
-        (click)="addToCart()" >
-        <ion-icon name="cart"></ion-icon>&nbsp;
-        Cart
-      </ion-button >
-    </ion-col>
-    <ion-col>
-      <ion-button class="btn" color="primary" (click)="buyNow()" >
-        Buy Now
-      </ion-button>
-    </ion-col>
-  </ion-row>
+
+
+<!-- FOOTER HERE -->
+<ion-footer>
+    <ion-row>
+        <ion-col>
+            <ion-button fill="outline" style="width: 100%;" (click)="addToCart()" >
+                <ion-icon name="cart"></ion-icon>&nbsp;
+                Cart
+            </ion-button>
+        </ion-col>
+        <ion-col>
+            <ion-button color="primary" (click)="buyNow()" expand="full">
+                Buy Now
+            </ion-button>
+        </ion-col>
+    </ion-row>
 </ion-footer>

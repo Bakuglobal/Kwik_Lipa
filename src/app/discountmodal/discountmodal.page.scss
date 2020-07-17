@@ -13,12 +13,15 @@
 }
 .tag{
     text-transform: capitalize;
-    font-size: large;
+    // font-size: large;
     font-weight: bold;
-    color: grey;
+    font-size: 13px;
+    color: #737373;
+    // color: grey;
 }
 .desc{
-    color:grey;
+    columns: #737373;
+    font-size: 13px;
 }
 .bottom{
     bottom: 10px;
@@ -42,9 +45,9 @@
     width: 100%;
 }
 .price{
-    font-size: 1.1em;
-    color: grey;
-    padding-top: 20px;
+    font-size: 13px;
+    color: #737373;
+    padding-top: 10px;
     padding-left: 0px;
 }
 .checked {
