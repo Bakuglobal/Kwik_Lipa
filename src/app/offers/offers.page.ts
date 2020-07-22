@@ -124,9 +124,14 @@ export class OffersPage implements OnInit {
   }
 
   addToCart(item) {
-    // this.contains(this.cart, item);
-    this.db.addCart(item);
-    this.toast('Product added To cart');
+    // check if cart contains product from another shop
+    if(this.shopSelected === item.shop){
+      this.db.addCart(item);
+      this.toast('Product added To cart');
+      return;
+    }else{
+      this.toast('Product from diff shop');
+    }
   }
   // go to home page
 
@@ -138,8 +143,10 @@ export class OffersPage implements OnInit {
     this.UnfilteredOffers.length = 0 ;
     this.fireApi.hiddenTabs = false;
     this.fireApi.shareShopBy('shopBy');
-    this.location.back();
-    // this.navCtrl.navigate(['tabs/tab1']);
+    this.fireApi.changeData('Shopname');
+    this.db.resetCart();
+    // this.location.back();
+    this.navCtrl.navigate(['tabs/selectshop']);
   }
 
 
@@ -173,6 +180,27 @@ export class OffersPage implements OnInit {
       component: CPage,
       componentProps: item
     });
+
+    mod.onDidDismiss()
+      .then((data) => {
+        console.log("response from modal",data);
+        if(data.data === "addToCart"){
+          this.addToCart(item);
+        }
+    });
+
     await mod.present()
+  }
+
+  shortenProduct(prod){
+    let text;
+    if(prod.length > 25){
+      text = prod.substring(0,25) ;
+      text += '...' ;
+      return text;
+    }else {
+      return prod;
+    }
+    
   }
 }

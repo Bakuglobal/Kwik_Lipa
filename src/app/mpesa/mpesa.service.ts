@@ -78,4 +78,18 @@ async toasted(msg) {
   });
   await ts.present();
 }
+formatNumber(number){
+  let num = number;
+  let check = num.charAt(0);
+  if (check == "+") {
+    let nospace = num.replace(/\s+/g, '');
+    number = nospace.substring(1, 12);
+    return number;
+  } else {
+    let clean = num.replace(/\s+/g, '');
+    let cut = '254' + clean.substring(1, 10);
+    number = cut;
+    return number;
+  }
+}
 }

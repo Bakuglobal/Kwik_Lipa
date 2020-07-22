@@ -12,8 +12,8 @@ import { Product } from '../models/product';
 import { FirestoreService } from './firestore.service';
 import { Post } from '../models/post';
 import { Shops } from '../models/shops';
-import { Category} from '../models/categories';
-  import { from } from 'rxjs';
+import { Category } from '../models/categories';
+import { from } from 'rxjs';
 export interface ShoppingList {
   Title: string,
   First: string,
@@ -31,13 +31,14 @@ export interface ShoppingList {
 })
 export class DatabaseService {
   shops;
-  data:any;
+  data: any;
   cart = [];
   private listCollection: AngularFirestoreCollection<ShoppingList>;
   private lists: Observable<ShoppingList[]>;
   products;
   items = [];
   count = 0;
+  notes= '' ;
   user;
   public cartCount = 0;
   constructor(
@@ -124,48 +125,48 @@ export class DatabaseService {
     });
   }
   //share cart details across pages
- 
+
   addCart(item) {
     if (this.cart.length === 0) {
-      if(!item.count){
+      if (!item.count) {
         item.count = 1;
         this.cartCount++;
-      }else{
-        this.cartCount += item.count ;
+      } else {
+        this.cartCount += item.count;
       }
       this.cart.push(item);
       console.log('0->added', this.cartCount, this.cart);
       return;
     } else {
       let exist: boolean = this.cart.some(x =>
-        x.product === item.product 
+        x.product === item.product
       );
-      if(exist){
-          // increase count
-          if(!item.count){
-            item.count = 1;
-            this.cartCount++;
-          }else{
-            this.cartCount += item.count ;
-          }
-          var indeX ;
-          for (let [index, p] of this.cart.entries()) {
-            console.log(index);
-            if(p.product === item.product){
-              indeX = index ;
-            }
-          }
-          this.cart[indeX].count += 1;
-          // this.cartCount++;
-          console.log('exists->increased', this.cartCount, this.cart[indeX]);
-          return;
-      }else {
-        // add to the cart
-        if(!item.count){
+      if (exist) {
+        // increase count
+        if (!item.count) {
           item.count = 1;
           this.cartCount++;
-        }else{
-          this.cartCount += item.count ;
+        } else {
+          this.cartCount += item.count;
+        }
+        var indeX;
+        for (let [index, p] of this.cart.entries()) {
+          console.log(index);
+          if (p.product === item.product) {
+            indeX = index;
+          }
+        }
+        this.cart[indeX].count += 1;
+        // this.cartCount++;
+        console.log('exists->increased', this.cartCount, this.cart[indeX]);
+        return;
+      } else {
+        // add to the cart
+        if (!item.count) {
+          item.count = 1;
+          this.cartCount++;
+        } else {
+          this.cartCount += item.count;
         }
         this.cart.push(item);
         // this.cartCount++;
@@ -177,16 +178,16 @@ export class DatabaseService {
   removeFromCart(item) {
     for (let [index, p] of this.cart.entries()) {
       if (p.product === item.product) {
-        this.cartCount =  this.cartCount - item.count;
+        this.cartCount = this.cartCount - item.count;
         this.cart.splice(index, 1);
         console.log('1->removed', this.cartCount, this.cart);
         return;
       }
     }
   }
-  reduceCount(item){
-    if(item.count == 1){
-      return ;
+  reduceCount(item) {
+    if (item.count == 1) {
+      return;
     }
     for (let [index, p] of this.cart.entries()) {
       if (p.product === item.product) {
@@ -197,7 +198,7 @@ export class DatabaseService {
       }
     }
   }
-  addCount(item){
+  addCount(item) {
     for (let [index, p] of this.cart.entries()) {
       if (p.product === item.product) {
         this.cartCount = this.cartCount + 1;
@@ -208,8 +209,14 @@ export class DatabaseService {
     }
   }
   resetCart() {
-    this.cart = [] ;
-    this.cartCount = 0 ;
+    this.cart = [];
+    this.cartCount = 0;
+  }
+  saveNotes(notes){
+    this.notes = notes ;
+  }
+  getNotes(){
+    return this.notes ;
   }
   getCart() {
     return this.cart;
@@ -217,16 +224,16 @@ export class DatabaseService {
   getCartCount() {
     return this.cartCount;
   }
-  getPosts(){
-    let posts = this.fs.collection<Post>('posts',ref => {
-      return ref.orderBy('time','desc')
+  getPosts() {
+    let posts = this.fs.collection<Post>('posts', ref => {
+      return ref.orderBy('time', 'desc')
     })
     return posts.snapshotChanges().pipe(
       map(actions => {
         return actions.map(a => {
-          const id = a.payload.doc.id ;
+          const id = a.payload.doc.id;
           const data = a.payload.doc.data();
-          return {id, ... data}
+          return { id, ...data }
         });
       })
     )
@@ -276,7 +283,7 @@ export class DatabaseService {
   getUser() {
     return this.user;
   }
-  getproducts(shop){
+  getproducts(shop) {
     return this.fs.collection(shop, ref => {
       return ref.orderBy('currentprice', 'asc');
     });
@@ -299,7 +306,7 @@ export class DatabaseService {
   // get featured products
   getFeaturedProducts() {
     let prod = this.fs.collection<Product>('Featured', ref => {
-      return ref.orderBy('currentprice','asc');
+      return ref.orderBy('currentprice', 'asc');
     });
     return prod.snapshotChanges().pipe(
       map(actions => {
@@ -311,31 +318,57 @@ export class DatabaseService {
       })
     )
   }
-  getShopPhoneNumber(shop){
+  getShopPhoneNumber(shop) {
     let obj = this.fs.collection<Shops>('shops', ref => {
-      return ref.where('shop','==',shop);
+      return ref.where('shop', '==', shop);
     });
-   return  obj.snapshotChanges().pipe(
+    return obj.snapshotChanges().pipe(
       map(actions => {
         return actions.map(a => {
           const data = a.payload.doc.data();
-          const id = a.payload.doc.id ;
-          return { id, ... data};
+          const id = a.payload.doc.id;
+          return { id, ...data };
         })
       })
     )
   }
   // get shop categories
-  getCategories(shop){
+  getCategories(shop) {
     return this.fs.collection('Categories').doc<Category>(shop);
   }
 
   // hold signup details
-  holddata(data){
-    this.data = data ;
+  holddata(data) {
+    this.data = data;
   }
-  sharedata(){
+  sharedata() {
     return this.data;
   }
- 
+
+  // get a place name by lat and long
+  getPlaceName(lat, long) {
+    var url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + long + '&sensor=true&key=AIzaSyBC23RcrPjg1qgOiSAxQ1vd1MaDACvcFpQ';
+    return this.http.get(url)
+  }
+  getPlaceCode(name) {
+    var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + name + ',' + '&key=AIzaSyBC23RcrPjg1qgOiSAxQ1vd1MaDACvcFpQ';
+    return this.http.get(url)
+  }
+  getDistance(src, dest) {
+    var url = 'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=' + src + '&destinations=' + dest + '&key=AIzaSyBC23RcrPjg1qgOiSAxQ1vd1MaDACvcFpQ'
+    return this.http.get(url)
+  }
+  DistanceInKm(lat1, long1, lat2, long2) {
+    var _eQuatorialEarthRadius = 6378.1370;
+    var _d2r = (Math.PI / 180.0);
+
+    var dlong = (long2 - long1) * _d2r;
+    var dlat = (lat2 - lat1) * _d2r;
+    var a = Math.pow(Math.sin(dlat / 2.0), 2.0) + Math.cos(lat1 * _d2r) * Math.cos(lat2 * _d2r) * Math.pow(Math.sin(dlong / 2.0), 2.0);
+    var c = 2.0 * Math.atan2(Math.sqrt(a), Math.sqrt(1.0 - a));
+    var d = _eQuatorialEarthRadius * c;
+
+    return d;
+  }
+
 }

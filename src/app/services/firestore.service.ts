@@ -132,6 +132,12 @@ getNgoShops(){
       changeData(data: any) {
         this.dataSource.next(data);
       }
+//------share shop address across pages
+private shopLocation = new BehaviorSubject("none");
+Location = this.shopLocation.asObservable();
+changeLocation(data: any) {
+  this.shopLocation.next(data);
+}
 //------share cart across pages
     private cartDetails = new BehaviorSubject("cart");
       serviceCart = this.cartDetails.asObservable();

@@ -54,6 +54,9 @@ const routes: Routes = [
       {
         path: 'createList', loadChildren:() => import('../create-list/create-list.module').then(m => m.CreateListPageModule), canActivate: [AuthService]
       },
+      {
+        path: 'delivery', loadChildren:() => import( '../checkout/delivery-address/delivery-address.module').then(m => m.DeliveryAddressPageModule)
+      },
       { path: 'mycredits', loadChildren:()=> import( '../mycredits/mycredits.module').then(m => m.MycreditsPageModule) },
       { path: 'about', loadChildren: () => import('../about/about.module').then(m => m.AboutPageModule) },
       { path: 'chatmodal', loadChildren: () => import('../chatmodal/chatmodal.module').then(m=>m.ChatmodalPageModule) },

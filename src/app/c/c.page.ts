@@ -24,5 +24,10 @@ export class CPage implements OnInit {
   close(){
     this.modal.dismiss();
   }
+   addToCart() {
+    this.modal.dismiss("addToCart");
+  }
+  
+
   
 }

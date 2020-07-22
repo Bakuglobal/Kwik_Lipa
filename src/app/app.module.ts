@@ -52,6 +52,7 @@ import { DiscountmodalPageModule } from './discountmodal/discountmodal.module';
 import { NotificationsPageModule } from './notifications/notifications.module';
 import { Badge } from '@ionic-native/badge/ngx';
 import { CallNumber} from '@ionic-native/call-number/ngx';
+import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
 // import { VideoPlayer } from '@ionic-native/video-player/ngx';
 import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player/ngx';
 @NgModule({
@@ -99,6 +100,7 @@ import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player/ngx';
     Network,
     Contacts,
     Geolocation,
+    NativeGeocoder,
     AppLauncher,
     Badge,
     // VideoPlayer,

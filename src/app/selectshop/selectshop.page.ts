@@ -4,7 +4,7 @@ import { FirestoreService } from '../services/firestore.service';
 import { DatabaseService } from '../services/database.service';
 import { Shop } from '../models/shops';
 import { map } from 'rxjs/operators';
-import { MenuController, AlertController } from '@ionic/angular';
+import { MenuController, AlertController, ToastController } from '@ionic/angular';
 import { Location } from '@angular/common';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Post } from '../models/post';
@@ -16,6 +16,7 @@ import { Post } from '../models/post';
 })
 export class SelectshopPage implements OnInit {
   shops: any []; 
+  shop: string ;
   unfilteredShops: any[] ;
   searchTerm: string ;
   showSearch = false ;
@@ -29,18 +30,30 @@ export class SelectshopPage implements OnInit {
     private menuCtrl: MenuController,
     private alertCtrl: AlertController,
     private location: Location,
-    private fs: AngularFirestore
+    private fs: AngularFirestore,
+    private service: DatabaseService,
+    private toast: ToastController
   ) { }
 
   ngOnInit() {
     this.getShops();
     this.menuCtrl.enable(true);
+    this.showShop();
   }
 
 
   //redirect to shop page
   goToShop(shop){
+    if(this.shop === shop.shop || this.shop === 'Shopname'){
+      this.redirect(shop);
+    }else{
+      this.showAlert(shop);
+    }
+
+  }
+  redirect(shop){
     this.fireApi.changeData(shop.shop);
+    this.fireApi.changeLocation(shop.Location);
     this.fireApi.hiddenTabs = true ;
     this.fireApi.serviceshopBy
         .subscribe(data => {
@@ -59,8 +72,14 @@ export class SelectshopPage implements OnInit {
             this.fireApi.hiddenTabs = true ;
             this.navCtrl.navigate(['tabs/shopprofile'], navigationExtras);
           }
-          
         }); 
+  }
+
+  //check if there a pending order
+  showShop() {
+    this.fireApi.serviceData
+      .subscribe(data => (this.shop = data));
+    console.log("sent data from home page : ", this.shop);
   }
   // get the list of shops
 
@@ -112,25 +131,33 @@ export class SelectshopPage implements OnInit {
       this.showSearch = false ;
     }
   }
-
-
-  // crazy product shuffle --- :-)
-  // domything(){
-  //   const ref = this.fs.collection("Kipusa Beauty",ref => {
-  //     return ref.limitToLast(10).orderBy('currentprice');
-  //   });
-  //   ref.valueChanges().subscribe(res => {
-  //     console.log('==-===')
-  //     console.table(res);
-  //     res.forEach(item => {
-  //       console.log(item);
-  //       this.fs.collection('Featured').add(item).catch(err => console.log(err));
-  //     })
-  //   },error => { console.log('get-err',error)});
-    
-  // }
-
-
+async showAlert(shop) {
+    const pop = await this.alertCtrl.create({
+      message: "You have an item from a different shop in your cart do you want to clear the cart and order from this shop?",
+      buttons: [
+        {
+          text: 'Discard',
+          role: 'cancel'
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            this.service.resetCart();
+            this.toasted("Cart is cleared");
+            this.redirect(shop);
+          }
+        }
+      ]
+    });
+    await pop.present();
+  }
+  async toasted(msg){
+    const tst = await this.toast.create({
+      message: msg,
+      duration: 700
+    });
+    await tst.present();
+   }
   
 
 }

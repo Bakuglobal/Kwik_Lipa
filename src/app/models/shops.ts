@@ -10,6 +10,7 @@ export class Shops {
     Email?:any;
     Contacts?:any;
     cover?:any;
+    description?:any;
 }
 export class Shop {
     key?:any;
@@ -25,4 +26,5 @@ export  class Restaurants {
     Email?:any;
     Contacts?:any;
     cover?:any;
+    description?:any;
 }

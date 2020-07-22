@@ -8,6 +8,7 @@ import { ModalController, ActionSheetController } from '@ionic/angular';
 import { SokomodalPage } from '../sokomodal/sokomodal.page';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { Post } from '../models/post';
+import { CallNumber } from '@ionic-native/call-number/ngx';
 
 
 @Component({
@@ -16,16 +17,16 @@ import { Post } from '../models/post';
   styleUrls: ['./shopprofile.page.scss'],
 })
 export class ShopprofilePage implements OnInit {
-  data: Shops ;
-  shop: Shops ;
-  Posts = [] ;
-   //variables
-   liked = false ;
-   h     = false ;
-   Addcomment = false ;
-   showSearch = false ;
-//objects
-   likes = {"count":0}
+  data: Shops;
+  // shop: Shops ;
+  Posts = [];
+  //variables
+  liked = false;
+  h = false;
+  Addcomment = false;
+  showSearch = false;
+  //objects
+  likes = { "count": 0 }
 
   constructor(
     private service: FirestoreService,
@@ -34,9 +35,10 @@ export class ShopprofilePage implements OnInit {
     private route: ActivatedRoute,
     private modalCtrl: ModalController,
     private iab: InAppBrowser,
-    private asC: ActionSheetController
-  ) { 
-    this.service.hiddenTabs = true ;
+    private asC: ActionSheetController,
+    private call: CallNumber
+  ) {
+    this.service.hiddenTabs = true;
     this.route.queryParams.subscribe(params => {
       if (params) {
         console.log(params);
@@ -44,40 +46,41 @@ export class ShopprofilePage implements OnInit {
       }
     });
   }
-  ionViewWillEnter(){
-    
+  ionViewWillEnter() {
+
     // this.getShop();
     this.getPosts();
   }
 
   ngOnInit() {
-    
+
   }
-  
-  back(){
-    this.service.hiddenTabs = false ;
+
+  back() {
+    this.service.changeData('Shopname');
+    this.service.hiddenTabs = false;
     this.navCtrl.navigate(['tabs/tab1']);
   }
   //open a link in a browser inside the app
 
-  inbrowser(link){
+  inbrowser(link) {
     console.log("Opens link in the app");
     const target = '_blank';
     // const options = { location : 'no' } ;
-    this.iab.create(link,target);
+    this.iab.create(link, target);
   }
   //go to maps to see location of the shop
 
-  async maps(){
+  async maps() {
     const map = await this.modalCtrl.create({
       component: SokomodalPage,
-      componentProps: {'shoplocation':this.shop.Location,'shop':this.shop.shop} 
+      componentProps: { 'shoplocation': this.data.Location, 'shop': this.data.shop }
     });
-    console.log('location',this.shop.Location);
+    console.log('location', this.data.Location);
     await map.present();
   }
-  
-   scanAndPay() {
+
+  scanAndPay() {
     this.service.shareShopBy('scan');
     this.navCtrl.navigate(['tabs/shop']);
   }
@@ -93,23 +96,23 @@ export class ShopprofilePage implements OnInit {
     this.navCtrl.navigate(['tabs/offers']);
   }
 
-  show(){
+  show() {
 
   }
-  infoModal(shop,logo){
+  infoModal(shop, logo) {
 
   }
-  showImage(){
+  showImage() {
 
   }
-  comments(){
+  comments() {
 
   }
   //share via whatsapp
-  async share(){
+  async share() {
     const asc = await this.asC.create({
-      animated: true ,
-      backdropDismiss: true ,
+      animated: true,
+      backdropDismiss: true,
       cssClass: './home.page.scss',
       buttons: [{
         icon: 'logo-whatsapp',
@@ -121,50 +124,55 @@ export class ShopprofilePage implements OnInit {
         text: 'Cancel',
         role: 'cancel'
       }
-    ]
+      ]
     });
     await asc.present();
   }
-//add a comment
-    AddComment(){
-      if(this.Addcomment == true){
-        this.Addcomment = false;
-      }else {
+  //add a comment
+  AddComment() {
+    if (this.Addcomment == true) {
+      this.Addcomment = false;
+    } else {
       this.Addcomment = true;
     }
+  }
+  // like posts
+  like() {
+    if (this.liked == false) {
+      this.likes.count++;
+      this.liked = true;
+    } else {
+      this.likes.count--;
+      this.liked = false;
     }
-// like posts
-    like(){
-      if(this.liked == false){
-        this.likes.count++ ;
-        this.liked = true ;
-      }else {
-        this.likes.count--;
-        this.liked = false ;
-      }
-    if(this.h == false){
-      this.h = true ;
-    }else{
-      this.h = false ;
+    if (this.h == false) {
+      this.h = true;
+    } else {
+      this.h = false;
     }
-      
-    }
-    getPosts(){
-      let posts = this.fs.collection<Post>('posts',ref => {
-        return ref.where('shop','==',this.data.shop).orderBy('time','desc')
+
+  }
+  getPosts() {
+    let posts = this.fs.collection<Post>('posts', ref => {
+      return ref.where('shop', '==', this.data.shop).orderBy('time', 'desc')
+    })
+    let fd = posts.snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const id = a.payload.doc.id;
+          const data = a.payload.doc.data();
+          return { id, ...data }
+        });
       })
-      let fd = posts.snapshotChanges().pipe(
-        map(actions => {
-          return actions.map(a => {
-            const id = a.payload.doc.id ;
-            const data = a.payload.doc.data();
-            return {id, ... data}
-          });
-        })
-      );
-      fd.subscribe(res => {
-        this.Posts = res ;
-        console.log(this.Posts);
-      })
-    }
+    );
+    fd.subscribe(res => {
+      this.Posts = res;
+      console.log(this.Posts);
+    })
+  }
+  callShop(number) {
+    this.call.callNumber(number, true)
+      .then(res => console.log('Launched dialer!', res))
+      .catch(err => console.log('Error launching dialer', err));
+  }
 }

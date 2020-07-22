@@ -20,12 +20,13 @@
 
 <ion-content>
 
-  <ion-item class="top">
-    <span *ngIf="!showSearch" style="font-size: 13px;padding-left: 40%;">Pay and Collect</span>
-    <ion-searchbar placeholder="Enter product name" *ngIf="showSearch" [(ngModel)]="searchTerm"
+  <div class="top">
+    <!-- <span *ngIf="!showSearch" style="font-size: 13px;padding-left: 40%;">Pay and Collect</span> -->
+    <ion-searchbar animated mode="ios" placeholder="Search a product" [(ngModel)]="searchTerm"
       (ionChange)="setFilteredItems()"></ion-searchbar>
-    <ion-icon name="search" slot="end" (click)="showSearchBar()"></ion-icon>
-  </ion-item>
+      <br>
+    <!-- <ion-icon name="search" slot="end" (click)="showSearchBar()"></ion-icon> -->
+  </div>
   <div>
     <div class="ion-padding">
       <ion-label>Categories</ion-label>
@@ -82,11 +83,10 @@
           </div>
           <img style="height: 150px;" src="{{item.image}}" (click)="viewProduct(item)">
           <ion-card-content>
-            <ion-label class="pr-name">{{item.product}}</ion-label><br>
+            <ion-label class="pr-name">{{shortenProduct(item.product)}}</ion-label><br>
             <ion-label class="pr-price">Ksh {{item.currentprice}}</ion-label><br>
-
           </ion-card-content>
-          <div class="prTag">
+          <div class="prTag" >
             <ion-label id="lb" (click)="addToCart(item)" >Add to Cart
             </ion-label>
           </div>

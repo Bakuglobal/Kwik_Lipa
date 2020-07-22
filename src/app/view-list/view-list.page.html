@@ -57,13 +57,13 @@
                         <ion-col no-padding size="3">
                             <ion-item no-padding style="float: right; right: -5px; margin-bottom: -6px;">
                                 <ion-col no-padding>
-                                    <ion-icon style="background-color: #999999; color: white; border-radius: 15px; width: 13px; height: 13px;" name="remove" (click)="reduce(newListItems.indexOf(item))"></ion-icon>
+                                    <ion-icon style="background-color: #999999; color: white; border-radius: 15px; width: 13px; height: 13px;" name="remove" (click)="reduce(Items.indexOf(item))"></ion-icon>
                                 </ion-col>
                                 <ion-col no-padding>
                                     <div style="padding-left: 3px; padding-right: 3px; color: #737373; font-size: 13px; margin-top: -2px;">{{item.count}}</div>
                                 </ion-col>
                                 <ion-col no-padding>
-                                    <ion-icon style="background-color: #999999; color: white; border-radius: 15px; width: 13px; height: 13px;" name="add" (click)="add(newListItems.indexOf(item))"></ion-icon>
+                                    <ion-icon style="background-color: #999999; color: white; border-radius: 15px; width: 13px; height: 13px;" name="add" (click)="add(Items.indexOf(item))"></ion-icon>
                                 </ion-col>
                             </ion-item>
                         </ion-col>

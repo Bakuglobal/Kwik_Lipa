@@ -1,0 +1,108 @@
+<ion-header style="background-color: #3880ff">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="back()">
+        <ion-icon name="arrow-round-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="shopname">Delivery</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+  <div *ngIf="!Ordersuccess">
+    <ion-list>
+      <ion-radio-group value="deliver" (ionChange)="deliveryOption($event)">
+        <ion-list-header>
+          <ion-label>How do you want your delivery?</ion-label>
+        </ion-list-header>
+
+        <ion-item>
+          <ion-label>Deliver it to me</ion-label>
+          <ion-radio slot="start" value="deliver"></ion-radio>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>I will pick it up</ion-label>
+          <ion-radio slot="start" value="pick"></ion-radio>
+        </ion-item>
+
+      </ion-radio-group>
+    </ion-list>
+
+    <!-- For delivery orders -->
+    <div *ngIf="delivery === 'deliver'" class="ion-padding">
+      <ion-searchbar [(ngModel)]="autocomplete.input" (ionInput)="UpdateSearchResults()"
+        placeholder="Enter a different address" (ionClear)="ClearAutocomplete()"></ion-searchbar>
+      <!-- suggest places -->
+      <ion-list [hidden]="autocompleteItems.length == 0">
+        <ion-item *ngFor="let item of autocompleteItems" tappable (click)="SelectSearchResult(item.description)">
+          {{ item.description }}
+        </ion-item>
+      </ion-list>
+      <div class="map-wrapper" style="height: 150px">
+        <!-- <div id="map_center">
+        <ion-icon name="pin" size="large" color="danger"></ion-icon>      
+      </div> -->
+        <div #map id="map" style="height: 150px;"></div>
+      </div>
+      <br><br>
+      <ion-label color="primary">{{placeid}}</ion-label><br><br>
+
+      <!-- show the delivery fee -->
+      <!-- <div>
+      <ion-label>Delivery Fee : </ion-label>
+      <ion-label color="primary" style="float: right;font-size: .9rem;">000</ion-label>
+  </div> -->
+
+    </div>
+    <!-- For pick up orders -->
+    <div *ngIf="delivery === 'pick'" class="ion-padding">
+      <br><br>
+
+      <!-- <ion-label>You will pay for this Order via M-pesa on pick up.</ion-label> <br><br> -->
+      <ion-label><span color="primary">{{shop}}</span> will send you a confirmation with time and place of pick up.
+      </ion-label>
+    </div>
+    <!-- Order total -->
+    <div>
+
+    </div>
+    <div style="position: fixed;bottom: 50px;width: 100%;" class="ion-padding">
+      <ion-label style="font-size: .8rem;">Subtotal : </ion-label>
+      <ion-label color="primary" style="float: right;font-size: .9rem;">{{getTotal()}}</ion-label><br>
+      <ion-label style="font-size: .8rem;">Delivery Fee : </ion-label>
+      <ion-label color="primary" style="float: right;font-size: .9rem;">{{deliveryFee}}</ion-label><br>
+      <ion-label style="font-size: .8rem;">Total : </ion-label>
+      <ion-label color="primary" style="float: right;font-size: 1rem;">{{total()}}</ion-label><br>
+    </div>
+  </div>
+  <div *ngIf="Ordersuccess">
+    <!-- Shows when the cart is empty -->
+    <div class="empty">
+      <ion-label></ion-label><br><br><br>
+      <ion-button (click)="back()" shape="round">Continue shopping</ion-button>
+    </div>
+    <br><br>
+    <!-- Shows when the order is sent -->
+    <ion-card padding class="successful" >
+      <ion-card-header>
+        <ion-icon color="primary" name="checkmark-circle-outline" size="large"></ion-icon>&nbsp;&nbsp;<br>
+        <ion-label style="color: green;"><b>Order Sent Successful</b></ion-label>
+      </ion-card-header>
+      <ion-card-content>
+        <br><br>
+        <ion-text>You can follow the progress of your order in My Orders page.</ion-text><br>
+        <ion-button expand="full" (click)="myorders()" fill="clear">My Orders</ion-button>
+        <br><br>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+
+<ion-footer *ngIf="!Ordersuccess">
+  <ion-button expand="full" shape="round" style="height: 40px;border-radius: 5px;" (click)="presentAlertConfirm()">
+    Place Order
+  </ion-button>
+</ion-footer>
