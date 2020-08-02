@@ -1,52 +1,64 @@
 <ion-content [scrollEvents]="true" (ionScroll)="onScroll($event)">
-  <div style="padding-bottom: 15px;">
-    <div class="back">
-      <ion-icon (click)="back()" name="arrow-back" color="primary"></ion-icon>
+    <div style="padding-bottom: 15px;">
+        <div class="back">
+            <ion-icon (click)="back()" name="arrow-back" color="primary"></ion-icon>
+        </div>
+        <div *ngIf="data === undefined">
+            <ion-skeleton-text animated style="width: 100%; object-fit: fill; height: 200px;border-radius: 0px;">
+            </ion-skeleton-text>
+        </div>
+        <div>
+            <img src="{{data.cover}}" alt="Cover image" style="width: 100%; object-fit: fill; height: 150px;">
+        </div>
+        <div>
+            <ion-avatar style="width: 60px; height: 60px; margin-top: -35px; margin-left: 25px;">
+            <img src="{{data.logo}}" style="object-fit: fill;">
+            </ion-avatar>
+        </div>
+        <div style="line-height: 1;" class="ion-padding">
+            <div style="font-size: 15px; font-weight: bold; color: #636363;">{{data.Restaurant}}</div><br>
+            <div *ngIf="data === undefined">
+                <br>
+                <ion-skeleton-text animated style="width: 80%; object-fit: fill; height: 20px;"></ion-skeleton-text><br>
+                <ion-skeleton-text animated style="width: 80%; object-fit: fill; height: 20px;"></ion-skeleton-text>
+            </div>
+            <div style="font-size: 13px; color: #636363; margin-top: 5px;" >
+                <a >{{data.Location}} <ion-icon name="pin"></ion-icon></a>
+            </div>
+            <div style="font-size: 13px; color: #636363; margin-top: 8px;" *ngIf="data !== undefined">Open from
+                {{data.Open}}&nbsp; - {{data.Close}}&nbsp; Mon - Sat
+            </div>
+            <div style="font-size: 13px; color: #636363; margin-top: 8px;" *ngIf="data !== undefined">Website:
+                <a  *ngIf="data !== undefined">{{data.Website}}</a>
+            </div>
+        </div>
     </div>
-    <div *ngIf="data === undefined">
-      <ion-skeleton-text animated style="width: 100%; object-fit: fill; height: 200px;border-radius: 0px;">
-      </ion-skeleton-text>
-    </div>
-    <div>
-      <img src="{{data.cover}}" alt="Cover image" style="width: 100%; object-fit: fill; height: 150px;">
-    </div>
-    <div>
-      <ion-avatar style="width: 60px; height: 60px; margin-top: -35px; margin-left: 25px;">
-        <img src="{{data.logo}}" style="object-fit: fill;">
-      </ion-avatar>
-    </div>
-    <div style="margin-top: 15px;line-height: 1;" class="ion-padding">
-      <div style="font-size: 25px; font-weight: bold;">{{data.Restaurant}}</div><br>
-      <div *ngIf="data === undefined">
-        <br>
-        <ion-skeleton-text animated style="width: 80%; object-fit: fill; height: 20px;"></ion-skeleton-text><br>
-        <ion-skeleton-text animated style="width: 80%; object-fit: fill; height: 20px;"></ion-skeleton-text>
-      </div>
-      <div style="font-size: 13px; color: #636363; margin-top: 5px;" >
-        <a >{{data.Location}} <ion-icon name="pin"></ion-icon></a>
-      </div>
-      <div style="font-size: 13px; color: #636363; margin-top: 8px;" *ngIf="data !== undefined">Open from
-        {{data.Open}}&nbsp; - {{data.Close}}&nbsp; Mon - Sat</div>
-      <div style="font-size: 13px; color: #636363; margin-top: 8px;" *ngIf="data !== undefined">Website:
-        <a  *ngIf="data !== undefined">{{data.Website}}</a>
-      </div>
-    </div>
-  </div>
 
-  <div>
-    <ion-searchbar animated mode="ios" [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()"
-      placeholder="Search menu"></ion-searchbar>
-  </div>
+    <div>
+      <ion-searchbar style="font-size: 13px; color: #636363;" animated mode="ios" [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()"
+        placeholder="Search menu"></ion-searchbar>
+    </div>
     <ion-segment scrollable (ionChange)="categoryBar($event)" id="meals">
-      <ion-segment-button checked value="All">
-        All
-      </ion-segment-button>
-      <ion-segment-button  *ngFor="let item of categories" value="{{item}}">
-        {{item}}
-      </ion-segment-button>
+        <ion-segment-button checked value="All" style="font-size: 11px;">
+          All
+        </ion-segment-button>
+        <ion-segment-button style="font-size: 11px;" *ngFor="let item of categories" value="{{item}}">
+          {{item}}
+        </ion-segment-button>
     </ion-segment>
-    <div *ngFor="let item of meals" class="ion-padding" (click)="seeDetails(item)" style="border-bottom: .5px solid lightgrey;">
-      <ion-label style="font-size: 1.2rem;font-weight: bold;color: var(--ion-color-dark);">{{item.Meal}}</ion-label><br><br>
-      <ion-label style="color: grey;">Kshs. {{item.currentprice}}</ion-label>
+    <!-- <div *ngFor="let item of meals" class="ion-padding" (click)="seeDetails(item)" style="border-bottom: .5px solid lightgrey;">
+        <ion-label style="font-size: 13px; font-weight: bold;  color: #636363;">{{item.Meal}}</ion-label><br><br>
+        <ion-label style="color: grey; margin-top: -5px;">Kshs. {{item.currentprice}}</ion-label>
+    </div> -->
+
+    <div style="background-color: #E4E4E4; width: 100%; padding-top: 10px; padding-bottom: 10px;">
+        <div *ngFor="let item of meals" class="ion-padding" (click)="seeDetails(item)" style="background-color: white; margin-left: 10px; margin-right: 10px; margin-bottom: 10px;">
+            <div style="font-size: 13px; font-weight: bold;  color: #636363;">
+                {{item.Meal}}
+            </div>
+            <div style="font-size: 13px; color: var(--ion-color-primary); margin-top: 10px;">
+                Kshs. {{item.currentprice}}
+            </div>
+        </div>
     </div>
 </ion-content>

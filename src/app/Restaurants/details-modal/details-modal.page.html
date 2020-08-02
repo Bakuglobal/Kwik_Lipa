@@ -1,40 +1,54 @@
-<ion-toolbar class="ion-padding">
-  <ion-buttons>
-    <ion-icon name="arrow-back" (click)="back()"></ion-icon>
-  </ion-buttons>
-  <ion-buttons  *ngIf="showCartIcon" slot="end" (click)="goToCart()">
-    <ion-icon name="cart" size="large"></ion-icon>&nbsp;
-    <ion-badge style="color:white">{{db.getCartCount()}}</ion-badge>
-  </ion-buttons>
-</ion-toolbar>
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons style="margin-left: 15px;">
+            <ion-icon name="arrow-back" (click)="back()"></ion-icon>
+        </ion-buttons>
+        <ion-buttons style="margin-right: 15px;"  *ngIf="showCartIcon" slot="end" (click)="goToCart()">
+            <ion-icon name="cart" style="height: 20px; margin-right: -11px;" size="large"></ion-icon>&nbsp;
+            <ion-badge style="color:white">{{db.getCartCount()}}</ion-badge>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+
 
 <ion-content>
-  <div class="ion-padding">
-    <ion-label style="font-weight: bold;color: grey;font-size: 1.2rem;" >{{data.Meal}}</ion-label> <br> <br> <br>
-  </div>
-  <div style="color: grey;padding-top: 10px;padding-bottom: 10px;background-color: var(--ion-color-light);">
-    <ion-row class="ion-padding" >
-      <ion-label style="font-size: 1rem;">Special Instructions</ion-label>
+    <div class="ion-padding">
+        <ion-label style="font-weight: bold;color: grey;font-size: 15px;" >{{data.Meal}}</ion-label> <br> <br> <br>
+    </div>
+
+    <div style="color: grey;padding-top: 10px;padding-bottom: 10px;background-color: var(--ion-color-light);">
+        <ion-row class="ion-padding" >
+        <ion-label style="font-size: 15px;">Special Instructions</ion-label>
+        </ion-row>
+    </div>
+
+    <div>
+        <ion-textarea name="notes" [(ngModel)]="notes" placeholder="Add notes for this order (eg. extra sauce, no onions"
+        cols="50" rows="10" ></ion-textarea>
+    </div>
+    <br>
+    
+    <ion-row class="ion-padding"> 
+        <ion-col class="price">
+        Kshs. <span>{{data.currentprice}}</span>
+        </ion-col>
+        <ion-col size="2" class="icon" (click)="reduce()">
+        <ion-icon name="remove"></ion-icon>
+        </ion-col>
+        <ion-col size="3" class="qty"><br>{{getCount()}}</ion-col>
+        <ion-col size="2" class="icon" (click)="add()">
+        <ion-icon name="add"></ion-icon>
+        </ion-col>
     </ion-row>
-  </div>
-  <div >
-  <ion-textarea name="notes" [(ngModel)]="notes" placeholder="Add notes for this order (eg. extra sauce, no onions"
-    cols="50" rows="10" ></ion-textarea>
-  </div>
-  <br>
-  <ion-row class="ion-padding"> 
-    <ion-col class="price">
-      Kshs. <span>{{data.currentprice}}</span>
-    </ion-col>
-    <ion-col size="2" class="icon" (click)="reduce()">
-      <ion-icon name="remove"></ion-icon>
-    </ion-col>
-    <ion-col size="3" class="qty"><br>{{getCount()}}</ion-col>
-    <ion-col size="2" class="icon" (click)="add()">
-      <ion-icon name="add"></ion-icon>
-    </ion-col>
-  </ion-row>
-  <div style="position: fixed;bottom: 0px;left: 0px;right: 0px;">
-    <ion-button expand="full"  (click)="addToCart()">Add to Cart</ion-button>
-  </div>
+
+    <br><br><br>
+    
+
 </ion-content>
+
+<ion-footer>
+    <div style="position: fixed;bottom: 0px;left: 0px;right: 0px;">
+        <ion-button expand="full"  (click)="addToCart()">Add to Cart</ion-button>
+    </div>
+</ion-footer>

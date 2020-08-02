@@ -15,67 +15,341 @@
 
 <ion-content>
 
+
+
+
     <div>
         <div>
-            <ion-searchbar animated mode="ios" [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()" placeholder="Search shop"></ion-searchbar>
+            <ion-searchbar animated mode="ios" [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()" placeholder="Search for products"></ion-searchbar>
         </div>
+
+
+
+          <!-- Segment with default selection -->
+        <ion-segment [(ngModel)]="segmentModel" (ionChange)="segmentChanged($event)" value="Products">
+            <ion-segment-button value="Products">
+                <ion-label>Products</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="Vendors">
+                <ion-label>Vendors</ion-label>
+            </ion-segment-button>
+        </ion-segment>
+
+        <div *ngIf="segmentModel === 'Products'" style="margin-bottom: 20px;">
+            <ion-row style="margin-left: 10px; margin-right: 10px; margin-top: 15px;">
+                <ion-col size="12">
+                    <div style="font-size: 18px; font-weight: bold;">Vegetables</div>
+                </ion-col>
+
+                <ion-slides pager="false" [options]="slideOpts">
+                    <ion-slide>
+                        <ion-col size="4" no-padding>
+                            <ion-card style="border-radius: 0px; margin: 5px; height: 200px;">
+                                <img style="width: 100%; height: 100px; background-position: center; background-repeat: no-repeat; background-size: cover;" src="/assets/images/shop.png" alt="">
+                                <div style="margin-bottom: 15px; margin-top: 15px; margin-left: 10px; color: black;">
+                                    <div style="font-size: 13px; margin-bottom: 5px;">Product name</div>
+                                    <div style="font-size: 11px;">Ksh 150</div>
+                                </div>
+                                
+                                <div class="prTag">
+                                    <div style="color: var(--ion-color-primary); background-color: white; font-size: 12px; padding-top: 3px; padding-bottom: 3px; margin: 0 7px; border-radius: 5px;">Add to cart</div>
+                                </div>
+                            </ion-card>
+                        </ion-col>
+
+                        <ion-col size="4" no-padding>
+                            <ion-card style="border-radius: 0px; margin: 5px; height: 200px;">
+                                <img style="width: 100%; height: 100px; background-position: center; background-repeat: no-repeat; background-size: cover;" src="/assets/images/rest.jpg" alt="">
+                                <div style="margin-bottom: 15px; margin-top: 15px; margin-left: 10px; color: black;">
+                                    <div style="font-size: 13px; margin-bottom: 5px;">Product name</div>
+                                    <div style="font-size: 11px;">Ksh 150</div>
+                                </div>
+                                
+                                <div class="prTag">
+                                    <div style="color: var(--ion-color-primary); background-color: white; font-size: 12px; padding-top: 3px; padding-bottom: 3px; margin: 0 7px; border-radius: 5px;">Add to cart</div>
+                                </div>
+                            </ion-card>
+                        </ion-col>
+
+                        <ion-col size="4" no-padding>
+                            <ion-card style="border-radius: 0px; margin: 5px; height: 200px;">
+                                <img style="width: 100%; height: 100px; background-position: center; background-repeat: no-repeat; background-size: cover;" src="/assets/images/shop.png" alt="">
+                                <div style="margin-bottom: 15px; margin-top: 15px; margin-left: 10px; color: black;">
+                                    <div style="font-size: 13px; margin-bottom: 5px;">Product name</div>
+                                    <div style="font-size: 11px;">Ksh 150</div>
+                                </div>
+                                
+                                <div class="prTag">
+                                    <div style="color: var(--ion-color-primary); background-color: white; font-size: 12px; padding-top: 3px; padding-bottom: 3px; margin: 0 7px; border-radius: 5px;">Add to cart</div>
+                                </div>
+                            </ion-card>
+                        </ion-col>
+
+                        <ion-col size="4" no-padding>
+                            <ion-card style="border-radius: 0px; margin: 5px; height: 200px;">
+                                <img style="width: 100%; height: 100px; background-position: center; background-repeat: no-repeat; background-size: cover;" src="/assets/images/shop.png" alt="">
+                                <div style="margin-bottom: 15px; margin-top: 15px; margin-left: 10px; color: black;">
+                                    <div style="font-size: 13px; margin-bottom: 5px;">Product name</div>
+                                    <div style="font-size: 11px;">Ksh 150</div>
+                                </div>
+                                
+                                <div class="prTag">
+                                    <div style="color: var(--ion-color-primary); background-color: white; font-size: 12px; padding-top: 3px; padding-bottom: 3px; margin: 0 7px; border-radius: 5px;">Add to cart</div>
+                                </div>
+                            </ion-card>
+                        </ion-col>
+
+                        <ion-col size="4" no-padding>
+                            <ion-card style="border-radius: 0px; margin: 5px; height: 200px;">
+                                <img style="width: 100%; height: 100px; background-position: center; background-repeat: no-repeat; background-size: cover;" src="/assets/images/rest.jpg" alt="">
+                                <div style="margin-bottom: 15px; margin-top: 15px; margin-left: 10px; color: black;">
+                                    <div style="font-size: 13px; margin-bottom: 5px;">Product name</div>
+                                    <div style="font-size: 11px;">Ksh 150</div>
+                                </div>
+                                
+                                <div class="prTag">
+                                    <div style="color: var(--ion-color-primary); background-color: white; font-size: 12px; padding-top: 3px; padding-bottom: 3px; margin: 0 7px; border-radius: 5px;">Add to cart</div>
+                                    <!-- <ion-label id="lb">Add to cart</ion-label> -->
+                                </div>
+                            </ion-card>
+                        </ion-col>
+                    </ion-slide>
+                </ion-slides>
+            </ion-row>
+
+            <ion-row style="margin-left: 10px; margin-right: 10px; margin-top: 20px;">
+                <ion-col size="12">
+                    <div style="font-size: 18px; font-weight: bold;">Clothes</div>
+                </ion-col>
+                <ion-slides pager="false" [options]="slideOpts">
+                    <ion-slide>
+                        <ion-col size="4" no-padding>
+                            <ion-card style="border-radius: 0px; margin: 5px; height: 200px;">
+                                <img style="width: 100%; height: 100px; background-position: center; background-repeat: no-repeat; background-size: cover;" src="/assets/images/shop.png" alt="">
+                                <div style="margin-bottom: 15px; margin-top: 15px; margin-left: 10px; color: black;">
+                                    <div style="font-size: 13px; margin-bottom: 5px;">Product name</div>
+                                    <div style="font-size: 11px;">Ksh 150</div>
+                                </div>
+                                
+                                <div class="prTag">
+                                    <div style="color: var(--ion-color-primary); background-color: white; font-size: 12px; padding-top: 3px; padding-bottom: 3px; margin: 0 7px; border-radius: 5px;">Add to cart</div>
+                                    <!-- <ion-label id="lb">Add to cart</ion-label> -->
+                                </div>
+                            </ion-card>
+                        </ion-col>
+
+                        <ion-col size="4" no-padding>
+                            <ion-card style="border-radius: 0px; margin: 5px; height: 200px;">
+                                <img style="width: 100%; height: 100px; background-position: center; background-repeat: no-repeat; background-size: cover;" src="/assets/images/rest.jpg" alt="">
+                                <div style="margin-bottom: 15px; margin-top: 15px; margin-left: 10px; color: black;">
+                                    <div style="font-size: 13px; margin-bottom: 5px;">Product name</div>
+                                    <div style="font-size: 11px;">Ksh 150</div>
+                                </div>
+                                
+                                <div class="prTag">
+                                    <div style="color: var(--ion-color-primary); background-color: white; font-size: 12px; padding-top: 3px; padding-bottom: 3px; margin: 0 7px; border-radius: 5px;">Add to cart</div>
+                                    <!-- <ion-label id="lb">Add to cart</ion-label> -->
+                                </div>
+                            </ion-card>
+                        </ion-col>
+
+                        <ion-col size="4" no-padding>
+                            <ion-card style="border-radius: 0px; margin: 5px; height: 200px;">
+                                <img style="width: 100%; height: 100px; background-position: center; background-repeat: no-repeat; background-size: cover;" src="/assets/images/shop.png" alt="">
+                                <div style="margin-bottom: 15px; margin-top: 15px; margin-left: 10px; color: black;">
+                                    <div style="font-size: 13px; margin-bottom: 5px;">Product name</div>
+                                    <div style="font-size: 11px;">Ksh 150</div>
+                                </div>
+                                
+                                <div class="prTag">
+                                    <div style="color: var(--ion-color-primary); background-color: white; font-size: 12px; padding-top: 3px; padding-bottom: 3px; margin: 0 7px; border-radius: 5px;">Add to cart</div>
+                                    <!-- <ion-label id="lb">Add to cart</ion-label> -->
+                                </div>
+                            </ion-card>
+                        </ion-col>
+
+                        <ion-col size="4" no-padding>
+                            <ion-card style="border-radius: 0px; margin: 5px; height: 200px;">
+                                <img style="width: 100%; height: 100px; background-position: center; background-repeat: no-repeat; background-size: cover;" src="/assets/images/shop.png" alt="">
+                                <div style="margin-bottom: 15px; margin-top: 15px; margin-left: 10px; color: black;">
+                                    <div style="font-size: 13px; margin-bottom: 5px;">Product name</div>
+                                    <div style="font-size: 11px;">Ksh 150</div>
+                                </div>
+                                
+                                <div class="prTag">
+                                    <div style="color: var(--ion-color-primary); background-color: white; font-size: 12px; padding-top: 3px; padding-bottom: 3px; margin: 0 7px; border-radius: 5px;">Add to cart</div>
+                                    <!-- <ion-label id="lb">Add to cart</ion-label> -->
+                                </div>
+                            </ion-card>
+                        </ion-col>
+
+                        <ion-col size="4" no-padding>
+                            <ion-card style="border-radius: 0px; margin: 5px; height: 200px;">
+                                <img style="width: 100%; height: 100px; background-position: center; background-repeat: no-repeat; background-size: cover;" src="/assets/images/rest.jpg" alt="">
+                                <div style="margin-bottom: 15px; margin-top: 15px; margin-left: 10px; color: black;">
+                                    <div style="font-size: 13px; margin-bottom: 5px;">Product name</div>
+                                    <div style="font-size: 11px;">Ksh 150</div>
+                                </div>
+                                
+                                <div class="prTag">
+                                    <div style="color: var(--ion-color-primary); background-color: white; font-size: 12px; padding-top: 3px; padding-bottom: 3px; margin: 0 7px; border-radius: 5px;">Add to cart</div>
+                                    <!-- <ion-label id="lb">Add to cart</ion-label> -->
+                                </div>
+                            </ion-card>
+                        </ion-col>
+                    </ion-slide>
+                </ion-slides>
+            </ion-row>
+
+            <div style="margin-left: 30px; margin-right: 30px; margin-top: 25px;">
+                <img style="width: 100%; height: 50px; background-position: center; background-repeat: no-repeat; background-size: cover;" src="/assets/images/shop.png" alt="">
+            </div>
+
+            <ion-row style="margin-left: 10px; margin-right: 10px; margin-top: 20px;">
+                <ion-col size="12">
+                    <div style="font-size: 18px; font-weight: bold;">Shoes</div>
+                </ion-col>
+                <ion-slides pager="false" [options]="slideOpts">
+                    <ion-slide>
+                        <ion-col size="4" no-padding>
+                            <ion-card style="border-radius: 0px; margin: 5px; height: 200px;">
+                                <img style="width: 100%; height: 100px; background-position: center; background-repeat: no-repeat; background-size: cover;" src="/assets/images/shop.png" alt="">
+                                <div style="margin-bottom: 15px; margin-top: 15px; margin-left: 10px; color: black;">
+                                    <div style="font-size: 13px; margin-bottom: 5px;">Product name</div>
+                                    <div style="font-size: 11px;">Ksh 150</div>
+                                </div>
+                                
+                                <div class="prTag">
+                                    <div style="color: var(--ion-color-primary); background-color: white; font-size: 12px; padding-top: 3px; padding-bottom: 3px; margin: 0 7px; border-radius: 5px;">Add to cart</div>
+                                </div>
+                            </ion-card>
+                        </ion-col>
+
+                        <ion-col size="4" no-padding>
+                            <ion-card style="border-radius: 0px; margin: 5px; height: 200px;">
+                                <img style="width: 100%; height: 100px; background-position: center; background-repeat: no-repeat; background-size: cover;" src="/assets/images/rest.jpg" alt="">
+                                <div style="margin-bottom: 15px; margin-top: 15px; margin-left: 10px; color: black;">
+                                    <div style="font-size: 13px; margin-bottom: 5px;">Product name</div>
+                                    <div style="font-size: 11px;">Ksh 150</div>
+                                </div>
+                                
+                                <div class="prTag">
+                                    <div style="color: var(--ion-color-primary); background-color: white; font-size: 12px; padding-top: 3px; padding-bottom: 3px; margin: 0 7px; border-radius: 5px;">Add to cart</div>
+                                </div>
+                            </ion-card>
+                        </ion-col>
+
+                        <ion-col size="4" no-padding>
+                            <ion-card style="border-radius: 0px; margin: 5px; height: 200px;">
+                                <img style="width: 100%; height: 100px; background-position: center; background-repeat: no-repeat; background-size: cover;" src="/assets/images/shop.png" alt="">
+                                <div style="margin-bottom: 15px; margin-top: 15px; margin-left: 10px; color: black;">
+                                    <div style="font-size: 13px; margin-bottom: 5px;">Product name</div>
+                                    <div style="font-size: 11px;">Ksh 150</div>
+                                </div>
+                                
+                                <div class="prTag">
+                                    <div style="color: var(--ion-color-primary); background-color: white; font-size: 12px; padding-top: 3px; padding-bottom: 3px; margin: 0 7px; border-radius: 5px;">Add to cart</div>
+                                </div>
+                            </ion-card>
+                        </ion-col>
+
+                        <ion-col size="4" no-padding>
+                            <ion-card style="border-radius: 0px; margin: 5px; height: 200px;">
+                                <img style="width: 100%; height: 100px; background-position: center; background-repeat: no-repeat; background-size: cover;" src="/assets/images/shop.png" alt="">
+                                <div style="margin-bottom: 15px; margin-top: 15px; margin-left: 10px; color: black;">
+                                    <div style="font-size: 13px; margin-bottom: 5px;">Product name</div>
+                                    <div style="font-size: 11px;">Ksh 150</div>
+                                </div>
+                                
+                                <div class="prTag">
+                                    <div style="color: var(--ion-color-primary); background-color: white; font-size: 12px; padding-top: 3px; padding-bottom: 3px; margin: 0 7px; border-radius: 5px;">Add to cart</div>
+                                </div>
+                            </ion-card>
+                        </ion-col>
+
+                        <ion-col size="4" no-padding>
+                            <ion-card style="border-radius: 0px; margin: 5px; height: 200px;">
+                                <img style="width: 100%; height: 100px; background-position: center; background-repeat: no-repeat; background-size: cover;" src="/assets/images/rest.jpg" alt="">
+                                <div style="margin-bottom: 15px; margin-top: 15px; margin-left: 10px; color: black;">
+                                    <div style="font-size: 13px; margin-bottom: 5px;">Product name</div>
+                                    <div style="font-size: 11px;">Ksh 150</div>
+                                </div>
+                                
+                                <div class="prTag">
+                                    <div style="color: var(--ion-color-primary); background-color: white; font-size: 12px; padding-top: 3px; padding-bottom: 3px; margin: 0 7px; border-radius: 5px;">Add to cart</div>
+                                </div>
+                            </ion-card>
+                        </ion-col>
+                    </ion-slide>
+                </ion-slides>
+            </ion-row>
+        </div>
+
+
+
+
+
+
+
             
         <!---   DISPLAY SKELETON WHEN LOADING OR INTERNET IS SLOW-->
-        <ion-row style="width: 96%; margin: auto; background-color: white;" *ngIf="!shops">
-            <ion-col size="6" style="margin-left: auto; margin-right: auto; margin-bottom: 15px;">
-                <ion-skeleton-text style="width: 100%; height: 100px; border-radius: 0px;" animated></ion-skeleton-text>
-                <ion-skeleton-text style="width: 80%; height: 15px; border-radius: 0px;" animated></ion-skeleton-text>
-            </ion-col>
-            <ion-col size="6" style="margin-left: auto; margin-right: auto; margin-bottom: 15px;">
-                <ion-skeleton-text style="width: 100%; height: 100px; border-radius: 0px;" animated></ion-skeleton-text>
-                <ion-skeleton-text style="width: 80%; height: 15px; border-radius: 0px;" animated></ion-skeleton-text>
-            </ion-col>
+        <div *ngIf="segmentModel === 'Vendors'">
+            <ion-row style="width: 96%; margin: auto; background-color: white;" *ngIf="!shops">
+                <ion-col size="6" style="margin-left: auto; margin-right: auto; margin-bottom: 15px;">
+                    <ion-skeleton-text style="width: 100%; height: 100px; border-radius: 0px;" animated></ion-skeleton-text>
+                    <ion-skeleton-text style="width: 80%; height: 15px; border-radius: 0px;" animated></ion-skeleton-text>
+                </ion-col>
+                <ion-col size="6" style="margin-left: auto; margin-right: auto; margin-bottom: 15px;">
+                    <ion-skeleton-text style="width: 100%; height: 100px; border-radius: 0px;" animated></ion-skeleton-text>
+                    <ion-skeleton-text style="width: 80%; height: 15px; border-radius: 0px;" animated></ion-skeleton-text>
+                </ion-col>
 
-            <ion-col size="6" style="margin-left: auto; margin-right: auto; margin-bottom: 15px;">
-                <ion-skeleton-text style="width: 100%; height: 100px; border-radius: 0px;" animated></ion-skeleton-text>
-                <ion-skeleton-text style="width: 80%; height: 15px; border-radius: 0px;" animated></ion-skeleton-text>
-            </ion-col>
-            <ion-col size="6" style="margin-left: auto; margin-right: auto; margin-bottom: 15px;">
-                <ion-skeleton-text style="width: 100%; height: 100px; border-radius: 0px;" animated></ion-skeleton-text>
-                <ion-skeleton-text style="width: 80%; height: 15px; border-radius: 0px;" animated></ion-skeleton-text>
-            </ion-col>
+                <ion-col size="6" style="margin-left: auto; margin-right: auto; margin-bottom: 15px;">
+                    <ion-skeleton-text style="width: 100%; height: 100px; border-radius: 0px;" animated></ion-skeleton-text>
+                    <ion-skeleton-text style="width: 80%; height: 15px; border-radius: 0px;" animated></ion-skeleton-text>
+                </ion-col>
+                <ion-col size="6" style="margin-left: auto; margin-right: auto; margin-bottom: 15px;">
+                    <ion-skeleton-text style="width: 100%; height: 100px; border-radius: 0px;" animated></ion-skeleton-text>
+                    <ion-skeleton-text style="width: 80%; height: 15px; border-radius: 0px;" animated></ion-skeleton-text>
+                </ion-col>
 
-            <ion-col size="6" style="margin-left: auto; margin-right: auto; margin-bottom: 15px;">
-                <ion-skeleton-text style="width: 100%; height: 100px; border-radius: 0px;" animated></ion-skeleton-text>
-                <ion-skeleton-text style="width: 80%; height: 15px; border-radius: 0px;" animated></ion-skeleton-text>
-            </ion-col>
-            <ion-col size="6" style="margin-left: auto; margin-right: auto; margin-bottom: 15px;">
-                <ion-skeleton-text style="width: 100%; height: 100px; border-radius: 0px;" animated></ion-skeleton-text>
-                <ion-skeleton-text style="width: 80%; height: 15px; border-radius: 0px;" animated></ion-skeleton-text>
-            </ion-col>
+                <ion-col size="6" style="margin-left: auto; margin-right: auto; margin-bottom: 15px;">
+                    <ion-skeleton-text style="width: 100%; height: 100px; border-radius: 0px;" animated></ion-skeleton-text>
+                    <ion-skeleton-text style="width: 80%; height: 15px; border-radius: 0px;" animated></ion-skeleton-text>
+                </ion-col>
+                <ion-col size="6" style="margin-left: auto; margin-right: auto; margin-bottom: 15px;">
+                    <ion-skeleton-text style="width: 100%; height: 100px; border-radius: 0px;" animated></ion-skeleton-text>
+                    <ion-skeleton-text style="width: 80%; height: 15px; border-radius: 0px;" animated></ion-skeleton-text>
+                </ion-col>
 
-            <ion-col size="6" style="margin-left: auto; margin-right: auto; margin-bottom: 15px;">
-                <ion-skeleton-text style="width: 100%; height: 100px; border-radius: 0px;" animated></ion-skeleton-text>
-                <ion-skeleton-text style="width: 80%; height: 15px; border-radius: 0px;" animated></ion-skeleton-text>
-            </ion-col>
-            <ion-col size="6" style="margin-left: auto; margin-right: auto; margin-bottom: 15px;">
-                <ion-skeleton-text style="width: 100%; height: 100px; border-radius: 0px;" animated></ion-skeleton-text>
-                <ion-skeleton-text style="width: 80%; height: 15px; border-radius: 0px;" animated></ion-skeleton-text>
-            </ion-col>
-        </ion-row>
-
-
-        <!-- <ion-row style="width: 96%; margin: auto; background-color: white;">
-            <ion-col size="6" style="margin-left: auto; margin-right: auto; margin-bottom: 15px;" *ngFor="let shop of shops" (click)="goToShop(shop)">
-                <img src="{{shop.logo}}" style="width: 100%; height: 115px;" alt="{{shop.shop}}">
-                <div style="text-align: left; font-size: 13px; font-weight: bold; color: #737373; margin-top: 5px;">{{shop.shop}}</div>
-            </ion-col>
-        </ion-row> -->
-        <ion-grid  padding >
-            <ion-row>
-            <ion-col size="6" *ngFor="let shop of shops" (click)="goToShop(shop)">
-                <ion-card style="height: 180px;">
-                    <img src="{{shop.logo}}"  style="height:95px;width: 100%;">
-                    <h5  style="text-transform: capitalize;text-align: center;padding: 20px;font-size: .9rem;font-weight: bold;">{{shop.shop}} </h5>
-                </ion-card>
-            </ion-col>
+                <ion-col size="6" style="margin-left: auto; margin-right: auto; margin-bottom: 15px;">
+                    <ion-skeleton-text style="width: 100%; height: 100px; border-radius: 0px;" animated></ion-skeleton-text>
+                    <ion-skeleton-text style="width: 80%; height: 15px; border-radius: 0px;" animated></ion-skeleton-text>
+                </ion-col>
+                <ion-col size="6" style="margin-left: auto; margin-right: auto; margin-bottom: 15px;">
+                    <ion-skeleton-text style="width: 100%; height: 100px; border-radius: 0px;" animated></ion-skeleton-text>
+                    <ion-skeleton-text style="width: 80%; height: 15px; border-radius: 0px;" animated></ion-skeleton-text>
+                </ion-col>
             </ion-row>
-        </ion-grid>
+
+
+            <!-- <ion-row style="width: 96%; margin: auto; background-color: white;">
+                <ion-col size="6" style="margin-left: auto; margin-right: auto; margin-bottom: 15px;" *ngFor="let shop of shops" (click)="goToShop(shop)">
+                    <img src="{{shop.logo}}" style="width: 100%; height: 115px;" alt="{{shop.shop}}">
+                    <div style="text-align: left; font-size: 13px; font-weight: bold; color: #737373; margin-top: 5px;">{{shop.shop}}</div>
+                </ion-col>
+            </ion-row> -->
+            <ion-grid  padding >
+                <ion-row>
+                <ion-col size="6" *ngFor="let shop of shops" (click)="goToShop(shop)">
+                    <ion-card style="height: 180px;">
+                        <img src="{{shop.logo}}"  style="height:95px;width: 100%;">
+                        <h5  style="text-transform: capitalize;text-align: center;padding: 20px;font-size: .9rem;font-weight: bold;">{{shop.shop}} </h5>
+                    </ion-card>
+                </ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
 
     </div>
 </ion-content>

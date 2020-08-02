@@ -13,82 +13,143 @@
   </ion-toolbar>
 
 </ion-header>
-<ion-content>
+<ion-content style="--background: #dedede;">
 
   <!-- Shows when the order is sent -->
-  <ion-card padding class="successful" *ngIf="Ordersuccess">
-    <ion-card-header>
-      <ion-icon color="primary" name="checkmark-circle-outline" size="large"></ion-icon>&nbsp;&nbsp;<br>
-      <ion-label style="color: green;"><b>Order Sent Successful</b></ion-label>
-    </ion-card-header>
-    <ion-card-content>
-      <br><br>
-      <ion-text>You can follow the progress of your order in My Orders page.</ion-text><br>
-      <ion-button expand="full" (click)="myorders()" fill="clear">My Orders</ion-button>
-      <br><br>
-    </ion-card-content>
-
+  <ion-card padding class="successful" *ngIf="Ordersuccess" style="background-color: white;">
+      <ion-card-header>
+          <ion-icon color="primary" name="checkmark-circle-outline" size="large"></ion-icon>&nbsp;&nbsp;<br>
+          <ion-label style="color: green;"><b>Order Sent Successful</b></ion-label>
+      </ion-card-header>
+      <ion-card-content>
+          <br>
+          <ion-text>You can follow the progress of your order in My Orders page.</ion-text><br>
+          <ion-button expand="full" (click)="myorders()" fill="clear">My Orders</ion-button>
+          <br>
+      </ion-card-content>
   </ion-card>
+
   <!-- Shows when the cart is empty -->
   <div *ngIf="cart.length == 0" class="empty">
-    <ion-label></ion-label><br><br><br>
-    <ion-button (click)="back()" shape="round">Continue shopping</ion-button>
+      <ion-label></ion-label><br><br><br>
+      <ion-button (click)="back()" expend="full" style="font-size: 13px;">Continue shopping</ion-button>
   </div>
+
   <!-- Shows items in the cart and there total  -->
   <div *ngIf="!Ordersuccess">
-    <ion-item *ngFor="let item of cart">
-      <ion-col size="3" *ngIf="item.image !== undefined">
-        <img class="img" src="{{item.image}}">
-      </ion-col>
-      <ion-col class="details" size="6">
-        <ion-label style="color:red;text-transform:capitalize;" (click)="remove(item)">Remove</ion-label>
-        <br>
-        <!-- <ion-label>{{item.product}} &nbsp; {{item.quantity}}</ion-label><br> -->
-        <ion-label>{{item.product}}</ion-label>&nbsp;
-        <ion-label *ngIf="item.persons !== undefined">{{item.persons}} Persons</ion-label>
-        <br>
-        <ion-label>Kshs. <b>{{item.currentprice}}</b></ion-label>
-      </ion-col>
-      <ion-col style="text-align: left;">
-        <ion-row >
-          <ion-col size="4" class="icon ion-activatable ripple-parent" (click)="reduce(item)">
-            <ion-icon name="remove" ></ion-icon>
-            <ion-ripple-effect type="unbounded"></ion-ripple-effect>
-          </ion-col>
-          <ion-col size="4" class="qty"><br>{{item.count}}</ion-col>
-          <ion-col size="4" class="icon ion-activatable ripple-parent" (click)="add(item)">
-            <ion-icon name="add" ></ion-icon>
-            <ion-ripple-effect type="unbounded"></ion-ripple-effect>
-          </ion-col>
-        </ion-row>
-      </ion-col>
-    </ion-item>
+      <div style="background-color: white; margin-right: 10px; margin-left: 10px; margin-bottom: 10px; margin-top: 10px; border-radius: 5px;" *ngFor="let item of cart">
+          <div *ngIf="item.image !== undefined">
+              <img style="width: 60px; height: 60px; margin-top: 10px; margin-left: 10px;" src="{{item.image}}">
+          </div>
+
+          <div style="position: absolute; margin-left: 80px; margin-top: -60px;">
+              <div style="margin-top: 3px; font-size: 14px; color: #737373;">{{item.product}}</div>
+              <div style="margin-top: 5px; font-size: 14px; color: #737373;" *ngIf="item.persons !== undefined">{{item.persons}} Persons</div>
+              <div style="margin-top: 5px; font-size: 14px; color: var(--ion-color-primary);">Kshs. <b>{{item.currentprice}}</b></div>
+          </div>
+
+          <div style="margin-top: 0px; margin-left: 78px;">
+              <div (click)="remove(item)" style="font-size: 13px; color: var(--ion-color-primary);">
+                  <ion-icon color="primary" name="trash"></ion-icon>
+                  Remove
+              </div>
+
+              <div style="margin-top: -17px; font-size: 13px; color: var(--ion-color-primary);">
+                  <ion-icon name="remove" (click)="reduce(item)" style="position: absolute; float: right; right: 63px; border:  1px solid var(--ion-color-primary);"></ion-icon>
+                  <div style="position: absolute; float: right; right: 45px;">{{item.count}}</div>
+                  <ion-icon name="add" (click)="add(item)" style="position: absolute; float: right; right: 20px; border:  1px solid var(--ion-color-primary);"></ion-icon>
+              </div>
+          </div>
+          <br><br>
+      </div>
   </div>
+
+
   <!-- Pick up time section-->
   <div *ngIf="cart.length != 0;">
-    <form #time=ngForm padding>
-      <ion-row>
-        <div>
-          <ion-label color="primary">Special Instructions</ion-label><br><br>
-          <ion-textarea name="notes" [(ngModel)]="notes" placeholder="Add notes for this order" cols="50">
-          </ion-textarea>
-        </div>
-      </ion-row>
-    </form>
-   
-  </div>
-</ion-content>
-<ion-footer *ngIf="cart.length != 0;">
-  <!-- <div color="medium" *ngIf="delivery == 'Deliver it to me'" style="text-align: center;">You will be charged on delivery
+      <form #time=ngForm padding>
+          <ion-row no-padding style="background-color: white; border-radius: 5px; padding: 10px; margin-right: -5px; margin-left: -5px; margin-top: -15px; margin-bottom: 10px;">
+              <div style="margin-bottom: 10px; width: 100%;"></div>
+              <div style="color: var(--ion-color-primary); font-size: 15px;">Delivery Option</div>
+              <div style="float: right; right: 17px; position: absolute; margin-top: 0px;">
+                  <ion-select style="font-size: 13px; color: #737373;" name="delivery" placeholder="select delivery" [(ngModel)]="delivery" (ionChange)="noDeliveryFee(delivery)">
+                      <ion-select-option>Deliver it to me</ion-select-option>
+                      <ion-select-option selected>I will pick it</ion-select-option>
+                  </ion-select>
+              </div>
+              <div style="margin-bottom: 10px; width: 100%;"></div>
+          </ion-row>
+          
+          <ion-row style="background-color: white; border-radius: 5px; padding: 10px; margin-right: -5px; margin-left: -5px; margin-bottom: 10px;" *ngIf="delivery == 'Deliver it to me'">
+              <div style="font-size: 14px; color: var(--ion-color-primary);">Pick a delivery location near you</div>
+              <div>
+                  <ion-select name="area" placeholder="select a delivery location near you" [(ngModel)]="selectedarea"
+                      (ionChange)="getDeliveryFee(selectedarea)">
+                      <ion-select-option style="font-size: 13px; color: #737373;" *ngFor="let item of areas">{{item.Area}}</ion-select-option>
+                  </ion-select>
+              </div>
+              <ion-col size="12" style="font-size: 13px; color: #737373;">Delivery fee : Kshs {{deliveryFee}}</ion-col>
+          </ion-row>
+
+      
+          <!-- <ion-label color="primary" style="font-size: large;" *ngIf="!noPickUpTime">Choose a Pickup Time</ion-label> -->
+          <ion-row style="background-color: white; border-radius: 5px; padding: 10px; margin-right: -5px; margin-left: -5px; margin-bottom: 10px;" *ngIf="!noPickUpTime">
+              <ion-col no-padding size="12" style="color: var(--ion-color-primary); font-size: 14px;">Choose a Pickup Time</ion-col>
+              <ion-col no-padding>
+                  <ion-select name="pickTime" [(ngModel)]="pickDay" Placeholder="Day" required (ionChange)="changeDay()">
+                      <ion-select-option *ngFor="let time of Days">{{time}}</ion-select-option>
+                  </ion-select>
+              </ion-col>
+              <ion-col no-padding>
+                  <ion-select name="pickTime" [(ngModel)]="pickHour" Placeholder="Hour" required style="width: 100%;">
+                      <ion-select-option *ngFor="let time of hour">{{time}}</ion-select-option>
+                  </ion-select>
+              </ion-col>
+              <ion-col no-padding>
+                  <ion-select name="pickTime" [(ngModel)]="pickMinute" Placeholder="Mins" required>
+                      <ion-select-option *ngFor="let time of minute">{{time}}</ion-select-option>
+                  </ion-select>
+              </ion-col>
+          </ion-row>
+
+          <ion-row style="background-color: white; border-radius: 5px; padding: 10px; margin-right: -5px; margin-left: -5px; margin-bottom: 10px;">
+              <div style="color: var(--ion-color-primary); font-size: 14px;">Special Instructions</div>
+              <div>
+                  <ion-textarea no-padding style="font-size: 13px; color: #737373;" name="notes" [(ngModel)]="notes" placeholder="Add notes for this order" cols="50" rows="6">
+                  </ion-textarea>
+              </div>
+          </ion-row>
+      </form>
+  <!-- Payment section -->
+  <!-- <div *ngIf="delivery == 'I will pick it'">
+    <ion-label color="primary" padding>Payment method</ion-label>
+    <ion-row style="width: 100%;background-color: var(--ion-color-light);" >
+      <ion-col style="padding-top: 30px">
+        <ion-label color="success" >M-Pesa</ion-label>
+      </ion-col>
+      <ion-col style="padding-top: 30px;">
+        <ion-label >{{Number}}</ion-label><br>
+        <ion-text color="primary" (click)="changeNumber()">change</ion-text>
+      </ion-col>
+      <ion-col>
+        <ion-card  style="border-radius: 150x;background-color: var(--ion-color-warning);">
+          <ion-card-content  style="text-align: center;">
+            <strong (click)="payForOrder()">Pay</strong>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
   </div> -->
-  <div style="height: 40px;font-size: .9rem;" class="ion-padding">
-    <ion-label color="primary">Total : </ion-label>
-    <ion-label class="price-slot" style="float: right;" color="primary">
-      KES &nbsp;<span style="font-size: medium;font-weight: bolder;"> {{getTotalCart() | number:'1.1-5'   }} </span>
-    </ion-label>
-  </div>
-  <ion-button expand="full" shape="round" style="height: 40px;border-radius: 5px;" (click)="proceed()"
-    [disabled]="paid === true">
-    Proceed
+</div>
+</ion-content>
+
+
+
+<ion-footer *ngIf="cart.length != 0;" style="background-color: white">
+  <div style="color: var(--ion-color-warning); font-size: 15px; text-align: center; margin-top: 10px;" *ngIf="delivery == 'Deliver it to me'">You will be charged on delivery</div>
+  <div style="color: var(--ion-color-warning); font-size: 15px; text-align: center; margin-top: 10px; font-weight: bold;">Total : KES {{getTotalCart() | number:'1.1-5'   }} </div>
+  <ion-button expand="full" style="height: 40px; font-size: 13px; margin-right: 10px; margin-left: 10px;" (click)="payment()"
+      [disabled]="paid === true">
+      Place Order
   </ion-button>
 </ion-footer>

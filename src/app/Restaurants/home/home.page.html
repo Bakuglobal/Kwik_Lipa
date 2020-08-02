@@ -1,133 +1,140 @@
-<ion-toolbar color="primary" class="ion-padding">
-  <ion-buttons>
-    <ion-icon name="arrow-back" (click)="back()"></ion-icon>
-    <ion-title style="text-align: center;color: white;">Select Restaurant</ion-title>
-  </ion-buttons>
-</ion-toolbar>
-<ion-content>
-  <div style="text-align: center;">
-    <ion-searchbar animated placeholder="Search Restaurant or Recipes" mode="ios"></ion-searchbar>
-  </div>
-  <div>
-    <ion-slides pager="true" [options]="AdvertslideOpts">
-      <ion-slide *ngFor="let item of Ads" (click)="posterToRest(item.shop)">
-        <img class="soko-image" src="{{item.image}}">
-      </ion-slide>
-      <!-- <ion-slide>
-        <img class="soko-image" src="../../../assets/images/foodad.jpg">
-      </ion-slide> -->
-    </ion-slides>
-  </div>
-  <div>
-    <div class="label">
-      <ion-label class="left">Popular on Kwik Food</ion-label>
-      <!-- <div class="right">
-        View all
-        <ion-icon src="/assets/images/arrow-right.svg"></ion-icon>
-      </div> -->
-    </div><br>
-    <ion-slides pager="false" [options]="slideme" *ngIf="products.length === 0">
-      <ion-slide *ngFor="let item of skeleton">
-        <ion-card style="width: 150px;height: 150px;">
-          <ion-skeleton-text animated style="width: 100%;height: 100px;border-radius: 0px;"></ion-skeleton-text>
-          <ion-card-content>
-            <ion-skeleton-text animated class="pr-name"></ion-skeleton-text><br>
-            <ion-skeleton-text animated class="pr-price"></ion-skeleton-text>
-          </ion-card-content>
-          <div class="prTag">
-            <ion-skeleton-text animated></ion-skeleton-text>
-          </div>
-        </ion-card>
-      </ion-slide>
-    </ion-slides>
-    <ion-slides pager="false" [options]="slideme">
-      <ion-slide *ngFor="let item of products " (click)="seeDetails(item)" >
-        <!-- <ion-card style="width: 150px;height: 150px;background-color: var(--ion-color-light);">
-          <!-- <img src="{{shop.logo}}" style="height: 100px; width: 150px;"> 
-          <ion-card-content style="text-align: left;padding-top: 20px;">
-           <h5 class="pr-name" style="text-transform: uppercase">{{item.Meal}} </h5><br>
-           <ion-label style="font-size: .6rem;">{{item.Restaurant}}</ion-label> <br>
-           <ion-label style="position:fixed;bottom: 20px;color: grey;">Kshs.{{item.currentprice}}</ion-label>
-          </ion-card-content>
-          
-        </ion-card> -->
-        <ion-card style="width: 180px;height: 200px;background-color: var(--ion-color-medium);">
-          <img style="height: 30px;width: 150px;" src="../../../assets/images/restHolder.jpeg"><br>
-          <ion-label style="font-size: .9em;">{{item.Meal}}</ion-label>
-          <ion-card-content >
-              <ion-label class="pr-price" style="color: var(--ion-color-primary);">{{item.Restaurant}}
-              </ion-label>
-          </ion-card-content>
-          <div style="align-content: center;position: absolute;width:100%;bottom: 0px;padding-top: 5px;padding-bottom: 5px;background-color: var(--ion-color-primary);">
-            <div style="font-size: .8em;font-weight: bold;border-radius: 20px;background-color: white;padding-bottom: 5px;padding-top: 5px;width: 90%;margin:auto;">
-              <ion-label>K E S {{item.currentprice}}
-              </ion-label>
-            </div>
-          </div>
-      </ion-card>
-      </ion-slide>
-    </ion-slides>
-  </div>
- 
-  <div>
-    <div class="label">
-      <ion-label class="left">All restaurants</ion-label>
-      <div class="right">
-        View all
-        <ion-icon src="/assets/images/arrow-right.svg"></ion-icon>
-      </div>
-    </div><br>
-    <ion-slides pager="false" [options]="slideme" *ngIf="Restaurants === undefined">
-      <ion-slide *ngFor="let item of skeleton ">
-        <ion-card style="width: 150px;height: 150px;">
-          <ion-skeleton-text animated style="width: 100%;height: 150px;border-radius: 0px;"></ion-skeleton-text>
-          <ion-card-content>
-            <ion-skeleton-text animated class="pr-name"></ion-skeleton-text><br>
-            <ion-skeleton-text animated class="pr-price"></ion-skeleton-text>
-          </ion-card-content>
-        </ion-card>
-      </ion-slide>
-    </ion-slides>
-    <ion-slides pager="false" [options]="slideme">
-      <ion-slide *ngFor="let shop of Restaurants " (click)="goToRest(shop)">
-        <ion-card style="width: 150px;height: 180px;background-color: var(--ion-color-medium);">
-          <img src="{{shop.logo}}" style="height: 100px; width: 150px;">
-          <ion-card-content style="text-align: left;">
-           <h5 class="pr-price" style="text-transform: uppercase" style="color: var(--ion-color-primary);">{{shop.Restaurant}} </h5>
-          </ion-card-content>
-        </ion-card>
-      </ion-slide>
-    </ion-slides>
-  </div>
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons>
+            <ion-icon style="margin-left: 15px;" name="arrow-back" (click)="back()"></ion-icon>
+            <ion-title style="text-align: center; color: white; margin-right: 15px;">Select Restaurant</ion-title>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
 
-  <div>
-    <div class="label">
-      <ion-label class="left">Buy recipes</ion-label>
-      <div class="right" (click)="gotoRecipes()">
-        View all
-        <ion-icon src="/assets/images/arrow-right.svg"></ion-icon>
-      </div>
-    </div><br>
-    <ion-slides pager="false" [options]="slideme" *ngIf="recipe === undefined">
-      <ion-slide *ngFor="let item of skeleton ">
-        <ion-card style="width: 150px;height: 170px;">
-          <ion-skeleton-text animated style="height: 100px; width: 150px;"></ion-skeleton-text>
-          <ion-card-content>
-            <ion-skeleton-text animated class="pr-name"></ion-skeleton-text><br>
-            <ion-skeleton-text animated class="pr-price"></ion-skeleton-text>
-          </ion-card-content>
-        </ion-card>
-      </ion-slide>
-    </ion-slides>
-    <ion-slides pager="false" [options]="slideme">
-      <ion-slide *ngFor="let shop of recipe " (click)="viewRecipeShop(shop)" >
-        <ion-card style="width: 150px;height: 170px;background-color: var(--ion-color-medium);">
-          <img src="{{shop.logo}}" style="height: 100px; width: 150px;">
-          <ion-card-content style="text-align: left;">
-           <h5 class="pr-price" style="text-transform: uppercase" style="color: var(--ion-color-primary);">{{shop.shop}} </h5>
-          </ion-card-content>
-        </ion-card>
-      </ion-slide>
-    </ion-slides>
-  </div>
-</ion-content>
+
+
+<ion-content>
+    <div style="text-align: center;">
+        <ion-searchbar animated placeholder="Search Restaurant or Recipes" mode="ios"></ion-searchbar>
+    </div>
+    <div>
+        <ion-slides pager="true" [options]="AdvertslideOpts">
+        <ion-slide *ngFor="let item of Ads" (click)="posterToRest(item.shop)">
+            <img class="soko-image" src="{{item.image}}">
+        </ion-slide>
+        <!-- <ion-slide>
+            <img class="soko-image" src="../../../assets/images/foodad.jpg">
+        </ion-slide> -->
+        </ion-slides>
+    </div>
+    <div>
+        <div class="label">
+        <ion-label class="left">Popular on Kwik Food</ion-label>
+        <!-- <div class="right">
+            View all
+            <ion-icon src="/assets/images/arrow-right.svg"></ion-icon>
+        </div> -->
+        </div><br>
+        <ion-slides pager="false" [options]="slideme" *ngIf="products.length === 0">
+            <ion-slide *ngFor="let item of skeleton">
+                <ion-card style="width: 150px;height: 150px;">
+                    <ion-skeleton-text animated style="width: 100%;height: 100px;border-radius: 0px;"></ion-skeleton-text>
+                    <ion-card-content>
+                        <ion-skeleton-text animated class="pr-name"></ion-skeleton-text><br>
+                        <ion-skeleton-text animated class="pr-price"></ion-skeleton-text>
+                    </ion-card-content>
+                    <div class="prTag">
+                        <ion-skeleton-text animated></ion-skeleton-text>
+                    </div>
+                </ion-card>
+            </ion-slide>
+        </ion-slides>
+
+
+        <ion-slides no-padding pager="false" [options]="slideme">
+            <ion-slide no-padding *ngFor="let item of products " (click)="seeDetails(item)" >
+                <!-- <ion-card style="width: 150px;height: 150px;background-color: var(--ion-color-light);">
+                <img src="{{shop.logo}}" style="height: 100px; width: 150px;"> 
+                <ion-card-content style="text-align: left;padding-top: 20px;">
+                <h5 class="pr-name" style="text-transform: uppercase">{{item.Meal}} </h5><br>
+                <ion-label style="font-size: .6rem;">{{item.Restaurant}}</ion-label> <br>
+                <ion-label style="position:fixed;bottom: 20px;color: grey;">Kshs.{{item.currentprice}}</ion-label>
+                </ion-card-content>
+                
+                </ion-card> -->
+                <ion-card no-padding style="width: 180px;height: 200px;background-color: var(--ion-color-medium);">
+                <img style="height: 30px;width: 100%;" src="../../../assets/images/restHolder.jpeg"><br>
+                <ion-label style="font-size: .9em;">{{item.Meal}}</ion-label>
+                <ion-card-content >
+                    <ion-label class="pr-price" style="color: var(--ion-color-primary);">{{item.Restaurant}}
+                    </ion-label>
+                </ion-card-content>
+                <div style="align-content: center;position: absolute;width:100%;bottom: 0px;padding-top: 5px;padding-bottom: 5px;background-color: var(--ion-color-primary);">
+                    <div style="font-size: .8em;font-weight: bold;border-radius: 20px;background-color: white;padding-bottom: 5px;padding-top: 5px;width: 90%;margin:auto;">
+                    <ion-label>K E S {{item.currentprice}}
+                    </ion-label>
+                    </div>
+                </div>
+            </ion-card>
+            </ion-slide>
+        </ion-slides>
+    </div>
+    
+    <div>
+        <div class="label">
+        <ion-label class="left">All restaurants</ion-label>
+        <div class="right">
+            View all
+            <ion-icon src="/assets/images/arrow-right.svg"></ion-icon>
+        </div>
+        </div><br>
+        <ion-slides pager="false" [options]="slideme" *ngIf="Restaurants === undefined">
+        <ion-slide *ngFor="let item of skeleton ">
+            <ion-card style="width: 150px;height: 150px;">
+            <ion-skeleton-text animated style="width: 100%;height: 150px;border-radius: 0px;"></ion-skeleton-text>
+            <ion-card-content>
+                <ion-skeleton-text animated class="pr-name"></ion-skeleton-text><br>
+                <ion-skeleton-text animated class="pr-price"></ion-skeleton-text>
+            </ion-card-content>
+            </ion-card>
+        </ion-slide>
+        </ion-slides>
+        <ion-slides pager="false" [options]="slideme">
+        <ion-slide *ngFor="let shop of Restaurants " (click)="goToRest(shop)">
+            <ion-card style="width: 150px;height: 180px;background-color: var(--ion-color-medium);">
+            <img src="{{shop.logo}}" style="height: 100px; width: 150px;">
+            <ion-card-content style="text-align: left;">
+            <h5 class="pr-price" style="text-transform: uppercase" style="color: var(--ion-color-primary);">{{shop.Restaurant}} </h5>
+            </ion-card-content>
+            </ion-card>
+        </ion-slide>
+        </ion-slides>
+    </div>
+
+    <div>
+        <div class="label">
+        <ion-label class="left">Buy recipes</ion-label>
+        <div class="right" (click)="gotoRecipes()">
+            View all
+            <ion-icon src="/assets/images/arrow-right.svg"></ion-icon>
+        </div>
+        </div><br>
+        <ion-slides pager="false" [options]="slideme" *ngIf="recipe === undefined">
+        <ion-slide *ngFor="let item of skeleton ">
+            <ion-card style="width: 150px;height: 170px;">
+            <ion-skeleton-text animated style="height: 100px; width: 150px;"></ion-skeleton-text>
+            <ion-card-content>
+                <ion-skeleton-text animated class="pr-name"></ion-skeleton-text><br>
+                <ion-skeleton-text animated class="pr-price"></ion-skeleton-text>
+            </ion-card-content>
+            </ion-card>
+        </ion-slide>
+        </ion-slides>
+        <ion-slides pager="false" [options]="slideme">
+        <ion-slide *ngFor="let shop of recipe " (click)="viewRecipeShop(shop)" >
+            <ion-card style="width: 150px;height: 170px;background-color: var(--ion-color-medium);">
+            <img src="{{shop.logo}}" style="height: 100px; width: 150px;">
+            <ion-card-content style="text-align: left;">
+            <h5 class="pr-price" style="text-transform: uppercase" style="color: var(--ion-color-primary);">{{shop.shop}} </h5>
+            </ion-card-content>
+            </ion-card>
+        </ion-slide>
+        </ion-slides>
+    </div>
+    </ion-content>

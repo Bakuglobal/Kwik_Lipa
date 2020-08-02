@@ -20,6 +20,8 @@ export class SelectshopPage implements OnInit {
   unfilteredShops: any[] ;
   searchTerm: string ;
   showSearch = false ;
+
+  segmentModel = "Products";
   
   
   
@@ -158,6 +160,14 @@ async showAlert(shop) {
     });
     await tst.present();
    }
+
+
+
+   segmentChanged(event){
+    console.log(this.segmentModel);
+    
+    console.log(event);
+  }
   
 
 }
