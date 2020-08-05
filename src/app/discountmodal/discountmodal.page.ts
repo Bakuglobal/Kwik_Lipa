@@ -144,6 +144,7 @@ export class DiscountmodalPage implements OnInit {
       .subscribe(data => (this.shopSelected = data));
     console.log("sent data from home page : ", this.shopSelected);
   }
+  
   async showAlert() {
     const pop = await this.alert.create({
       message: "You have an item from a different shop in your cart do you want to clear the cart and add this item?",

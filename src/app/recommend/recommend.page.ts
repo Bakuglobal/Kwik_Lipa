@@ -83,7 +83,7 @@ export class RecommendPage implements OnInit {
     await md.present();
   }
   getShops() {
-    this.fireApi.getShops().valueChanges().subscribe(res => {
+    this.fireApi.getShops().subscribe(res => {
       this.shops = res ;
     });
     // this.fireApi

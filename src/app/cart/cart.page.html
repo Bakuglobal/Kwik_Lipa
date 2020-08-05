@@ -13,7 +13,7 @@
   </ion-toolbar>
 
 </ion-header>
-<ion-content>
+<ion-content style="--background: #dedede;">
 
   <!-- Shows when the order is sent -->
   <ion-card padding class="successful" *ngIf="Ordersuccess">
@@ -35,7 +35,7 @@
     <ion-button (click)="back()" shape="round">Continue shopping</ion-button>
   </div>
   <!-- Shows items in the cart and there total  -->
-  <div *ngIf="!Ordersuccess">
+  <!-- <div *ngIf="!Ordersuccess">
     <ion-item *ngFor="let item of cart">
       <ion-col size="3" *ngIf="item.image !== undefined">
         <img class="img" src="{{item.image}}">
@@ -43,7 +43,7 @@
       <ion-col class="details" size="6">
         <ion-label style="color:red;text-transform:capitalize;" (click)="remove(item)">Remove</ion-label>
         <br>
-        <!-- <ion-label>{{item.product}} &nbsp; {{item.quantity}}</ion-label><br> -->
+        <ion-label>{{item.product}} &nbsp; {{item.quantity}}</ion-label><br> 
         <ion-label>{{item.product}}</ion-label>&nbsp;
         <ion-label *ngIf="item.persons !== undefined">{{item.persons}} Persons</ion-label>
         <br>
@@ -63,17 +63,61 @@
         </ion-row>
       </ion-col>
     </ion-item>
-  </div>
+  </div> -->
+   <!-- Shows items in the cart and there total  -->
+   <div *ngIf="!Ordersuccess">
+    <div style="background-color: white; margin-right: 10px; margin-left: 10px; margin-bottom: 10px; margin-top: 10px; border-radius: 5px;" *ngFor="let item of cart">
+        <div *ngIf="item.image !== undefined">
+            <img style="width: 60px; height: 60px; margin-top: 10px; margin-left: 10px;" src="{{item.image}}">
+        </div>
+        
+        <div  size="6" *ngIf="item.image === undefined" class="ion-padding">
+          <!-- <ion-label style="color:red;text-transform:capitalize;" (click)="remove(item)">Remove</ion-label> -->
+          <!-- <br> -->
+          <ion-label style="font-size: .8em;">{{item.product}} &nbsp; {{item.quantity}}</ion-label><br> 
+          <ion-label *ngIf="item.persons !== undefined">{{item.persons}} Persons</ion-label>
+          <br><br>
+          <ion-label>Kshs. <b>{{item.currentprice}}</b></ion-label>
+        </div>
+        <div style="position: absolute; margin-left: 80px; margin-top: -60px;" *ngIf="item.image !== undefined">
+            <div style="margin-top: 3px; font-size: 14px; color: #737373;">{{item.product}}</div>
+            <div style="margin-top: 5px; font-size: 14px; color: #737373;" *ngIf="item.persons !== undefined">{{item.persons}} Persons</div>
+            <div style="margin-top: 5px; font-size: 14px; color: var(--ion-color-primary);">Kshs. <b>{{item.currentprice}}</b></div>
+        </div>
+
+        <div style="margin-top: 0px; margin-left: 78px;">
+            <div (click)="remove(item)" style="font-size: 13px; color: var(--ion-color-primary);">
+                <ion-icon color="primary" name="trash"></ion-icon>
+                Remove
+            </div>
+
+            <div style="margin-top: -17px; font-size: 13px; color: var(--ion-color-primary);">
+                <ion-icon name="remove" (click)="reduce(item)" style="position: absolute; float: right; right: 63px; border:  1px solid var(--ion-color-primary);"></ion-icon>
+                <div style="position: absolute; float: right; right: 45px;">{{item.count}}</div>
+                <ion-icon name="add" (click)="add(item)" style="position: absolute; float: right; right: 20px; border:  1px solid var(--ion-color-primary);"></ion-icon>
+            </div>
+        </div>
+        <br><br>
+    </div>
+</div>
+
   <!-- Pick up time section-->
   <div *ngIf="cart.length != 0;">
     <form #time=ngForm padding>
-      <ion-row>
+      <ion-row style="background-color: white; border-radius: 5px; padding: 10px; margin-right: -5px; margin-left: -5px; margin-bottom: 10px;">
+        <div style="color: var(--ion-color-primary); font-size: 14px;">Special Instructions</div>
+        <div>
+            <ion-textarea no-padding style="font-size: 13px; color: #737373;" name="notes" [(ngModel)]="notes" placeholder="Add notes for this order" cols="50" rows="6">
+            </ion-textarea>
+        </div>
+    </ion-row>
+      <!-- <ion-row>
         <div>
           <ion-label color="primary">Special Instructions</ion-label><br><br>
           <ion-textarea name="notes" [(ngModel)]="notes" placeholder="Add notes for this order" cols="50">
           </ion-textarea>
         </div>
-      </ion-row>
+      </ion-row> -->
     </form>
    
   </div>
@@ -81,12 +125,14 @@
 <ion-footer *ngIf="cart.length != 0;">
   <!-- <div color="medium" *ngIf="delivery == 'Deliver it to me'" style="text-align: center;">You will be charged on delivery
   </div> -->
-  <div style="height: 40px;font-size: .9rem;" class="ion-padding">
+  <!-- <div style="height: 40px;font-size: .9rem;" class="ion-padding">
     <ion-label color="primary">Total : </ion-label>
     <ion-label class="price-slot" style="float: right;" color="primary">
       KES &nbsp;<span style="font-size: medium;font-weight: bolder;"> {{getTotalCart() | number:'1.1-5'   }} </span>
     </ion-label>
-  </div>
+  </div> -->
+  <div style="color: var(--ion-color-warning); font-size: 15px; text-align: center; margin-top: 10px;" *ngIf="delivery == 'Deliver it to me'">You will be charged on delivery</div>
+  <div style="color: var(--ion-color-warning); font-size: 15px; text-align: center; margin-top: 10px; font-weight: bold;">Total : KES {{getTotalCart() | number:'1.1-5'   }} </div>
   <ion-button expand="full" shape="round" style="height: 40px;border-radius: 5px;" (click)="proceed()"
     [disabled]="paid === true">
     Proceed

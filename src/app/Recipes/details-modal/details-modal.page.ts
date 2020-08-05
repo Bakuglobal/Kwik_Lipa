@@ -49,6 +49,7 @@ export class DetailsModalPage implements OnInit {
       }
       this.quantity =  this.quantity + this.count;
       this.showCartIcon  = true ;
+      this.service.changeData(this.data.shop);
       this.db.addCart(item);
       this.toast('Product added To cart');
     }

@@ -9,6 +9,7 @@ import { Location } from '@angular/common';
 import { MpesaService } from 'src/app/mpesa/mpesa.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Contacts } from '@ionic-native/contacts/ngx';
+import { Bill } from 'src/app/models/bill';
 
 
 declare var google;
@@ -36,10 +37,12 @@ export class DeliveryAddressPage implements OnInit {
   long2: string;
   autocomplete: { input: string; };
   autocompleteItems: any[];
+  bill: Bill;
   // location: any;
   placeid: any;
   GoogleAutocomplete: any;
   directionDisplay = new google.maps.DirectionsRenderer;
+  disableBtn = false;
 
   delivery = 'deliver';
   deliveryFee: number;
@@ -52,7 +55,8 @@ export class DeliveryAddressPage implements OnInit {
   notes: string;
   phonenumber: string;
   loader: any;
-  Ordersuccess = false ;
+  Ordersuccess = false;
+  userID;
   constructor(
     private navCtrl: Router,
     private service: FirestoreService,
@@ -69,30 +73,35 @@ export class DeliveryAddressPage implements OnInit {
     private alert: AlertController
   ) {
     this.service.hiddenTabs = true;
-
+    this.userID = localStorage.getItem('userID');
     // autocomplete
     this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
     this.autocomplete = { input: '' };
     this.autocompleteItems = [];
 
-    this.getShop();
-    this.getCart();
     this.phonenumber = localStorage.getItem('Number');
 
 
   }
-
-  ngOnInit() {
-
+  ionViewWillEnter() {
+    this.getShop();
+    this.getCart();
     this.loadMap();
+  }
+  ngOnInit() {
+    
   }
   getShop() {
     this.service.serviceData
       .subscribe(data => (this.shop = data));
     console.log("shop name: ", this.shop);
-    this.service.Location.subscribe(data => (this.shopLocation = data));
-    console.log("shop location : ", this.shopLocation);
-    this.getShopCodes();
+    // this.service.Location.subscribe(data => (this.shopLocation = data));
+    this.db.getShop(this.shop).subscribe(res => {
+      let data: any = res[0];
+      this.shopLocation = data.Location;
+      console.log("shop location : ", this.shopLocation);
+      this.getShopCodes();
+    })
   }
 
   back() {
@@ -118,6 +127,7 @@ export class DeliveryAddressPage implements OnInit {
         break;
 
       case "deliver":
+        this.loadMap();
         this.getFee();
         break;
     }
@@ -287,7 +297,7 @@ export class DeliveryAddressPage implements OnInit {
   }
   payment() {
     // initiate mpesa transactions
-    this.loading();
+    this.loading('Preparing payment do not leave this page or Close the  app .');
     // get Token
     this.mpesa.getToken().subscribe(res => {
       let token = res;
@@ -300,7 +310,8 @@ export class DeliveryAddressPage implements OnInit {
       } else {
         // SEND STK
         let desc = localStorage.getItem('userID');
-        this.sendSTK(desc, token);
+        let accountRef = this.shop;
+        this.sendSTK(desc, token, accountRef);
       }
     })
 
@@ -309,9 +320,9 @@ export class DeliveryAddressPage implements OnInit {
 
 
   }
-  sendSTK(desc, token) {
+  sendSTK(desc, token, accountRef) {
     // let number = this.mpesa.formatNumber(this.phonenumber)
-    this.mpesa.sendStkRequest(this.total(), this.phonenumber, desc, token).subscribe(data => {
+    this.mpesa.sendStkRequest(this.total(), this.phonenumber, desc, token, accountRef).subscribe(data => {
       let dt: mpesaRes = data;
       console.log(dt);
       if (dt.errorMessage === "Invalid Access Token") {
@@ -331,54 +342,123 @@ export class DeliveryAddressPage implements OnInit {
         this.loader.dismiss();
         return;
       }
+      // create a bill for this order
+      let Delivered_To;
+      let orderType;
+      if (this.delivery === 'pick') {
+        Delivered_To = 'N/A',
+          this.deliveryFee = 0;
+        orderType = "Pay_&_Pick"
+      } else {
+        Delivered_To = this.placeid,
+          orderType = "Delivery"
+      }
+      let bill = {
+        Date: new Date(),
+        Delivered_To: Delivered_To,
+        Delivery_Fee: this.deliveryFee,
+        Merchant: this.shop,
+        MpesaID: "---",
+        Rider_Fee: this.deliveryFee / 2,
+        Rider_ID: "---",
+        Total_Order_Cost: this.total(),
+        Total_Product_Price: this.getTotal(),
+        Transaction_status: "pending",
+        userID: this.userID,
+        Order_Type: orderType
+      }
+      this.db.createBill().doc(dt.CheckoutRequestID).set(bill).catch(error => {
+        console.log(error);
+        return;
+      });
+      this.loader.dismiss();
+      this.disableBtn = true;
       console.log("AWAITING response");
-        // wait for 5 seconds then check the server 
-        setTimeout(()=>{
-          if(dt.ResponseCode === '0'){
-            // stk was sent so check for results
-            this.mpesa.getMpesaResponse().subscribe(data => {
-              console.log(data);
-              switch (data) {
-                case 'paid':
-                  // sent out order to shop
-                  let ord = this.prepareOrderObj();
-                  ord.payment = "paid";
-                  this.fs.collection('Orders').doc(ord.OrderID).set(ord).then(res => {
-                    this.clearCart();
-                    this.Ordersuccess = true ;
-                    this.loader.dismiss();
-                  })
-                    .catch(err => { console.log('error msg', err); this.loader.dismiss(); });
-                  break;
-              
-                case 'canceled':
-                  // toast canceled msg
-                  this.loader.dismiss();
-                  this.toaster('the payment was canceled');
-                  break;
-              }
-              // this.loader.dismiss();
-            },error => {
-              console.log(error);
-              this.loader.dismiss();
-            })
+      // wait for 5 seconds then check the server 
+      setTimeout(() => { 
+        if (dt.ResponseCode === '0') {
+          // stk was sent so check for results
+          this.db.createBill().doc<Bill>(dt.CheckoutRequestID).valueChanges().subscribe(res => {
+            console.log(res);
+            this.bill = res;
+            switch (this.bill.Transaction_status) {
+              case 'success':
+                this.disableBtn = false;
+                let ord = this.prepareOrderObj();
+                ord.payment = "paid";
+                this.fs.collection('Orders').doc(ord.OrderID).set(ord).then(res => {
+                  this.clearCart();
+                  this.Ordersuccess = true ;
+          //         this.loader.dismiss();
+                })
+                  .catch(err => { console.log('error msg', err); this.loader.dismiss(); });
+                break;
+              case 'canceled':
+                // toast canceled msg
+                // this.loader.dismiss();
+                this.toaster('the payment was canceled');
+                this.disableBtn = false;
+                break;
+              default:
+                // toast canceled msg
+                // this.loader.dismiss();
+                this.toaster('Something went wrong try again');
+                this.disableBtn = false;
+                break;
+            }
+          });
+          // this.mpesa.getMpesaResponse().subscribe(data => {
+          //   console.log(data);
+          //   switch (data) {
+          //     case 'paid':
+          //       // sent out order to shop
+          //       let ord = this.prepareOrderObj();
+          //       ord.payment = "paid";
+          //       this.fs.collection('Orders').doc(ord.OrderID).set(ord).then(res => {
+          //         this.clearCart();
+          //         this.Ordersuccess = true ;
+          //         this.loader.dismiss();
+          //       })
+          //         .catch(err => { console.log('error msg', err); this.loader.dismiss(); });
+          //       break;
 
-          }else{
-            // stk did not go through
-            this.toaster('something went wrong try checking out again');
-            this.loader.dismiss();
-          }
-        },30000);
+          //     case 'canceled':
+          //       // toast canceled msg
+          //       this.loader.dismiss();
+          //       this.toaster('the payment was canceled');
+          //       break;
+          //   }
+          //   // this.loader.dismiss();
+          // },error => {
+          //   console.log(error);
+          //   this.loader.dismiss();
+          // })
+
+        } else {
+          // stk did not go through
+          this.toaster('something went wrong try checking out again');
+          this.loader.dismiss();
+        }
+      }, 30000);
       // this.loader.dismiss();
     });
-}
+  }
 
-//goto orders
-myorders() {
-  this.service.hiddenTabs = false;
-  this.Ordersuccess = false;
-  this.navCtrl.navigate(['tabs/transactions'])
-}
+  disableme(){
+    if(this.total() === 0 || this.total() === NaN ){
+      return true;
+    }
+    if(this.disableBtn === true){
+      return true ;
+    }else {return false}
+  }
+
+  //goto orders
+  myorders() {
+    this.service.hiddenTabs = false;
+    this.Ordersuccess = false;
+    this.navCtrl.navigate(['tabs/transactions'])
+  }
   prepareOrderObj() {
     var deliveryLocation;
     var fee;
@@ -405,7 +485,8 @@ myorders() {
       "OrderID": id,
       "username": localStorage.getItem('Name'),
       "DeliveryFee": fee,
-      "payment": ""
+      "payment": "",
+      "Complete": "False"
     }
     return order;
   }
@@ -417,9 +498,9 @@ myorders() {
     });
   }
   // loader
-  async loading() {
+  async loading(msg) {
     this.loader = await this.loadCtrl.create({
-      message: 'Preparing payment ...'
+      message: msg
     });
     await this.loader.present();
   }
@@ -454,8 +535,8 @@ myorders() {
           handler: () => {
             console.log('Pick from contacts');
             this.contacts.pickContact().then(det => {
-            let number = this.mpesa.formatNumber(det.phoneNumbers[0].value);
-            this.phonenumber = number ;
+              let number = this.mpesa.formatNumber(det.phoneNumbers[0].value);
+              this.phonenumber = number;
             });
           }
         },
@@ -464,7 +545,7 @@ myorders() {
           handler: (data) => {
             console.log(data);
             let number = this.mpesa.formatNumber(data.number);
-            this.phonenumber = number ;
+            this.phonenumber = number;
             this.payment();
           }
         }
@@ -473,13 +554,22 @@ myorders() {
     await pop.present();
   }
   async presentAlertConfirm() {
+    // check which type of order
+    if(this.delivery === 'pick'){
     const alert = await this.alert.create({
       header: 'Please Confirm!',
       message:
         'Pay <strong>KES ' +
         this.total() +
-        '.00</strong>!!!'+'<br>'+' via' + ''+'<strong>'+' '+this.phonenumber +'</strong>' +''+ ' M-pesa',
-      buttons:[
+        '.00</strong>!!!' + '<br>' + ' via' + '' + '<strong>' + ' ' + this.phonenumber + '</strong>' + '' + ' M-pesa',
+      buttons: [
+        {
+          text: 'Pay using another number',
+          cssClass: 'secondary',
+          handler: () => {
+            this.changeNumber();
+          }
+        },
         {
           text: 'Yes',
           cssClass: 'secondary',
@@ -492,19 +582,26 @@ myorders() {
           text: 'Cancel',
           role: 'cancel',
           cssClass: 'secondary'
-        },
-        {
-          text: 'Pay using another number',
-          cssClass: 'secondary',
-          handler: () => {
-            this.changeNumber();
-          }
         }
       ]
     });
 
     await alert.present();
+  }else{
+    this.loading('Sending your Order ...');
+    this.sendOrder();
   }
-  
 
+  }
+  sendOrder() {
+    // sent out order to shop
+    let ord = this.prepareOrderObj();
+    ord.payment = "pending";
+    this.fs.collection('Orders').doc(ord.OrderID).set(ord).then(res => {
+      this.clearCart();
+      this.Ordersuccess = true;
+      this.loader.dismiss();
+    })
+      .catch(err => { console.log('error msg', err); this.loader.dismiss(); });
+  }
 }

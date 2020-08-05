@@ -71,7 +71,7 @@ export class SettingsPage implements OnInit {
     this.getUser(this.userID);
   }
   getShops() {
-    this.fireApi.getShops().valueChanges().subscribe(res => {
+    this.fireApi.getShops().subscribe(res => {
       this.shops = res ;
     });
     // this.fireApi

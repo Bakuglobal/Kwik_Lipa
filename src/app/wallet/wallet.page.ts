@@ -79,7 +79,7 @@ export class WalletPage implements OnInit {
   }
 
   getShops() {
-    this.fireApi.getShops().valueChanges().subscribe(res => {
+    this.fireApi.getShops().subscribe(res => {
       this.shops = res ;
     });
     // this.fireApi

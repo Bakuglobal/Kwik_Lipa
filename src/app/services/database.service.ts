@@ -11,9 +11,10 @@ import { Platform } from '@ionic/angular';
 import { Product } from '../models/product';
 import { FirestoreService } from './firestore.service';
 import { Post } from '../models/post';
-import { Shops } from '../models/shops';
+import { Shops, Shop } from '../models/shops';
 import { Category } from '../models/categories';
 import { from } from 'rxjs';
+import { Bill } from '../models/bill';
 export interface ShoppingList {
   Title: string,
   First: string,
@@ -68,7 +69,20 @@ export class DatabaseService {
   getLists() {
     return this.lists;
   }
-
+  getShop(shop){
+    let ref = this.fs.collection<Shop>('shops', ref => {
+      return ref.where('shop','==',shop);
+    });
+    return ref.snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data() ;
+          const id = a.payload.doc.id ;
+          return { id, ...data };
+        })
+      })
+    )
+  }
   getList(id) {
     return this.fs.collection<ShoppingList>('shopping-list', ref => ref.where('user-id', '==', id));
 
@@ -220,6 +234,9 @@ export class DatabaseService {
   }
   getCart() {
     return this.cart;
+  }
+  createBill(){
+    return this.fs.collection<Bill>('Bills');
   }
   getCartCount() {
     return this.cartCount;

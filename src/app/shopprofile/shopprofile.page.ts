@@ -4,11 +4,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Shops, Shop } from '../models/shops';
-import { ModalController, ActionSheetController } from '@ionic/angular';
+import { ModalController, ActionSheetController, ToastController } from '@ionic/angular';
 import { SokomodalPage } from '../sokomodal/sokomodal.page';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { Post } from '../models/post';
 import { CallNumber } from '@ionic-native/call-number/ngx';
+import { DatabaseService } from '../services/database.service';
+import { Product } from '../models/product';
+import { CPage } from '../c/c.page';
 
 
 @Component({
@@ -27,6 +30,11 @@ export class ShopprofilePage implements OnInit {
   showSearch = false;
   //objects
   likes = { "count": 0 }
+  searchTerm: string ;
+  category: string  = 'All';
+  categories = [] ;
+  offers = [];
+  UnfilteredOffers :Product []
 
   constructor(
     private service: FirestoreService,
@@ -36,7 +44,10 @@ export class ShopprofilePage implements OnInit {
     private modalCtrl: ModalController,
     private iab: InAppBrowser,
     private asC: ActionSheetController,
-    private call: CallNumber
+    private call: CallNumber,
+    public db: DatabaseService,
+    private modal: ModalController,
+    private toastCtrl: ToastController
   ) {
     this.service.hiddenTabs = true;
     this.route.queryParams.subscribe(params => {
@@ -50,8 +61,18 @@ export class ShopprofilePage implements OnInit {
 
     // this.getShop();
     this.getPosts();
+    this.db.getproducts(this.data.shop).valueChanges().subscribe(res => {
+      this.offers = res;
+      this.UnfilteredOffers = res;
+    })
+    console.log('products' + this.UnfilteredOffers);
+    
+    this.db.getCategories(this.data.shop).valueChanges().subscribe(res => {
+      this.categories = res.categories ;
+      console.log(this.categories);
+    });
+    this.category = 'All' ;
   }
-
   ngOnInit() {
 
   }
@@ -174,5 +195,85 @@ export class ShopprofilePage implements OnInit {
     this.call.callNumber(number, true)
       .then(res => console.log('Launched dialer!', res))
       .catch(err => console.log('Error launching dialer', err));
+  }
+
+  setFilteredItems() {
+    if (this.searchTerm != null || this.searchTerm != '') {
+      this.offers = this.filterItems()
+      console.log(this.offers)
+    }
+  }
+
+  filterItems() {
+    return this.UnfilteredOffers.filter(item => {
+      return item.product.toLowerCase().indexOf(this.searchTerm.toLowerCase()) > -1;
+    });
+  }
+  shortenProduct(prod){
+    let text;
+    if(prod.length > 25){
+      text = prod.substring(0,25) ;
+      text += '...' ;
+      return text;
+    }else {
+      return prod;
+    }
+    
+  }
+  filterCategory(){
+    console.log(this.category);
+    if(this.category === "All"){
+      console.log(this.category);
+      this.offers = this.UnfilteredOffers ;
+    }else {
+      console.log('unfiltered',this.UnfilteredOffers);
+      this.offers  = this.filtercat();
+    }
+  }
+  filtercat(){
+    return this.UnfilteredOffers.filter(item => {
+      console.log(item.category);
+      return item.category.toLowerCase().indexOf(this.category.toLowerCase()) > -1;
+    });
+  }
+   //view a product details in a  modal
+   async viewProduct(item) {
+    const mod = await this.modal.create({
+      component: CPage,
+      componentProps: item
+    });
+
+    mod.onDidDismiss()
+      .then((data) => {
+        console.log("response from modal",data);
+        if(data.data === "addToCart"){
+          this.addToCart(item);
+        }
+    });
+
+    await mod.present()
+  }
+  addToCart(item) {
+    // check if cart contains product from another shop
+    if(this.data.shop === item.shop){
+      this.db.addCart(item);
+      this.toast('Product added To cart');
+      return;
+    }else{
+      this.toast('Product from diff shop');
+    }
+  }
+  sendCart() {
+    this.service.hiddenTabs = true;
+    this.navCtrl.navigate(['tabs/cart'])
+  }
+   //toast message
+
+   async toast(data) {
+    const toast = await this.toastCtrl.create({
+      message: data,
+      duration: 1000
+    });
+    await toast.present();
   }
 }

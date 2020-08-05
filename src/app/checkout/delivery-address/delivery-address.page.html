@@ -50,33 +50,27 @@
       <br><br>
       <ion-label color="primary">{{placeid}}</ion-label><br><br>
 
-      <!-- show the delivery fee -->
-      <!-- <div>
-      <ion-label>Delivery Fee : </ion-label>
-      <ion-label color="primary" style="float: right;font-size: .9rem;">000</ion-label>
-  </div> -->
-
     </div>
-    <!-- For pick up orders -->
-    <div *ngIf="delivery === 'pick'" class="ion-padding">
-      <br><br>
-
-      <!-- <ion-label>You will pay for this Order via M-pesa on pick up.</ion-label> <br><br> -->
-      <ion-label><span color="primary">{{shop}}</span> will send you a confirmation with time and place of pick up.
+    <!-- progress bar for confirming payment -->
+    <div *ngIf="disableBtn" style="margin-top: 20%;">
+      <ion-label class="ion-padding" color="primary">Confirming payment</ion-label><br><br><br>
+      <ion-progress-bar mode="ios" buffer="0.5" type="indeterminate" reversed="true"></ion-progress-bar>
+    </div>
+    <div *ngIf="delivery === 'pick'" class="ion-padding" style="margin-top: 25%;">
+      <ion-label color="danger"><span >{{shop}}</span> will send you a confirmation with
+        time and place of pick up.
       </ion-label>
     </div>
-    <!-- Order total -->
-    <div>
+  </div>
+  <!-- Order total -->
 
-    </div>
-    <div style="position: fixed;bottom: 50px;width: 100%;" class="ion-padding">
-      <ion-label style="font-size: .8rem;">Subtotal : </ion-label>
-      <ion-label color="primary" style="float: right;font-size: .9rem;">{{getTotal()}}</ion-label><br>
-      <ion-label style="font-size: .8rem;">Delivery Fee : </ion-label>
-      <ion-label color="primary" style="float: right;font-size: .9rem;">{{deliveryFee}}</ion-label><br>
-      <ion-label style="font-size: .8rem;">Total : </ion-label>
-      <ion-label color="primary" style="float: right;font-size: 1rem;">{{total()}}</ion-label><br>
-    </div>
+  <div style="position: fixed;bottom: 50px;width: 100%;" class="ion-padding" *ngIf="!Ordersuccess">
+    <ion-label style="font-size: .8rem;">Subtotal : </ion-label>
+    <ion-label color="primary" style="float: right;font-size: .9rem;">{{getTotal()}}</ion-label><br>
+    <ion-label style="font-size: .8rem;">Delivery Fee : </ion-label>
+    <ion-label color="primary" style="float: right;font-size: .9rem;">{{deliveryFee}}</ion-label><br>
+    <ion-label style="font-size: .8rem;">Total : </ion-label>
+    <ion-label color="primary" style="float: right;font-size: 1rem;">{{total()}}</ion-label><br>
   </div>
   <div *ngIf="Ordersuccess">
     <!-- Shows when the cart is empty -->
@@ -86,7 +80,7 @@
     </div>
     <br><br>
     <!-- Shows when the order is sent -->
-    <ion-card padding class="successful" >
+    <ion-card padding class="successful">
       <ion-card-header>
         <ion-icon color="primary" name="checkmark-circle-outline" size="large"></ion-icon>&nbsp;&nbsp;<br>
         <ion-label style="color: green;"><b>Order Sent Successful</b></ion-label>
@@ -102,7 +96,8 @@
 </ion-content>
 
 <ion-footer *ngIf="!Ordersuccess">
-  <ion-button expand="full" shape="round" style="height: 40px;border-radius: 5px;" (click)="presentAlertConfirm()">
+  <ion-button expand="full" [disabled]="disableme()" shape="round" style="height: 40px;border-radius: 5px;"
+    (click)="presentAlertConfirm()">
     Place Order
   </ion-button>
 </ion-footer>

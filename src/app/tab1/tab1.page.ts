@@ -428,7 +428,7 @@ export class Tab1Page implements OnInit {
   }
   getShops() {
     console.log('==========')
-    this.fireApi.getShops().valueChanges()
+    this.fireApi.getShops()
       .subscribe(res => {
         this.shops = res;
         this.unfilteredShops = res;
@@ -439,7 +439,6 @@ export class Tab1Page implements OnInit {
     this.service.hiddenTabs = true;
     this.navCtrl.navigate(['tabs/lifestyle']);
   }
-
 
 }
 

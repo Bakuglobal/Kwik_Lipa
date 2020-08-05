@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Shops, Restaurants } from '../models/shops';
+import { Shops, Restaurants, Shop } from '../models/shops';
 import { Meal } from '../models/meal';
 import { Lifestyle } from '../models/lifestyle';
 import { Product } from '../models/product';
-
+import {map} from 'rxjs/operators';
+import { Restaurant } from '../models/restaurant';
 @Injectable({
   providedIn: 'root'
 })
@@ -19,7 +20,10 @@ export class ShuffleService {
   constructor(
     private fs: AngularFirestore
   ) {
-    this.getShops();
+    this.getShops().subscribe(res => {
+      this.shops = res ;
+      this.createProductPool();
+    })
     this.getRestaurants();
     this.getAllvideos();
   }
@@ -28,13 +32,26 @@ export class ShuffleService {
 
   // search fliters for shops
   getShops() {
-    this.fs.collection<Shops>('shops').valueChanges().subscribe(res => {
-      this.shops = res;
-      console.table(this.shops);
-      this.createProductPool();
-    }, err => {
-      console.log(err);
+    let ref = this.fs.collection<Shops>('shops', ref => {
+      return ref.where('type','==','Shops')
     });
+    return ref.snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const id = a.payload.doc.id ;
+          const data = a.payload.doc.data();
+          return { id, ... data};
+        });
+      })
+    );
+    
+    // this.fs.collection<Shops>('shops').valueChanges().subscribe(res => {
+    //   this.shops = res;
+    //   // console.table(this.shops);
+    //   this.createProductPool();
+    // }, err => {
+    //   console.log(err);
+    // });
   }
   ShopSearch(shopname) {
     let result = this.filterShop(shopname);
@@ -51,7 +68,7 @@ export class ShuffleService {
   getRestaurants() {
     this.fs.collection<Restaurants>('restaurants').valueChanges().subscribe(res => {
       this.restaurants = res;
-      console.table(this.restaurants);
+      // console.table(this.restaurants);
       this.createFoodPool();
     }, err => {
       console.log(err);
@@ -59,7 +76,7 @@ export class ShuffleService {
   }
   getMeals(rest) {
     this.fs.collection<Meal>(rest).valueChanges().subscribe(res => {
-      console.table(res);
+      // console.table(res);
       res.forEach(item => {
         this.foodPool.push(item);
         console.log('======');
@@ -99,7 +116,7 @@ export class ShuffleService {
   getAllvideos() {
     this.fs.collection<Lifestyle>('lifestyleVideos').valueChanges().subscribe(res => {
       this.videos = res;
-      console.table(this.videos);
+      // console.table(this.videos);
     }, err => {
       console.log(err);
     });
@@ -125,7 +142,7 @@ export class ShuffleService {
   }
   getProducts(shop){
     this.fs.collection<Product>(shop).valueChanges().subscribe(res => {
-      console.table(res);
+      // console.table(res);
       res.forEach(item => {
         this.productPool.push(item);
       });
@@ -143,4 +160,5 @@ export class ShuffleService {
     });
   }
 
+ 
 }

@@ -47,6 +47,8 @@ quantity= 0 ;
     }
     this.quantity =  this.quantity + this.count;
     this.showCartIcon  = true ;
+    this.service.changeData(this.data.Restaurant);
+    // this.service.changeLocation(shop.Location);
     this.db.addCart(item);
     this.toast('Product added To cart');
   }

@@ -8,8 +8,8 @@
                 <br> What
                 would you like to do? </span></ion-title>
         <ion-title *ngIf="heading && !searchBar" text-center>Hello {{Name}}</ion-title>
-        <ion-searchbar #IonSearchbar placeholder="Enter term here" *ngIf="searchBar" mode="ios" animated class="searchbar"
-            [(ngModel)]="searchTerm" (ionChange)="startSearch()">
+        <ion-searchbar #IonSearchbar placeholder="Enter term here" *ngIf="searchBar" mode="ios" animated
+            class="searchbar" [(ngModel)]="searchTerm" (ionChange)="startSearch()">
         </ion-searchbar>
         <ion-buttons slot="end" (click)="search()" style="padding-right: 5px;">
             <ion-icon size="large" name="search" *ngIf="!searchBar"></ion-icon>
@@ -19,7 +19,7 @@
     </ion-toolbar>
 </div>
 <!-- </ion-header> -->
-<ion-content  (ionScroll)="onScroll($event)">
+<ion-content (ionScroll)="onScroll($event)">
     <div *ngIf="!searchBar">
         <!-- MAIN  MENU -->
 
@@ -65,7 +65,8 @@
                     <img src="/assets/images/order-food.png" style="width: 100%; border-radius: 5px;" alt="">
                     <div class="container"
                         style="margin-left: 50%; width: 100%; margin-top: -32px; background-color: rgba(0, 174, 229, 0.7); transform: translate(-50%, -50%);">
-                        <h1 style="font-size: 14px; color: white; text-align: center; font-weight: bold;">ORDER FOOD</h1>
+                        <h1 style="font-size: 14px; color: white; text-align: center; font-weight: bold;">ORDER FOOD
+                        </h1>
                     </div>
                 </div>
             </ion-row>
@@ -94,7 +95,7 @@
             </ion-row>
             <br>
 
-           
+
 
 
             <div style="margin-right: 20px;">
@@ -103,7 +104,8 @@
                     <img src="/assets/images/shop.png" style="width: 100%; border-radius: 5px;" alt="">
                     <div class="container"
                         style="margin-left: 50%; width: 100%; margin-top: -32px; background-color: rgba(0, 174, 229, 0.7); transform: translate(-50%, -50%); ">
-                        <h1 style="font-size: 14px; color: white; text-align: center; font-weight: bold;">BUY PRODUCTS AND SERVICES</h1>
+                        <h1 style="font-size: 14px; color: white; text-align: center; font-weight: bold;">BUY PRODUCTS
+                            AND SERVICES</h1>
                     </div>
                 </div>
             </div>
@@ -316,7 +318,8 @@
     <!-- SEARCH RESULTS CONTAINER -->
     <div *ngIf="searchBar">
         <div style="text-align: center;padding-top:30%;" *ngIf="!hideGuide">
-            <ion-label class="ion-padding" color="primary">Search for Food, Restaurants or Shops near you from the searchbar above</ion-label>
+            <ion-label class="ion-padding" color="primary">Search for Food, Restaurants or Shops near you from the
+                searchbar above</ion-label>
         </div>
         <div style="text-align: center;padding-top: 45%;" *ngIf="!stopSpinner">
             <ion-spinner name="circles"></ion-spinner>
@@ -324,12 +327,12 @@
         <!-- Food results -->
         <div *ngIf="FoodResults.length > 0">
             <div class="label">
-              <ion-label class="left">Food Results</ion-label>
+                <ion-label class="left">Food Results</ion-label>
             </div><br>
-           
-            <ion-slides pager="false" [options]="resultSliders">
-              <ion-slide *ngFor="let item of FoodResults " (click)="seeDetails(item)" >
-                <!-- <ion-card style="width: 150px;height: 150px;background-color: var(--ion-color-light);">
+
+            <!-- <ion-slides pager="false" [options]="resultSliders">
+              <ion-slide *ngFor="let item of FoodResults " (click)="seeDetails(item)" > -->
+            <!-- <ion-card style="width: 150px;height: 150px;background-color: var(--ion-color-light);">
                   <ion-card-content style="text-align: left;padding-top: 20px;">
                    <h5 class="pr-name" style="text-transform: uppercase">{{item.Meal}} </h5><br>
                    <ion-label style="font-size: .6rem;">{{item.Restaurant}}</ion-label> <br>
@@ -337,116 +340,150 @@
                   </ion-card-content>
                   
                 </ion-card> -->
-                <ion-card style="width: 150px;height: 150px;">
-                    <img style="height: 30px;width: 150px;" src="../../../assets/images/restHolder.jpeg">
-                    <ion-card-content style="background-color: var(--ion-color-medium);">
-                        <ion-label class="pr-name" style="font-size: .7em;">{{item.Meal}}</ion-label><br>
-                        <ion-label class="pr-price" style="color: var(--ion-color-primary);">{{item.Restaurant}}
-                        </ion-label>
-                        <br>
-                    </ion-card-content>
-                    <div style="align-content: center;position: absolute;width:100%;bottom: 0px;padding-top: 10px;padding-bottom: 10px;background-color: var(--ion-color-primary);">
-                      <div style="font-size: .8em;font-weight: bold;border-radius: 20px;background-color: white;padding-bottom: 5px;padding-top: 5px;width: 90%;margin:auto;">
-                        <ion-label>K E S {{item.currentprice}}
-                        </ion-label>
-                      </div>
-                    </div>
-                </ion-card>
-              </ion-slide>
-            </ion-slides>
-          </div>
+            <ion-grid class="ion-padding">
+                <ion-row>
+                    <ion-col size="4" *ngFor="let item of FoodResults " (click)="seeDetails(item)">
+                        <ion-card style="height: 150px;">
+                            <img style="height: 30px;" src="../../../assets/images/restHolder.jpeg">
+                            <ion-card-content style="background-color: var(--ion-color-medium);">
+                                <ion-label class="pr-name" style="font-size: .7em;">{{item.Meal}}</ion-label><br>
+                                <ion-label class="pr-price" style="color: var(--ion-color-primary);">{{item.Restaurant}}
+                                </ion-label>
+                                <br>
+                            </ion-card-content>
+                            <div
+                                style="align-content: center;position: absolute;width:100%;bottom: 0px;padding-top: 10px;padding-bottom: 10px;background-color: var(--ion-color-primary);">
+                                <div
+                                    style="text-align: center;font-size: .7em;font-weight: bold;border-radius: 20px;background-color: white;padding-bottom: 5px;padding-top: 5px;width: 90%;margin:auto;">
+                                    <span>K E S {{item.currentprice}}</span>
+                                </div>
+                            </div>
+                        </ion-card>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+            <!-- </ion-slide>
+            </ion-slides> -->
+        </div>
 
-          <!-- Shops results -->
-          <div *ngIf="ShopResults.length > 0">
+        <!-- Shops results -->
+        <div *ngIf="ShopResults.length > 0">
             <div class="label">
-              <ion-label class="left">Shops Results</ion-label>
+                <ion-label class="left">Shops Results</ion-label>
             </div><br>
-            
-            <ion-slides pager="false" [options]="resultSliders">
-              <ion-slide *ngFor="let item of ShopResults " (click)="goToShop(item)" >
-                <ion-card style="width: 150px;height: 150px;background-color: var(--ion-color-light);">
-                  <img src="{{item.logo}}" style="height: 100px; width: 150px;">
-                  <ion-card-content style="text-align: left;padding-top: 20px;">
-                   <ion-label style="font-size: .6rem;">{{item.shop}}</ion-label> <br>
-                  </ion-card-content>
-                </ion-card>
-              </ion-slide>
-            </ion-slides>
-          </div>
 
-          <!-- lifestyle videos results -->
-          <div *ngIf="VideoResults.length > 0">
+            <!-- <ion-slides pager="false" [options]="resultSliders">
+                <ion-slide *ngFor="let item of ShopResults " (click)="goToShop(item)"> -->
+            <ion-grid>
+                <ion-row>
+                    <ion-col size="4" *ngFor="let item of ShopResults " (click)="goToShop(item)">
+
+
+                        <ion-card style="height: 140px;background-color: var(--ion-color-light);">
+                            <img src="{{item.logo}}" style="height: 90px">
+                            <ion-card-content style="text-align: left;padding-top: 20px;">
+                                <ion-label style="font-size: .6rem;">{{item.shop}}</ion-label> <br>
+                            </ion-card-content>
+                        </ion-card>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+            <!-- </ion-slide>
+            </ion-slides> -->
+        </div>
+
+        <!-- lifestyle videos results -->
+        <div *ngIf="VideoResults.length > 0">
             <div class="label">
                 <ion-label class="left">Video Results</ion-label>
-              </div><br>
-            <ion-slides pager="true" [options]="AdvertslideOpts">
-                <ion-slide *ngFor="let item of VideoResults">
-                    <img style="width: 385px;height: 200px;" src="/assets/images/video2.png" *ngIf="item.thumbnail === undefined">
-                    <img style="width: 385px;height: 200px;" src="{{item.thumbnail}}" *ngIf="item.thumbnail !== undefined">
-                    <ion-row class="play-controller">
-                        <ion-col (click)="openMyVideo(item.videoId)">
-                            <ion-icon name="play"></ion-icon>
-                        </ion-col>
-                    </ion-row>
-                    <!-- <ion-row class="duration">
+            </div><br>
+            <!-- <ion-slides pager="true" [options]="AdvertslideOpts">
+                <ion-slide *ngFor="let item of VideoResults"> -->
+            <ion-grid>
+                <ion-row>
+                    <ion-col size="4" *ngFor="let item of VideoResults">
+                        <ion-card style="height: 150px;background-color: var(--ion-color-light);">
+                            <img style="height: 100px;" src="/assets/images/video2.png"
+                                *ngIf="item.thumbnail === undefined" (click)="openMyVideo(item.videoId)">
+                            <img style="height: 100px;" src="{{item.thumbnail}}" *ngIf="item.thumbnail !== undefined"
+                                (click)="openMyVideo(item.videoId)">
+                            <ion-card-content style="text-align: left;padding-top: 10px;">
+                                <ion-label style="font-size: .6rem;font-weight: bold;">{{item.Title}}</ion-label> <br>
+                            </ion-card-content>
+                        </ion-card>
+                        <!-- <ion-row class="play-controller">
+                            <ion-col (click)="openMyVideo(item.videoId)">
+                                <ion-icon name="play"></ion-icon>
+                            </ion-col>
+                        </ion-row> -->
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+            <!-- <ion-row class="duration">
                         <ion-col>
                             <div>10: 03</div>
                         </ion-col>
                     </ion-row> -->
-                </ion-slide>
-            </ion-slides>
-          </div>
+            <!-- </ion-slide>
+            </ion-slides> -->
+        </div>
 
-          <!-- Products results -->
-          <div *ngIf="ProductsResults.length > 0"> 
+        <!-- Products results -->
+        <div *ngIf="ProductsResults.length > 0">
             <div class="label">
-              <ion-label class="left">Products Results</ion-label>
+                <ion-label class="left">Products Results</ion-label>
             </div><br>
-            <ion-slides pager="false" [options]="resultSliders">
-              <ion-slide *ngFor="let item of ProductsResults " (click)="gotoDiscountModal(item)" >
-                <!-- <ion-card style="width: 180px;height: 210px;background-color: var(--ion-color-light);">
-                  <img src="{{item.image}}" style="height: 100px; width: 180px;">
-                  <ion-card-content style="text-align: left;padding-top: 20px;">
-                   <h5 class="pr-name" style="text-transform: uppercase">{{item.product}} </h5><br>
-                   <ion-label style="font-size: .6rem;">{{item.shop}}</ion-label> <br>
-                   <ion-label style="position:fixed;bottom: 20px;color: grey;">Kshs.{{item.currentprice}}</ion-label>
-                  </ion-card-content>
-                </ion-card> -->
-                <ion-card style="width: 180px;height: 210px;background-color: var(--ion-color-light);">
-                    <img src="{{item.image}}" style="height: 100px; width: 180px;">
-                    <ion-card-content style="background-color: var(--ion-color-medium);">
-                        <ion-label class="pr-name" style="font-size: .7em;">{{item.product}}</ion-label><br>
-                        <ion-label class="pr-price" style="color: var(--ion-color-primary);">{{item.shop}}
-                        </ion-label>
-                        <br>
-                    </ion-card-content>
-                    <div style="align-content: center;position: absolute;width:100%;bottom: 0px;padding-top: 5px;padding-bottom: 5px;background-color: var(--ion-color-primary);">
-                      <div style="font-size: .8em;font-weight: bold;border-radius: 20px;background-color: white;padding-bottom: 5px;padding-top: 5px;width: 90%;margin:auto;">
-                        <ion-label>K E S {{item.currentprice}}
-                        </ion-label>
-                      </div>
-                    </div>
-                </ion-card>
-              </ion-slide>
-            </ion-slides>
-          </div>
-          <!-- Restaurants results -->
-          <div *ngIf="RestaurantsResults.length > 0"> 
+            <!-- <ion-slides pager="false" [options]="resultSliders">
+                <ion-slide *ngFor="let item of ProductsResults " (click)="gotoDiscountModal(item)"> -->
+            <ion-grid>
+                <ion-row>
+                    <ion-col size="4" *ngFor="let item of ProductsResults " (click)="gotoDiscountModal(item)">
+                        <ion-card style="height: 210px;background-color: var(--ion-color-light);">
+                            <img src="{{item.image}}" style="height: 100px;">
+                            <ion-card-content style="background-color: var(--ion-color-medium);">
+                                <ion-label class="pr-name" style="font-size: .7em;">{{item.product}}</ion-label><br>
+                                <ion-label class="pr-price" style="color: var(--ion-color-primary);">{{item.shop}}
+                                </ion-label>
+                                <br>
+                            </ion-card-content>
+                            <div
+                                style="align-content: center;position: absolute;width:100%;bottom: 0px;padding-top: 5px;padding-bottom: 5px;background-color: var(--ion-color-primary);">
+                                <div
+                                    style="text-align: center;font-size: .8em;font-weight: bold;border-radius: 20px;background-color: white;padding-bottom: 5px;padding-top: 5px;width: 90%;margin:auto;">
+                                    <span>K E S {{item.currentprice}}
+                                    </span>
+                                </div>
+                            </div>
+                        </ion-card>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+            <!-- </ion-slide>
+            </ion-slides> -->
+        </div>
+        <!-- Restaurants results -->
+        <div *ngIf="RestaurantsResults.length > 0">
             <div class="label">
-              <ion-label class="left">Restaurant Results</ion-label>
+                <ion-label class="left">Restaurant Results</ion-label>
             </div><br>
-            <ion-slides pager="false" [options]="resultSliders">
-              <ion-slide *ngFor="let item of RestaurantsResults " (click)="seeDetails(item)" >
-                <ion-card style="width: 150px;height: 150px;background-color: var(--ion-color-light);">
-                  <img src="{{item.logo}}" style="height: 100px; width: 150px;">
-                  <ion-card-content style="text-align: left;padding-top: 20px;">
-                   <!-- <h5 class="pr-name" style="text-transform: uppercase">{{item.product}} </h5><br> -->
-                   <ion-label style="font-size: .6rem;">{{item.Restaurant}}</ion-label> <br>
-                   <!-- <ion-label style="position:fixed;bottom: 20px;color: grey;">Kshs.{{item.currentprice}}</ion-label> -->
-                  </ion-card-content>
-                </ion-card>
-              </ion-slide>
-            </ion-slides>
-          </div>
+            <!-- <ion-slides pager="false" [options]="resultSliders">
+                <ion-slide *ngFor="let item of RestaurantsResults " (click)="seeDetails(item)"> -->
+            <ion-grid>
+                <ion-row>
+                    <ion-col size="4" *ngFor="let item of RestaurantsResults " (click)="seeDetails(item)">
+                        <ion-card style="height: 150px;background-color: var(--ion-color-light);">
+                            <img src="{{item.logo}}" style="height: 90px;">
+                            <ion-card-content style="text-align: left;padding-top: 10px;">
+                                <!-- <h5 class="pr-name" style="text-transform: uppercase">{{item.product}} </h5><br> -->
+                                <ion-label style="font-size: .6rem;font-weight: bold;">{{item.Restaurant}}</ion-label> <br>
+                                <!-- <ion-label style="position:fixed;bottom: 20px;color: grey;">Kshs.{{item.currentprice}}</ion-label> -->
+                            </ion-card-content>
+                        </ion-card>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+            <!-- </ion-slide>
+            </ion-slides> -->
+        </div>
     </div>
 </ion-content>

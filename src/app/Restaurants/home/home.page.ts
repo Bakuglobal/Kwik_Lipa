@@ -60,7 +60,7 @@ export class HomePage implements OnInit {
     this.navCtrl.navigate(['tabs/recipes']);
   }
   getRecipeShop() {
-    this.service.getRecipe().valueChanges().subscribe(res => {
+    this.service.getRecipe().subscribe(res => {
       this.recipe = res;
       console.log("recipe", this.recipe);
     })

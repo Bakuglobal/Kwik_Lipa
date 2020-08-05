@@ -46,7 +46,7 @@ export class HomePage implements OnInit {
 
   getShops() {
     console.log('==========')
-    this.fireApi.getRecipe().valueChanges()
+    this.fireApi.getRecipe()
     .subscribe(res => {
       this.recipe = res ;
       this.unfilteredShops = res ;

@@ -246,10 +246,32 @@ changeLocation(data: any) {
     }
 //get the list of shops   
   getShops(){
-    return this.fs.collection<Shops>('shops');
+    let ref =  this.fs.collection<Shops>('shops', ref => {
+      return ref.where('type','==','Shops');
+    });
+    return ref.snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data();
+          const id = a.payload.doc.id ;
+          return { id, ... data};
+        })
+      })
+    )
   }
   getRecipe(){
-    return this.fs.collection<Shops>('recipes');
+    let ref =  this.fs.collection<Shops>('shops', ref => {
+      return ref.where('type','==','recipes');
+    });
+    return ref.snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data();
+          const id = a.payload.doc.id ;
+          return { id, ... data};
+        })
+      })
+    )
   }
   getCats(){
     return this.fs.collection('videocat');
@@ -444,7 +466,18 @@ getAds(){
 }
 // get restaurants
 getRest(){
-  return this.fs.collection('restaurants').valueChanges();
+  let ref =  this.fs.collection<Shops>('shops', ref => {
+    return ref.where('type','==','food');
+  });
+  return ref.snapshotChanges().pipe(
+    map(actions => {
+      return actions.map(a => {
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id ;
+        return { id, ... data};
+      })
+    })
+  )
 }
 getMeals(shop){
   return this.fs.collection(shop).valueChanges();

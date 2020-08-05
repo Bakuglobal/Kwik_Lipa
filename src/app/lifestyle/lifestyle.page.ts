@@ -68,7 +68,7 @@ hair:any[];
     this.youtube.openVideo(id);
   }
   getShops(){
-    this.service.getShops().valueChanges().subscribe(res => {
+    this.service.getShops().subscribe(res => {
       this.shops = res ;
       console.log(this.shops);
     })

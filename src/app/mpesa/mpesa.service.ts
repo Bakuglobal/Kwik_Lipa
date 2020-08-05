@@ -31,7 +31,7 @@ getToken(){
  
 }
 
-sendStkRequest(amt,phone,desc,token) {
+sendStkRequest(amt,phone,desc,token,accountRef) {
   if(token === null){
     console.log('TOKEN NULL');
     return;
@@ -45,7 +45,8 @@ sendStkRequest(amt,phone,desc,token) {
           "phone": phone.toString(),  
           "amount": amt.toString(),
           "token":token,
-          "desc": desc.toString()
+          "desc": desc.toString(),
+          "accountRef":accountRef.toString()
   }
  return this.httpClient.post("https://kwik-lipa-mpesa-online.glitch.me/hooks/stk", postData, {headers : headers})
 }

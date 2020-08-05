@@ -85,7 +85,7 @@ export class SelectshopPage implements OnInit {
 
   getShops() {
     console.log('==========')
-    this.fireApi.getShops().valueChanges()
+    this.fireApi.getShops()
     .subscribe(res => {
       this.shops = res ;
       this.unfilteredShops = res ;
@@ -133,7 +133,7 @@ export class SelectshopPage implements OnInit {
   }
 async showAlert(shop) {
     const pop = await this.alertCtrl.create({
-      message: "You have an item from a different shop in your cart do you want to clear the cart and order from this shop?",
+      message: "You have item(s) from a different shop in your cart do you want to clear the cart and order from this shop?",
       buttons: [
         {
           text: 'Discard',
