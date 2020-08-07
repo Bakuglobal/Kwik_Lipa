@@ -3,9 +3,7 @@
         <ion-buttons style="margin-left: 10px; margin-right: 10px">
             <ion-icon style="width: 20px; height: 20px;" slot="start" (click)="back()" name="arrow-back"></ion-icon>
             <ion-title text-center>Shopping Lists</ion-title>
-            <!-- <ion-icon slot="start" name="arrow-back" (click)="back()"></ion-icon> -->
-            <!-- <ion-searchbar animated mode="ios" placeholder="Enter list Title"></ion-searchbar> -->
-            <!-- <ion-icon slot="end" name="search" (click)="showSearch()" color="primary"></ion-icon> -->
+          
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
@@ -27,17 +25,13 @@
     <ion-card style="margin-left: 15px; margin-right: 14px;" color="" *ngFor="let item of myList" class="ion-padding" (click)="viewList(item)">
         <ion-card-title>
             <div style="font-size: 15px; font-weight: bold; color: var(--ion-color-primary);" class="ion-float-left">{{item.Title}}: {{item.Items.length}} Items</div>
-            <!-- <ion-text class="ion-float-right"> By : <span *ngIf="item.createdBy !== myName">{{item.createdBy}}</span> <span
-            *ngIf="item.createdBy == myName">You</span></ion-text> --> <br> 
         </ion-card-title>
         <ion-card-content style="margin-left: -15px; margin-top: -7px;  margin-bottom: -15px;">
             <div>
-                <!-- <ion-label>Shared with :</ion-label><br> -->
                 <ion-icon style="width: 20px; height: 20px; color: #737373;" name="people"></ion-icon>&nbsp;&nbsp;
                 <ion-text style="font-size: 13px;" *ngFor="let item of item.members">{{item.firstName}}&nbsp;  </ion-text>
             </div>
             <div style="font-size: 11px;">Created : {{item.DueDate | date}}</div>
-            <!-- <div style="" >{{item.Items.length}} Items</div> -->
         </ion-card-content>
     </ion-card>
 

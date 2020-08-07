@@ -38,6 +38,7 @@ export class DeliveryAddressPage implements OnInit {
   autocomplete: { input: string; };
   autocompleteItems: any[];
   bill: Bill;
+  firstTry = true ;
   // location: any;
   placeid: any;
   GoogleAutocomplete: any;
@@ -134,7 +135,39 @@ export class DeliveryAddressPage implements OnInit {
   }
 
 
+reloadMap(){
+  // set the new location
+  let latLng = new google.maps.LatLng(this.lat, this.long);
+  let mapOptions = {
+    center: latLng,
+    zoom: 15,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  }
+  // load map
+  this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+  this.addMarker(this.map);
+}
+addMarker(map){
+  let marker = new google.maps.Marker({
+    map: map,
+    animation: google.maps.Animation.DROP,
+    position: map.getCenter()
+  });
+  
+  let content = "<h4>My Location!</h4>";
+  
+  this.addInfoWindow(marker, content);
+}
+addInfoWindow(marker, content){
 
+  let infoWindow = new google.maps.InfoWindow({
+    content: content
+  });
+
+  google.maps.event.addListener(marker, 'click', () => {
+    infoWindow.open(this.map, marker);
+  });
+}
   //LOADING THE MAP HAS 2 PARTS.
   loadMap() {
 
@@ -150,21 +183,22 @@ export class DeliveryAddressPage implements OnInit {
       //LOAD THE MAP WITH THE PREVIOUS VALUES AS PARAMETERS.
       this.getAddressFromCoords(resp.coords.latitude, resp.coords.longitude);
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+      this.addMarker(this.map);
       this.map.addListener('tilesloaded', () => {
         console.log('accuracy', this.map, this.map.center.lat());
         this.lat = this.map.center.lat()
         this.long = this.map.center.lng()
         this.getAddressFromCoords(this.map.center.lat(), this.map.center.lng());
+        // get place name
+        this.getName(this.map.center.lat(), this.map.center.lng());
       });
-      this.directionDisplay.setMap(this.map);
     }).catch((error) => {
       console.log('Error getting location', error);
     });
   }
   getAddressFromCoords(lattitude, longitude) {
     console.log("getAddressFromCoords " + lattitude + " " + longitude);
-    // get place name
-    this.getName(lattitude, longitude);
+    
     // calculate fee
     this.getFee();
     let options: NativeGeocoderOptions = {
@@ -201,7 +235,7 @@ export class DeliveryAddressPage implements OnInit {
       this.autocompleteItems = [];
       return;
     }
-    this.GoogleAutocomplete.getPlacePredictions({ input: this.autocomplete.input },
+    this.GoogleAutocomplete.getPlacePredictions({ input: this.autocomplete.input,componentRestrictions: {country: 'ke'} },
       (predictions, status) => {
         this.autocompleteItems = [];
         this.zone.run(() => {
@@ -216,7 +250,7 @@ export class DeliveryAddressPage implements OnInit {
   SelectSearchResult(item) {
     console.log(item);
     // get place code
-    this.db.getPlaceCode(item).subscribe(val => {
+    this.db.getPlaceCode(item.description).subscribe(val => {
       let data: any = val;
       console.log(data.results[0].geometry.location);
       const geocode = data.results[0].geometry.location;
@@ -228,7 +262,9 @@ export class DeliveryAddressPage implements OnInit {
       this.autocomplete.input = '';
       this.autocompleteItems = [];
       this.getAddressFromCoords(geocode.lat, geocode.lng);
-      this.getName(geocode.lat, geocode.lng);
+      this.placeid = item.description ;
+      // this.getName(geocode.lat, geocode.lng);
+      this.reloadMap();
       this.getFee();
     });
     // this.placeid = item.place_id ;
@@ -554,8 +590,10 @@ export class DeliveryAddressPage implements OnInit {
     await pop.present();
   }
   async presentAlertConfirm() {
+    if(this.total() > 0){
+    }else{return;}
     // check which type of order
-    if(this.delivery === 'pick'){
+    // if(this.delivery === 'pick'){
     const alert = await this.alert.create({
       header: 'Please Confirm!',
       message:
@@ -574,7 +612,13 @@ export class DeliveryAddressPage implements OnInit {
           text: 'Yes',
           cssClass: 'secondary',
           handler: () => {
-            this.phonenumber = this.mpesa.formatNumber(this.phonenumber);
+            console.log('phone number',this.phonenumber);
+            console.log(this.phonenumber.substr(0,3));
+            if(this.phonenumber.toString().length === 12){
+              // don't format number
+            }else{
+              this.phonenumber = this.mpesa.formatNumber(this.phonenumber);
+            }
             this.payment();
           }
         },
@@ -585,12 +629,11 @@ export class DeliveryAddressPage implements OnInit {
         }
       ]
     });
-
     await alert.present();
-  }else{
-    this.loading('Sending your Order ...');
-    this.sendOrder();
-  }
+  // }else{
+  //   this.loading('Sending your Order ...');
+  //   this.sendOrder();
+  // }
 
   }
   sendOrder() {

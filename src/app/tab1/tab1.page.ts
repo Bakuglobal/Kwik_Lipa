@@ -354,7 +354,7 @@ export class Tab1Page implements OnInit {
     this.navCtrl.navigate(['tabs/selectshop']);
   }
   shoppingList() {
-    this.navCtrl.navigate(['tabs/mycontacts']);
+    this.navCtrl.navigate(['tabs/shoppinglist']);
   }
   goToselectShop() {
     this.service.hiddenTabs = true;

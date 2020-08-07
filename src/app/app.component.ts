@@ -37,7 +37,7 @@ export class AppComponent {
   public appPages = [
     {
       title: 'My Account',
-      url: '/tabs/settings',
+      url: '/tabs/profile',
       icon: 'person',
       active: false
     },
@@ -50,7 +50,7 @@ export class AppComponent {
     },
     {
       title: 'Shopping List',
-      url: '/tabs/mycontacts',
+      url: '/tabs/shoppinglist',
       icon: 'list-box',
       active: false
     },

@@ -33,11 +33,11 @@
 
     <!-- For delivery orders -->
     <div *ngIf="delivery === 'deliver'" class="ion-padding">
-      <ion-searchbar [(ngModel)]="autocomplete.input" (ionInput)="UpdateSearchResults()"
+      <ion-searchbar animated mode="ios" [(ngModel)]="autocomplete.input" (ionInput)="UpdateSearchResults()"
         placeholder="Enter a different address" (ionClear)="ClearAutocomplete()"></ion-searchbar>
       <!-- suggest places -->
       <ion-list [hidden]="autocompleteItems.length == 0">
-        <ion-item *ngFor="let item of autocompleteItems" tappable (click)="SelectSearchResult(item.description)">
+        <ion-item *ngFor="let item of autocompleteItems" tappable (click)="SelectSearchResult(item)">
           {{ item.description }}
         </ion-item>
       </ion-list>
@@ -52,8 +52,8 @@
 
     </div>
     <!-- progress bar for confirming payment -->
-    <div *ngIf="disableBtn" style="margin-top: 20%;">
-      <ion-label class="ion-padding" color="primary">Confirming payment</ion-label><br><br><br>
+    <div *ngIf="disableBtn" style="margin-top: 10px;">
+      <ion-label class="ion-padding" color="primary">Confirming payment</ion-label><br><br>
       <ion-progress-bar mode="ios" buffer="0.5" type="indeterminate" reversed="true"></ion-progress-bar>
     </div>
     <div *ngIf="delivery === 'pick'" class="ion-padding" style="margin-top: 25%;">

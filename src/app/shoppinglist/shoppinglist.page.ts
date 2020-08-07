@@ -19,9 +19,9 @@ import { List } from '../models/list';
 import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
-  selector: 'app-mycontacts',
-  templateUrl: './mycontacts.page.html',
-  styleUrls: ['./mycontacts.page.scss'],
+  selector: 'app-shoppinglist',
+  templateUrl: './shoppinglist.page.html',
+  styleUrls: ['./shoppinglist.page.scss'],
 })
 export class MycontactsPage implements OnInit {
 
