@@ -11,9 +11,9 @@ import { DatabaseService } from '../services/database.service';
 import { map } from 'rxjs/operators';
 
 @Component({
-  selector: "app-settings",
-  templateUrl: "./settings.page.html",
-  styleUrls: ["./settings.page.scss"]
+  selector: "app-profile",
+  templateUrl: "./profile.page.html",
+  styleUrls: ["./profile.page.scss"]
 })
 export class SettingsPage implements OnInit {
 

@@ -82,6 +82,7 @@ export class HomePage implements OnInit {
       console.log(this.products);
     }, error => { console.log(error) });
   }
+    
   seeDetails(item){
     let navigationExtras: NavigationExtras = {
       queryParams: item
