@@ -55,6 +55,7 @@ import { CallNumber} from '@ionic-native/call-number/ngx';
 import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
 // import { VideoPlayer } from '@ionic-native/video-player/ngx';
 import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player/ngx';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -86,6 +87,7 @@ import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player/ngx';
     ImageDisplayPageModule,
     DiscountmodalPageModule,
     NotificationsPageModule,
+    NewChatPageModule,
   ],
   providers: [
     DeviceOrientation,

@@ -497,4 +497,10 @@ getproducts(shop){
   });
 }
 
+sendToShop(list){
+  return this.fs.collection('sendlist').add(list);
 }
+
+}
+
+

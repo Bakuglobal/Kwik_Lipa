@@ -28,7 +28,7 @@ export class MycontactsPage implements OnInit {
   @ViewChild('content',{static:true}) content : IonContent ;
 // variables
 search = false ;
-myList ;
+myList :any[];
 userID ;
 totaItems ;
 budget ;
@@ -92,6 +92,8 @@ phone;
     await mod.present();
     
   }
+
+  
 
 
   createList(){
