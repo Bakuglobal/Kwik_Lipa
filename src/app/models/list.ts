@@ -4,4 +4,5 @@ export class List {
     members?:any;
     userID?: any ;
     DueDate?: any ;
+    myList?:any;
 }

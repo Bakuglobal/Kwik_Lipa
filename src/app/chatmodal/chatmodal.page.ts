@@ -40,6 +40,7 @@ export class ChatmodalPage implements OnInit {
     this.modalController.dismiss();
   }
   ngOnInit() {
+    this.send()
   }
   
   

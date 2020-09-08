@@ -52,9 +52,11 @@ export class Tab2Page implements OnInit{
           this.showLogin = true;
         }
         this.userPhone = localStorage.getItem('userPhone')
-        this.firstChatByMe();   
+        this.firstChatByMe();
+        this.newChatModal(); 
        
       }
+
       login(){
         this.navCtrl.navigate(['tabs/login']);
       }
