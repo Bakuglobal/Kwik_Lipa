@@ -1,3 +1,8 @@
+.spinner-container {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+  }
 .chat {
     display: flex;
     flex-direction: column;
@@ -8,7 +13,7 @@
         align-self: flex-end;
         padding: 6px 10px 7px;
         border-radius: 15px 15px 0px ;
-        background: #32dbe4;
+        background: #660066;
         font-size: medium;
         line-height: 1.4;
 
@@ -21,7 +26,7 @@
         align-self: flex-start;
         padding: 6px 10px 7px;
         border-radius: 0px 15px 15px ;
-        background: #32de23;
+        background:#003366;
         font-size: medium;
         line-height: 1.4;
 

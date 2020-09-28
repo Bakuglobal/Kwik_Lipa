@@ -20,8 +20,7 @@ import { DeviceOrientation } from '@ionic-native/device-orientation/ngx';
 import { Contacts } from '@ionic-native/contacts/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import {Network} from '@ionic-native/network/ngx';
-import { ChatmodalPageModule } from './chatmodal/chatmodal.module';
-import { NewChatPageModule } from './new-chat/new-chat.module';
+import { NewChatPageModule } from './chat-module/new-chat/new-chat.module';
 import { HttpModule } from '@angular/http';
 import { HTTP } from '@ionic-native/http/ngx';
 import { InfomodalPageModule } from './infomodal/infomodal.module';
@@ -55,7 +54,7 @@ import { CallNumber} from '@ionic-native/call-number/ngx';
 import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
 // import { VideoPlayer } from '@ionic-native/video-player/ngx';
 import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player/ngx';
-
+import { ResumeChatPageModule } from './chat-module/resume-chat/resume-chat.module';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -71,8 +70,6 @@ import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player/ngx';
     AngularFireAuthModule,
     FormsModule,
     AngularFireStorageModule,
-    ChatmodalPageModule,
-    NewChatPageModule,
     InfomodalPageModule,
     SokomodalPageModule,
     CommentsPageModule,
@@ -88,6 +85,7 @@ import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player/ngx';
     DiscountmodalPageModule,
     NotificationsPageModule,
     NewChatPageModule,
+    ResumeChatPageModule,
   ],
   providers: [
     DeviceOrientation,
@@ -95,6 +93,7 @@ import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player/ngx';
     InAppBrowser,
     CallNumber,
     StatusBar,
+    Contacts,
     OffersPage,
     OpenNativeSettings,
     Firebase,

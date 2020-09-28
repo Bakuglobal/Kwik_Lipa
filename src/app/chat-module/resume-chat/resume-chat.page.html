@@ -5,10 +5,10 @@
     </ion-buttons>
     <ion-buttons slot="start" text-center>
       <ion-chip>
-        <ion-avatar ><img src="../../assets/images/bg.png"></ion-avatar>
+        <!-- <ion-avatar ><img src="../../assets/images/bg.png"></ion-avatar> -->
         <ion-label>{{sendTo}}</ion-label>
         </ion-chip><br>
-        <ion-label><b style="color: green;font-size: 2em;">.</b>online</ion-label>
+        <!-- <ion-label><b style="color: green;font-size: 2em;">.</b>online</ion-label> -->
       
     </ion-buttons>
   
@@ -16,16 +16,21 @@
   </ion-header>
 <ion-content [scrollEvents]="true">
   
-  <div class="chat" *ngFor="let chat of chatRef | async">
-    <div class="me" *ngIf="uid == chat.UserID">
-      {{chat.Message}}
+  <div class="chat" *ngFor="let chat of chats">
+    <div class="you" *ngIf="uid == chat.sender">
+      {{chat.text}}
+      <br>
+      <span class="name">
+        {{chat.Date.toDate() | date: 'h:mm a'}}
+      </span>
     </div>
   
-    <div class="you" *ngIf="uid != chat.UserID">
+    <div class="me" *ngIf="uid != chat.sender">
+      {{chat.text}}
+      <br>
       <span class="name">
-        {{chat.Name}}
-      </span><br>
-      {{chat.Message}}
+        {{chat.Date.toDate() | date: 'h:mm a'}}
+      </span>
     </div>
   </div>
 
@@ -33,7 +38,7 @@
 </ion-content>
 <ion-footer style="background-color: white;">
   <ion-item style="background-color: white;">
-    <ion-textarea type="text" [(ngModel)]="text" placeholder="Enter message"></ion-textarea>
+    <ion-textarea type="text" [(ngModel)]="inputText" placeholder="Enter message"></ion-textarea>
     <ion-button (click)="send()"  icon-only slot="end"><ion-icon name="send" ></ion-icon></ion-button>
   </ion-item>
 </ion-footer>

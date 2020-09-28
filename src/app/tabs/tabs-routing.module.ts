@@ -17,14 +17,14 @@ const routes: Routes = [
           }
         ]
       },
+       
       {
-        path: 'users',
+        path: 'chat-home',
         children: [
           {
             path: '',
             loadChildren: () =>
-              import('../users/users.module').then(m => m.UsersPageModule),
-            // canActivate : [AuthService]
+              import('../chat-module/chat-home/chat-home.module').then(m => m.ChatHomePageModule)
           }
         ]
       },
@@ -59,10 +59,8 @@ const routes: Routes = [
       },
       { path: 'mycredits', loadChildren:()=> import( '../mycredits/mycredits.module').then(m => m.MycreditsPageModule) },
       { path: 'about', loadChildren: () => import('../about/about.module').then(m => m.AboutPageModule) },
-      { path: 'chatmodal', loadChildren: () => import('../chatmodal/chatmodal.module').then(m=>m.ChatmodalPageModule) },
       { path: 'e-receipt', loadChildren: () => import('../e-receipt/e-receipt.module').then(m=>m.EReceiptPageModule)},
       { path: 'shoppinglist', loadChildren: () => import('../shoppinglist/shoppinglist.module').then(m=>m.MycontactsPageModule),canActivate : [AuthService] },
-      { path: 'new-chat', loadChildren: () => import('../new-chat/new-chat.module').then(m=>m.NewChatPageModule) },
       { path: 'notifications', loadChildren: () => import('../notifications/notifications.module').then(m=>m.NotificationsPageModule),canActivate : [AuthService] },
       { path: 'offers', loadChildren: () => import('../offers/offers.module').then(m=>m.OffersPageModule) },
       { path: 'payment', loadChildren: () => import('../payment/payment.module').then(m=>m.PaymentPageModule) },
