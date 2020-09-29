@@ -85,27 +85,26 @@ export class NewChatPage implements OnInit {
  }
 
 ngOnInit() {
+  // this.getUsersAndIDs();
   this.setFilteredItems();
 }
 
   ionViewWillEnter() {
 
-    this.getUsersAndIDs()
+    // this.getUsersAndIDs()
 
   }
 
-  getUsersAndIDs() {
-    this.fireApi.getUsersAndIDs().subscribe(res => {
-      console.log('Users are =>', res);
-    })
-  }
+  
 
 setFilteredItems() {
+  // this.db.getUsersAndIDs()
   this.items = this.db.filterItems(this.searchTerm);
   if(this.searchTerm != null && this.items == null){
     this.notfound = true ;
   }
 }
+
 getUserProfile(id){
   this.fireApi.getUserDetails(id)
   .valueChanges()
@@ -216,7 +215,7 @@ getUserProfile(id){
   retrieveMessages(){
     // this.fs.collection('Chats', ref => ref.orderBy('Date', 'asc')).ref.where('sender', '==', localStorage.getItem('userID'))
       this.fs.collection('Chats', 
-      ref=>ref.where('sender','==', localStorage.getItem('userID')).orderBy('Date', 'asc')
+      ref=>ref.where('sender','==', localStorage.getItem('userID')).orderBy('Date', 'desc')
       ).snapshotChanges().subscribe(res=>{
         console.log(res)
         this.chats=res

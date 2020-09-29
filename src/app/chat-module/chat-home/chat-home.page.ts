@@ -6,6 +6,7 @@ import { NewChatPage } from 'src/app/chat-module/new-chat/new-chat.page';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { DatabaseService } from 'src/app/services/database.service';
 
 @Component({
   selector: 'app-chat-home',
@@ -40,7 +41,8 @@ export class ChatHomePage implements OnInit {
       private modalCtrl: ModalController,
       private fs: AngularFirestore,
       private service: FirestoreService,
-      private fauth: AngularFireAuth
+      private fauth: AngularFireAuth,
+      private db: DatabaseService
     ) {
             this.userID = localStorage.getItem('userID');
             
@@ -100,9 +102,22 @@ export class ChatHomePage implements OnInit {
     this.service.retrieveMessages().subscribe(res => {
       console.log(res)
       this.chats = res
+      this.chats.forEach(user=>{
+        this.getUserName(user)
+      })
 
     })
   }
+
+  getUserName(user){
+    this.db.getName(user.sendTo).subscribe(res=>{
+      let name = res[0].firstName
+      let index = this.chats.indexOf(user)
+      this.chats[index].firstName=name
+    })
+  }
+
+
 
 
   //GET CHATS

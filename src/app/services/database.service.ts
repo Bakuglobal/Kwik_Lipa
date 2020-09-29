@@ -63,7 +63,8 @@ export class DatabaseService {
         });
       })
     );
-    this.getUsers();
+    // this.getUsers();
+    this.getUsersAndIDs();
   }
 
   //   START OF  SHOPPING LIST DATABASE SERVICE
@@ -151,7 +152,28 @@ export class DatabaseService {
     //   })
     // )
   }
-
+  // get users
+  getUsersAndIDs() {
+    this.fireApi.getUsersAndIDs().subscribe(res => {
+      console.log('Users are =>', res);
+      this.items = res;
+    })
+  }
+getName(phoneNumber){
+// return this.fs.collection('users').doc<User>('id')
+let ref = this.fs.collection<User>('users', ref=>{
+  return ref.where('phone', '==', phoneNumber)
+})
+return ref.snapshotChanges().pipe(
+  map(actions=>{
+    return actions.map(a=>{
+      const id = a.payload.doc.id
+      const data = a.payload.doc.data()
+      return {id, ...data}
+    })
+  })
+)
+}
   // Filter users 
   filterItems(searchTerm) {
     // this.getUsers();

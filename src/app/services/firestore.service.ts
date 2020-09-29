@@ -512,6 +512,7 @@ getproducts(shop){
       })
     )
   }
+  
   getUserProfile(id) {
     return this.fs.collection('users').doc(id)
   }
