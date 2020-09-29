@@ -10,4 +10,5 @@ export class User {
     dob?: any;
     wallet?: any;
     type?:any;
+    id?:any;
 }

@@ -93,17 +93,20 @@ phone;
     
   }
 
+  
+
 
   createList(){
     this.navCtrl.navigate(['tabs/createList']);
   }
   getallLists(){
     this.fireApi.getLists(this.userID).subscribe(res => {
-      this.myList = res ;
+      this.myList = res ;      
       if(res.length !== 0){
         this.zeroList = true ;
       }
       console.log(this.myList);
+      this.getTotalCount();
     });
     this.fireApi.getSharedLists(this.phone).subscribe(res => {
       this.sharedList = res ;
@@ -116,6 +119,10 @@ phone;
   }
   getTotalCount() {
     this.totaItems = this.myList.Items.reduce((a, b) => a + (b.count * 1), 0);
+    // let count = 0;
+    // this.myList.forEach(el=>{ el.Items.forEach(pr.count)})
+    // this.totaItems=count;
+    // console.log(this.totaItems);
   }
   totalBudget(item){
    return this.budget = item.Items.reduce((a, b) => a + (b.count * b.price), 0);

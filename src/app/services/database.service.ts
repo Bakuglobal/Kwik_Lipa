@@ -15,6 +15,7 @@ import { Shops, Shop } from '../models/shops';
 import { Category } from '../models/categories';
 import { from } from 'rxjs';
 import { Bill } from '../models/bill';
+import { User } from '../models/user';
 export interface ShoppingList {
   Title: string,
   First: string,
@@ -62,7 +63,8 @@ export class DatabaseService {
         });
       })
     );
-    this.getUsers();
+    // this.getUsers();
+    this.getUsersAndIDs();
   }
 
   //   START OF  SHOPPING LIST DATABASE SERVICE
@@ -122,14 +124,56 @@ export class DatabaseService {
 
   // get users from firestore
   async getUsers() {
-    this.fs.collection('users').get()
+    this.fs.collection<User>('users').get()
       .subscribe(querySnapshot => {
         querySnapshot.docs.forEach(doc => {
           this.items.push(doc.data());
         });
       })
-  }
 
+    // let ref = this.fs.collection<User>('users', ref=>{
+    //   return ref.orderBy('phone')
+    // })
+    //  ref.snapshotChanges().pipe(
+    //   map(actions => {
+    //      actions.map(a => {
+    //       const data = a.payload.doc.data();
+    //       const id = a.payload.doc.id;
+    //        let user_data = { id, ...data };
+    //        console.log(user_data)
+    //        this.items.push(user_data)
+    //       //  user_data.forEach(item => {
+    //       //    console.log('item added', item)
+    //       //    this.items.push(item);
+    //       //  })
+    //     })
+       
+        
+    //   })
+    // )
+  }
+  // get users
+  getUsersAndIDs() {
+    this.fireApi.getUsersAndIDs().subscribe(res => {
+      console.log('Users are =>', res);
+      this.items = res;
+    })
+  }
+getName(phoneNumber){
+// return this.fs.collection('users').doc<User>('id')
+let ref = this.fs.collection<User>('users', ref=>{
+  return ref.where('phone', '==', phoneNumber)
+})
+return ref.snapshotChanges().pipe(
+  map(actions=>{
+    return actions.map(a=>{
+      const id = a.payload.doc.id
+      const data = a.payload.doc.data()
+      return {id, ...data}
+    })
+  })
+)
+}
   // Filter users 
   filterItems(searchTerm) {
     // this.getUsers();

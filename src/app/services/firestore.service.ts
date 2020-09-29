@@ -27,6 +27,7 @@ import { List } from '../models/list';
 import { Notice } from '../models/upload';
 import { ADs } from '../models/ads';
 import { Category } from '../models/categories';
+import { Chat } from '../models/chat';
 
 
 const httpOptions = {
@@ -497,4 +498,44 @@ getproducts(shop){
   });
 }
 
+  getUsersAndIDs() {
+    const ref = this.fs.collection<User>('users', ref => {
+      return ref.orderBy('phone')
+    })
+    return ref.snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const id = a.payload.doc.id;
+          const data = a.payload.doc.data()
+          return { id, ...data }
+        })
+      })
+    )
+  }
+  
+  getUserProfile(id) {
+    return this.fs.collection('users').doc(id)
+  }
+
+sendToShop(list){
+  return this.fs.collection('sendlist').add(list);
 }
+// retrieve msgs with ids
+retrieveMessages(){
+  let ref = this.fs.collection<Chat>('Chats',
+    ref => ref.where('sender', '==', localStorage.getItem('userID')).orderBy('Date', 'asc')
+  )
+  return ref.snapshotChanges().pipe(
+    map(actions => {
+      return actions.map(a => {
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      })
+    })
+  )
+  
+}
+}
+
+

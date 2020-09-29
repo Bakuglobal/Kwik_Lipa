@@ -5,20 +5,24 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-chatmodal',
-  templateUrl: './chatmodal.page.html',
-  styleUrls: ['./chatmodal.page.scss'],
+  selector: 'app-resume-chat',
+  templateUrl: './resume-chat.page.html',
+  styleUrls: ['./resume-chat.page.scss'],
 })
-export class ChatmodalPage implements OnInit {
+export class ResumeChatPage implements OnInit {
 
-  //passed data via inputs
+   //passed data via inputs
 
-      @Input() sendTo : any ;
+  @Input() sendTo : any ;
+  @Input() id: any;
+  @Input() text: any;
+  @Input() Date: any;
+  @Input() sender: any;
 
   //variables
 
-      text: string ;
-      chatRef: any ;
+      inputText: string ;
+      chats = [];
       uid: string ;
       time: any ;
 
@@ -32,7 +36,7 @@ export class ChatmodalPage implements OnInit {
     private modalController: ModalController
   ) { 
     this.uid = localStorage.getItem('userID');
-    this.chatRef = this.fs.collection('chats',ref=>ref.orderBy('Time','asc')).valueChanges();
+    // this.chats = this.fs.collection('chats',ref=>ref.orderBy('Time','asc')).valueChanges();
 
   }
 
@@ -40,9 +44,17 @@ export class ChatmodalPage implements OnInit {
     this.modalController.dismiss();
   }
   ngOnInit() {
+    this.getReplies();
+    this.send()
   }
   
-  
+  getReplies(){
+    this.fs.collection('Chats').doc(this.id).collection('replies')
+    .valueChanges().subscribe(res=>{
+      console.log(res)
+      this.chats = res
+    })
+  }
 //send message
 
       send(){
@@ -51,14 +63,14 @@ export class ChatmodalPage implements OnInit {
             alert("Please add a recepient of this message");
           }else{
               this.time = new Date() ;
-              this.fs.collection('chats').add({
+              this.fs.collection('Chats').doc(this.id).collection('replies').add({
                 Name: this.fauth.auth.currentUser.displayName,
-                Message: this.text,
-                UserID: this.fauth.auth.currentUser.uid,
-                Time: this.time,
+                text: this.inputText,
+                sender: this.fauth.auth.currentUser.uid,
+                Date: new Date(),
                 SendTo: this.sendTo
               });
-              this.text = '' ;
+              this.inputText = '' ;
             }
         }
       }

@@ -299,4 +299,22 @@ export class ViewListPage implements OnInit {
     return this.budget ;
   }
 
+  SendList() {
+    const list = {
+      Title: this.Title,
+      Members: this.members,
+      Items: this.Items,
+      Due_date: this.DueDate,
+      Created_by:this.createdBy,
+      User_id:this.userID,
+      Document_id:this.id
+    }
+    this.service.sendToShop(list).then(response => {
+      console.log('response', response)
+    }
+    ).catch(error => { console.log('error', error) }
+    )
+
+  }
 }
+
