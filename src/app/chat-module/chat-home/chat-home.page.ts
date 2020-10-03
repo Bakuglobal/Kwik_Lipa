@@ -56,7 +56,7 @@ export class ChatHomePage implements OnInit {
         }
         this.userPhone = localStorage.getItem('userPhone')
         this.firstChatByMe();
-        this.newChatModal(); 
+        // this.newChatModal(); 
        
       }
 
@@ -73,19 +73,11 @@ export class ChatHomePage implements OnInit {
     }
     this.userPhone = localStorage.getItem('userPhone')
     this.retrieveMessages();
-    this.newChatModal();
+    // this.newChatModal();
 
   }
   
-      // getUserProfile(id){
-      //   this.service.getUserDetails(id)
-      //   .valueChanges()
-      //   .subscribe(user => {
-      //     console.log("USER--"+ user[0]);
-      //     this.showData(user)
-      //   });
-       
-      // }
+      
        showData(user){
           this.user.phone = user[0].phone;
           this.user.name = user[0].name;
@@ -98,7 +90,7 @@ export class ChatHomePage implements OnInit {
       
   
   retrieveMessages() {
-    // this.fs.collection('Chats', ref => ref.orderBy('Date', 'asc')).ref.where('sender', '==', localStorage.getItem('userID'))
+   
     this.service.retrieveMessages().subscribe(res => {
       console.log(res)
       this.chats = res
@@ -110,8 +102,9 @@ export class ChatHomePage implements OnInit {
   }
 
   getUserName(user){
-    this.db.getName(user.sendTo).subscribe(res=>{
-      let name = res[0].firstName
+    this.db.getName(user.sendTo).valueChanges().subscribe(res=>{
+      let name = res.firstName
+      console.log('name', name)
       let index = this.chats.indexOf(user)
       this.chats[index].firstName=name
     })

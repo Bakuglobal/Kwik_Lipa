@@ -16,6 +16,7 @@ import { Category } from '../models/categories';
 import { from } from 'rxjs';
 import { Bill } from '../models/bill';
 import { User } from '../models/user';
+import { Chat } from '../models/chat';
 export interface ShoppingList {
   Title: string,
   First: string,
@@ -130,27 +131,6 @@ export class DatabaseService {
           this.items.push(doc.data());
         });
       })
-
-    // let ref = this.fs.collection<User>('users', ref=>{
-    //   return ref.orderBy('phone')
-    // })
-    //  ref.snapshotChanges().pipe(
-    //   map(actions => {
-    //      actions.map(a => {
-    //       const data = a.payload.doc.data();
-    //       const id = a.payload.doc.id;
-    //        let user_data = { id, ...data };
-    //        console.log(user_data)
-    //        this.items.push(user_data)
-    //       //  user_data.forEach(item => {
-    //       //    console.log('item added', item)
-    //       //    this.items.push(item);
-    //       //  })
-    //     })
-       
-        
-    //   })
-    // )
   }
   // get users
   getUsersAndIDs() {
@@ -159,21 +139,26 @@ export class DatabaseService {
       this.items = res;
     })
   }
-getName(phoneNumber){
-// return this.fs.collection('users').doc<User>('id')
-let ref = this.fs.collection<User>('users', ref=>{
-  return ref.where('phone', '==', phoneNumber)
-})
-return ref.snapshotChanges().pipe(
-  map(actions=>{
-    return actions.map(a=>{
-      const id = a.payload.doc.id
-      const data = a.payload.doc.data()
-      return {id, ...data}
-    })
-  })
-)
+getName(id){
+  return this.fs.collection('users').doc<User>(id)
+
 }
+
+// get replies
+getReplies(id){
+  let ref = this.fs.collection('Chats').doc(id).collection<Chat>('replies', ref=>{
+    return ref.orderBy('Date', 'asc')
+  })
+  return ref.snapshotChanges().pipe(
+    map(actions => {
+      return actions.map(a => {
+        const data = a.payload.doc.data() ;
+        const id = a.payload.doc.id ;
+        return { id, ...data };
+      })
+    })
+  )
+} 
   // Filter users 
   filterItems(searchTerm) {
     // this.getUsers();

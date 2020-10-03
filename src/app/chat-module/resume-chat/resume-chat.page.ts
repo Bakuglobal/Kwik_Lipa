@@ -3,6 +3,8 @@ import { ModalController, IonContent } from '@ionic/angular';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
+import { FirestoreService } from 'src/app/services/firestore.service';
+import { Chat } from 'src/app/models/chat';
 
 @Component({
   selector: 'app-resume-chat',
@@ -25,6 +27,7 @@ export class ResumeChatPage implements OnInit {
       chats = [];
       uid: string ;
       time: any ;
+      recepient: Chat;
 
   //objects
 
@@ -33,10 +36,11 @@ export class ResumeChatPage implements OnInit {
     private fauth: AngularFireAuth,
     private fs: AngularFirestore,
     private navCtrl: Router,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private fireApi: FirestoreService
   ) { 
     this.uid = localStorage.getItem('userID');
-    // this.chats = this.fs.collection('chats',ref=>ref.orderBy('Time','asc')).valueChanges();
+   
 
   }
 
@@ -45,7 +49,10 @@ export class ResumeChatPage implements OnInit {
   }
   ngOnInit() {
     this.getReplies();
-    this.send()
+    // this.send()
+    this.fireApi.getUserProfile(this.sendTo).valueChanges().subscribe(res=>{
+      this.recepient = res
+    })
   }
   
   getReplies(){
@@ -64,7 +71,6 @@ export class ResumeChatPage implements OnInit {
           }else{
               this.time = new Date() ;
               this.fs.collection('Chats').doc(this.id).collection('replies').add({
-                Name: this.fauth.auth.currentUser.displayName,
                 text: this.inputText,
                 sender: this.fauth.auth.currentUser.uid,
                 Date: new Date(),

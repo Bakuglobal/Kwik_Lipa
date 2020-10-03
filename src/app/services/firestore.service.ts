@@ -448,6 +448,39 @@ getunreadNotice(id){
      })
    )
 }
+// check prev chats, composite queery
+prevChatSender(id){
+let ref = this.fs.collection<Chat>('Chats', ref=>{
+  return ref.where('sender', '==', id).orderBy('Date', 'asc')
+  
+})
+return ref.snapshotChanges().pipe(
+  map(actions => {
+    return actions.map(a => {
+      const data = a.payload.doc.data();
+      const id = a.payload.doc.id ;
+      return { id, ... data};
+    })
+  })
+)
+}
+
+prevChatSendTo(id){
+  let ref = this.fs.collection<Chat>('Chats', ref=>{
+    return ref.where('sendTo', '==', id).orderBy('Date', 'asc')
+    
+  })
+  return ref.snapshotChanges().pipe(
+    map(actions => {
+      return actions.map(a => {
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id ;
+        return { id, ... data};
+      })
+    })
+  )
+  }
+
 // get donation poster
 getPoster(){
   return this.fs.collection('donations').valueChanges();
