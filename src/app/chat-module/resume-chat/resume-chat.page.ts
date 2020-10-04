@@ -5,6 +5,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { Chat } from 'src/app/models/chat';
+import { DatabaseService } from 'src/app/services/database.service';
 
 @Component({
   selector: 'app-resume-chat',
@@ -37,7 +38,9 @@ export class ResumeChatPage implements OnInit {
     private fs: AngularFirestore,
     private navCtrl: Router,
     private modalController: ModalController,
-    private fireApi: FirestoreService
+    private fireApi: FirestoreService,
+    private db: DatabaseService,
+    
   ) { 
     this.uid = localStorage.getItem('userID');
    
@@ -56,27 +59,33 @@ export class ResumeChatPage implements OnInit {
   }
   
   getReplies(){
-    this.fs.collection('Chats').doc(this.id).collection('replies')
-    .valueChanges().subscribe(res=>{
+   this.db.getReplies(this.id).subscribe(res=>{
       console.log(res)
       this.chats = res
     })
   }
 //send message
-
       send(){
         if( this.text != ''){
           if(this.sendTo == ''){
             alert("Please add a recepient of this message");
           }else{
               this.time = new Date() ;
-              this.fs.collection('Chats').doc(this.id).collection('replies').add({
+              let msg = {
                 text: this.inputText,
                 sender: this.fauth.auth.currentUser.uid,
                 Date: new Date(),
                 SendTo: this.sendTo
+              }
+              this.fs.collection('Chats').doc(this.id).collection('replies').add(msg).then(res=>{
+                this.inputText = '' ;
+                this.fs.collection('Chats').doc(this.id).update(msg).then(res => {
+                  console.log('message sent!')
+                }).catch(error=>{
+                  console.log(error)
+                })
               });
-              this.inputText = '' ;
+              
             }
         }
       }
