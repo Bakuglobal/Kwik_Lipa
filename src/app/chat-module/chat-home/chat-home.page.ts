@@ -101,6 +101,14 @@ export class ChatHomePage implements OnInit {
       })
 
     })
+    this.service.retrieveMessagesToMe().subscribe(res => {
+      console.log(res)
+      this.chats = res
+      this.chats.forEach(user=>{
+        this.getSenderName(user)
+      })
+
+    })
   }
 
   getUserName(user){
@@ -112,7 +120,14 @@ export class ChatHomePage implements OnInit {
     })
   }
 
-
+  getSenderName(user){
+    this.db.getName(user.sender).valueChanges().subscribe(res=>{
+      let name = res.firstName
+      console.log('name', name)
+      let index = this.chats.indexOf(user)
+      this.chats[index].firstName=name
+    })
+  }
 
 
   //GET CHATS

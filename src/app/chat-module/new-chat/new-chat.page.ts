@@ -70,7 +70,7 @@ export class NewChatPage implements OnInit {
     this.uid = localStorage.getItem('userID');
     // this.chatRef = this.fs.collection('chats',ref=>ref.orderBy('Date','asc')).valueChanges();
     // get my phone number from local storage
-    this.myNumber = localStorage.getItem('userPhone');
+    this.myNumber = localStorage.getItem('Number');
 
 
   }

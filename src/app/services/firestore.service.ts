@@ -569,6 +569,23 @@ retrieveMessages(){
   )
   
 }
+
+retrieveMessagesToMe(){
+  let ref = this.fs.collection<Chat>('Chats',
+    ref => ref.where('sendTo', '==', localStorage.getItem('userID')).orderBy('Date', 'asc')
+  )
+  return ref.snapshotChanges().pipe(
+    map(actions => {
+      return actions.map(a => {
+        const data = a.payload.doc.data();
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      })
+    })
+  )
+  
+}
+
 }
 
 

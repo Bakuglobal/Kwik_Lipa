@@ -137,6 +137,13 @@ export class DatabaseService {
     this.fireApi.getUsersAndIDs().subscribe(res => {
       console.log('Users are =>', res);
       this.items = res;
+      // remove users phone to prevent self chatting :)
+      this.items.forEach(item=>{
+        if (item.phone==localStorage.getItem('Number')){
+          let index= this.items.indexOf(item)
+          this.items.splice(index, 1)
+        }
+      })
     })
   }
 getName(id){
