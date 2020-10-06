@@ -202,8 +202,8 @@ export class NewChatPage implements OnInit {
     }
   }
   checkPrevChat() {
-    console.log('id', this.recepientId)
-    this.fireApi.prevChatSender(this.recepientId).subscribe(res => {
+    console.log('id', this.uid)
+    this.fireApi.prevChatSender(this.uid).subscribe(res => {
       console.log('res', res)
       if (res.length > 0) {
         this.lastChat.push(res[0])
@@ -213,7 +213,7 @@ export class NewChatPage implements OnInit {
       console.log(error)
     })
 
-    this.fireApi.prevChatSendTo(this.recepientId).subscribe(res => {
+    this.fireApi.prevChatSendTo(this.uid).subscribe(res => {
       console.log('res', res)
       if (res.length > 0) {
         this.lastChat.push(res[0])
