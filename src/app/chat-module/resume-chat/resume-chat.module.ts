@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { ResumeChatPage } from './resume-chat.page';
+import { DateAgoPipe } from 'src/app/pipes/date-ago.pipe';
 
 const routes: Routes = [
   {
@@ -21,6 +22,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ResumeChatPage]
+  declarations: [ResumeChatPage,DateAgoPipe]
 })
 export class ResumeChatPageModule {}

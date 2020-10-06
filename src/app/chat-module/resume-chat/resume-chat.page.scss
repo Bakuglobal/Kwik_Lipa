@@ -11,6 +11,11 @@
         background:#34B7F1;
         font-size: medium;
         line-height: 1.4;
+        .name{
+            font-size: .6em;
+            font-weight: bold;
+            font-style: italic;
+        }
 
     }
 
@@ -26,8 +31,9 @@
         line-height: 1.4;
 
         .name{
-            font-size: small;
+            font-size: .6em;
             font-weight: bold;
+            font-style: italic;
         }
 
     }

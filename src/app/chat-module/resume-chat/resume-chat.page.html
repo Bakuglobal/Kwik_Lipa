@@ -1,7 +1,7 @@
   <ion-header style="background-color: #3880ff;">
   <ion-toolbar color="primary" >
     <ion-buttons (click)="close()" slot="start">
-      <ion-icon name="arrow-back" size="large"></ion-icon>
+      <ion-icon name="arrow-back" ></ion-icon>
     </ion-buttons>
     <ion-buttons slot="start" text-center>
       <ion-chip>
@@ -26,7 +26,7 @@
       {{chat.text}}
       <br>
       <span class="name">
-        {{chat.Date.toDate() | date: 'h:mm a'}}
+        {{chat.Date.toDate() | dateAgo}}
       </span>
     </div>
   
@@ -34,7 +34,7 @@
       {{chat.text}}
       <br>
       <span class="name">
-        {{chat.Date.toDate() | date: 'h:mm a'}}
+        {{chat.Date.toDate() | dateAgo}}
       </span>
     </div>
   </div>
