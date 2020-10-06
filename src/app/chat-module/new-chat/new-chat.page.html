@@ -1,15 +1,19 @@
 <ion-header style="background-color: #3880ff;">
   <ion-toolbar color="primary">
     <ion-buttons (click)="close()" slot="start">
-      <ion-icon name="arrow-back" size="large"></ion-icon>
+      <ion-icon name="arrow-back" mode="ios" size="large"></ion-icon>
     </ion-buttons>
     <ion-title *ngIf="!Msgrecepient">
       New Chat
     </ion-title>
-    <ion-title *ngIf="Msgrecepient">
-      {{sendTo}}<br>
-      {{recepient}}
+    <ion-chip *ngIf="Msgrecepient">
+      <img  style="border-radius: 100%;" [src]="AvatarImage(sendTo.charAt(0),30)" alt="img">
+      <ion-title >
+        {{sendTo}}<br>
+        {{recepient}}
     </ion-title>
+    </ion-chip>
+    
     <ion-buttons slot="end" *ngIf="!Msgrecepient">
       <ion-icon style="margin-top: 5px;margin-right: 5px;" (click)="pickContact()" name="contact" size="large">
       </ion-icon>
@@ -18,15 +22,17 @@
 </ion-header>
 <ion-content>
   <div *ngIf="!Msgrecepient">
-    <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()" placeholder="Enter phone number">
+    <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()" placeholder="Search phone number or name">
     </ion-searchbar>
 
     <ion-list>
       <div *ngFor="let item of items" (click)="createChat(item)">
         <ion-item *ngIf="item.phone !== myNumber">
-          <!-- <ion-avatar><img src={{item.photo}}></ion-avatar><ion-col size=".5"></ion-col> -->
-          {{item.firstName}}<br>
-          {{ item.phone }}
+          <ion-col size="2"> <ion-avatar><img  style="border-radius: 100%;" [src]="AvatarImage(item.firstName.charAt(0))" alt="img"></ion-avatar></ion-col>
+          <ion-col class="ion-padding">
+            {{item.firstName}}<br>
+            {{ item.phone }}
+          </ion-col>
         </ion-item>
       </div>
       

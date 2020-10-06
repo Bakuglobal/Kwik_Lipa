@@ -46,7 +46,6 @@ export class ChatHomePage implements OnInit {
       private service: FirestoreService,
       private fauth: AngularFireAuth,
       private db: DatabaseService,
-      private avatar: AvatarService, 
     ) {
             this.userID = localStorage.getItem('userID');
             

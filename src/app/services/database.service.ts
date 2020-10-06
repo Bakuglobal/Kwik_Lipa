@@ -171,7 +171,12 @@ getReplies(id){
     // this.getUsers();
     console.log(this.items)
     return this.items.filter(item => {
-      return item.phone.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
+      if(item.phone.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1){
+        return item.phone.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
+      }else{
+        return item.firstName.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
+      }
+     
     });
   }
   //share cart details across pages

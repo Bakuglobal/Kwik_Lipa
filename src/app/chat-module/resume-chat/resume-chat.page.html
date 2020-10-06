@@ -3,9 +3,9 @@
     <ion-buttons (click)="close()" slot="start">
       <ion-icon name="arrow-back" ></ion-icon>
     </ion-buttons>
-    <ion-buttons slot="start" text-center>
+    <!-- <ion-buttons slot="start" text-center>
       <ion-chip>
-        <!-- <ion-avatar ><img src="../../assets/images/bg.png"></ion-avatar> -->
+        <!-- <ion-avatar ><img src="../../assets/images/bg.png"></ion-avatar> 
         <div>
           <ion-label>{{recepient.firstName}}</ion-label>
           <br>
@@ -13,10 +13,16 @@
         </div>
         
         </ion-chip><br>
-        <!-- <ion-label><b style="color: green;font-size: 2em;">.</b>online</ion-label> -->
+        <!-- <ion-label><b style="color: green;font-size: 2em;">.</b>online</ion-label> 
       
-    </ion-buttons>
-  
+    </ion-buttons> -->
+    <ion-chip >
+      <img  style="border-radius: 100%;" [src]="AvatarImage(recepient.firstName.charAt(0),30)" alt="img">
+      <ion-title >
+        {{recepient.firstName}}<br>
+        {{recepient.phone}}
+    </ion-title>
+    </ion-chip>
   </ion-toolbar>
   </ion-header>
 <ion-content [scrollEvents]="true">
