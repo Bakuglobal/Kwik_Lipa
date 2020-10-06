@@ -165,7 +165,7 @@ export class NewChatPage implements OnInit {
 
         this.fs.collection('Chats').doc(this.lastChat[0].id).collection('replies').add(msg).then(res => {
           // update latest chat in home
-          this.fs.collection('Chats').doc(this.lastChat[0].id).update(msg).then(res => {
+          this.fs.collection('Chats').doc(this.lastChat[0].id).set(msg).then(res => {
             console.log('message sent!')
             this.toaster('Message sent successfully')
             this.close()

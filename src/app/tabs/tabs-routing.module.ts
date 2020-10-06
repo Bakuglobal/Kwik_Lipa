@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { ActivatedRoute, RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
 import { AuthService } from '../Auth/auth.service';
 const routes: Routes = [
@@ -24,7 +24,7 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: () =>
-              import('../chat-module/chat-home/chat-home.module').then(m => m.ChatHomePageModule)
+              import('../chat-module/chat-home/chat-home.module').then(m => m.ChatHomePageModule), canActivate: [AuthService]
           }
         ]
       },

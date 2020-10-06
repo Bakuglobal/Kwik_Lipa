@@ -105,7 +105,7 @@ retrieveMessages() {
          })
     })
     this.service.retrieveMessagesToMe().subscribe(res => {
-      console.log(res);
+      console.log('res', res);
       this.chatTome = res ;
       if(this.chatTome.length === 0){
         this.loader = false ;
@@ -149,14 +149,21 @@ retrieveMessages() {
         this.chatTome[index].firstName=name ;
         // check if a chat with same id exists
         let chatCheck = this.filterChats(id);
-        // if(chatCheck.length > 0){
-          
-        // }
-        this.chats.push(this.chatTome[index]);
+        if(chatCheck.length > 0){
+          let index2 = this.chats.indexOf(chatCheck[0]);
+          this.chats[index2]=this.chatTome[index];
+        }
+        // this.chats.push(this.chatTome[index]);
         this.loader = false;
       }else{
         this.loader = false;
-        this.chatTome[index].firstName=name;
+         // check if a chat with same id exists
+         let chatCheck = this.filterChats(id);
+         if(chatCheck.length > 0){
+           let index2 = this.chats.indexOf(chatCheck[0]);
+           this.chats[index2]=this.chatTome[index];
+         }
+        // this.chatTome[index].firstName=name;
         this.chats.push(this.chatTome[index]);
       }
     })
