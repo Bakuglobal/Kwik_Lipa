@@ -79,7 +79,7 @@
       </ion-card>
     </div> -->
   <ion-item *ngFor="let chat of chats " (click)="chatModal(chat)"  >
-    <ion-col size="2"> <ion-avatar><img  style="border-radius: 100%;" [src]="AvatarImage(chat.firstName.charAt(0))" alt="img"></ion-avatar></ion-col>
+    <ion-col size="2"> <ion-avatar><img  style="border-radius: 100%;" [src]="AvatarImage(chat.firstName.charAt(0),30)" alt="img"></ion-avatar></ion-col>
     <ion-col class="ion-padding"> 
         <span>{{chat.firstName}}</span><br>
         <span>{{chat.text}}</span>
