@@ -4,7 +4,7 @@
       <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>
     <ion-title >
-      <span  >Chat</span>
+      <span>My Chats</span>
     </ion-title>
     <ion-buttons (click)="notifications()" class="notice-btn" slot="end">
     <!--  <ion-badge style="color:rgb(247, 95, 35);font-weight: bold;font-size: 18px;background-color: yellow">1</ion-badge> -->
@@ -49,36 +49,42 @@
       
     </ion-item>
     
-    <ion-grid>
-        <ion-row  *ngIf="chats.length==0">
+    <ion-grid style="margin-top: 30%;" *ngIf="chats.length==0 && !loader">
+        <ion-row  >
           <div text-center style="padding-left: 20% ;padding-top:30px">
             <ion-icon name="alert" size="large"></ion-icon>
             <h4 style="text-align: center;">
               You have no messages.
             </h4>
-
           </div>
         </ion-row>
+      </ion-grid>
+      <ion-grid *ngIf="loader">
         <ion-row>
-          <div text-center *ngIf="chats.length == 0" style="padding-top: 30px; margin: auto;">
+          <div text-center  style="padding-top: 30px; margin: auto;">
             <ion-spinner name="circles" ></ion-spinner>
             </div>
         </ion-row>
-        </ion-grid>
-   
-
-   <div *ngFor="let chat of chats " > 
+      </ion-grid>
+        
+   <!-- <div *ngFor="let chat of chats " > 
       <ion-card  >
         <ion-row (click)="chatModal(chat)" >
           <ion-col size="2"> <ion-avatar><img  style="border-radius: 100%;" [src]="AvatarImage(chat.firstName.charAt(0))" alt="img"></ion-avatar></ion-col>
           <ion-col padding> 
               <span>{{chat.firstName}}</span><br>
               <span>{{chat.text}}</span>
-              
           </ion-col>
         </ion-row>
       </ion-card>
-    </div>
+    </div> -->
+  <ion-item *ngFor="let chat of chats " (click)="chatModal(chat)"  >
+    <ion-col size="2"> <ion-avatar><img  style="border-radius: 100%;" [src]="AvatarImage(chat.firstName.charAt(0))" alt="img"></ion-avatar></ion-col>
+    <ion-col class="ion-padding"> 
+        <span>{{chat.firstName}}</span><br>
+        <span>{{chat.text}}</span>
+    </ion-col>
+  </ion-item>
   <ion-fab vertical="bottom" horizontal="end" (click)="newChatModal()">
     <ion-fab-button icon-only>
       <ion-icon name="chatbubbles"></ion-icon>

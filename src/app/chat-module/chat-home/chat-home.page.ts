@@ -17,8 +17,10 @@ import { AvatarService } from 'src/app/services/avatar.service';
 export class ChatHomePage implements OnInit {
 
   mychat= [] ;
+  chatTome  = [];
   msg ;
   receivedMsg ;
+  loader = true ;
   userID ;
   userPhone ;
   recepients = [] ;
@@ -91,20 +93,19 @@ export class ChatHomePage implements OnInit {
       
       
   
-  retrieveMessages() {
+retrieveMessages() {
    
-    this.service.retrieveMessages().subscribe(res => {
-      console.log(res)
-      this.chats = res
-      this.chats.forEach(user=>{
-        this.getUserName(user)
-      })
-
+  this.service.retrieveMessages().subscribe(res => {
+      this.chats = res ;
+      console.log(this.chats);
+        this.chats.forEach(user=>{
+          this.getUserName(user)
+         })
     })
     this.service.retrieveMessagesToMe().subscribe(res => {
       console.log(res)
-      this.chats = res
-      this.chats.forEach(user=>{
+      this.chatTome = res ;
+      this.chatTome.forEach(user=>{
         this.getSenderName(user)
       })
 
@@ -112,20 +113,40 @@ export class ChatHomePage implements OnInit {
   }
 
   getUserName(user){
+    console.log('user',user);
     this.db.getName(user.sendTo).valueChanges().subscribe(res=>{
       let name = res.firstName
       console.log('name', name)
-      let index = this.chats.indexOf(user)
-      this.chats[index].firstName=name
+      let index = this.chats.indexOf(user);
+      console.log(index);
+      console.log(this.chats[index]);
+      if(index < 0){
+        index  = index * -1 ;
+        console.log(index);
+        this.chats[index].firstName=name ;
+        this.loader = false;
+      }else{
+        this.loader = false;
+        this.chats[index].firstName=name ;
+      }
     })
   }
 
   getSenderName(user){
     this.db.getName(user.sender).valueChanges().subscribe(res=>{
       let name = res.firstName
-      console.log('name', name)
-      let index = this.chats.indexOf(user)
-      this.chats[index].firstName=name
+      console.log('name', name);
+      let index = this.chatTome.indexOf(user) ;
+      if(index < 0){
+        index  = index * -1 ;
+        this.chatTome[index].firstName=name ;
+        this.chats.push(this.chatTome[index]);
+        this.loader = false;
+      }else{
+        this.loader = false;
+        this.chatTome[index].firstName=name;
+        this.chats.push(this.chatTome[index]);
+      }
     })
   }
 
