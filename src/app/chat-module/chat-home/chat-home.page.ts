@@ -97,13 +97,19 @@ retrieveMessages() {
   this.service.retrieveMessages().subscribe(res => {
       this.chats = res ;
       console.log(this.chats);
+      if(this.chats.length === 0){
+        this.loader = false ;
+      }
         this.chats.forEach(user=>{
           this.getUserName(user)
          })
     })
     this.service.retrieveMessagesToMe().subscribe(res => {
-      console.log(res)
+      console.log(res);
       this.chatTome = res ;
+      if(this.chatTome.length === 0){
+        this.loader = false ;
+      }
       this.chatTome.forEach(user=>{
         this.getSenderName(user)
       })
@@ -132,6 +138,8 @@ retrieveMessages() {
   }
 
   getSenderName(user){
+    let id = user.id ;
+    console.log('id =>',id);
     this.db.getName(user.sender).valueChanges().subscribe(res=>{
       let name = res.firstName
       console.log('name', name);
@@ -139,6 +147,11 @@ retrieveMessages() {
       if(index < 0){
         index  = index * -1 ;
         this.chatTome[index].firstName=name ;
+        // check if a chat with same id exists
+        let chatCheck = this.filterChats(id);
+        // if(chatCheck.length > 0){
+          
+        // }
         this.chats.push(this.chatTome[index]);
         this.loader = false;
       }else{
@@ -146,6 +159,11 @@ retrieveMessages() {
         this.chatTome[index].firstName=name;
         this.chats.push(this.chatTome[index]);
       }
+    })
+  }
+  filterChats(id){
+    return this.chats.filter(item => {
+      return item.id.toLowerCase().indexOf(id.toLowerCase()) > -1;
     })
   }
 
