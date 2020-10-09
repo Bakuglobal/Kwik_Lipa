@@ -18,7 +18,6 @@ export class AuthService {
   public getCurrentUserUid(): string {
     return this.afAuth.auth.currentUser.uid;
   }
-
   // log in 
   public sigin(user: User): Promise<firebase.auth.UserCredential> {
     return this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password);

@@ -6,7 +6,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { DiscountmodalPage } from './discountmodal.page';
-
 const routes: Routes = [
   {
     path: '',

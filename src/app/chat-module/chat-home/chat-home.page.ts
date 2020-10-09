@@ -153,6 +153,7 @@ retrieveMessages() {
           let index2 = this.chats.indexOf(chatCheck[0]);
           this.chats[index2]=this.chatTome[index];
         }
+        
         // this.chats.push(this.chatTome[index]);
         this.loader = false;
       }else{

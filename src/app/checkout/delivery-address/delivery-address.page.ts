@@ -2,6 +2,8 @@ import { Component, OnInit, NgZone, ViewChild, ElementRef } from '@angular/core'
 import { Router } from '@angular/router';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { DatabaseService } from 'src/app/services/database.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { ToastController, LoadingController, AlertController } from '@ionic/angular';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
@@ -10,7 +12,8 @@ import { MpesaService } from 'src/app/mpesa/mpesa.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Contacts } from '@ionic-native/contacts/ngx';
 import { Bill } from 'src/app/models/bill';
-
+import {Flutterwave, InlinePaymentOptions, PaymentSuccessResponse} from "flutterwave-angular-v3";
+import { getMaxListeners } from 'process';
 
 declare var google;
 export class mpesaRes {
@@ -55,9 +58,22 @@ export class DeliveryAddressPage implements OnInit {
   shopLocation: string;
   notes: string;
   phonenumber: string;
+  email: string;
   loader: any;
   Ordersuccess = false;
   userID;
+
+  // FlutterWave Configs
+  publicKey = "FLWPUBK-e926be420113c463b04d599925695eda-X";
+
+  
+  customerDetails = {name:this.afAuth.auth.currentUser.displayName, email:this.afAuth.auth.currentUser.email, phone_number:this.afAuth.auth.currentUser.phoneNumber}
+  customizations = {title: 'Kwyk App', description: 'One Stop Online Shop', logo: 'https://iili.io/2g9DPf.md.png'}
+
+  meta = {'counsumer_id': '7898', 'consumer_mac': 'kjs9s8ss7dd'}
+  paymentData: InlinePaymentOptions
+ 
+
   constructor(
     private navCtrl: Router,
     private service: FirestoreService,
@@ -71,7 +87,9 @@ export class DeliveryAddressPage implements OnInit {
     private loadCtrl: LoadingController,
     private fs: AngularFirestore,
     public contacts: Contacts,
-    private alert: AlertController
+    private alert: AlertController,
+    private afAuth: AngularFireAuth,
+    private flutterwave: Flutterwave, //inject flutterwave service
   ) {
     this.service.hiddenTabs = true;
     this.userID = localStorage.getItem('userID');
@@ -79,10 +97,7 @@ export class DeliveryAddressPage implements OnInit {
     this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
     this.autocomplete = { input: '' };
     this.autocompleteItems = [];
-
     this.phonenumber = localStorage.getItem('Number');
-
-
   }
   ionViewWillEnter() {
     this.getShop();
@@ -90,8 +105,41 @@ export class DeliveryAddressPage implements OnInit {
     this.loadMap();
   }
   ngOnInit() {
-    
+
   }
+  //create an empty {}
+  paymentObject(){
+    this.paymentData = {
+      public_key: this.publicKey,
+      tx_ref: this.generateReference(),
+      amount: this.total(),
+      currency: 'KES',
+      payment_options: 'card, ussd',
+      redirect_url: '',
+      meta: this.meta,
+      customer: this.customerDetails,
+      customizations: this.customizations,
+      callback: this.makePaymentCallback,
+      onclose: this.closedPaymentModal,
+      callbackContext: this
+    }
+  }
+  // flutterwave start
+  makePayment(){
+    this.flutterwave.inlinePay(this.paymentData)
+  }
+
+  makePaymentCallback(response: PaymentSuccessResponse): void {
+    console.log("Payment callback", response);
+  }
+  closedPaymentModal(): void {
+    console.log('payment is closed');
+  }
+  generateReference(): string {
+    let date = new Date();
+    return date.getTime().toString();
+  }
+  //end
   getShop() {
     this.service.serviceData
       .subscribe(data => (this.shop = data));
@@ -599,13 +647,14 @@ addInfoWindow(marker, content){
       message:
         'Pay <strong>KES ' +
         this.total() +
-        '.00</strong>!!!' + '<br>' + ' via' + '' + '<strong>' + ' ' + this.phonenumber + '</strong>' + '' + ' M-pesa',
+        '.00</strong>' + '<br>' + ' via' + '' + '<strong>' + ' ' + this.phonenumber + '</strong>' + '' + ' M-pesa',
       buttons: [
         {
-          text: 'Pay using another number',
+          text: 'Pay using card',
           cssClass: 'secondary',
           handler: () => {
-            this.changeNumber();
+            this.paymentObject();
+            this.makePayment();
           }
         },
         {

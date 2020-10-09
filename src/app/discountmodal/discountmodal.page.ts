@@ -5,10 +5,12 @@ import { DatabaseService } from '../services/database.service';
 import { FirestoreService } from '../services/firestore.service';
 import { data } from 'jquery';
 
+
 @Component({
   selector: 'app-discountmodal',
   templateUrl: './discountmodal.page.html',
   styleUrls: ['./discountmodal.page.scss'],
+  
 })
 export class DiscountmodalPage implements OnInit {
   count = 1;
@@ -28,15 +30,13 @@ export class DiscountmodalPage implements OnInit {
   @Input('currentprice') currentprice;
   @Input('Location') Location;
 
-
-
   constructor(
     private mod: ModalController,
     private navCtrl: Router,
     public service: DatabaseService,
     private fireApi: FirestoreService,
     private alert: AlertController,
-    private toast: ToastController
+    private toast: ToastController,
   ) { }
 
   ngOnInit() {
@@ -93,6 +93,7 @@ export class DiscountmodalPage implements OnInit {
       'quantity': this.quantity
     }
   }
+  
   buyNow() {
     // cart is empty
     if(this.shopSelected === "Shopname"){

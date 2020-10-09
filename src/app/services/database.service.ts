@@ -150,7 +150,6 @@ getName(id){
   return this.fs.collection('users').doc<User>(id)
 
 }
-
 // get replies
 getReplies(id){
   let ref = this.fs.collection('Chats').doc(id).collection<Chat>('replies', ref=>{
