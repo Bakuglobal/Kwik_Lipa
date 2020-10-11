@@ -64,14 +64,15 @@ export class DeliveryAddressPage implements OnInit {
   userID;
 
   // FlutterWave Configs
-  publicKey = "FLWPUBK-e926be420113c463b04d599925695eda-X";
+  publicKey = "FLWSECK-f4e9ab12e6b96d9da17bbfc47846286a-X";
 
   
-  customerDetails = {name:this.afAuth.auth.currentUser.displayName, email:this.afAuth.auth.currentUser.email, phone_number:this.afAuth.auth.currentUser.phoneNumber}
+  customerDetails = {name:localStorage.getItem('Name'), email:this.afAuth.auth.currentUser.email, phone_number:this.afAuth.auth.currentUser.phoneNumber}
   customizations = {title: 'Kwyk App', description: 'One Stop Online Shop', logo: 'https://iili.io/2g9DPf.md.png'}
 
   meta = {'counsumer_id': '7898', 'consumer_mac': 'kjs9s8ss7dd'}
   paymentData: InlinePaymentOptions
+  localStorage: any;
  
 
   constructor(
@@ -98,6 +99,7 @@ export class DeliveryAddressPage implements OnInit {
     this.autocomplete = { input: '' };
     this.autocompleteItems = [];
     this.phonenumber = localStorage.getItem('Number');
+    console.log('name', localStorage.getItem('Name'))
   }
   ionViewWillEnter() {
     this.getShop();
@@ -123,10 +125,18 @@ export class DeliveryAddressPage implements OnInit {
       onclose: this.closedPaymentModal,
       callbackContext: this
     }
+    this.makePayment();
   }
   // flutterwave start
   makePayment(){
     this.flutterwave.inlinePay(this.paymentData)
+    let button1 = document.getElementById('back-to-intro--right')
+    let button2= document.getElementById('method-card')
+    
+    setTimeout(()=>{
+      button1.click()
+      button2.click()
+    }, 1000)
   }
 
   makePaymentCallback(response: PaymentSuccessResponse): void {
@@ -654,7 +664,7 @@ addInfoWindow(marker, content){
           cssClass: 'secondary',
           handler: () => {
             this.paymentObject();
-            this.makePayment();
+           
           }
         },
         {

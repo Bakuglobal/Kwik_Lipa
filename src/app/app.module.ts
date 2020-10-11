@@ -55,6 +55,7 @@ import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
 // import { VideoPlayer } from '@ionic-native/video-player/ngx';
 import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player/ngx';
 import { ResumeChatPageModule } from './chat-module/resume-chat/resume-chat.module';
+import { Flutterwave, FlutterwaveModule } from "flutterwave-angular-v3"
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -86,6 +87,7 @@ import { ResumeChatPageModule } from './chat-module/resume-chat/resume-chat.modu
     NotificationsPageModule,
     NewChatPageModule,
     ResumeChatPageModule,
+    FlutterwaveModule,
   ],
   providers: [
     DeviceOrientation,
@@ -104,6 +106,7 @@ import { ResumeChatPageModule } from './chat-module/resume-chat/resume-chat.modu
     NativeGeocoder,
     AppLauncher,
     Badge,
+    Flutterwave,
     // VideoPlayer,
     SplashScreen,
     BarcodeScanner,
