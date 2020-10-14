@@ -72,7 +72,7 @@
         <ion-label position="stacked">Add items <span style="color: var(--ion-color-danger);">*</span></ion-label>
         <ion-input type="text" name="item" placeholder="what do you want to buy ?" (ionChange)="searchItem()"
         [(ngModel)]="searchTerm"></ion-input>
-        <ion-icon style="width: 20px; height: 20px; margin-top: 25px;" name="add" size="large" slot="end" color="primary" *ngIf="suggestion" (click)="addItem()"></ion-icon>
+        <small style="width: 30px; height: 30px; margin-top: 25px;" name="add" size="large" slot="end" color="primary" class='text-primary' *ngIf="suggestion" (click)="addItem()">Add</small>
     </ion-item>
 
     <div *ngIf="newListItems.length > 0" style="margin-top: 15px;">
