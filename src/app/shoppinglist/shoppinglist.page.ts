@@ -65,7 +65,7 @@ phone;
   ngOnInit() {
     
   }
-  ionViewDidEnter(){
+  ionViewWillEnter(){
     this.getallLists();
   }
 
@@ -108,12 +108,12 @@ phone;
       console.log(this.myList);
       this.getTotalCount();
     });
-    this.fireApi.getSharedLists(this.phone).subscribe(res => {
+    this.fireApi.getSharedLists(localStorage.getItem('userID')).subscribe(res => {
       this.sharedList = res ;
       if(res.length !== 0){
         this.zeroList = true ;
       }
-      console.log(this.sharedList);
+      console.log('shared list', this.sharedList);
 
     })
   }

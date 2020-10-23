@@ -1,0 +1,47 @@
+<ion-content>
+  <ion-list>
+    <ion-radio-group [(ngModel)]='selected'>
+      <ion-list-header>
+        <ion-label>
+         <strong>Select A Merchant</strong>
+          
+        </ion-label>
+      </ion-list-header>
+     <strong>SHOPS</strong>
+      <ion-item *ngFor= 'let shop of shops'>
+        <ion-radio value="{{shop.id}}"></ion-radio>
+          <ion-col>
+            {{shop.sellerInfo.shop}}
+          </ion-col>
+          <ion-col>
+            {{shop.businessInfo.address[0].address1}}
+          </ion-col>
+      </ion-item>
+      <br>
+      <strong>RESTAURANTS</strong>
+      <ion-item *ngFor= 'let rest of restaurants'>
+        <ion-radio value="{{rest.id}}"></ion-radio>
+          <ion-col>
+            {{rest.sellerInfo.shop}}
+          </ion-col>
+          <ion-col>
+            {{rest.businessInfo.address[0].address1}}
+          </ion-col>
+      </ion-item>
+      <br>
+      <strong>RECIPE SHOPS</strong>
+      <ion-item *ngFor= 'let x of recipeshops'>
+        <ion-radio value="{{x.id}}"></ion-radio>
+          <ion-col>
+            {{x.sellerInfo.shop}}
+          </ion-col>
+          <ion-col>
+            {{x.businessInfo.address[0].address1}}
+          </ion-col>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+  <ion-button (click)='selectMerchant()'>
+    Send
+  </ion-button>
+</ion-content>

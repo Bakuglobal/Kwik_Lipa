@@ -83,7 +83,7 @@ export class CreateListPage implements OnInit {
   }
 
   back() {
-    this.navCtrl.navigate(['tabs/mycontacts'])
+    this.navCtrl.navigate(['tabs/shoppinglist'])
   }
   // filter products
   searchItem() {
@@ -163,7 +163,7 @@ export class CreateListPage implements OnInit {
       // do not add
       this.Toasted('member already added')
     } else {
-      this.Listmembers.push(item);
+      this.Listmembers.push(item.id);
       this.member = null ;
       this.users.length = 0;
       this.userSuggestion = false;

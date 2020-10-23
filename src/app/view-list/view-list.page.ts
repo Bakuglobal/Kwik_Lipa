@@ -5,6 +5,7 @@ import { Contacts } from '@ionic-native/contacts/ngx';
 import { FirestoreService } from '../services/firestore.service';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Router } from '@angular/router';
+import { ShopModalPage } from '../shop-modal/shop-modal.page';
 
 @Component({
   selector: 'app-view-list',
@@ -36,16 +37,19 @@ export class ViewListPage implements OnInit {
   userName ;
   shared = [];
   budget: number ;
+  membersList: any[]=[];
+  public isDisabled: boolean = false;
 
   constructor(
-    private modal: ModalController,
+    private modal1: ModalController,
     private fs: AngularFirestore,
     private alert: AlertController,
     private toast: ToastController,
     private contact: Contacts,
     private service : FirestoreService,
     private socialSharing: SocialSharing,
-    private navCtrl: Router
+    private navCtrl: Router,
+    
   ) {
     this.myID = localStorage.getItem('userID');
     
@@ -61,15 +65,24 @@ export class ViewListPage implements OnInit {
       this.ListRef.push(item) ;
     });
     this.members.forEach(item => {
-      this.shared.push(item) ;
+      this.getNames(item)
+      // this.shared.push(item) ;
     });
+  }
+
+  getNames(id){
+     this.service.getUserProfile(id).valueChanges().subscribe(res=>{
+       this.membersList.push(res.firstName)
+     },error=>{
+       console.log(error)
+     })
   }
   shopNow(){
     if(this.budget == 0){
       this.setBudget();
     }else{
       // this.navCtrl.navigate(['tabs/recommend']);
-      this.modal.dismiss(this.budget);
+      this.modal1.dismiss(this.budget);
     }
   }
   ngOnInit() {
@@ -107,7 +120,7 @@ export class ViewListPage implements OnInit {
   }
 
   close() {
-      this.modal.dismiss();
+      this.modal1.dismiss();
   }
   add(index) {
     this.Items[index].count++;
@@ -141,7 +154,7 @@ export class ViewListPage implements OnInit {
     this.update();
   }
   addMembersToList(user) {
-    this.members.push(user);
+    this.members.push(user.id);
     this.edit = false ;
     this.update();
   }
@@ -263,7 +276,7 @@ export class ViewListPage implements OnInit {
         {
           text:'Not now',
           handler: () => {
-            this.modal.dismiss(this.budget);
+            this.modal1.dismiss(this.budget);
             // this.navCtrl.navigate(['tabs/recommend']);
             
           }
@@ -299,22 +312,44 @@ export class ViewListPage implements OnInit {
     return this.budget ;
   }
 
-  SendList() {
-    const list = {
-      Title: this.Title,
-      Members: this.members,
-      Items: this.Items,
-      Due_date: this.DueDate,
-      Created_by:this.createdBy,
-      User_id:this.userID,
-      Document_id:this.id
-    }
-    this.service.sendToShop(list).then(response => {
-      console.log('response', response)
-    }
-    ).catch(error => { console.log('error', error) }
-    )
+  async SendList() {
+    const shopsModal = await this.modal1.create({
+      component:ShopModalPage,componentProps:{}
+    })
+    await shopsModal.present();
+    shopsModal.onDidDismiss().then((shopId)=>{
+      console.log('shopid', shopId)
+      const list = {
+        Title: this.Title,
+        Members: this.members,
+        Items: this.Items,
+        Due_date: this.DueDate,
+        Created_by:this.createdBy,
+        User_id:this.userID,
+        Document_id:this.id,
+        shopId:shopId.data,
+      }
+      this.service.sendToShop(list).then(response => {
+        //toast//
+        this.toaster('Your shopping list was sent successfully')
+        //disable send btn
+        this.isDisabled = true;
+        console.log('response', response)
+      }
+      ).catch(error => { console.log('error', error) }
+      )
+  
+    })
+    
+  }
 
+  async toaster(msg) {
+    const showToast = await this.toast.create({
+      message: msg,
+      duration: 1000,
+      position: 'bottom'
+    })
+    await showToast.present()
   }
 }
 

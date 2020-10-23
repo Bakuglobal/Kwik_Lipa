@@ -45,7 +45,18 @@
 
     <!-- SHARED LISTS -->
     <div style="font-size: 15px; font-weight: bold; text-align: center; color: var(--ion-color-primary);"> Shared Lists</div>
-
+    <ion-card style="margin-left: 15px; margin-right: 14px;" color="" *ngFor="let item of sharedList" class="ion-padding" (click)="viewList(item)">
+        <ion-card-title>
+            <div style="font-size: 15px; font-weight: bold; color: var(--ion-color-primary);" class="ion-float-left">{{item.Title}}: {{item.Items.length}} Items</div>
+        </ion-card-title>
+        <ion-card-content style="margin-left: -15px; margin-top: -7px;  margin-bottom: -15px;">
+            <div>
+                <ion-icon style="width: 20px; height: 20px; color: #737373;" name="people"></ion-icon>&nbsp;&nbsp;
+                <ion-text style="font-size: 13px;" *ngFor="let item of item.members">{{item.firstName}}&nbsp;  </ion-text>
+            </div>
+            <div style="font-size: 11px;">Created : {{item.DueDate | date}}</div>
+        </ion-card-content>
+    </ion-card>
     <div style="text-align: center; margin-top: 5px;" *ngIf="!zeroList"><br>
         <div>
             <img src="../../assets/share.svg" style="width: 50px; height: 50px;">

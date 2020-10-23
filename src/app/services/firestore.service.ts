@@ -248,7 +248,7 @@ changeLocation(data: any) {
 //get the list of shops   
   getShops(){
     let ref =  this.fs.collection<Shops>('shops', ref => {
-      return ref.where('type','==','Shops');
+      return ref.where('businessInfo.type','==','Shops');
     });
     return ref.snapshotChanges().pipe(
       map(actions => {
@@ -262,7 +262,7 @@ changeLocation(data: any) {
   }
   getRecipe(){
     let ref =  this.fs.collection<Shops>('shops', ref => {
-      return ref.where('type','==','recipes');
+      return ref.where('businessInfo.type','==','recipes');
     });
     return ref.snapshotChanges().pipe(
       map(actions => {
@@ -396,9 +396,9 @@ getLists(id){
   )
 }
 // get shared shopping lists
-getSharedLists(phone){
+getSharedLists(id){
   this.allLists = this.fs.collection<List>('shopping-list', ref => {
-    return ref.where('members','array-contains',phone).orderBy('DueDate','asc');
+    return ref.where('members','array-contains',id).orderBy('DueDate','asc');
   })
   return this.allLists.snapshotChanges().pipe(
     map(actions => {
@@ -501,7 +501,7 @@ getAds(){
 // get restaurants
 getRest(){
   let ref =  this.fs.collection<Shops>('shops', ref => {
-    return ref.where('type','==','food');
+    return ref.where('businessInfo.type','==','food');
   });
   return ref.snapshotChanges().pipe(
     map(actions => {
@@ -547,7 +547,7 @@ getproducts(shop){
   }
   
   getUserProfile(id) {
-    return this.fs.collection('users').doc(id)
+    return this.fs.collection('users').doc<User>(id)
   }
 
 sendToShop(list){

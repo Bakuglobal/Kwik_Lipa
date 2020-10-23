@@ -56,6 +56,8 @@ import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx';
 import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player/ngx';
 import { ResumeChatPageModule } from './chat-module/resume-chat/resume-chat.module';
 import { Flutterwave, FlutterwaveModule } from "flutterwave-angular-v3"
+import { ShopPageModule } from './shop/shop.module';
+import { ShopModalPageModule } from './shop-modal/shop-modal.module';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -88,6 +90,8 @@ import { Flutterwave, FlutterwaveModule } from "flutterwave-angular-v3"
     NewChatPageModule,
     ResumeChatPageModule,
     FlutterwaveModule,
+    ShopModalPageModule,
+    
   ],
   providers: [
     DeviceOrientation,

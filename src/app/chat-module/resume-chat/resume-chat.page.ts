@@ -28,7 +28,7 @@ export class ResumeChatPage implements OnInit {
   chats = [];
   uid: string;
   time: any;
-  recepient: Chat;
+  recepient:any;
 
   //objects
 

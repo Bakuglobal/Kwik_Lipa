@@ -12,7 +12,8 @@ const routes: Routes = [
   { path: 'chat-home', loadChildren: './chat-module/chat-home/chat-home.module#ChatHomePageModule' },
   
   { path: 'resume-chat', loadChildren: './chat-module/resume-chat/resume-chat.module#ResumeChatPageModule' },
-  { path: 'new-chat', loadChildren: './chat-module/new-chat/new-chat.module#NewChatPageModule' }
+  { path: 'new-chat', loadChildren: './chat-module/new-chat/new-chat.module#NewChatPageModule' },
+  { path: 'shop-modal', loadChildren: './shop-modal/shop-modal.module#ShopModalPageModule' }
 
 
   // { path: 'home', loadChildren: './Recipes/home/home.module#HomePageModule' },
